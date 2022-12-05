@@ -1,0 +1,175 @@
+﻿
+@{
+	ViewBag.Title = "CreateLedger";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Accounts/JsModule/Master/CreateLedger.js?his-version-1.0"></script>
+<style>
+	.active {
+		color: green;
+	}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Ledger List</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-xs-3">
+									<span class="btn btn-success" onclick="LedgerList()">Load List</span>
+								</div>
+								<div class="col-xs-3">
+									<span class="text-pink">Search</span>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+									</div>
+								</div>
+								<hr />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll">
+												<table id="tblLedger" class="table table-bordered">
+													<thead>
+														<tr>
+															<th>Edit</th>
+															<th>Ledger Id</th>
+															<th>Ledger Name</th>
+															<th>Opening</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<input type="button" onclick="Clear()" class="btn btn-success" value="New" /><span class="text-white" id="txtLedgerId"></span>
+								<h4 class="text-white pull-right">Create Ledger Master</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Group</label>
+										<select id="ddlGroup" class="form-control border-imp">
+											<option>Select Group</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Ledger Name</label>
+										<input type="text" id="txtLedgerName" class="form-control text-uppercase border-imp" placeholder="Ledger Name" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Pan No.</label>
+										<input type="text" id="txtPanNo" class="form-control" placeholder="Pan No." />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>GST No.</label>
+										<input type="text" id="txtGSTNo" class="form-control" placeholder="GST No." />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Contact Person </label>
+										<input type="text" id="txtContactPerson" class="form-control" placeholder="Contact Person" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>External Name </label>
+										<input type="text" id="txtExternalName" class="form-control" placeholder="External Name" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Opening Amt</label>
+										<input type="text" id="txtOpeningAmt" data-int class="form-control" placeholder="Opening Amt" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Party Address</label>
+										<input type="text" id="txtPartyAddress" class="form-control" placeholder="Party Address" />
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<input type="button" id="btnSaveLedger" onclick="CreateLedgers()" class="btn btn-success pull-right" value="Submit" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,248 @@
+﻿
+@{
+    ViewBag.Title = "ShareDeduction";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Referral/JsModule/jsCommision/ShareDeduction.js"></script>
+<style>
+    #referralSection label {
+        padding: 1px 8px;
+        background: rgb(0 123 44);
+        color: rgb(255 255 255);
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+        border-right: 13px solid rgb(243 156 18);
+    }
+
+    .tbl-btn {
+        border: none;
+        padding: 1px 8px;
+    }
+
+    .flex-btn {
+        border: none;
+        border-radius: 0;
+        height: 28px;
+    }
+
+    .bc {
+        border-radius: 0;
+        border-color: #00a65a;
+    }
+
+    .active {
+        color: green;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    #btnSyncProcess {
+        border: none;
+        border-radius: 0;
+        padding: 6px 15px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Panel Search</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-4">
+                                    <div class="fileinput fileinput-new input-group" style="display:flex">
+                                        <input type="text" id="txtIPDNo" class="form-control bc" autocomplete="off" placeholder="IPD No">
+                                        <button class="flex-btn btn-success" onclick="GetPatientDetailByIPDNo()"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-9" style="display:none">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                        <input type="date" id="txtFrom" class="form-control bc">&nbsp;
+                                        <input type="date" id="txtTo" class="form-control bc">
+                                        <button class="flex-btn btn-success"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll" style="height:105px;border: 1px solid #ddd;">
+                                                <table id="tblPatient" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>IPD No</th>
+                                                            <th>Patient Name</th>
+                                                            <th>Gender</th>
+                                                            <th>Doctor</th>
+                                                            <th>Panel Name</th>
+                                                            <th>Admited On</th>
+                                                            <th>Discharged On</th>
+                                                            <th style="width:1%">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Share Deduction</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                            <input type="text" id="txtSearchReferral" autocomplete="off" style="border-color: #00c0ef;" class="form-control bc" placeholder="Search Referral">
+                                            <button class="flex-btn btn-info" style="width:60%" onclick="ReferralSearch()"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                            <select class="form-control bc" style="border-color: #f39c12;" id="ddlReferralForCommission">
+                                                <option value="00">Select Referral</option>
+                                            </select>
+                                            <button id="btnSetReferral" class="flex-btn btn-warning" style="width:40%" onclick="SetReferral()"><i class="fa fa-plus"></i>&nbsp;Set</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="height:200px;border: 1px solid #ddd;display:none" id="ReferralSection">
+                                            <table id="tblReferral" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Referral Name</th>
+                                                        <th>Mobile</th>
+                                                        <th>Locality</th>
+                                                        <th>Address</th>
+                                                        <th style="width:1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" id="referralSection" style="display:none">
+                                        <label class="text-danger">Alloted Referral : <span id="txtAllotedReferral">Self</span></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                        <label class="form-control">Com.[%]</label>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input type="text" id="txtPercComm" style="border-color: #00c0ef; font-size:12px;font-weight:bold" class="form-control bc" value="10" placeholder="Percentage">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                            <button class="btn-success" id="btnSyncProcess" onclick="SyncProcess()" style="border-radius:0">Sync & Process</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin:0;" />
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <label>Total Amount</label>
+                                        <input type="text" class="form-control" id="txtTotalAmount" placeholder="Total Amount" disabled="disabled" />
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label>Exempted</label>
+                                        <input type="text" class="form-control" id="txtExempted" placeholder="Exempted" disabled="disabled" />
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label>Net Amount</label>
+                                        <input type="text" class="form-control" id="txtNetAmount" placeholder="Net Amount" disabled="disabled" />
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label>Com.Amount</label>
+                                        <div style="display:flex">
+                                            <input type="text" class="form-control" id="txtComissionAmount" placeholder="Deduction Amt" disabled="disabled" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin-top: 5px;" />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <table id="tblCommissionList" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SR.No.</th>
+                                                            <th>Category Name</th>
+                                                            <th>Amount</th>
+                                                            <th>Exclusion</th>
+                                                            <th>Net Amount</th>
+                                                            <th>Commission</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

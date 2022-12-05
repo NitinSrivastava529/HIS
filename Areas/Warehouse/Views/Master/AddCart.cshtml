@@ -1,0 +1,160 @@
+﻿@{
+	ViewBag.Title = "AddCart";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/Master/Cart.js?his-version-1.0"></script>
+
+<style>
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.scroll-table {
+		width: 100%;
+		height: 430px;
+		background: #fff;
+		overflow: hidden;
+		overflow-y: auto;
+	}
+
+	.table {
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 5px;
+	}
+
+	.panel-body {
+		padding: 15px 15px 0px 20px;
+		position: relative;
+	}
+	
+
+	.btn-warning {
+		background: #ff6a00 !important;
+	}
+	
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="">
+					<div class="panel">
+						<div class="panel-heading" style="background:#0076d0;padding:1px 10px;">
+							<p class="text-white">Add Department</p>
+						</div>
+						<div class="panel-body" style="background:#fff;">
+							<div class="col-xs-6">
+								<span class="text-pink">Search Department</span>
+							</div>
+							<div class="col-xs-6">
+								<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+									<input type="text" id="txtSearchDept" class="form-control input_pass" onkeyup="return SearchDepartment(this)" placeholder="Search Department..">
+								</div>
+							</div>
+							<hr />
+							<div class="example-box-wrapper">
+								<div class="form-horizontal bordered-row">
+									<div class="form-group">
+										<div class="col-sm-10">
+											<div class="fileinput fileinput-new input-group" style="display:flex" data-provides="fileinput">
+												<input type="text" id="txtDeptName" data-imp data-count="50" class="form-control text-uppercase" placeholder="Department Name" autocomplete="off">
+												<input type="button" id="btnSaveUpdateDept" class="btn-primary" value="Save" onclick="return AddWhDepartment();">
+												<input type="hidden" id="hideditauto" />
+											</div>
+										</div>
+									</div>
+									<div class="table table-responsive">
+										<div class="scroll-table">
+											<table class="table table-bordered" id="tblwhDeptList">
+												<thead>
+													<tr>
+														<th>Department Code</th>
+														<th>Department Name</th>
+														<th>Created On</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="">
+					<div class="panel">
+						<div class="panel-heading" style="background:#0076d0;padding:1px 10px;">
+							<p class="text-white">Manage Cart</p>
+						</div>
+						<div class="panel-body" style="background:#fff;">
+							<div class="col-xs-6">
+								<a href="AssignCart" class="btn btn-success">Assign Cart</a>
+							</div>
+							<div class="col-xs-6">
+								<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+									<input type="text" id="txtSearchCart" class="form-control input_pass" onkeyup="return SearchCart(this)" placeholder="Search Cart..">
+								</div>
+							</div>
+							<hr />
+							<div class="example-box-wrapper">
+								<div class="form-horizontal bordered-row">
+									<div class="form-group">
+										<div class="col-md-4">
+											<label>Department</label>
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<select id="ddlDept" class="form-control"></select>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<label>Cart Type</label>
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<select id="ddlCartType" class="form-control">
+                                                    <option value="Non-Consumable">Non-Consumable</option>
+													<option value="Consumable">Consumable</option>
+													<option value="EmergencyCart">Emergency Cart</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-5">
+											<label>Cart Name</label>
+											<div class="fileinput fileinput-new input-group" style="display:flex" data-provides="fileinput">
+												<input type="text" id="txtCartName" data-imp data-count="50" class="form-control text-uppercase" value="" placeholder="Cart Name">										
+												<input type="button" id="btnSaveSection" class="btn-primary" value="Save" onclick="return AddWhCart()">
+												<input type="hidden" id="hidcartautoId" />
+											</div>
+										</div>
+									</div>
+									<div class="table table-responsive">
+										<div class="scroll-table" style="height: 410px;">
+											<table id="tblwhCartList" class="table table-bordered">
+												<thead>
+													<tr>
+														<th>Cart Id</th>
+														<th>Cart Type</th>
+														<th>Cart Name</th>
+														<th>Created On</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

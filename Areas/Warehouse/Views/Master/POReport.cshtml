@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "POReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Vendor Master List</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="button" id="btn1" class="btn btn-success pull-left" value="Get Report" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="button" class="btn btn-success pull-right" value="XL" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-xs-8" style="margin-top:10px;">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <table id="tblPoReport" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Item Id</th>
+                                                            <th>Name Of Product</th>
+                                                            <th>Order Pack</th>
+                                                            <th>MRP</th>
+                                                            <th>NPR</th>
+                                                            <th>Vendor Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>19836</td>
+                                                            <td>Dispirine Pain Killer</td>
+                                                            <td>1X10</td>
+                                                            <td>120</td>
+                                                            <td>987</td>
+                                                            <td>ABCD</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>19835</td>
+                                                            <td>Dispirine Pain Killer</td>
+                                                            <td>1X10</td>
+                                                            <td>120</td>
+                                                            <td>987</td>
+                                                            <td>ABCD</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#txtSearch').on('keyup', function () {
+            var val = $(this).val().toLocaleLowerCase();
+            $('#tblPoReport tbody tr').filter(function () {
+                $(this).toggle($(this).text().toLocaleLowerCase().indexOf(val) > -1);
+            });
+        });
+    });
+</script>

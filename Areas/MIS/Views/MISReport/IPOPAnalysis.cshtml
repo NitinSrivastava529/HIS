@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "IPOPAnalysis";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/MIS/JsModule/MISReport.js?his-version-1.0"></script>
+
+<div id="page-content">
+    <section class="content">
+        <div class="row">
+            <div class="box box-purple">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            Report Type
+                            <select id="ddlLogic" class="form-control">
+                                <option value="OPD-Report" selected="selected">OPD-Report</option>
+                                <option value="IPD-Report">IPD-Report</option>
+                                <option value="IPD-Surgery">IPD-Surgery</option>
+                                <option value="PAC-OT">PAC-OT</option>
+                               </select>
+                        </div>
+                        <div class="col-md-2">
+                            From Date<input type="date" class="form-control" id="txtFrom" autocomplete="off" placeholder="dd/mm/yyyy" data-date-format="DD-MM-YYYY" />
+                        </div>
+                        <div class="col-md-2">
+                            To Date<input type="date" class="form-control" id="txtTo" autocomplete="off" placeholder="dd/mm/yyyy" />
+                        </div>
+                        <div class="col-md-2">
+                            Department Name
+                            <select id="ddlTnxType" class="form-control"></select>
+                        </div>
+                        <div class="col-md-2">
+                            Doctor Name
+                            <select id="ddlDoctorName" class="form-control"></select>
+                        </div>
+                        <div class="col-md-2">
+                            Category Name
+                            <select id="ddlCat" class="form-control"></select>
+                        </div>
+                        <div class="col-md-2">
+                            Sub Category
+                            <select id="ddlSubCat" class="form-control"></select>
+                        </div>
+                        <div class="col-md-1">
+                            Command
+                            <button id="btnXLReport" type="button" class="btn btn-success btn-block">XL Report </button>
+                            <span id="spnStatus"></span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <script>
+        DropDownBinding();
+    </script>
+</div>

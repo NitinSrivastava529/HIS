@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "AvailCoupon";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Temporary/JsModule/AvailCoupon.js"></script>
+<style>
+    .Msg {
+        display: none;
+        color: rgb(255 255 255);
+        background: rgb(0 166 90);
+        padding: 2px 10px;
+        font-size: 13px;
+        border-radius: 2px;
+        border: 1px solid rgb(8 148 84);
+    }
+
+    .active {
+        color: green;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Avail Coupon</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-3">
+                                    <label>Coupon No</label>
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="fileinput fileinput-new input-group" style="display:flex">
+                                        <input type="text" id="txtCouponNo" style="border: 1px solid #00a65a;" class="form-control" value="" placeholder="Coupon No">
+                                        <button class="btn-success" style="width:28%;border: none;" onclick="Validate()">Validate</button>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="Msg">
+                                            <span>.</span>
+                                        </div>
+                                        <hr style="margin:10px;" />
+                                        <div class="col-xs-5" style="background: #fff0f6;border: 1px solid #ddd;">
+                                            <label>
+                                                <input type="radio" name="PatientInfo" value="IPD" />By IPD
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="PatientInfo" value="UHID" />By UHID
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-7">
+                                            <div class="fileinput fileinput-new input-group" style="display:flex">
+                                                <input type="text" id="txtFind" style="border: 1px solid #a29e0c;" class="form-control" placeholder="Find">
+                                                <button class="btn-success" id="btnPatientInfo" style="width:28%;border: none;background:#a29e0c">Info</button>
+                                                &nbsp;<button class="btn-success" id="btnAvail" style="width:28%;border: none;background:#036dbe" onclick="AvailCoupon()">Avail</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="table table-responsive">
+                                                <div class="scroll" style="height:105px;border: 1px solid #ddd;">
+                                                    <table id="tblPatient" class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>IPD No</th>
+                                                                <th>Patient Name</th>
+                                                                <th>Gender</th>
+                                                                <th>Doctor</th>
+                                                                <th>Panel Name</th>
+                                                                <th>Admited On</th>
+                                                                <th>Discharged On</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

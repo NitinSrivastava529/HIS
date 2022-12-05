@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "IndentReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<script src="~/Areas/IPD/JsModule/Indent/IndentReport.js"></script>
+<style>
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    #AdmittedIPDPatient table {
+        width: 100%;
+        background: #fff;
+        display: block;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel">
+                    <div class="panel-body" style="height:580px;overflow-y:scroll">
+
+                        <div class="col-xs-5">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchPatient" class="form-control input_pass" value="" placeholder="Search...">
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <input type="text" id="txtIPDNo" class="form-control input_pass" value="" placeholder="Search By IPD NO...">
+                        </div>
+                        <div class="col-xs-2">
+                            <input type="button" class="form-control btn btn-success" value="View" onclick="GetIndentByIPDNo();" />
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive">
+                                    <div id="AdmittedIPDPatient">
+                                        <table id="tblAdmittedIPDPatient" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>IPD No.</th>
+                                                    <th>Patient Name</th>
+                                                    <th>UHID No.</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-body" style="height:580px;overflow-y:scroll">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#dff3ff">
+                                <table>
+                                    <tr>
+                                        <td style="width:40%"><b>Patient Name : </b><span data-pname></span></td>
+                                        <td style="width:20%"><b>, Gender : </b><span data-gender></span></td>
+                                        <td style="width:20%"><b>, Age : </b><span data-age></span></td>
+                                        <td style="width:20%"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 8px 20px;">
+
+                                <div class="table-responsive">
+                                    <table id="tblReport" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Indent Qty</th>
+                                                <th>Issue Qty</th>
+                                                <th>Remark</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

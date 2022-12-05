@@ -1,0 +1,301 @@
+﻿
+@{
+    ViewBag.Title = "CovidPackageItems";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Online/JsModule/CovidPackageItems.js?his-version-1.0"></script>
+<style>
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .scroll {
+        background: #fff;
+        height: 350px;
+        overflow: hidden;
+        overflow-y: auto;
+        display: block;
+    }
+
+    canvas {
+        /*height:250px !important;*/
+        /*width:300px !important;*/
+    }
+
+    .well {
+        font-size: 12px;
+        min-height: 20px;
+        padding: 4px;
+        margin-bottom: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #e3e3e3;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    #AdmittedIPDPatient {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 510px;
+        display: block;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 306px;
+        max-width: min-content;
+        max-height: 310px;
+        /* overflow: scroll; */
+        overflow-x: hidden;
+        position: absolute;
+        z-index: 1;
+        background: #fff;
+        top: 129px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 10px;
+        border-radius: 3px;
+    }
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-1">
+                            <span class="text-pink">Filter</span>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchPatient" class="form-control input_pass" value="" placeholder="Search...">
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+
+                        </div>
+                        <div class="col-xs-5">
+
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive">
+                                    <div id="AdmittedIPDPatient">
+                                        <table id="tblAdmittedIPDPatient" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Action</th>
+                                                    <th>Book Date</th>
+                                                    <th>Patient Id</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Age </th>
+                                                    <th>Gender</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="scroll" style="height:700px;">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#ServiceGiven">Service Given Marking</a></li>
+                        <li><a data-toggle="tab" href="#Report" >Report</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="ServiceGiven" class="tab-pane fade in active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="scroll">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover" id="tblPackageItemsDone">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Action</th>
+                                                        <th>Item Name</th>
+                                                        <th>Schedule Date</th>
+                                                        <th>Process Date</th>
+                                                        <th>Process By</th>
+                                                        <th>Service Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <span id="ids"></span>
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label>Choose Item : <span data-toggle="tooltip" title="Enable Package Item Selection!" style="font-size: 17px;cursor: pointer;" class="fa fa-check-square-o text-success enable"></span></label>
+                                                <select id="ddlPackage" class="form-control"></select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Process Date : </label>
+                                                <input type="date" id="txtProcDate" class="form-control" placeholder="dd-mm-yyyy" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Search Employee : </label>
+                                                <div style="display:flex">
+                                                    <input type="text" id="txtEmpName" class="form-control" placeholder="Search Employee" />
+                                                    <span class="btn btn-success" id="btnGetEmployee"><i class="fa fa-plus"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Process By : </label>
+                                                <select id="ddlProcBy" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <div class="col-md-3">
+                                                <label>Service Status: </label>
+                                                <select id="ddlServiceStatus" class="form-control">
+                                                    <option>Completed</option>
+                                                    <option>Attempted</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label>Remark</label>
+                                                <textarea id="txtRemark" class="form-control" rows="1"></textarea>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label class="form-control" style="visibility:hidden">Remark</label>
+                                                <input type="button" class="btn btn-success" onclick="InsertCovidServices()" value="Submit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Report" class="tab-pane fade">
+                            <div class="box-body">
+                                <div class="col-md-3"><input type="date" class="form-control" id="txtFrom" autocomplete="off" placeholder="dd/mm/yyyy" data-date-format="DD-MM-YYYY" /></div>
+                                <div class="col-md-3"><input type="date" class="form-control" id="txtTo" autocomplete="off" placeholder="dd/mm/yyyy" /></div>
+                                <div class="col-md-6">
+                                    <button id="btnAll" type="button" class="btn btn-info btn-block" onclick="ServiceGivenReport();">GET REPORT BETWEEN SCHEDULED</button>
+                                </div>
+
+                            </div>
+                            <div id="Report" style="width:100%;overflow-y:auto;height:600px;">
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="tblServiceGiven">
+                                        <thead>
+                                            <tr>
+                                                <th>PatientId</th>
+                                                <th>Item Name</th>
+                                                <th>Schedule Date</th>
+                                                <th>Service Status</th>
+                                                <th>Service Given</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+     </div>
+</div>
+
+
+
+
+

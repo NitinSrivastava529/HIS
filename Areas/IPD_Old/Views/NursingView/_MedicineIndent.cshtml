@@ -1,0 +1,294 @@
+﻿<script src="~/Areas/IPD/JsModule/NursingView/_MedicineIndent.js"></script>
+<style>
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    #AdmittedIPDPatient {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 510px;
+        display: block;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 373px;
+        max-width: 500px;
+        max-height: 310px;
+        overflow: hidden;
+        overflow-y: auto;
+        position: absolute;
+        z-index: 999;
+        background: #fff;
+        top: 28px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 0px;
+        border-radius: 3px;
+    }
+
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+
+    table[id=ddlReqBy] {
+        width: 100%;
+        margin-top: -1px;
+        padding-left: 11px;
+        display: block;
+        font-size: 12px;
+        border: 1px solid rgb(237, 235, 235);
+        box-shadow: 1px 1px 12px #efefef;
+        overflow: hidden;
+    }
+
+        table[id=ddlReqBy] tbody, table[id=ddlReqBy] thead {
+            width: 100%;
+            line-height: 22px;
+            max-height: 330px;
+            font-size: 12px;
+            display: block;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+
+            table[id=ddlReqBy] tbody tr td {
+                width: 195px;
+                display: list-item;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                position: absolute;
+                position: relative;
+            }
+
+            table[id=ddlReqBy] tbody tr {
+                border-bottom: 1px solid #f1f1f1;
+            }
+
+    #txtReqBy {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-decoration: none;
+        width: 237px;
+    }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        margin: 0 5px;
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 315px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .msg {
+        color: #ffffff;
+        background: #dd8803;
+        width: max-content;
+        padding: 5px 14px;
+        position: absolute;
+        bottom: 39px;
+        z-index: 10;
+        left: 11px;
+        border-radius: 2px;
+        display: none;
+    }
+
+        .msg span {
+            background: #ff0049;
+            padding: 2px;
+            border-radius: 20px;
+            width: 13px;
+            height: 13px;
+            font-size: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+</style>
+<div class="example-box-wrapper">
+    <div class="form-horizontal bordered-row">
+        <div class="form-group">
+            <div class="col-md-1">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <label>Req.By : </label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <select class="form-control" id="ddlReqBy">
+                        <option>Choose Nurse </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <label>Req. Type : </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <select class="form-control" id="ddlReqType">
+                        <option>Normal</option>
+                        <option>Urgent</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-1">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <label>Doctor : </label>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <select class="form-control" id="ddlDoctor">
+                        <option>Choose Doctor </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <label>Search By Type : </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <select class="form-control" id="ddlSearchType">
+                        <option value="Indent-ETHICAL">By Product</option>
+                        <option value="Indent-BySaltName">By Salt</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr style="margin:0" />
+        <div class="form-group">
+            <div class="col-md-5">
+                <div class="fileinput fileinput-new input-group position-relative" data-provides="fileinput">
+                    <input type="text" id="txtSearchProduct" class="form-control" placeholder="Search Product..." />
+                    <div id="ItemList" style="display:none">
+                        <table id="tblnavigate">
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <input type="text" id="txtItemID" class="form-control" style="display:none" />
+                    <input type="text" id="txtIsCash" class="form-control" style="display:none" />
+                </div>
+                <div class="msg"></div>
+            </div>
+
+
+            <div class="col-md-2">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <input type="text" id="txtQuantity" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="5" class="form-control" placeholder="Quantity..." />
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <input type="text" id="txtRemark" class="form-control input_pass" value="" placeholder="Remark..">
+                    <span id="btnSaveProduct" class="input-group-addon btn btn-primary">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="table table-responsive">
+            <select id="ddlProduct" style="display:none"></select>
+            <div id="ProductList">
+                <table id="tblProduct" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Remark</th>
+                            <th>Credit/Cash</th>
+                            <th>Action </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+        <button id="btnSaveIPOPIndent" style="margin-right:10px" class="btn btn-success pull-right"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+    </div>
+</div>

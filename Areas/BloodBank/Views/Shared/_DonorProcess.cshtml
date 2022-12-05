@@ -1,0 +1,1227 @@
+﻿<script src="~/Areas/BloodBank/JsModule/_DonorProcess.js"></script>
+<style>
+    #DiscardedInfo {
+        padding: 2px 15px;
+        background: #fff;
+        color: red;
+        float: right;
+        border-radius: 32px;
+    }
+    tr.discarded td {
+        background: #ffc4c4;
+    }
+    .filter-section {
+        margin-top: 3px;
+        background: #f5f5f5;
+    }
+    #modalComponent .col-md-6 {
+        width: 48%;
+    }
+
+    #btnSaveComponent {
+        position: absolute;
+        top: 150px;
+        left: -9px;
+        padding: 0px 7px;
+        width: 60px;
+    }
+
+    .error {
+        border-color: red !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .bc {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-color: #06a08b;
+    }
+
+    .btnRC {
+        height: 30px;
+        margin: -1px;
+        border-radius: 0;
+    }
+
+    .section {
+        margin-top: 5px;
+        padding: 1px;
+        border: 1px solid #2478a9;
+        height: 150px;
+    }
+
+    .title {
+        background: #2478a9;
+        color: #fff;
+        padding: 2px 5px;
+        margin: 1px 0;
+        width: 100%;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 25px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+    }
+
+    .fullHeight {
+        min-height: 590px !important;
+    }
+
+    .DonorProcessInfo .form-control {
+        height: 24px;
+        border-color: #c3c3c3
+    }
+
+    .DonorProcessInfo td b {
+        white-space: pre;
+    }
+
+    .DonorProcessInfo td {
+        background: #ffffff;
+        font-size: 13px;
+        border-bottom: 4px solid;
+        padding-top: 11px !important;
+        padding-bottom: 8px !important;
+        color: #525252;
+    }
+
+    .DonorProcessInfo .fa {
+        cursor: pointer;
+        color: #fff;
+        background: #919b91;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 22px;
+        border-radius: 30px;
+        border: 4px double #fff;
+        font-size: 15px;
+        /*position: absolute;*/
+        margin-top: -6px;
+        margin-left: 6px;
+    }
+
+    .DoneProcess {
+        background: #2dad54 !important;
+    }
+
+    .InProcess {
+        background: #cdb510 !important;
+    }
+
+    .lockProcess {
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    .NotProcess {
+        background: #c6c7c6 !important;
+    }
+
+    .modal-body {
+        padding: 1px 10px 13px;
+    }
+
+    .modalProcess .tblDonorInfoForProcess {
+        margin-bottom: 10px;
+        background: #ffffff;
+        border-bottom: 1px solid #dfdfdf;
+    }
+
+        .modalProcess .tblDonorInfoForProcess td {
+            background: #ccf5ff;
+            border: none;
+            padding: 5px !important;
+            font-size: 13px;
+        }
+
+    .modalProcess .tblApproveInfo {
+        margin-bottom: 10px;
+        background: #ffffff;
+        border-bottom: 1px solid #dfdfdf;
+    }
+
+        .modalProcess .tblApproveInfo td {
+            background: #fff;
+            border: none;
+            padding: 5px !important;
+            font-size: 13px;
+        }
+
+    hr {
+        margin-top: 0;
+        margin-bottom: 4px;
+        border: 0;
+        border-top: 1px solid #ededed;
+        width: 92%;
+    }
+
+    .IsDonation {
+        display: none;
+    }
+
+    .mendatory {
+        color: red;
+    }
+
+    .PoorShocked {
+        position: absolute;
+        background: #fde8e8;
+        padding: 2px 6px;
+        border-radius: 29px;
+        border: 1px solid #ddd;
+        right: 7px;
+        top: 6px;
+    }
+
+    .AntiList1 .col-md-2 {
+        width: 25%;
+        padding: 0;
+        text-align: center;
+    }
+
+    .AntiList2 .col-md-2 {
+        padding: 0;
+        width: 28%;
+        text-align: center;
+    }
+
+    .radioList {
+        border-radius: 30px;
+        background: #fbdcab;
+        width: 90%;
+        margin: auto;
+    }
+
+        .radioList label {
+            margin: 0;
+        }
+
+    #tblAntigen tbody td, #tblAntigen thead th {
+        font-size: 14px;
+        margin: 0;
+        text-align: center;
+    }
+
+    #tblApprAntigen tbody td, #tblApprAntigen thead th {
+        font-size: 11px;
+        margin: 0;
+        text-align: center;
+    }
+
+    .bg-success {
+        background-color: #c5e9b6;
+    }
+
+
+    #lblBBNotSame {
+        display: none;
+        color: #d53535;
+        background: #ffdede;
+        font-size: 13px;
+        padding: 5px 4px;
+        border-radius: 4px;
+    }
+
+    .lblBBApprovalInfo {
+        margin-top: 15px;
+        color: #5e5e5e;
+        background: #a3e388;
+        font-size: 13px;
+        padding: 5px 10px;
+        border-radius: 32px;
+        margin-left: 20px;
+        width: 142px;
+    }
+
+    #tblBloodTest thead th {
+        text-align: center;
+    }
+
+    #tblBloodTest tbody .form-control {
+        border: 1px solid #9eb1c9;
+        height: 25px;
+        margin: 2px 0;
+    }
+
+    .selected {
+        background: #faffdf;
+    }
+
+    .panel-heading {
+        padding: 5px !important;
+        background: #0076d0;
+    }
+
+        .panel-heading button {
+            float: right;
+            margin: -20px 0px;
+        }
+
+    /*.approve {
+        border: 1px solid #979797;
+        position: absolute;
+        bottom: 6px;
+        right: 20px;
+        border-radius: 40px;
+        box-shadow: inset -1px 1px 11px 0px #308b37;
+        height: 28px;
+        font-size: 14px;
+        padding: 1px 16px;
+    }*/
+    .approve {
+        border: 1px solid #979797;
+        border-radius: 40px;
+        /*box-shadow: inset -1px 1px 11px 0px #308b37;*/
+        height: 28px;
+        font-size: 14px;
+        padding: 1px 16px;
+    }
+
+    .healthStatus {
+        color: #f39c12;
+        font-size: 24px;
+        margin: -5px 0px 0px 0px;
+        float: right;
+        cursor: pointer;
+    }
+
+    .healthStatusContainer {
+        position: absolute;
+        display: none;
+        background: #fff4d7;
+        padding: 5px 11px;
+        top: 10%;
+        z-index: 100000;
+        border: 1px solid #b5b1b1;
+        border-radius: 2px;
+    }
+
+    #lblApproveStatus {
+        background: #29a521;
+        display: inline;
+        border-radius: 30px;
+        padding: 4px 11px;
+        font-size: 12px;
+        color: #fff;
+    }
+    .IndentBy {
+        border-radius: 2px;       
+        display: flex;
+        align-items: center;
+        padding: 4px 4px;
+        border: 1px solid #d7d7d7;
+    }
+
+    .IndentDate {
+        border-radius: 2px;       
+        display: flex;
+        align-items: center;
+        padding: 4px 4px;
+        border: 1px solid #d7d7d7;
+    }
+
+        .IndentDate label {
+            white-space: pre;
+            margin-left: 10px;
+        }
+
+        .IndentDate .form-control {
+            height: 27px;
+            border: 1px solid #c3c3c3;
+        }
+        .IndentDate .select2-container--default .select2-selection--single {
+            margin-right: 1px;
+            height: 27px;
+            background-color: #fff;
+            border: 1px solid #c3c2c2;
+            border-radius: 3px;
+        }
+</style>
+<div class="row filter-section">
+    <div class="col-md-2">
+        <div class="IndentBy">
+            <label>Donor By : </label>
+            <label><input type="radio" name="DonorStatus" value="Pending" checked />&nbsp;Pending </label>
+            @*<label><input type="radio" name="DonorStatus" value="Approval" />&nbsp;Approval </label>*@
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="IndentDate">
+            <label>from : </label>
+            <input type="date" id="txtFrom" class="form-control" />
+            <label>To : </label>
+            <input type="date" id="txtTo" class="form-control" />
+            <button class="btn btn-warning" onclick="DonorProcess('DonorSearch:ByDate')" style="height: 25px;width: 32%;border-radius: 0;"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="IndentDate">
+            <label>By : </label>
+            <select id="ddlInput" class="form-control">
+                <option>Mobile No</option>
+                <option>Donor Id</option>
+            </select>
+            <input type="text" id="txtSearchInput" class="form-control" placeholder="Search Input" />            
+            <button class="btn btn-warning" onclick="DonorProcess('DonorSearch:ByMobileNo')" style="height: 25px;width: 32%;border-radius: 0;"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+        </div>
+    </div>
+</div>
+<div class="section" style="height:580px;">
+    <label class="title">Donor Process</label>
+    <div class="DonorProcessInfo" style="height:550px;overflow:auto">
+        <table class="table" id="tblDonorProcessInfo">
+            <thead>
+                <tr>
+                    <th style="width:1%">S.NO.</th>
+                    <th>Visit Id</th>
+                    <th>Date</th>
+                    <th>Donor Name</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Contact No</th>
+                    <th>Collection</th>
+                    <th>Grouping</th>
+                    <th>Component</th>
+                    <th>Screening</th>
+                    <th>Approve</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade modalProcess" id="modalBloodCollection" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:10%;">
+            <div class="panel-heading">
+                <h5 class="text-white">Blood Collection Details</h5>
+                <button data-dismiss="modal" class="btn btn-danger btn-xs">x</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section" style="height:210px;">
+                            <label class="title">Donor Details</label>
+                            <table class="table tblDonorInfoForProcess">
+                                <tr>
+                                    <td><b>Donor ID</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorID">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Donor Name</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorName">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Gender</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoGender">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Blood Group</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBloodGroup">-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Bag Type</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBagType">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Quantity</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoQuantity">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Entry Date</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoEntryDate">-</td>
+                                    <td>&nbsp;</td>
+                                    <td colspan="3"><b class="text-danger">(As Per Entry Date)</b></td>
+                                </tr>
+                            </table>
+
+                            <div class="row" style="padding:0px 10px">
+                                <div class="col-md-4">
+                                    <div class="flex">
+                                        <label style="white-space:pre">Donation Completed : </label>
+                                        <select id="ddlDonationCompleted" class="form-control">
+                                            <option value="N">Select</option>
+                                            <option value="Y" selected>Yes</option>
+                                            <option value="N">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <div class="flex">
+                                        <label style="white-space:pre">Remark : </label>
+                                        <input type="text" id="txtCollectionRemark" class="form-control" placeholder="Remark.." />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row IsDonation" style="padding:4px 10px">
+                                <div class="col-md-3">
+                                    <div class="flex">
+                                        <label style="white-space:pre">Bag Type : </label>
+                                        <select id="ddlCollectionBagType" class="form-control">
+                                            <option value="-">Select</option>
+                                            <option value="Single">Single</option>
+                                            <option value="Double">Double</option>
+                                            <option value="Triple">Triple</option>
+                                            <option value="Quadrent">Quadrent</option>
+                                            <option value="Penta">Penta</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex">
+                                        <label style="white-space:pre">Volume Taken<span class="mendatory">*</span> : </label>
+                                        <select id="ddlCollectionVolumeTaken" class="form-control">
+                                            <option value="-">Select</option>
+                                            <option value="350 ml">350 ml</option>
+                                            <option value="450 ml">450 ml</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex">
+                                        <label style="white-space:pre">BB Tube No <span class="mendatory">*</span>: </label>
+                                        <input type="text" id="txtCollectionBBTubeNo" class="form-control" placeholder="BB Tube No" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="flex">
+                                        <label style="white-space:pre">Phlbt. Side<span class="mendatory">*</span> : </label>
+                                        <select id="ddlIsPhlebotomy" class="form-control">
+                                            <option value="-">Select</option>
+                                            <option value="Left" selected>Left</option>
+                                            <option value="Right">Right</option>
+                                            <option value="Left Right">Left Right</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="padding:0px 10px">
+                                <div class="col-md-12 text-center action-btn">
+                                    <hr />
+                                    <button class="btn btn-success" onclick="InsertUpdateCollection()"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+                                    <button class="btn btn-danger" onclick="ClearCollectionInfo()"><i class="fa fa-close">&nbsp;</i>Clear</button>
+                                    <label class="PoorShocked"><input type="checkbox" name="PoorShocked" />&nbsp;Poor/Shocked Collection</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalProcess" id="modalGrouping" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:10%;">
+            <div class="panel-heading">
+                <h5 class="text-white">Blood Grouping</h5>
+                <button data-dismiss="modal" class="btn btn-danger btn-xs">x</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section" style="height:415px;">
+                            <label class="title">Donor Details</label>
+                            <table class="table tblDonorInfoForProcess">
+                                <tr>
+                                    <td><b>Donor ID</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorID">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Donor Name</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorName">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Gender</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoGender">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Blood Group</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBloodGroup">-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Bag Type</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBagType">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Quantity</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoQuantity">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Entry Date</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoEntryDate">-</td>
+                                    <td>&nbsp;</td>
+                                    <td colspan="3"><b class="text-danger">(As Per Entry Date)</b></td>
+                                </tr>
+                            </table>
+                            <div class="row" style="padding:0px 10px">
+                                <div class="col-md-7">
+                                    <div class="row AntiList1" style="padding:4px 10px">
+                                        <div class="col-md-2">
+                                            <label style="white-space:pre">Anti A</label><br />
+                                            <div class="radioList">
+                                                <label><input type="radio" name="AntiA" value="N" />&nbsp;N</label>
+                                                <label><input type="radio" name="AntiA" value="P" />&nbsp;P</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label style="white-space:pre">Anti B</label><br />
+                                            <div class="radioList">
+                                                <label><input type="radio" name="AntiB" value="N" />&nbsp;N</label>
+                                                <label><input type="radio" name="AntiB" value="P" />&nbsp;P</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label style="white-space:pre">Anti AB</label><br />
+                                            <div class="radioList">
+                                                <label><input type="radio" name="AntiAB" value="N" />&nbsp;N</label>
+                                                <label><input type="radio" name="AntiAB" value="P" />&nbsp;P</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label style="white-space:pre">Anti RH</label><br />
+                                            <div class="radioList">
+                                                <label><input type="radio" name="AntiRH" value="N" />&nbsp;N</label>
+                                                <label><input type="radio" name="AntiRH" value="P" />&nbsp;P</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table table-responsive">
+                                        <div class="table-responsive vertiscrl" style="margin: 10px 0;overflow:auto;height:214px;border: 1px solid #2478a9;">
+                                            <table id="tblAntigen" class="table table-bordered" style="margin:0">
+                                                <thead style="background: #00a65a;color: #fff;">
+                                                    <tr>
+                                                        <th>Anti A</th>
+                                                        <th>Anti B</th>
+                                                        <th>Anti AB</th>
+                                                        <th>Anti RH</th>
+                                                        <th>Blood Alloted</th>
+                                                        <th>Blood Group</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="PNPP">
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>A+</td>
+                                                        <td>A</td>
+                                                    </tr>
+                                                    <tr class="PNPN">
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>A-</td>
+                                                        <td>A</td>
+                                                    </tr>
+                                                    <tr class="NNPP">
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>B+</td>
+                                                        <td>B</td>
+                                                    </tr>
+                                                    <tr class="NPPN">
+                                                        <td>N</td>
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>B-</td>
+                                                        <td>B</td>
+                                                    </tr>
+                                                    <tr class="PPPP">
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>AB+</td>
+                                                        <td>AB</td>
+                                                    </tr>
+                                                    <tr class="PPPN">
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>AB-</td>
+                                                        <td>AB</td>
+                                                    </tr>
+                                                    <tr class="NNNP">
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>P</td>
+                                                        <td>O+</td>
+                                                        <td>O</td>
+                                                    </tr>
+                                                    <tr class="NNNN">
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>O-</td>
+                                                        <td>O</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row AntiList2" style="padding:4px 10px">
+                                        <div class="col-md-2">
+                                            <label style="white-space:pre">A Cell</label><br />
+                                            <div class="radioList">
+                                                <label><input type="radio" name="ACell" value="N" />&nbsp;N</label>
+                                                <label><input type="radio" name="ACell" value="P" />&nbsp;P</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label style="white-space:pre">B Cell</label><br />
+                                            <div class="radioList">
+                                                <label><input type="radio" name="BCell" value="N" />&nbsp;N</label>
+                                                <label><input type="radio" name="BCell" value="P" />&nbsp;P</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label style="white-space:pre">O Cell</label><br />
+                                            <div class="radioList">
+                                                <label><input type="radio" name="OCell" value="N" />&nbsp;N</label>
+                                                <label><input type="radio" name="OCell" value="P" />&nbsp;P</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 action-btn" style="width:15%">
+                                            <button id="btnSaveGroupInfo" disabled class="btn btn-success" onclick="InsertUpdateGroupingInfo()" style="margin-top: 21px;">Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="table table-responsive">
+                                        <div class="table-responsive vertiscrl" style="margin: 10px 0;overflow:auto;height:122px;border: 1px solid #2478a9;">
+                                            <table id="tblCell" class="table table-bordered" style="margin:0">
+                                                <thead style="background: #00a65a;color: #fff;">
+                                                    <tr>
+                                                        <th>A Cell</th>
+                                                        <th>B Cell</th>
+                                                        <th>O Cell</th>
+                                                        <th>Blood Alloted</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="NPN">
+                                                        <td>N</td>
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>A</td>
+                                                    </tr>
+                                                    <tr class="PNN">
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>B</td>
+                                                    </tr>
+                                                    <tr class="NNN">
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>N</td>
+                                                        <td>AB</td>
+                                                    </tr>
+                                                    <tr class="PPN">
+                                                        <td>P</td>
+                                                        <td>P</td>
+                                                        <td>N</td>
+                                                        <td>O</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <label id="lblBBNotSame"><b>Note :</b> Antigen And Cell Blood Group Should be Same.</label>
+                                        <br />
+                                        <label class="lblBBApprovalInfo"><b>Blood Alloted  : </b><Alloted></Alloted></label>
+                                        <label class="lblBBApprovalInfo"><b>Blood Group : </b><Cell></Cell></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalProcess" id="modalComponent" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:10%;width: 1120px;">
+            <div class="panel-heading">
+                <h5 class="text-white">Component Creation Details</h5>
+                <button data-dismiss="modal" class="btn btn-danger btn-xs">x</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section" style="height:480px;">
+                            <label class="title">Donor Details</label>
+                            <table class="table tblDonorInfoForProcess">
+                                <tr>
+                                    <td><b>Donor ID</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorID">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Donor Name</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorName">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Gender</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoGender">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Blood Group</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBloodGroup">-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Bag Type</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBagType">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Entry Date</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoEntryDate">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Tube No.</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoTubeNo">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Blood CollectionId</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBloodCollectionId">-</td>
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:382px;border: 1px solid #2478a9;">
+                                        <table id="tblComponentInfo" class="table table-bordered" style="margin-bottom:6px">
+                                            <thead style="background: #00a65a;color: #fff;">
+                                                <tr>
+                                                    <th style="width:1%;"><input type="checkbox" /> </th>
+                                                    <th>Component Name</th>
+                                                    <th>Short Name</th>
+                                                    <th style="width: 10%;text-align:right">Qty</th>
+                                                    <th style="width:16%;">Pack Size</th>
+                                                    <th>Expiry Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 text-center action-btn" style="width:4%;padding: 0;">
+                                    <button id="btnSaveComponent" onclick="InsertComponentReation()" class="btn btn-success"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+                                </div>
+                                <div class="col-md-6 pull-right">
+                                    <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:382px;border: 1px solid #2478a9;">
+                                        <table id="tblAllotedComponentInfo" class="table table-bordered" style="margin-bottom:6px">
+                                            <thead style="background: #00a65a;color: #fff;">
+                                                <tr>
+                                                    <th>Component Name</th>
+                                                    <th style="width:16%;text-align:right">Qty</th>
+                                                    <th style="width:16%;text-align:right">Pack Size</th>
+                                                    <th style="width:16%;">Expiry Date</th>
+                                                    <th style="width:1%;">#</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalProcess" id="modalScreened" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:10%;">
+            <div class="panel-heading">
+                <h5 class="text-white">Blood Screening Details</h5>
+                <button data-dismiss="modal" class="btn btn-danger btn-xs">x</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section" style="height:361px;">
+                            <label class="title">Donor Details</label>
+                            <table class="table tblDonorInfoForProcess">
+                                <tr>
+                                    <td><b>Donor ID</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorID">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Donor Name</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorName">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Gender</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoGender">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Blood Group</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBloodGroup">-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Bag Type</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBagType">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Entry Date</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoEntryDate">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Tube No.</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoTubeNo">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Volume</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoVolume">-</td>
+                                </tr>
+                            </table>
+                            <div class="col-md-12" style="padding:0">
+                                <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:264px;border: 1px solid #2478a9;">
+                                    <table id="tblBloodTest" class="table table-bordered" style="margin-bottom:6px">
+                                        <thead style="background: #00a65a;color: #fff;">
+                                            <tr>
+                                                <th style="width:1%;"><input type="checkbox" /> </th>
+                                                <th>Component</th>
+                                                <th style="width: 15%;">Blood Collection ID</th>
+                                                <th style="width: 15%;">Method</th>
+                                                <th style="width: 15%;">Value</th>
+                                                <th style="width: 15%;">Result</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <div class="col-md-12 text-center action-btn">
+                                        <hr />
+                                        <button class="btn btn-success" onclick="InsertScreeningInfo()"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+                                        <button class="btn btn-danger" onclick="ClearScreenInfo()"><i class="fa fa-close">&nbsp;</i>Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalProcess" id="modalApprove" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:-3%;width: 1120px;">
+            <div class="panel-heading">
+                <h5 class="text-white">Blood Screening Details</h5>
+                <button data-dismiss="modal" class="btn btn-danger btn-xs">x</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section" style="height:600px;">
+                            <label class="title">Donor Details</label>
+                            <table class="table tblDonorInfoForProcess">
+                                <tr>
+                                    <td><b>Donor ID</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorID">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Donor Name</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoDonorName">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Gender</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoGender">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Blood Group</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBloodGroup">-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Bag Type</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoBagType">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Entry Date</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoEntryDate">-</td>
+                                    <td>&nbsp;</td>
+                                    <td><b>Tube No.</b></td>
+                                    <td><b>:</b></td>
+                                    <td class="txtInfoTubeNo">-</td>
+                                    <td>&nbsp;</td>
+                                    <td colspan="3"><span id="lblApproveStatus"></span><button class="btn btn-success approve" id="btnApproveFinal" onclick="ApproveDonation()"><i class="fa fa-check-circle-o">&nbsp;</i>Approve</button></td>
+                                </tr>
+                            </table>
+                            <div class="col-md-12" style="padding:0">
+                                <div class="col-md-12">
+                                    <div class="section" style="height:86px;">
+                                        <label class="title">1. Collection Details</label>
+                                        <table class="table tblApproveInfo">
+                                            <tr>
+                                                <td><b>Bag Type</b></td>
+                                                <td><b>:</b></td>
+                                                <td class="txtBagType">-</td>
+                                                <td>&nbsp;</td>
+                                                <td><b>Volume Taken</b></td>
+                                                <td><b>:</b></td>
+                                                <td class="txtVolumeTaken">-</td>
+                                                <td>&nbsp;</td>
+                                                <td><b>BB Tube No</b></td>
+                                                <td><b>:</b></td>
+                                                <td class="txtBBTubeNo">-</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Remark</b></td>
+                                                <td><b>:</b></td>
+                                                <td colspan="8" class="txtCollectionRemark">-</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="padding:0;">
+                                <div class="col-md-12">
+                                    <div class="section" style="margin-top: 10px;height: 210px;overflow-x: hidden;overflow-y: auto;">
+                                        <label class="title">2. Blood Grouping Details</label>
+                                        <div class="row" style="padding:0px 10px">
+                                            <div class="col-md-7">
+                                                <table id="tblApprAntigen" class="table table-bordered" style="margin:0">
+                                                    <thead style="background: #00a65a;color: #fff;">
+                                                        <tr>
+                                                            <th>Anti A</th>
+                                                            <th>Anti B</th>
+                                                            <th>Anti AB</th>
+                                                            <th>Anti RH</th>
+                                                            <th>Blood Alloted</th>
+                                                            <th>Blood Group</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="PNPP">
+                                                            <td>P</td>
+                                                            <td>N</td>
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>A+</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr class="PNPN">
+                                                            <td>P</td>
+                                                            <td>N</td>
+                                                            <td>P</td>
+                                                            <td>N</td>
+                                                            <td>A-</td>
+                                                            <td>A</td>
+                                                        </tr>
+                                                        <tr class="NNPP">
+                                                            <td>N</td>
+                                                            <td>N</td>
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>B+</td>
+                                                            <td>B</td>
+                                                        </tr>
+                                                        <tr class="NPPN">
+                                                            <td>N</td>
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>N</td>
+                                                            <td>B-</td>
+                                                            <td>B</td>
+                                                        </tr>
+                                                        <tr class="PPPP">
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>AB+</td>
+                                                            <td>AB</td>
+                                                        </tr>
+                                                        <tr class="PPPN">
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>P</td>
+                                                            <td>N</td>
+                                                            <td>AB-</td>
+                                                            <td>AB</td>
+                                                        </tr>
+                                                        <tr class="NNNP">
+                                                            <td>N</td>
+                                                            <td>N</td>
+                                                            <td>N</td>
+                                                            <td>P</td>
+                                                            <td>O+</td>
+                                                            <td>O</td>
+                                                        </tr>
+                                                        <tr class="NNNN">
+                                                            <td>N</td>
+                                                            <td>N</td>
+                                                            <td>N</td>
+                                                            <td>N</td>
+                                                            <td>O-</td>
+                                                            <td>O</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="table table-responsive">
+                                                    <table id="tblApprCell" class="table table-bordered" style="margin:0">
+                                                        <thead style="background: #00a65a;color: #fff;">
+                                                            <tr>
+                                                                <th>A Cell</th>
+                                                                <th>B Cell</th>
+                                                                <th>O Cell</th>
+                                                                <th>Blood Alloted</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="NPN">
+                                                                <td>N</td>
+                                                                <td>P</td>
+                                                                <td>N</td>
+                                                                <td>A</td>
+                                                            </tr>
+                                                            <tr class="PNN">
+                                                                <td>P</td>
+                                                                <td>N</td>
+                                                                <td>N</td>
+                                                                <td>B</td>
+                                                            </tr>
+                                                            <tr class="NNN">
+                                                                <td>N</td>
+                                                                <td>N</td>
+                                                                <td>N</td>
+                                                                <td>AB</td>
+                                                            </tr>
+                                                            <tr class="PPN">
+                                                                <td>P</td>
+                                                                <td>P</td>
+                                                                <td>N</td>
+                                                                <td>O</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <label class="lblBBApprovalInfo"><b>Blood Alloted  : </b><Alloted></Alloted></label>
+                                                    <label class="lblBBApprovalInfo"><b>Blood Group : </b><Cell></Cell></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding:0">
+                                <div class="col-md-12">
+                                    <div class="section" style="height: 170px;overflow:auto">
+                                        <label class="title">3. Component Details</label>
+                                        <table id="tblApprovalComponentInfo" class="table table-bordered" style="margin-bottom:6px">
+                                            <thead style="background: #00a65a;color: #fff;">
+                                                <tr>
+                                                    <th>Component Name</th>
+                                                    <th style="width:16%;text-align:right">Qty</th>
+                                                    <th style="width:16%;text-align:right">Pack Size</th>
+                                                    <th style="width:16%;">Expiry Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding:0;">
+                                <div class="col-md-12">
+                                    <div class="section" style="height:170px;overflow:auto">
+                                        <label class="title">4. Screened Details <label id="DiscardedInfo"></label></label>
+                                        <table id="tblApproveScreenedInfo" class="table table-bordered" style="margin-bottom:6px">
+                                            <thead style="background: #00a65a;color: #fff;">
+                                                <tr>
+                                                    <th>Component Name</th>
+                                                    <th>Blood Collection ID</th>
+                                                    <th>Method</th>
+                                                    <th>Value</th>
+                                                    <th>Result</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="healthStatusContainer">
+    <table>
+        <tr>
+            <td><b>Blood Pressure</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthBP"></td>
+            <td>&nbsp;</td>
+            <td><b>Weight</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthWeight"></td>
+            <td>&nbsp;</td>
+            <td><b>Temprature</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthTemprature"></td>
+            <td>&nbsp;</td>
+            <td><b>Height</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthHeight"></td>
+        </tr>
+        <tr>
+            <td><b>Pulse</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthPulse"></td>
+            <td>&nbsp;</td>
+            <td><b>Hemoglobin</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthHemoglobin"></td>
+            <td>&nbsp;</td>
+            <td><b>GPE</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthGPE"></td>
+            <td>&nbsp;</td>
+            <td><b>Platelet</b></td>
+            <td><b>:</b></td>
+            <td id="txtHealthPlatelet"></td>
+        </tr>
+    </table>
+</div>

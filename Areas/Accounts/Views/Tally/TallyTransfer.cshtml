@@ -1,0 +1,151 @@
+﻿
+@{
+	ViewBag.Title = "TallyTransfer";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Accounts/JsModule/Tally/TallyTransfer.js"></script>
+<style>
+	.btn-flat {
+		border-radius: 2px;
+		border: none;
+		padding: 6px;
+	}
+	.msg {
+		display:none;
+		font-size: 12px;
+		color: rgb(255 255 255);
+		width: max-content;
+		z-index: 1;
+		right: 52px;	
+		background: rgb(204 21 21);
+		position: absolute;
+		padding: 4px 6px;
+	}
+	.active {
+		color: green;
+	}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Tally Transfer</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control" id="txtFrom" />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" class="form-control" id="txtTo" />
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-success" onclick="VoucherDetail()">Submit</button>
+                                    <button class="btn btn-warning" id="btnSend">Send</button>
+                                    <button class="btn btn-primary" id="btnSend">Total = <span id="txtTotal">0</span> / <span id="txtRemain">0</span></button>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <span class="msg"></span>
+                                                <table id="tblTallyVoucher" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Breackup</th>
+                                                            <th>Voucher Date</th>
+                                                            <th>Voucher Type</th>
+                                                            <th>Voucher No</th>
+                                                            <th>Bill No</th>
+                                                            <th>Bill Type</th>
+                                                            <th>Credit Ledger</th>
+                                                            <th>Debit Ledger</th>
+                                                            <th>Amount</th>
+                                                            <th>Narration</th>
+                                                            <th style="width: 1%;">Send</th>
+                                                            <th>Sync</th>
+                                                            <th style="width: 1%;">Review</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <span style="text-align:center;width:100%" id="elVoucherNo"></span>
+                </div>
+                <div class="modal-body">
+                    <span style="text-align:center;width:100%" id="elVoucherDetail"></span>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

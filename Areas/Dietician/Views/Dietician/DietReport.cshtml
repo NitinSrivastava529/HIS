@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "DietReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    .select-row {
+        background: #186eb1 !IMPORTANT;
+        color: #fff;
+    }
+    .dietCategory {
+        cursor: pointer;
+        font-weight: bold !important;
+        color: #952006;
+    }
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+        margin: 0 0 5px 0;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<script src="~/Areas/Dietician/JsModule/DietReport.js"></script>
+<script src="~/Areas/Dietician/JsModule/_partialDietSchedule.js"></script>
+<div id="page-content">
+    <dsiv class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white text-left">Diet Report</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-2">
+                            <label>Date</label>
+                            <input type="date" id="txtFrom" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Category</label>
+                            <select class="form-control" id="ddlCategory"></select>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Floor</label>
+                            <select class="form-control" id="ddlFloor"></select>
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label>.</label>
+                            <div class="flex">
+                                <button class="btn btn-primary" onclick="DietReportOfTheDay()" style="margin:0;border-radius:0;height:28px">Get Records <i class="fa fa-sign-in">&nbsp;</i></button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="scroll" style="min-height:490px;overflow:auto;border:1px solid #2492b3">
+                                <table id="tblPatientDietInfo" class="table table-bordered" style="margin-bottom:0">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient Name</th>
+                                            <th>Room Detail</th>
+                                            <th>Category Name</th>
+                                            <th>Scheduled Diet</th>
+                                            <th>Scheduled By</th>
+                                            <th>Dietecian Lock By</th>
+                                            <th>Freezed By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dsiv>
+</div>
+<div class="modal fade" id="modalSchedule" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:10%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Schedule Diet</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @Html.Partial("_DietSchedule")
+                    <button data-dismiss="modal" class="btn btn-danger btn-xs pull-right">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

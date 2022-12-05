@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<div id="page-content">
+    <script src="~/Areas/Accounts/JsModule/VoucherEntry.js?his-version-1.0"></script>
+    <div class="box box-default">
+        <div class="box-body">
+            <div class="form-horizontal">
+                <div class="row">
+                    <div class="col-md-12 form-control" style="background-color:#5a755a;color:white">
+                        <b>Payment Voucher Entry </b>
+                    </div>
+                </div>
+                <div class="row">
+                    @*Left Side*@
+                    <div class="col-md-8">
+                        <div class="row">
+                            <label class="col-md-2 control-label">Date<span class="text-red">*</span></label>
+                            <div class="col-md-6">
+                                <input type="date" class="form-control" style="width:200px" id="txtDate" autocomplete="off" placeholder="dd/mm/yyyy" />
+                            </div>
+                            <label class="col-md-2 control-label"></label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" value="Pymt" readonly="readonly" id="txtVchType" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-md-2 control-label">Pay To<span class="text-red">*</span></label>
+                            <div class="col-md-6">
+                                <input type="hidden" id="hfPayTo" value="" />
+                                <input type="text" class="form-control srch" id="txtPayTo" autocomplete="off" onfocus="return Bind_PayTo_PayBy('Debit')" placeholder="Pay To" maxlength="50">
+                            </div>
+                            <label class="col-md-2 control-label">Dr. Amount<span class="text-red">*</span></label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" onkeypress="return Valid(event)" id="txtDrAmount" onkeyup="return BindCredit(this);">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <label class="col-md-2 control-label">Pay By<span class="text-red">*</span></label>
+                            <div class="col-md-6">
+                                <input type="hidden" id="hfPayBy" value="" />
+                                <input type="text" class="form-control srch" id="txtPayBy" autocomplete="off" onfocus="return Bind_PayTo_PayBy('Credit')" placeholder="Pay By" maxlength="50">
+                            </div>
+                            <label class="col-md-2 control-label">Cr. Amount<span class="text-red">*</span></label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="txtCrAmount" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <label class="col-md-2 control-label">Narration<span class="text-red">*</span></label>
+                            <div class="col-md-6">
+                                <textarea class="form-control" rows="4" id="txtNarration"></textarea>
+                            </div>
+
+                            <div class="col-md-2 m-t-10">
+                                <a class="btn btn-success form-control" href="javascript:void(0)" id="btnSubmit" onclick="SubmitPayDetails()">Submit</a>
+                            </div>
+                        </div>
+                        <div class="row m-t-5">
+                            <div class="col-md-12">
+                                <div class="table-responsive vertiscrl">
+                                    <table class="table table-bordered" id="FillData"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*Ritht Side*@
+                    <div class="col-md-4">
+                        <div class="row m-t-5">
+                            <div class="col-md-12">
+                                <div class="table-responsive vertiscrl">
+
+                                    <table class="table table-bordered" id="FillDataRight"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function myFunction() {
+        // Declare variables
+        PageNameLogic = "Pymt";
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("FillDataRight");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+
+

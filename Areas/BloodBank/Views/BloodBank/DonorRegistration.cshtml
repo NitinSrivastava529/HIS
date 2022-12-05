@@ -1,0 +1,451 @@
+﻿
+@{
+    ViewBag.Title = "DonorRegistration";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/BloodBank/JsModule/DonorRegistration.js?v1.0"></script>
+<style>
+    #liveCamera video {
+        width: 100%;
+        height: 122px;
+        margin: 1px 0px;
+    }
+
+    #liveCamera label {
+        text-align: center;
+        width: 100%;
+        color: #429900;
+    }
+
+    #ImgCaptured label {
+        text-align: center;
+        width: 100%;
+        color: #429900;
+    }
+
+    #ImgCaptured canvas {
+        width: 100%;
+        height: 122px;
+        margin: 1px 0px;
+    }
+
+    #cameraControl {
+        border: 1px solid #e7e7e7;
+        position: absolute;
+        bottom: 2px;
+        background: #fff7e8;
+        width: 87%;
+    }
+
+        #cameraControl .fa {
+            cursor: pointer;
+            font-size: 22px;
+            padding: 0px 14px;
+            margin: 5px 0;
+        }
+
+            #cameraControl .fa:nth-child(1) {
+                color: #e99a0c;
+            }
+
+            #cameraControl .fa:nth-child(2) {
+                color: #6bbb22;
+            }
+
+            #cameraControl .fa:nth-child(3) {
+                color: #dd4e4e;
+            }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .bc {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-color: #06a08b;
+    }
+
+    .btnRC {
+        height: 30px;
+        margin: -1px;
+        border-radius: 0;
+    }
+
+    .section {
+        margin-top: 5px;
+        padding: 1px;
+        border: 1px solid #2478a9;
+        height: 150px;
+    }
+
+    .title {
+        background: #2478a9;
+        color: #fff;
+        padding: 2px 5px;
+        margin: 0;
+        width: 100%;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 25px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+    }
+
+    #modalDonorSearch .select2-container--default .select2-selection--single {
+        height: 27px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+    }
+
+    .fullHeight {
+        min-height: 590px !important;
+    }
+
+    .tblDonorInfo .form-control {
+        height: 24px;
+        border-color: #c3c3c3
+    }
+
+    .tblDonorInfo td b {
+        white-space: pre;
+    }
+
+    .tblDonorInfo td {
+        font-size: 12px;
+        border: none !important;
+        padding-top: 4px !important;
+    }
+
+    .QuestionList {
+        padding: 5px 3px;
+        display: inline-flex;
+        align-items: center;
+        width: 99%;
+        border-bottom: 1px solid#e5e5e5;
+        margin: 0px 5px;
+    }
+
+        .QuestionList .lblQuest {
+            font-size: 12px;
+            width: 43%;
+            margin-left: 0px;
+        }
+
+        .QuestionList .lblRemark {
+            margin-left: 25px;
+        }
+
+        .QuestionList .remark {
+            border-radius: 0;
+            border-color: #b9b9b9;
+            width: 40%;
+            margin-left: 15px;
+        }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="section" style="height:210px;">
+                    <label class="title">Donor Details</label>
+                    <table class="table tblDonorInfo">
+                        <tr>
+                            <td><b>Donor Id</b></td>
+                            <td><b>:</b></td>
+                            <td><input type="text" id="txtDonorId" value="New" readonly="" class="form-control" /></td>
+                            <td colspan="8"><button onclick="$('#modalDonorSearch').modal('show')" class="btn btn-warning btn-xs"><i class="fa fa-user-circle">&nbsp;</i>Already Donor</button></td>
+                        </tr>
+                        <tr>
+                            <td><b>First Name</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <div class="flex">
+                                    <div style="width:35%;margin-right: 3px;">
+                                        <select id="ddlTitle" class="border-imp">
+                                            <option value="Male">Mr.</option>
+                                            <option value="Female">Mrs.</option>
+                                            <option value="Female">Miss.</option>
+                                            <option value="Male">Master.</option>
+                                            <option value="Female">Baby.</option>
+                                            <option value="UnKnown">B/O.</option>
+                                            <option value="UnKnown">Dr.</option>
+                                            <option value="UnKnown">Prof.</option>
+                                            <option value="Female">Madam.</option>
+                                            <option value="UnKnown">Selvi.</option>
+                                            <option value="UnKnown">Selvan.</option>
+                                            <option value="Female">Sister.</option>
+                                            <option value="Male">Mohd.</option>
+                                        </select>
+                                    </div>
+                                    <input type="text" id="txtFirstName" class="form-control" data-imp />
+                                </div>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td><b>Last Name</b></td>
+                            <td><b>:</b></td>
+                            <td><input type="text" id="txtLastName" class="form-control" data-imp /></td>
+                            <td>&nbsp;</td>
+                            <td><b>Gender</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <label><input type="radio" name="gender" value="Male" checked />&nbsp;Male</label>
+                                <label><input type="radio" name="gender" value="Female" />&nbsp;Female</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Type</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <select id="ddlType" class="form-control">
+                                    <option value="-">N/A</option>
+                                    <option value="Volunteer">SDP</option>
+                                    <option value="Volunteer">Volunteer</option>
+                                    <option value="Replacement">Replacement</option>
+                                    <option value="Family Donor">Family Donor</option>
+                                </select>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td><b>DOB</b></td>
+                            <td><b>:</b></td>
+                            <td><input type="date" id="txtDOB" class="form-control" /></td>
+                            <td>&nbsp;</td>
+                            <td><b>Age</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <div class="flex">
+                                    <input type="text" id="txtAge" class="form-control" />
+                                    <div style="width:40%;margin-right: 3px;margin-left: 4px;">
+                                        <select id="ddlTitle" class="border-imp">
+                                            <option value="Male">YRS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Relative Name</b></td>
+                            <td><b>:</b></td>
+                            <td><input type="text" id="txtRelativeName" class="form-control" data-imp /></td>
+                            <td>&nbsp;</td>
+                            <td><b>Relation</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <select id="ddlRelation" class="form-control">
+                                    <option>FATHER</option>
+                                    <option>S/O</option>
+                                    <option>W/O</option>
+                                    <option>D/O</option>
+                                    <option>H/O</option>
+                                    <option>C/O</option>
+                                    <option>F/O</option>
+                                    <option>M/O</option>
+                                    <option>BROTHER</option>
+                                    <option>UNCLE</option>
+                                    <option>SISTER</option>
+                                    <option>OTHER</option>
+                                </select>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td><b>Blood Group</b></td>
+                            <td><b>:</b></td>
+                            <td><select id="ddlBloodGroup" class="form-control"></select></td>
+                        </tr>
+                        <tr>
+                            <td><b>Address</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <div class="flex">
+                                    <input type="text" id="txtAddress" class="form-control" data-imp />
+                                    <input type="text" style="width:25%;margin-left:5px;" id="txtPinCode" class="form-control" placeholder="Pin Code" data-imp />
+                                </div>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td><b>Country</b></td>
+                            <td><b>:</b></td>
+                            <td><select id="ddlCountry" class="form-control" data-imp></select></td>
+                            <td>&nbsp;</td>
+                            <td><b>City</b></td>
+                            <td><b>:</b></td>
+                            <td><select id="ddlCity" class="form-control" data-imp></select></td>
+                        </tr>
+                        <tr>
+                            <td><b>Contact No</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <div class="flex">
+                                    <input type="text" style="width:40%" id="txtContactNo" class="form-control" data-imp />
+                                    <input type="text" style="width:60%;margin-left:10px;" id="txtAadharNo" class="form-control" placeholder="Aadhar No" />
+                                </div>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td><b>Email</b></td>
+                            <td><b>:</b></td>
+                            <td><input type="text" id="txtEmail" class="form-control" /></td>
+                            <td>&nbsp;</td>
+                            <td><b>How Often</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <select id="ddlHowOften" class="form-control">
+                                    <option value="0:Month">N/A</option>
+                                    <option value="3:Month">3 Monthly</option>
+                                    <option value="6:Month">6 Monthly</option>
+                                    <option value="12:Month">Yearly</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="section" style="height:210px;">
+                    <label class="title">Photo Capture</label>
+                    <div id="liveCamera">
+                        <video id="video" autoplay></video>
+                        <label>Start Camera</label>
+                    </div>
+                    <div id="ImgCaptured">
+                        <canvas id="canvas"></canvas>
+                        <label>Captured..</label>
+                    </div>
+                    <div id="cameraControl">
+                        <i id="start-camera" class="fa fa-camera" title="Start"></i>
+                        <i id="click-photo" class="fa fa-picture-o" title="Capture"></i>
+                        <i id="click-photo" class="fa fa-stop" title="Stop"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="section" style="height:222px;">
+                    <label class="title">Quentionnaire</label>
+                    <div class="Questionnair" style="height:180px;overflow:auto"></div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="section">
+                    <label class="title">Health Status</label>
+                    <table class="table tblDonorInfo">
+                        <tr>
+                            <td><b>BP</b></td>
+                            <td><b>:</b></td>
+                            <td class="flex"><input type="text" id="txtBP" class="form-control" />&nbsp;mm/Hg</td>
+                            <td>&nbsp;</td>
+                            <td><b>Weight</b></td>
+                            <td><b>:</b></td>
+                            <td class="flex"><input type="text" id="txtWeight" class="form-control" />&nbsp;kg.</td>
+                            <td>&nbsp;</td>
+                            <td><b>Temp</b></td>
+                            <td><b>:</b></td>
+                            <td class="flex"><input type="text" id="txtTemp" class="form-control" />&nbsp;&#8451;</td>
+                        </tr>
+                        <tr>
+                            <td><b>Pulse</b></td>
+                            <td><b>:</b></td>
+                            <td class="flex"><input type="text" id="txtPulse" class="form-control" />&nbsp;<label style="width: 20%;">p-m</label></td>
+                            <td>&nbsp;</td>
+                            <td><b>Height</b></td>
+                            <td><b>:</b></td>
+                            <td class="flex"><input type="text" id="txtHeight" class="form-control" />&nbsp;cm</td>
+                            <td>&nbsp;</td>
+                            <td><b>Hemoglobin</b></td>
+                            <td><b>:</b></td>
+                            <td class="flex">
+                                <select id="ddlHemoglobin" class="form-control" data-imp>
+                                    <option value="0">Select</option>
+                                    <option value="<12.5">&lt;12.5</option>
+                                    <option value=">12.5">&gt;12.5</option>
+                                </select>
+                                &nbsp;Hb
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>GPE</b></td>
+                            <td><b>:</b></td>
+                            <td><input type="text" id="txtGPE" class="form-control" /></td>
+                            <td>&nbsp;</td>
+                            <td><b>Fit</b></td>
+                            <td><b>:</b></td>
+                            <td>
+                                <label><input type="radio" name="Fit" value="Y" checked />&nbsp;Yes</label>
+                                <label><input type="radio" name="Fit" value="N" />&nbsp;No</label>
+                            </td>
+                            <td>&nbsp;</td>
+                            <td><b>Platelet Count</b></td>
+                            <td><b>:</b></td>
+                            <td><input type="text" id="txtPlateletCount" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td><b>Remark</b></td>
+                            <td><b>:</b></td>
+                            <td colspan="8"><input type="text" id="txtRemark" class="form-control" /></td>
+                            <td>
+                                <button class="btn btn-success" id="btnFinalSubmit" onclick="FinalSubmit()" style="width:55%;margin-left:5px"><i class="fa fa-sign-in">&nbsp;</i>Final Submit</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDonorSearch" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:10%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Donor Search</h5>
+                <span data-dismiss="modal" class="btn-close">x</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group flex">
+                            <span style="width:12%"><b>Search</b></span>
+                            <span style="width:4%"><b>:</b></span>
+                            <span style="width:85%">
+                                <div class="flex">
+                                    <div style="width:30%;margin-right: 2px;height: 27px;">
+                                        <select id="ddlSearchInput" class="form-control">
+                                            <option>Mobile No</option>
+                                            <option>Donor Name</option>
+                                            <option>Aadhar No</option>
+                                            <option>Donor Id</option>
+                                        </select>
+                                    </div>
+                                    <input type="text" id="txtSearchValue" style="height: 27px;width: 60%;border-color: #f39c12;" class="form-control text-uppercase bc" placeholder="Search.." autocomplete="off" />
+                                    <button onclick="SearchDonor()" style="height: 27px;" class="btn btn-warning btn-xs btnRC"><i class="fa fa-search">&nbsp;</i>Search</button>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="height:450px;overflow:auto;border:1px solid #009688;padding: 0;">
+                        <table id="tblDonorSearchInfo" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="white-space:nowrap">Donor Code</th>
+                                    <th>Donor Name</th>
+                                    <th>Gender</th>
+                                    <th>DOB</th>
+                                    <th>Mobile</th>
+                                    <th>Aadhar No</th>
+                                    <th style="width:1%">CMD</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

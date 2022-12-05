@@ -1,0 +1,133 @@
+﻿@using System.Data
+@using MediSoftTech_HIS.Areas.Online.Models
+@model ipPayU
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Areas/Online/Views/Shared/_layout.cshtml";
+}
+<script src="~/JsModule/global.js?his-version-1.0"></script>
+<script src="~/Areas/Online/JsModule/online_payPackage.js?his-version-1.0"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js?his-version-1.0" type="text/javascript"></script>
+<script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js?his-version-1.0" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>
+@*<script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js?his-version-1.0" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>*@
+
+<div id="page-content">
+    <section class="content">
+        @*<div class="row">
+                <div class="box box-purple">
+                    <div class="box-body">
+                        <div class="col-md-12" style="text-align:center">Chandan Hospital</div>
+                    </div>
+                </div>
+            </div>*@
+        @if (Model != null)
+        {
+            ipPayU obj = Model;
+            string Disabled = "";
+            if (obj.Message.Contains("Already Paid"))
+            {
+                Disabled = "disable";
+            }
+            <input type="hidden" id="udf5" name="udf5" value='@obj.UDF' />
+            <input type="hidden" id="hidkey" name="udf5" value='@obj.Key' />
+            <input type="hidden" id="hidHash" name="udf5" value='@obj.Hash' />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-purple">
+                        <div class="Row" style="text-align:center;width:100%">
+                            <b style="font-size:15px">Chandan Hospital</b>
+                        </div>
+                        <div class="box-body">
+                            <div class="container" style="width:100%">
+                                <h4>Chandan Hospital</h4>
+                                <table id="tblOrderIds" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <td>Booking Id</td>
+                                            <td><input type="text" id="txtBookingId" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.TnxId' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Patient Name</td>
+                                            <td><input type="text" id="txtPatientName" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.firstname' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile No</td>
+                                            <td><input type="text" id="txtMobile" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.Mobile' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td><input type="text" id="txtEmail" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.Email' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reason</td>
+                                            <td><input type="text" id="txtReason" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.Remark' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Appointed Doctor</td>
+                                            <td><input type="text" id="txtdoctorname" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.DoctorName' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amount</td>
+                                            <td><input type="text" id="txtAmount" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.Amount' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Payment status</td>
+                                            <td><input type="text" id="txtAmount" class="form-control" readonly="readonly" style="font-size:12px" value='@obj.Message' /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">For Assistance Please call :<a href="tel:+917311170955">+917311170955</a></td>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @if (obj.Message.Contains("Already Paid"))
+                    {
+                        <input type="button" id="btnPay" value="Make Payment"  disabled="disabled" class="btn btn-warning btn-block" />
+                    }
+                    else
+                    {
+                        <input type="button" id="btnPay" value="Make Payment" onclick="launchBOLT(); return false;" class="btn btn-warning btn-block" />
+                    }
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12" id="payResponse">
+                    <table id="tblOrderIds" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td colspan="2">Payment Response</td>
+                            </tr>
+
+                            <tr>
+                                <td>Reference No</td>
+                                <td><input type="text" id="txtRefNo" class="form-control" readonly="readonly" style="font-size:12px" /></td>
+                            </tr>
+                            <tr>
+                                <td>Payment Status</td>
+                                <td><input type="text" id="txtStatus" class="form-control" readonly="readonly" style="font-size:12px" /></td>
+                            </tr>
+                            <tr>
+                                <td>Amount</td>
+                                <td><input type="text" id="txtRamount" class="form-control" readonly="readonly" style="font-size:12px" /></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+        }
+    </section>
+
+
+
+</div>
+
+

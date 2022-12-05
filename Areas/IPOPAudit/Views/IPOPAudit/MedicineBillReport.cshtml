@@ -1,0 +1,107 @@
+﻿
+@{
+	ViewBag.Title = "MedicineBillReport";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/IPOPAudit/JsModule/MedicineBillReport.js?his-version-1.0"></script>
+<style>
+	table tbody {
+		display: block;
+		width: 100%;
+		max-height: 450px;
+		overflow-y: scroll;
+	}
+
+		table thead, table tbody tr {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+		}
+
+	#tblIPDReport tbody tr td:first-child, #tblIPDReport thead th:first-child {
+		width: 280px !important;
+		text-align: left !important;
+	}
+
+	#tblIPDReport thead th, #IPDReport tbody tr td {
+		width: 30px;
+		text-align: center;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.panel-body {
+		padding: 15px 15px 0px 20px;
+		position: relative;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="col-xs-5">
+							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+								<input type="text" id="txtSearchPatient" class="form-control input_pass" value="" placeholder="Search...">
+							</div>
+						</div>
+						<div class="col-xs-7">
+							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+								<input type="text" id="txtIPDNo" class="form-control input_pass" placeholder="Find By IPD No....">
+								<input type="button" id="btnSearch" class="btn-success" value="Get">
+							</div>
+						</div>
+						<hr />
+						<div class="example-box-wrapper">
+							<div class="form-horizontal bordered-row">
+								<div class="table table-responsive">
+									<div id="AdmittedIPDPatient">
+										<table id="tblAdmittedIPDPatient" class="table table-bordered">
+											<thead>
+												<tr>
+													<th>IPD N.</th>
+													<th>Patient Name</th>
+													<th>UHID No.</th>
+													<th>Doctor</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+@*<div class="alert-msg">
+	<span class="timeout">03</span>
+	<span>Data Not Found..!</span>
+</div>*@
+

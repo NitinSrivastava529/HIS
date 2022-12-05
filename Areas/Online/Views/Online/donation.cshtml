@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "PatientRegistration";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    .group {
+        display: flex;
+    }
+
+    .disable {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+        // Disable scrolling on child elements
+        .disable div,
+        .disable textarea {
+            overflow: hidden;
+        }
+</style>
+
+<div id="page-content" style="margin-left:0px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="panel">
+                    <div class="Row" style="text-align:center;width:100%">
+                        <b style="font-size:15px">Chandan Hospital</b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="well-sm" style="background-color:darkseagreen;text-align:center">
+                            <h4>Chandan Hospital</h4>
+                            Donation Page
+                        </div>
+                        <div class="example-box-wrapper">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-3">
+                                    <label class="">Mobile No</label>
+                                    <input type="text" id="txtMobile" maxlength="10" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Mobile No.">
+                                </div>
+                            <div id="divFormBody">
+                                <div class="row">
+                                    <div class="col-xs-6 col-md-3">
+                                        <label class="">Patient Name</label>
+                                        <input type="text" id="txtPatientName" class="form-control" placeholder="Patient Name">
+
+                                    </div>
+                                    <div class="col-xs-6 col-md-3">
+                                        <label class="">Gender</label>
+                                        <select id="ddlGender" class="form-control">
+                                            <option>Select Gender</option>
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Other</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div class="col-xs-6 col-md-3">
+                                        <label class="">Age</label>
+                                        <input type="text" id="txtAge" class="form-control" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="2" placeholder="Age">
+                                    </div>
+                                    <div class="col-xs-6 col-md-3">
+                                        <label class="">Age Type</label>
+                                        <select id="ddlAgeType" class="form-control">
+                                            <option>Age Type</option>
+                                            <option>Year</option>
+                                            <option>Month</option>
+                                            <option>Days</option>
+                                        </select>
+                                    </div>
+                                </div>
+                               <div class="row">
+                                    <div class="col-xs-6 col-md-3">
+                                        <label class="">City</label>
+                                        <input type="text" id="ddlCity" class="form-control" placeholder="City">
+
+                                    </div>
+                                    <div class="col-xs-6 col-md-3">
+                                        <div class="form-group">
+                                            <label class="">Locality</label>
+                                            <input type="text" id="txtLocality" class="form-control" placeholder="Locality">
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 col-md-3">
+                                        <div class="form-group">
+                                            <label class="">Address</label>
+                                            <input type="text" id="txtAddress" class="form-control" placeholder="Address">
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="form-group">
+                                            <label class="">Appointment Remark</label>
+                                            <textarea id="txtAppomtReason" class="form-control" placeholder="Appointment Remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input-group-btn">
+                                            <input type="button" id="btnSaveDonation" class="btn btn-success" value="Submit" />
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+</div>

@@ -1,0 +1,98 @@
+﻿
+@{
+	ViewBag.Title = "AvailCoupon";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Utility/JsModule/AvailCoupon.js"></script>
+<style>
+	.active {
+		color: green;
+	}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#848484;padding: 4px;">
+								<h4 class="text-white">Avail Coupon</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-xs-2">
+									<span class="text-pink">Search</span>
+								</div>
+								<div class="col-xs-10">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtSearch" class="form-control input_pass" data-int maxlength="10" value="" placeholder="Search by Mobile or Coupon...">
+										<button id="btnSearch" class="btn btn-success" style="width:30%"><i class="fa fa-search">&nbsp;</i>Search</button>
+										<button id="btnSearch" class="btn btn-primary" style="width:50%" onclick="SendCoupon()"><i class="fa fa-send-o">&nbsp;</i>Send Coupon</button>
+									</div>
+								</div>
+								<div class="col-xs-12">
+									<table id="tblCoupon" class="table table-bordered" style="max-height: 500px;overflow: auto;border: 1px solid;">
+										<thead>
+											<tr>
+												<th>Mobile No</th>
+												<th>Patient Name</th>
+												<th>Coupon</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

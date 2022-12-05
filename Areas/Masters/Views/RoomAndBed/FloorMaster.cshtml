@@ -1,0 +1,322 @@
+﻿
+@{
+	ViewBag.Title = "FloorMaster";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Masters/JsModule/FloorMaster.js"></script>
+<style>
+	.nav > li > a {
+		border: 1px solid #dcdcdc;
+		background: #f3f3f3;
+	}
+	.bc{
+		border: 1px solid rgb(0 166 90) !important;		
+	}
+	.bn {
+		border:none;		
+	}
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 450px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	input:disabled span.slider {
+		background-color: #ddd !important;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 bottom-tab">
+				<ul class="nav nav-tabs" style="margin:0">
+					<li class="active"><a data-toggle="tab" href="#Floor">Floor Master</a></li>
+					<li><a data-toggle="tab" href="#Nursing">Nursing Station Master</a></li>
+					<li><a data-toggle="tab" href="#Ward">Ward Master</a></li>
+					<li><a data-toggle="tab" href="#Room">Room Master</a></li>
+					<li><a data-toggle="tab" href="#Mapping">Mapping Master</a></li>
+				</ul>
+				<div class="tab-content" style="max-height:500px;overflow:auto">
+					<div id="Floor" class="tab-pane fade in active">
+						<div class="col-md-4">
+							<div class="ml15">
+								<div class="">
+									<div class="panel">
+										<div class="panel-heading" style="background:#0a8fb7;padding: 4px;">
+											<h4 class="text-white">Create And Edit Floor</h4>
+										</div>
+										<div class="panel-body">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+															<input type="text" id="txtFloor" class="form-control" placeholder="Floor Name" />
+															<input type="text" id="txtFloorId" style="display:none" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group">
+															<textarea id="txtFloorDescription" class="form-control bc" rows="1" placeholder="Description"></textarea>
+															<input type="button" id="btnSaveFloor" class="btn-success btn-action bn" value="Create" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<hr style="margin-top:0" />
+														<div class="table table-responsive">
+															<div class="scroll" style="max-height:400px">
+																<table id="tblFloor" class="table table-bordered">
+																	<thead>
+																		<tr>
+																			<th style="width:1%">Action</th>
+																			<th>Floor Name</th>
+																			<th>Discription</th>
+																			<th>On/Off</th>
+																		</tr>
+																	</thead>
+																	<tbody></tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="Nursing" class="tab-pane fade">
+						<div class="col-md-4">
+							<div class="ml15">
+								<div class="">
+									<div class="panel">
+										<div class="panel-heading" style="background:#3b868a;padding: 4px;">
+											<h4 class="text-white">Create And Edit Nursing Station</h4>
+										</div>
+										<div class="panel-body">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+															<input type="text" id="txtNursing" class="form-control" placeholder="Nursing Station Name" />
+															<input type="text" id="txtNursingId" style="display:none" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group">
+															<textarea id="txtNursingDescription" class="form-control bc" rows="1" placeholder="Description"></textarea>
+															<input type="button" id="btnSaveNursing" class="btn-success btn-action bn" onclick="CreateRoom()" value="Create" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<hr style="margin-top:0" />
+														<div class="table table-responsive">
+															<div class="scroll" style="max-height:400px">
+																<table id="tblNursing" class="table table-bordered">
+																	<thead>
+																		<tr>
+																			<th style="width:1%">Action</th>
+																			<th>Nursing Name</th>
+																			<th>Discription</th>
+																			<th>On/Off</th>
+																		</tr>
+																	</thead>
+																	<tbody></tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="Ward" class="tab-pane fade">
+						<div class="col-md-4">
+							<div class="ml15">
+								<div class="">
+									<div class="panel">
+										<div class="panel-heading" style="background:#3b668a;padding: 4px;">
+											<h4 class="text-white">Create And Edit Ward</h4>
+										</div>
+										<div class="panel-body">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+															<input type="text" id="txtWard" class="form-control" placeholder="Ward Name" />
+															<input type="text" id="txtWardId" style="display:none" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group">
+															<textarea id="txtWardDescription" class="form-control bc" rows="1" placeholder="Description"></textarea>
+															<input type="button" id="btnSaveWard" class="btn-success btn-action bn" value="Create" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<hr style="margin-top:0" />
+														<div class="table table-responsive">
+															<div class="scroll" style="max-height:400px">
+																<table id="tblWard" class="table table-bordered">
+																	<thead>
+																		<tr>
+																			<th style="width:1%">Action</th>
+																			<th>Ward Name</th>
+																			<th>Discription</th>
+																			<th>On/Off</th>
+																		</tr>
+																	</thead>
+																	<tbody></tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="Room" class="tab-pane fade">
+						<div class="col-md-4">
+							<div class="ml15">
+								<div class="">
+									<div class="panel">
+										<div class="panel-heading" style="background:#3b668a;padding: 4px;">
+											<h4 class="text-white">Create And Edit Room</h4>
+										</div>
+										<div class="panel-body">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+															<input type="text" id="txtRoom" class="form-control" placeholder="Room Name" />
+															<input type="text" id="txtRoomId" style="display:none" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group">
+															<textarea id="txtRoomDescription" class="form-control bc" rows="1" placeholder="Description"></textarea>
+															<input type="button" id="btnSaveRoom" class="btn-success btn-action bn" value="Create" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<hr style="margin-top:0" />
+														<div class="table table-responsive">
+															<div class="scroll" style="max-height:400px">
+																<table id="tblRoom" class="table table-bordered">
+																	<thead>
+																		<tr>
+																			<th style="width:1%">Action</th>
+																			<th>Room Name</th>
+																			<th>Discription</th>
+																			<th>On/Off</th>
+																		</tr>
+																	</thead>
+																	<tbody></tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="Mapping" class="tab-pane fade">
+						<div class="col-md-8">
+							<div class="ml15">
+								<div class="">
+									<div class="panel">
+										<div class="panel-heading" style="background:#3b668a;padding: 4px;">
+											<h4 class="text-white">Mapping</h4>
+										</div>
+										<div class="panel-body">
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+															<select id="ddlMappingFloor" class="form-control"></select>&nbsp;
+															<select id="ddlMappingNursing" class="form-control"></select>&nbsp;
+															<select id="ddlMappingWard" class="form-control"></select>&nbsp;
+															<select id="ddlMappingRooms" class="form-control"></select>&nbsp;
+															<input type="text" id="txtTotalBeds" class="form-control bc" placeholder="Total Beds"/>
+															<input type="button" id="btnSaveMapping" class="btn-success btn-action bn" value="Save" />
+														</div>
+													</div>												
+													<div class="col-md-12">
+														<hr style="margin-top:0" />
+														<div class="table table-responsive">
+															<div class="scroll" style="max-height:400px">
+																<table id="tblMapping" class="table table-bordered">
+																	<thead>
+																		<tr>
+																			<th style="width:1%">SR.No.</th>
+																			<th>Floor</th>
+																			<th>Nursing Station</th>
+																			<th>Ward</th>
+																			<th>Room</th>
+																			<th>Total Beds</th>																			
+																			<th style="width:1%">Action</th>
+																		</tr>
+																	</thead>
+																	<tbody></tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>								
+		</div>
+	</div>
+</div>
+
+

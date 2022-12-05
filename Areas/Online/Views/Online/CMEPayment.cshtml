@@ -1,0 +1,280 @@
+﻿@using System.Data
+@using MediSoftTech_HIS.Areas.Online.Models
+@model ipPayU
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CMEPayment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="~/JsModule/global.js"></script>
+    <script src="~/Areas/Online/JsModule/CMEPayment.js?v1.1"></script>
+
+    <script id="bolt" src="https://checkout-static.citruspay.com/bolt/run/bolt.min.js?his-version-1.5" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script>
+
+    <style>
+        #tblOrderIds td, #tblOrderIds input[type=text] {
+            border: none;
+            padding: 1px 2px;
+            font-size: 15px;
+            background: #fff;
+            line-height: 36px;
+        }
+
+        body {
+            padding: 1px;
+            background: #fff;
+        }
+
+        .content {
+            padding: 10px;
+            background: #fff;
+        }
+
+            .content .table-bordered {
+                border: 1px solid #90c9b9;
+            }
+
+        .pay-response {
+            margin: 0;
+            background: #90c9b9;
+            padding: 2px 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .pay-now {
+            width: max-content;
+            align-items: baseline;
+            border: 1px solid #28a745;
+            display: flex;
+            border-radius: 2px;
+        }
+
+            .pay-now label {
+                border-right: 1px solid #efecec;
+                padding-left: 12px;
+                padding-right: 15px;
+                margin: 0;
+            }
+
+            .pay-now button {
+                border-radius: 0;
+                background: #28a745;
+                border: 1px solid #28a745;
+                color: #fff;
+                height: 40px;
+            }
+
+        .pay-later {
+            margin-top: 25px;
+            width: max-content;
+            align-items: baseline;
+            border: 1px solid #e0a800;
+            display: flex;
+            border-radius: 2px;
+        }
+
+            .pay-later label {
+                border-right: 1px solid #efecec;
+                padding-left: 12px;
+                padding-right: 15px;
+                margin: 0;
+            }
+
+            .pay-later button {
+                border-radius: 0;
+                background: #e0a800;
+                border: 1px solid #e0a800;
+                color: #fff;
+                height: 40px;
+            }
+    </style>
+    <style>
+        .card-body {
+            padding: 5px;
+            border: 4px solid #fff;
+            background: #ececec;
+        }
+
+        body {
+            background: #efefef;
+        }
+
+        .btn-link {
+            font-weight: 400;
+            color: #0d98b7 !important;
+            text-decoration: none !important;
+            font-size: 16px;
+        }
+
+        .card {
+            border: none;
+        }
+
+        .card-header {
+            box-shadow: 2px 1px 2px 1px #e6e6e6;
+            background: #ffffff;
+            margin-bottom: 7px;
+            padding: 8px 10px;
+        }
+
+        .title {
+            width: 100%;
+            font-weight: bold;
+            color: #fff;
+            font-size: 16px;
+            text-align: center;
+            margin: 5px 15px;
+        }
+
+        .userdetail {
+            font-weight: bold;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            width: 100%;
+            margin: auto;
+        }
+
+        .header-bar {
+            margin: 0;
+            width: 100%;
+            background: #007bff;
+        }
+
+        .footer-bar {
+            margin: 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #b3ac9b;
+        }
+    </style>
+</head>
+<body>
+    <div class="row header-bar">
+        <div class="col-md-12" style="display:flex">
+            <label class="title">Chandan Hospital</label>
+        </div>
+    </div>
+    <section class="content">
+        @if (Model != null)
+        {
+            ipPayU obj = Model;
+            string Disabled = "";
+            if (obj.Message.Contains("Already Paid"))
+            {
+                Disabled = "disable";
+            }
+            <input type="hidden" id="udf5" name="udf5" value='@obj.UDF' />
+            <input type="hidden" id="hidkey" name="udf5" value='@obj.Key' />
+            <input type="hidden" id="hidHash" name="udf5" value='@obj.Hash' />
+            <div class="row">
+                <div class="col-md-12">
+                    <table id="tblOrderIds" style="border:none" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td><b>Registration Id</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtBookingId" class="form-control" readonly="readonly" value='@obj.TnxId' /></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 140px;"><b>Particepant Name</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtParticepantName" class="form-control" readonly="readonly" value='@obj.firstname' /></td>
+                            </tr>
+                            <tr>
+                                <td><b>Mobile No</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtMobile" class="form-control" readonly="readonly" value='@obj.Mobile' /></td>
+                            </tr>
+                            <tr style="display:none">
+                                <td><b>Email</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtEmail" class="form-control" readonly="readonly" value='@obj.Email' /></td>
+                            </tr>
+                            <tr style="display:none">
+                                <td><b>Reason</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtReason" class="form-control" readonly="readonly" value='@obj.Remark' /></td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtAmount" class="form-control" style="font-weight:bold" readonly="readonly" value='@obj.Amount' /></td>
+                            </tr>
+                            <tr style="display:none">
+                                <td>Payment status</td>
+                                <td><b>:</b></td>
+                                <td><input type="text" class="form-control" readonly="readonly" value='@obj.Message' /></td>
+                            </tr>
+                            @*<tr>
+                                    <td colspan="2">For Assistance Please call :<a href="tel:+917311170955">+917311170955</a></td>
+                                </tr>*@
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                @if (obj.Message.Contains("Already Paid"))
+                {<div class="col-md-12">
+                        <input type="button" id="btnPay" value="Make Payment" disabled="disabled" class="btn btn-warning btn-block" />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-12" style="display:flex;justify-content: center;">
+                        <div class="pay-later">
+                            <label>@obj.Amount Rs.</label>
+                            <button class="btn btn-warning" onclick="launchBOLT()"><i class="fa fa-sign-in">&nbsp;</i>Make Payment</button>
+                        </div>
+                    </div>
+                    @*<input type="button" id="btnPay" value="Make Payment" onclick="launchBOLT(); return false;" class="btn btn-warning btn-block" />*@
+                }
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12" id="payResponse">
+                    <label class="pay-response">Payment Response</label>
+                    <table id="tblOrderIds" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td><b>Reference No</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtRefNo" class="form-control" readonly="readonly" /></td>
+                            </tr>
+                            <tr>
+                                <td><b>Payment Status</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtStatus" class="form-control" readonly="readonly" /></td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td><b>:</b></td>
+                                <td><input type="text" id="txtRamount" class="form-control" readonly="readonly" /></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+            </div>
+        }
+    </section>
+    <div class="row footer-bar">
+        <div class="col-md-12" style="display:flex">
+            <label class="title"></label>
+        </div>
+    </div>
+</body>
+</html>

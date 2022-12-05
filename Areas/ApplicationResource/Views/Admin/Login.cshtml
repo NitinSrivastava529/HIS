@@ -1,0 +1,94 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HIS || Login Panel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery.min.js?his-version-1.0"></script>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
+    <link href="~/Content/css/custom.css?his-version-1.0" rel="stylesheet" />
+    <script src="~/JsModule/global.js?his-version-1.0"></script>
+    <script src="~/JsModule/Authentication.js?his-version-1.0"></script>
+    @*@Scripts.Render("~/Areas/JsModule")*@
+    <style>
+        .btn {
+            font-size: 15px;
+            height: 31px;
+            line-height: 16px;
+        }
+
+        .ml5 {
+            margin-left: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).keyup(function (e) {
+            if (e.keyCode == 13) {
+                Authentication();
+            }
+        });
+        chkSession();
+        function preventBack() { window.history.forward(); }
+
+        setTimeout("preventBack()", 0);
+
+        window.onunload = function () { null };
+
+    </script>
+
+</head>
+<body style="background:url(/images/login_bg.jpg) 2% 54%">
+    <div class=" container h-100 login">
+         <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="~/Content/logo/logo.png" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                    <form>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" id="txtUserID" class="form-control input_user text-uppercase" value="" placeholder="username">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" id="txtPassword" class="form-control input_pass" value="" placeholder="password">
+                            <span></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customControlInline">
+                                <label class="custom-control-label" for="customControlInline">Remember me</label>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <span id="btnLogin" class="btn login_btn">Login</span>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mt-4">
+                    @*<div class="d-flex justify-content-center links">
+                            Don't have an account? <a href="#" class="ml-2">Sign Up</a>
+                        </div>*@
+                    <div class="d-flex justify-content-center links">
+                        <a href="#">Forgot your password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

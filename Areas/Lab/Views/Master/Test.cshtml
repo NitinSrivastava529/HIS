@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Lab/JsModule/Test.js"></script>
+@*<style>
+        .btn-close {
+            right: 5px;
+            opacity: 100%;
+            position: absolute;
+            color: #fff !important;
+            font-weight: bold;
+            font-size: 12px;
+            padding: 0px 6px;
+            background: #b92c02;
+            height: 16px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .flex {
+            display: flex !important;
+            align-items: center;
+        }
+
+        hr {
+            margin-top: 35px;
+            margin-bottom: 5px;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+
+        .custom-table {
+            width: 100%;
+            line-height: 29px;
+            font-size: 12px;
+        }
+
+        .fileinput.input-group {
+            display: flex;
+        }
+
+        .text-17 {
+            font-size: 17px;
+        }
+
+        .btn-flat {
+            padding: 2px;
+            border: none;
+        }
+
+        .scroll {
+            width: 100%;
+            background: #fff;
+            overflow: overlay;
+            max-height: 450px;
+            display: block;
+        }
+
+        .panel-body {
+            /*box-shadow: 1px 1px 10px #d2d2d2;*/
+            border-radius: 10px;
+            padding: 5px 3px 0px 3px;
+            position: relative;
+        }
+
+        .note {
+            list-style: disc;
+            color: red;
+            font-size: 11px;
+            font-weight: bold;
+            background: #f7f7f7;
+            border: 1px solid #d86c6c;
+        }
+
+        .bn {
+            margin: 0px;
+            font-size: 10pt;
+            padding: 0px 10px;
+            border-radius: 0;
+            text-align: left;
+            height: 30px;
+        }
+
+        .bc {
+            border: 1px solid #00a65a;
+            border-radius: 0;
+        }
+
+    </style>*@
+@*<div id="page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="ml15">
+                        <div class="">
+                            <div class="panel">
+                                <div class="panel-heading" style="padding: 4px;  margin-top:10px;">
+                                    <h4 class="text-white text-center" style="color:black;">Sample Tranfer Sheet</h4>    s
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            Dispatch No : DIS/21-22/0009
+                                        </div>
+                                        <div class="col-md-6">
+                                            Branch Name: Chandan Hospital
+                                        </div>
+                                       <div class="col-md-4">
+                                           To : Chandan Speciality
+                                       </div>
+                                        <div class="col-md"
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@*<div class="col-md-6">
+    <div class="scroll" style="height:511px;  display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+        <table class="table table-bordered" id="tblPatientDetail">
+            <thead>
+                <tr>
+                    <th style="width:1%;">S.No</th>
+                    <th style="width: 5%;">Visit No</th>
+                    <th style="width: 3%;">BarCode</th>
+                    <th style="width: 8%;">Patient Name</th>
+                    <th style="width: 9%;">Test Detail</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<div class="col-md=6">
+    <button id="button1" class="btn btn-success">Click</button>
+    <button id="button1" class="btn btn-success">Click</button>
+</div>
+
+<h5 style="text-align:center">Sample Transfer Sheet</h5>
+<hr />
+<br />
+<label>Dispatch No: DIS/21-22/0009</label> <br />
+<label>Branch Name: Chandan Hospital </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<label>To: Chandan Speciality</label><br />
+<label>Diapatch Date:15/02/2021</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<label>Time: 2021-04-12 12:10:05.593</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<label>DeliveryBoy Name: Rahul Kanojiya </label>
+<br />
+<table style="width:100%;border:1px solid gray; ">
+    <tr style=" border: 1px solid #dddddd; text-align: left;">
+        <th>Visit No</th>
+        <th>BarCode No</th>
+        <th>Patient Name</th>
+        <th>Reg Date</th>
+        <th>Sample Date</th>
+        <th>Test Name</th>
+    </tr>
+    <tr>
+        <td >DIS/21-22/0009</td>
+        <td>525877</td>
+        <td>SURAJ KUMAR</td>
+        <td>2021-04-12 12:10:05.593</td>
+        <td>2021-04-12 12:10:05.593</td>
+        <td>SGOT</td>
+    </tr>
+</table>*@
+
+<div title="div1Title" style="background-color:red">
+    DIV1
+</div>
+<div title="pTitle">
+    DIV2
+</div>
+<span title="div1Title" style="background-color:green">
+    SPAN 1
+    <br /><br />
+    <span>
+        SPAN 2
+    </span>
+</span>

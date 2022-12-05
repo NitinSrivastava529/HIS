@@ -1,0 +1,239 @@
+﻿
+@{
+	ViewBag.Title = "Vendor Master";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Master/VendorMaster.js?his-version-1.0"></script>
+<style>
+	.active {
+		color: green;
+	}	
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Vendor Master List</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-xs-3">
+									<span class="btn btn-success" onclick="GetVendorMasterList()">Load List</span>
+								</div>
+								<div class="col-xs-3">
+									<span class="text-pink">Search</span>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+									</div>
+								</div>
+								<hr />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll">
+												<table id="tblVendor" class="table table-bordered">
+													<thead>
+														<tr>
+															<th>Edit</th>
+															<th>Vendor Id</th>
+															<th>Vendor Name</th>															
+															<th>On/Off</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<input type="button" onclick="Clear()" class="btn btn-success" value="New" />
+								<h4 class="text-white pull-right">Create Vendor Master</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="col-md-8">
+									<div class="form-group">
+										<label>Vendor Name</label>
+										<input type="text" id="txtVendorName" data-imp class="form-control text-uppercase" placeholder="Vendor Name" />
+										<span data-vendorid style="display:none"></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Contact Person </label>
+										<input type="text" id="txtContactPerson" class="form-control" data-imp placeholder="Contact Person" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Address1</label>
+										<input type="text" id="txtAddress1" data-imp class="form-control" placeholder="Address1" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Address2</label>
+										<input type="text" id="txtAddress2" class="form-control" placeholder="Address2" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Address3</label>
+										<input type="text" id="txtAddress3" class="form-control" placeholder="Address3" />
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Country</label>
+										<select id="ddlCountry" class="form-control ddlCountry" data-imp>
+											<option>Select State</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>State</label>
+										<select id="ddlState" class="form-control ddlState" data-imp>
+											<option>Select State</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>City</label>
+										<select id="ddlCity" data-imp class="form-control ddlCity">
+											<option>Select City</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Account Code </label>
+										<input type="text" id="txtAccountCode" readonly="readonly" maxlength="12" class="form-control" placeholder="Account Code" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Contact No</label>
+										<input type="text" id="txtContactNo" data-imp maxlength="12" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g, '')" class="form-control" placeholder="Contact No" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Email</label>
+										<input type="text" id="txtEmail" class="form-control" placeholder="Email" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Pin</label>
+										<input type="text" id="txtPin" maxlength="6" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g, '')" class="form-control" placeholder="Pin" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Payment Mode</label>
+										<select id="ddlPaymentMode" class="form-control" data-imp>
+											<option>Credit</option>
+											<option>Cash</option>
+											
+										</select>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Payment Days</label>
+										<input type="text" id="txtPaymentDays" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g, '')" class="form-control" maxlength="4" placeholder="Payment Days" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>GST No</label>
+										<input type="text" id="txtGstNo" data-imp class="form-control" placeholder="GST No" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Drug License No</label>
+										<input type="text" id="txtDrugLicenseNo" class="form-control" placeholder="Drug License No" />
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Notes</label>
+										<textarea id="txtNotes" class="form-control" rows="1" placeholder="Notes"></textarea>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<input type="button" id="btnSaveVendor" class="btn btn-success pull-right" value="Submit" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

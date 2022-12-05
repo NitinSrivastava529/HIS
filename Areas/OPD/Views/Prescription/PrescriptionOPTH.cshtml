@@ -1,0 +1,2247 @@
+﻿
+@{
+    ViewBag.Title = "PrescriptionOPTH";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/OPD/JsModule/Prescription/PrescriptionOPTH.js"></script>
+<style type="text/css">
+    .duration {
+        border: 1px solid #2478a9;
+        font-size: 11px;
+        height: 20px;
+        width: 60px;
+        padding: 1px 3px;
+        margin-left: 3px;
+        border-radius: 2px;
+    }
+
+    body {
+        color: #000;
+    }
+
+    .title {
+        background: #2478a9;
+        color: #fff;
+        padding: 3px 63px 2px 6px;
+        top: 3px;
+        position: relative;
+    }
+
+        .title:after {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            content: '';
+            border-right: -2px solid transparent;
+            border-left: 25px solid transparent;
+            border-top: 25px solid #fff;
+        }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    .category {
+        font-weight: bold;
+        background: #fafcfe;
+        display: flow-root;
+        border: 1px solid #2478a9;
+    }
+
+    .select-row td {
+        background: #2478a9;
+        color: #fff !important;
+    }
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 2px 2px 0px 3px !important;
+        border-top-width: 1px;
+        border-top-style: solid;
+        text-align: left;
+        color: #000;
+    }
+
+    .section {
+        min-height: 160px;
+        max-height: 160px;
+        overflow: auto;
+        margin-bottom: 5px;
+        border: 1px solid #2478a9;
+    }
+
+    .list {
+        height: 200px;
+        background: #fff;
+        margin: 5px;
+        /*border: 1px solid #ddd*/
+    }
+
+        .list h3 {
+            margin: 1px;
+            font-size: 13px;
+            background: #ddd;
+            padding: 3px;
+        }
+
+        .list ul {
+            list-style: none;
+            padding: 0px 0px;
+            margin: 0px;
+        }
+
+            .list ul li:not(.group) {
+                padding: 0px 25px;
+                font-size: 12px;
+            }
+
+                .list ul li:not(.group):hover {
+                    color: #2478a9;
+                    cursor: pointer;
+                }
+
+            .list ul li.group {
+                padding: 0px 12px;
+                font-weight: 500;
+                height: 15px;
+            }
+
+    .delete {
+        background: #e10808;
+        color: #fff;
+        padding: 0px 4px;
+        font-size: 8px;
+        border-radius: 2px;
+        font-weight: 500;
+        cursor: pointer;
+        margin: 5px;
+        display: none;
+    }
+
+        .delete:hover {
+            display: block;
+        }
+</style>
+<style>
+    .other-services-confirmation {
+        border-radius: 2px;
+        background: #fbe2e2;
+        padding: 4px 6px;
+    }
+
+    div#skill .circle {
+        position: relative;
+        height: 22px;
+        width: 22px;
+        border: 3px solid #ff934c;
+        border-top-color: #e60000;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+        top: -10px;
+        left: -4px;
+    }
+
+    div#skill {
+        /* background-color: rgba(144, 0, 64, 0.8); */
+        color: #fff;
+        padding: 9px 0;
+        position: absolute;
+        display: none;
+    }
+
+    .nav > li > a {
+        font-size: 12px;
+        position: relative;
+        display: block;
+        margin: -1px 0px 4px 0px;
+        padding: 0px 15px !important;
+    }
+
+    .tab-pane {
+        padding: 0px 15px;
+    }
+
+    .select2-dropdown {
+        z-index: 140;
+    }
+
+    .dash-header {
+        position: fixed;
+        width: 100%;
+        height: 60px;
+        background: #e8e8e8;
+        padding-left: 10px;
+        z-index: 2;
+    }
+
+        .dash-header table {
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+        }
+
+    .dash-body {
+        position: relative;
+        width: 100%;
+        top: 58px;
+    }
+
+    .left-panel {
+        float: left;
+        margin-left: 10px;
+        position: fixed;
+        width: 12%;
+    }
+
+        .left-panel button {
+            text-align: left;
+            display: inline-block;
+            padding: 10px 5px;
+            margin-bottom: 3px;
+            font-size: 11px;
+            line-height: 1.42857143;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            background-color: #6b6b6b;
+            color: #fff;
+            box-shadow: none;
+            width: 98%;
+        }
+
+    .OPDPrintPreview {
+        width: 70%;
+        float: right;
+        /*padding: 0 13px;*/
+        border: 1px solid #000;
+    }
+
+    .OPDPrintPreview-header {
+        padding: 0 8px;
+        margin-top: -17px;
+        padding-bottom: 6px;
+    }
+
+        .OPDPrintPreview-header label.pull-left {
+            margin: 0;
+            color: #000000;
+            font-family: Verdana, Arial, sans-serif;
+        }
+
+        .OPDPrintPreview-header label.header-value {
+            margin-bottom: 0px !important;
+            font-size: 13px;
+            font-family: Verdana, Arial, sans-serif;
+            color: #000;
+            font-weight: normal;
+        }
+
+    .OPDPrintPreview-body {
+        border-top: 2px solid #000;
+        padding-bottom: 5px;
+        margin-top: -2px;
+    }
+
+    .OPDPrintPreview-body-left {
+        margin-bottom: -5px;
+        border-right: solid 1px #303e54;
+        min-height: 650px;
+    }
+
+    .OPDPrintPreview-body-right {
+        margin-bottom: -5px;
+        border-right: solid 1px #303e54;
+        min-height: 650px;
+    }
+
+    .OPDPrintPreview-body-right-doctor {
+        bottom: 10px;
+        position: absolute;
+        right: 15px;
+        font-weight: bold;
+    }
+
+    .OPDPrintPreview table {
+        color: #000;
+        border: 1PX solid #ddd;
+        font-size: 14px;
+    }
+
+    .right-panel {
+        margin-top: 3px;
+        border: 1px solid green;
+        padding: 5px;
+    }
+
+    #dash-dynamic-section {
+        width: 86.5%;
+        float: right;
+        /*background: url(http://192.168.4.10/HIS/Images/patter.jpg);*/
+        margin: 2px 4px;
+        display: inline-block;
+        border: solid 1px Green;
+        padding: 2px;
+    }
+
+    .panel-heading {
+        background: #026cbd;
+        padding: 0px;
+    }
+
+    .panel-title {
+        margin-left: 15px;
+        text-align: left;
+        font-weight: bold;
+        font-size: 13px;
+        color: white;
+        background: #026cbd;
+        padding: 3px;
+    }
+
+    .rotate {
+        transform: rotateZ(12deg);
+    }
+
+    .ListItems {
+        border-radius: 8px;
+        line-height: 0px;
+        font-size: 88%;
+        list-style: none;
+        padding: 7px;
+        background: #fafcfe;
+        border: 1px solid #ddd;
+        max-height: 400px;
+        overflow: auto;
+        overflow-y: auto;
+    }
+
+        .ListItems li {
+            font-weight: normal;
+        }
+
+            .ListItems li label input[type=checkbox] {
+                margin: 0;
+            }
+
+            .ListItems li label {
+                user-select: none;
+                cursor: pointer;
+                max-width: 205px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            .ListItems li a.fa {
+                cursor: pointer;
+                padding-left: 5px;
+                float: right;
+                font-size: 14px;
+            }
+
+            .ListItems li a.fa-trash {
+                color: #dc1c1c;
+            }
+
+            .ListItems li a.fa-pencil {
+                color: #ff8232;
+            }
+
+    .search-box {
+        font-size: 14px;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        color: #3e3e3e;
+    }
+
+    .bottom-box {
+        font-size: 14px;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        color: #3e3e3e;
+    }
+
+    .text11 {
+        font-size: 11px !important;
+    }
+
+    .panel-body {
+        padding: 5px 12px;
+    }
+
+    .btn-flat {
+        border-radius: 2px;
+        border: none;
+        padding: 0;
+    }
+
+    .panel-group .panel + .panel {
+        margin-top: 2px;
+    }
+
+    .panel-group {
+        margin-bottom: 4px;
+    }
+
+    .currentVisit {
+        color: #b7510d;
+        cursor: pointer;
+        padding: 0 5px;
+        font-size: 15px;
+    }
+
+        .currentVisit:hover {
+            color: #484343;
+        }
+
+    .form-control {
+        border: 1px solid #d8d1d1;
+    }
+
+    .prescribedItem {
+        margin-bottom: 10px;
+        display: none;
+    }
+
+        .prescribedItem TemplateGroup {
+            font-weight: bold;
+            cursor: pointer;
+            font-weight: bold;
+            user-select: none;
+            color: black;
+        }
+
+        .prescribedItem span {
+            color: black;
+            font-size: 11px;
+            border-radius: 4px;
+            border: 1px solid #e0dede;
+            padding: 1px 2px;
+            line-height: 23px;
+            margin-left: 4px;
+            cursor: pointer;
+        }
+
+    .OPDPrintPreview-body-left .prescribedItem {
+        color: black;
+        padding-left: 5px;
+    }
+
+        .OPDPrintPreview-body-left .prescribedItem b {
+            color: #000000;
+            font-size: 13px;
+            border-radius: 0;
+            border: none;
+            margin-left: 0px;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 0;
+        }
+
+    .prescribedItem span:hover {
+        border-radius: 0;
+        border: 1px solid #ffcdcd;
+    }
+
+    .MedicineTemplate tbody tr:hover {
+        cursor: pointer;
+        color: #026cbd;
+    }
+
+    .text-red {
+        color: #d82323 !important;
+    }
+
+    span {
+        user-select: none; /* standard syntax */
+        -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+        -moz-user-select: none; /* mozilla browsers */
+        -ms-user-select: none; /* IE10+ */
+    }
+
+    #LaboratoryRadiologyItems span, #VitalSignItems span, #PrescribedProcedureItems span {
+        user-select: none;
+        height: 14px;
+        display: table;
+        list-style: none;
+        font-size: 10px;
+        font-weight: bold;
+        border: none;
+        padding: 0px;
+        margin: -4px 2px;
+        color: black;
+        opacity: initial;
+        text-transform: capitalize;
+        line-height: 14px;
+        margin: 0px;
+    }
+
+    .left-panel button i {
+        font-size: 14px;
+        margin-right: 5px;
+    }
+
+    #LaboratoryRadiologyItems span:hover, #PrescribedProcedureItems span:hover {
+        color: blue;
+    }
+
+    .active-btn {
+        background-color: #2969a7 !important;
+    }
+
+    .active-item {
+        background: #3f7f50 !important;
+    }
+
+    .NoteItems {
+        bottom: 5px;
+        background: #e8e8e8;
+        padding: 1px 9px 5px 6px;
+        margin: 0px 0px 0px 8px;
+        position: absolute;
+    }
+
+    .prescribedItem input[type=text] {
+        font-size: 11px;
+        border: 1px solid #cac8c8;
+        border-radius: 2px;
+    }
+
+    close {
+        display: none;
+        background: #e40000;
+        color: #fff;
+        border-radius: 34px;
+        width: 10px;
+        height: 10px;
+        font-size: 7px;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+        right: 6px;
+        top: -7px;
+        padding: 2px;
+    }
+
+    .show {
+        display: initial;
+    }
+
+    .btn-rx {
+        padding: 1px 22px 2px 2px;
+        width: 19px;
+        height: 17px;
+        border: 1px solid #007b15;
+        border-radius: 3px;
+        margin-right: 0px;
+        cursor: pointer;
+        display: flex;
+        font-size: 15px;
+    }
+
+    .select2-container {
+        width: 100% !important;
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        z-index: 10000;
+        position: revert;
+        vertical-align: middle;
+    }
+
+    .form-group {
+        margin-bottom: 6px;
+    }
+    /*Editable Drop-Down Control*/
+    .select-editable {
+        position: relative;
+        background-color: white;
+        width: 100%;
+    }
+
+        .select-editable select {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            width: 100%;
+            margin: 0;
+        }
+
+        .select-editable input {
+            border: 1px solid #d6d6d6;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 90%;
+            padding: 1px 6px;
+            font-size: 12px;
+        }
+
+            .select-editable select:focus, .select-editable input:focus {
+                outline: none;
+            }
+
+    .btnGroup button {
+        width: max-content;
+    }
+
+    .btnRound {
+        margin-right: 4px !important;
+        border-right: 1px solid #069783 !important;
+        width: 8% !important;
+    }
+</style>
+<style>
+    .btnDelete {
+        font-size: 10px;
+        padding: 2px 2px;
+        height: 13px;
+        line-height: 0;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    .btnMore {
+        height: 20px;
+        line-height: 0;
+        margin-top: -2px;
+    }
+
+    #tblSph td {
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .divCustom button {
+        width: 29%;
+        top: -24px;
+        height: 25px;
+        border-radius: 0;
+    }
+
+    .divCustom {
+        padding: 7px 5px;
+        display: none;
+        border-radius: 2px;
+        position: absolute;
+        background: #fff;
+        right: 16px;
+        top: 32px;
+        border: 1px solid #DDD;
+        width: 91%;
+        box-shadow: 1px 1px 2px 0px #c3c3c3;
+    }
+
+    #tblOPTHHeaderInfo td, #tblOPTHHeaderInfo th {
+        color: #262424;
+        background: #f9f0ec;
+        border: none;
+        font-size: 13px;
+        padding: 1px;
+    }
+
+    #divTemplate {
+        display: block;
+        padding: 6px 3px;
+        border-left: 1px solid rgb(36, 120, 169);
+        border-right: 1px solid rgb(36, 120, 169);
+    }
+
+    #LaboratoryRadiologyItems {
+        display: block;
+        padding: 5px;
+    }
+
+    #tblVisualAcuity {
+        margin: 0;
+    }
+
+        #tblSpecDetail input, #tblVisualAcuity input, #tblOtherInfo input {
+            border: 1px solid #d8d1d1;
+            height: 20px;
+        }
+
+        #tblVisualAcuity td > button.fillValue {
+            border: 1px solid #d8d1d1;
+            height: 20px;
+            float: right;
+            line-height: 0;
+            margin: -20px 0px;
+            border-radius: 0;
+        }
+
+    .btn-row {
+        height: 21px;
+        line-height: 0;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    #tblSpecDetail thead tr:nth-child(1) > th, #tblVisualAcuity thead tr:nth-child(1) > th {
+        color: #fff !important;
+        background: #2478a9 !important;
+    }
+
+    #tblSpecDetail thead tr:nth-child(2) > th, #tblVisualAcuity thead tr:nth-child(2) > th {
+        color: #fff;
+        background: #f39c12 !important;
+    }
+    .tblPrevSpecInfo thead tr:nth-child(3) > th, .tblPrevSpecInfo thead tr:nth-child(3) > th {
+        color: #fff;
+        background: #f39c12 !important;
+    }
+    .divCustom::before {
+        position: absolute;
+        top: -7px;
+        right: 1px;
+        display: inline-block;
+        content: '';
+        border-right: 7px solid #fffefe00;
+        border-bottom: 7px solid transparent;
+        border-bottom-color: #f39c12;
+        border-left: 7px solid transparent;
+    }
+
+    .SelectedGlass {
+        color: #fff !important;
+        background: #14a314;
+        border: 1px solid #005c00;
+    }
+
+    #modalSpectacular table td {
+        padding: 3px;
+    }
+
+    #modalSpectacular table {
+        margin-bottom: 10px;
+    }
+
+    .spec-title {
+        font-weight: bold;
+        font-size: 12px;
+        margin: -10px 1px 2px 0px;
+    }
+
+    .pdfViewer {
+        width: 41%;
+        position: relative;
+        top: 50px;
+        background: rgb(53 53 53);
+        padding: 5px;
+        color: rgb(232 232 232);
+        text-align: left;
+    }
+
+    .msg {
+        color: #ffffff;
+        background: #dd8803;
+        width: max-content;
+        padding: 5px 14px;
+        position: absolute;
+        bottom: 39px;
+        z-index: 10;
+        left: 11px;
+        border-radius: 2px;
+        display: none;
+    }
+
+        .msg span {
+            background: #ff0049;
+            padding: 2px;
+            border-radius: 20px;
+            width: 13px;
+            height: 13px;
+            font-size: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 373px;
+        max-width: 500px;
+        max-height: 310px;
+        overflow: hidden;
+        overflow-y: auto;
+        position: absolute;
+        z-index: 11111;
+        background: #fff;
+        top: 49px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 0px;
+        border-radius: 3px;
+    }
+
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="Vital-body" style="padding:0 5px;margin-top:1px">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <div id="divEmergency">
+                                        <div class="category"><span class="title" style="top:0;padding:0px 50px 0px 6px">Patient Info</span></div>
+                                        <div class="section" style="min-height:45px;max-height:45px">
+                                            <table class="table" id="tblOPTHHeaderInfo" style="margin:0">
+                                                <tr>
+                                                    <td><b>Patient Name</b></td>
+                                                    <td>:</td>
+                                                    <td>-</td>
+                                                    <td>&nbsp;</td>
+                                                    <td><b>Age</b></td>
+                                                    <td>:</td>
+                                                    <td>-</td>
+                                                    <td>&nbsp;</td>
+                                                    <td><b>App. No</b></td>
+                                                    <td>:</td>
+                                                    <td>-</td>
+                                                    <td>&nbsp;</td>
+                                                    <td><b>App. Date</b></td>
+                                                    <td>:</td>
+                                                    <td>-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Current Doctor</b></td>
+                                                    <td>:</td>
+                                                    <td>-</td>
+                                                    <td>&nbsp;</td>
+                                                    <td><b>UHID</b></td>
+                                                    <td>:</td>
+                                                    <td id="txtHeaderUHID">-</td>
+                                                    <td>&nbsp;</td>
+                                                    <td><b>Panel</b></td>
+                                                    <td>:</td>
+                                                    <td>-</td>
+                                                    <td>&nbsp;</td>
+                                                    <td colspan="3">
+                                                        <div class="input-group-btn btnGroup">
+                                                            <button class="btn btn-primary btn-xs" style="margin-right:2%" id="btnOutApp" onclick="InOutMarking()">Out</button>
+                                                            <button class="btn btn-danger btn-xs" style="margin-right:2%" id="btnCloseApp" onclick="CloseAppointment()">Close</button>
+                                                            <button class="btn btn-primary btn-xs" style="margin-right:2%" id="btnPrint" onclick="PrintReceipt()">Print Prescription</button>
+                                                            <button class="btn btn-warning btn-xs" id="btnNextFollowUp" data-target="#modalNextFollowUp" data-toggle="modal">Next Follow-Up Date</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div id="divPres">
+                                        <div class="category"><span class="title">Previous Prescription</span><button data-target="#modalOtherServices" data-toggle="modal" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button> </div>
+                                        <div class="section" style="min-height:340px;max-height:340px;">
+                                            <div class="" style="min-height:335px;max-height:335px;">
+                                                <div class="">
+                                                    <div class="col-md-12 bottom-tab">
+                                                        <ul class="nav nav-tabs" style="margin:2px 0px">
+                                                            <li class="active"><a data-toggle="tab" href="#PatientVisits">Patient Visits</a></li>
+                                                            <li><a data-toggle="tab" href="#menu1">IPD Discharge Summary</a></li>
+                                                        </ul>
+                                                        <div class="tab-content">
+                                                            <div id="PatientVisits" class="tab-pane fade in active" style="padding: 0;">
+                                                                <table id="tblPatientVisits" class="table table-bordered"><tbody></tbody></table>
+                                                            </div>
+                                                            <div id="menu1" class="tab-pane fade">
+                                                                <label class="currentVisit">Current Visit <b style="float:right;color:#a72121;font-size: 15px;" class="fa fa-print"></b></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="divPres">
+                                        <div class="category"><span class="title" style="padding:3px 35px 2px 6px">
+    <button onclick="DeleteAllVisualAcuity()" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>
+    Visual Acuity&nbsp;<button onclick="GetPrevVisualAcuity()" class="btn btn-warning btn-xs btnMore"><i class="fa fa-sign-in">&nbsp;</i>Previous</button></span>
+                                        <button class="btn btn-success pull-right" style="margin:1px 5px;height: 22px;line-height:20px" onclick="InsertVisualAcuity()"><i class="fa fa-check-circle">&nbsp;</i>Save</button></div>
+                                        <div class="section" style="min-height: 131px;">
+                                            <div style="overflow:auto;padding: 3px 5px;">
+                                                <table class="table table-bordered" id="tblVisualAcuity">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th class="text-center">Left</th>
+                                                            <th class="text-center">Right</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="flex" style="border: 1px solid #00a65a;padding:0 !important;border-bottom: 1px solid #f9fafe"><button class="btn btn-success btn-xs btn-row">Un-Aided</button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Left" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Right" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex" style="border: 1px solid #00a65a;padding:0 !important;border-bottom: 1px solid #f9fafe"><button class="btn btn-success btn-xs btn-row">With Pin Hole</button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Left" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Right" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex" style="border: 1px solid #00a65a;padding:0 !important;border-bottom: 1px solid #f9fafe"><button class="btn btn-success btn-xs btn-row">With Prv Glass</button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Left" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Right" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex" style="border: 1px solid #00a65a;padding:0 !important;border-bottom: 1px solid #f9fafe"><button class="btn btn-success btn-xs btn-row">Prv Spect Power</button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Left" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                            <td><input type="text" class="form-control" placeholder="Right" /><button class="btn btn-warning btn-xs fillValue"><i class="fa fa-check"></i></button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div id="divChiefComplaints">
+                                        <div class="category">
+                                            <span class="title"><button onclick="DeleteAllItem('T00014')" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Chief Complaints</span>
+                                            <button onclick="$(this).siblings('.divCustom').toggle('slow')" class="btn btn-success btn-xs pull-right"><i class="fa fa-edit"></i></button>
+                                            <button onclick="GetChiefComplaintInfo()" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button>
+                                            <div class="divCustom">
+                                                <div class="flex">
+                                                    <button class="btn btn-success btn-xs btnCMEyesInfo">LE</button>
+                                                    <textarea type="text" id="txtCustomMedicine" style="top: -23px;height:75px;border-color:#f39c12;border-radius:0" class="form-control" placeholder="Input Remark"></textarea>
+                                                    <button onclick="InsertCustomMedicine($(this))" data-template="T00014" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="section" style="min-height:150px;max-height:150px;">
+                                            <div class="list" style="min-height:145px;max-height:145px;">
+                                                <ul id="ulChiefComplaints"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="divEmergency">
+                                        <div class="category">
+                                            <span class="title"><button data-toggle="modal" data-target="#modalOtherServices" class="btn btn-default btn-xs btnMore">More</button>&nbsp;<button onclick="DeleteAllItem('T00011')" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Examination</span>
+                                            <button onclick="$(this).siblings('.divCustom').toggle('slow')" class="btn btn-success btn-xs pull-right"><i class="fa fa-edit"></i></button>
+                                            <button onclick="GetGroupInfo('Examination|T00011')" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button>
+                                            <div class="divCustom" style="top:214px">
+                                                <div class="flex">
+                                                    <button class="btn btn-success btn-xs btnCMEyesInfo">LE</button>
+                                                    <textarea type="text" id="txtCustomMedicine" style="top: -23px;height:75px;border-color:#f39c12;border-radius:0" class="form-control" placeholder="Input Remark"></textarea>
+                                                    <button onclick="InsertCustomMedicine($(this))" data-template="T00011" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="section">
+                                            <div class="list" style="min-height:130px;max-height:130px;">
+                                                <ul id="ulExamination"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="divOther">
+                                        <div class="category">
+                                            <span class="title"><button onclick="DeleteAllItem('T00012')" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Diagnosis</span>
+                                            <button onclick="$(this).siblings('.divCustom').toggle('slow')" class="btn btn-success btn-xs pull-right"><i class="fa fa-edit"></i></button>
+                                            <button onclick="GetDiagnosisInfo()" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button>
+                                            <div class="divCustom" style="top:405px">
+                                                <div class="flex">
+                                                    <button class="btn btn-success btn-xs btnCMEyesInfo">LE</button>
+                                                    <textarea type="text" id="txtCustomMedicine" style="top: -23px;height:75px;border-color:#f39c12;border-radius:0" class="form-control" placeholder="Input Remark"></textarea>
+                                                    <button onclick="InsertCustomMedicine($(this))" data-template="T00012" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="section" style="min-height:130px;max-height:130px;">
+                                            <div class="list" style="min-height:118px;max-height:118px;">
+                                                <ul id="ulDiagnosis"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div id="divOther">
+                                            <div class="category"><span class="title">Advice</span><span style="margin-left:2%">Advice Details</span><button onclick="GetAdviceInfo()" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button> </div>
+                                            <div class="section" style="min-height:130px;max-height:130px;">
+                                                <div class="list" style="min-height:118px;max-height:118px;">
+                                                    <ul id="ulAdvice"></ul>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="category">
+                                        <span class="title">
+                                            <button onclick="DeleteAllPresMedicine()" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Medicine
+                                        </span><span style="margin-left:25%">Medicine Details</span><button onclick="GetOPTHMedicineInfo()" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                    <div style="min-height: 150px;max-height:150px;overflow:auto;margin-bottom:5px;border: 1px solid #2478a9;">
+                                        <table class="table table-bordered MedicineTemplate" id="tblPresMedicineInfo">
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="category"><span class="title">
+    <button onclick="DeleteAllItem('T00009')" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Test
+</span><span style="margin-left:25%"></span><button onclick="GetLabTestInfo()" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button> </div>
+                                    <div style="min-height: 160px;max-height:160px;overflow:auto;margin-bottom:5px;border: 1px solid #2478a9;">
+                                        <div class="prescribedTestItem">
+                                            <templategroup id="T00009"><b>Investigation : </b></templategroup><br>
+                                            <ul id="PrescLaboratoryRadiologyItems"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div id="divOther">
+                                        <div class="category">
+                                            <span class="title">
+                                                <button onclick="DeleteAllItem('T00013')" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Advice
+                                            </span>
+                                            <button onclick="$(this).siblings('.divCustom').toggle('slow')" class="btn btn-success btn-xs pull-right"><i class="fa fa-edit"></i></button>
+                                            <button onclick="GetAdviceInfo()" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button>
+                                            <div class="divCustom">
+                                                <div class="flex">
+                                                    <button class="btn btn-success btn-xs btnCMEyesInfo">LE</button>
+                                                    <textarea type="text" id="txtCustomMedicine" style="top: -23px;height:75px;border-color:#f39c12;border-radius:0" class="form-control" placeholder="Input Remark"></textarea>
+                                                    <button onclick="InsertCustomMedicine($(this))" data-template="T00013" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="section" style="min-height:160px;max-height:160px;">
+                                            <div class="list" style="min-height:160px;max-height:160px;">
+                                                <ul id="ulAdvice"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="category">
+                                        <span class="title">
+                                            <button onclick="DeleteAllSpecInfo()" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Spectacular&nbsp;<button onclick="GetPrevSpecInfo()" class="btn btn-warning btn-xs btnMore"><i class="fa fa-sign-in">&nbsp;</i>Previous</button>
+                                        </span><span style="margin-left:25%">Glass Details</span><button class="btn btn-success pull-right" style="margin:1px 5px;height: 22px;line-height:20px" onclick="InsertDistanceSpecInfo()"><i class="fa fa-check-circle">&nbsp;</i>Submit</button>
+                                    </div>
+                                    <div style="min-height: 130px;max-height:130px;overflow:auto;border: 1px solid #2478a9;padding:0 5px;">                                        
+                                        <table class="table table-bordered" id="tblSpecDetail">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:1%"></th>
+                                                    <th class="text-center" colspan="4">Left Glass</th>
+                                                    <th class="text-center" colspan="4">Right Glass</th>
+                                                </tr>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Sph</th>
+                                                    <th>Cyl</th>
+                                                    <th>Axis</th>
+                                                    <th>VA</th>
+                                                    <th>Sph</th>
+                                                    <th>Cyl</th>
+                                                    <th>Axis</th>
+                                                    <th>VA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="flex" style="border: 1px solid #00a65a;padding:0 !important;border-bottom: 1px solid #f9fafe"><button data-target="#modalDistance" data-toggle="modal" class="btn btn-success btn-xs btn-row">Distance</button></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex" style="border: 1px solid #00a65a;padding:0 !important"><button data-target="#modalNear" data-toggle="modal" class="btn btn-success btn-xs btn-row">Near</button></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                    <td><input type="text" class="form-control" /></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div style="margin: -18px 0;">
+                                            <label><input type="checkbox" onchange="InsertDistanceSpecInfo()" name="Const" value="Const" />&nbsp;Const</label>
+                                            <label><input type="checkbox" onchange="InsertDistanceSpecInfo()" name="Bifocal" value="Bifocal" />&nbsp;Bifocal</label>
+                                            <label><input type="checkbox" onchange="InsertDistanceSpecInfo()" name="PhotoSun" value="PhotoSun" />&nbsp;PhotoSun</label>
+                                            <label><input type="checkbox" onchange="InsertDistanceSpecInfo()" name="ARC" value="ARC" />&nbsp;ARC</label>
+                                            <label><input type="checkbox" onchange="InsertDistanceSpecInfo()" name="Progressive" value="Progressive" />&nbsp;Progressive</label>
+                                            <label><input type="checkbox" onchange="InsertDistanceSpecInfo()" name="Near" value="Near" />&nbsp;Near</label>
+                                        </div>
+                                    </div>
+                                    @*<button class="btn btn-success pull-right" style="margin:-30px 10px" onclick="InsertDistanceSpecInfo()"><i class="fa fa-check-circle">&nbsp;</i>Submit</button>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalExamination" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top: 5%;height:485px">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #2478a9;color:#fff;padding:5px;">
+                <h4 class="modal-title" style="font-size:15px;">
+                    <span class="text-center" id="txtTemplate"></span>
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding: 2px 6px;">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#2478a9;padding: 4px;">
+                                <h5 class="text-white">Group Master</h5>
+                                <button onclick="$('#divGroup').slideToggle()" style="margin-top: -19px;" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>New</button>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding:5px 0;">
+                                <div id="divGroup" style="display:none">
+                                    <div class="col-md-8">
+                                        <div style="display:flex;margin-bottom:4px;">
+                                            <input type="text" id="txtGroupName" style="border-color: #007792;border-radius: 0;" class="form-control" autocomplete="off" placeholder="New Group Name" />
+                                            <button class="btn-success" onclick="InsertGroup()" style="background: #007792;border:none" id="btnSaveTemplate">Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="txtSearchGroup" class="form-control" autocomplete="off" placeholder="Search.." />
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="max-height: 315px;min-height: 315px;">
+                                        <table id="tblGroup" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 3%;">#</th>
+                                                    <th>Group Name</th>
+                                                    <th style="width:1%">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#2478a9;padding: 4px;">
+                                <h5 class="text-white">Item Master-<span id="txtSelectedGroupName"></span></h5>
+                                <button onclick="$('#divItem').slideToggle()" style="margin-top: -19px;" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>New</button>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding:5px 0;">
+                                <div id="divItem" style="display:none">
+                                    <div class="col-md-8">
+                                        <div style="display:flex;margin-bottom:4px;">
+                                            <input type="text" id="txtItemName" style="border-color: #007792;border-radius: 0;" class="form-control" autocomplete="off" placeholder="New Item Name" />
+                                            <button class="btn-success" onclick="InsertTemplateInfo()" style="background: #007792;border:none" id="btnSaveTemplate">Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="txtSearchGroup" class="form-control" autocomplete="off" placeholder="Search.." />
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="max-height: 315px;min-height: 315px;">
+                                        <table id="tblTemplateInfo" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 11%;">Eye</th>
+                                                    <th style="width:11%">Item Id</th>
+                                                    <th>Item Name</th>
+                                                    <th style="width:20%">Duration</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="InsertPresItems()" style="margin:-12px 5px" class="btn btn-success pull-right"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDiagnosis" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 5%;height:485px">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #2478a9;color:#fff;padding:5px;">
+                <h4 class="modal-title" style="font-size:15px;">
+                    <span class="text-center">Diagnosis</span>
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding: 2px 6px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#2478a9;padding: 4px;">
+                                <h5 class="text-white">Item Master</h5>
+                                <button onclick="$('#divDiagnosisItem').slideToggle()" style="margin-top: -19px;" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>New</button>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding:5px 0;">
+                                <div id="divDiagnosisItem" style="display:none">
+                                    <div class="col-md-8">
+                                        <div style="display:flex;margin-bottom:4px;">
+                                            <input type="text" id="txtDiagnosisItemName" style="border-color: #007792;border-radius: 0;" class="form-control" autocomplete="off" placeholder="New Item Name" />
+                                            <button class="btn-success" onclick="InsertDiagnosisItem()" style="background: #007792;border:none" id="btnSaveTemplate">Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="txtSearchGroup" class="form-control" autocomplete="off" placeholder="Search.." />
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="max-height: 315px;min-height: 315px;">
+                                        <table id="tblDiagnosisItem" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 11%;">Eye</th>
+                                                    <th style="width:11%">Item Id</th>
+                                                    <th>Item Name</th>
+                                                    <th style="width:20%">Duration</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="InsertDiagnosisPresItems()" style="margin:-12px 5px" class="btn btn-success pull-right"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAdvice" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 5%;height:485px">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #2478a9;color:#fff;padding:5px;">
+                <h4 class="modal-title" style="font-size:15px;">
+                    <span class="text-center">Advice</span>
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding: 2px 6px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#2478a9;padding: 4px;">
+                                <h5 class="text-white">Item Master</h5>
+                                <button onclick="$('#divAdviceItem').slideToggle()" style="margin-top: -19px;" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>New</button>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding:5px 0;">
+                                <div id="divAdviceItem" style="display:none">
+                                    <div class="col-md-8">
+                                        <div style="display:flex;margin-bottom:4px;">
+                                            <input type="text" id="txtAdviceItemName" style="border-color: #007792;border-radius: 0;" class="form-control" autocomplete="off" placeholder="New Item Name" />
+                                            <button class="btn-success" onclick="InsertAdviceItem()" style="background: #007792;border:none" id="btnSaveTemplate">Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="txtSearchGroup" class="form-control" autocomplete="off" placeholder="Search.." />
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="max-height: 315px;min-height: 315px;">
+                                        <table id="tblAdviceItem" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 11%;">Eye</th>
+                                                    <th style="width:11%">Item Id</th>
+                                                    <th>Item Name</th>
+                                                    <th style="width:20%">Duration</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="InsertAdvicePresItems()" style="margin:-12px 5px" class="btn btn-success pull-right"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalChiefComplaint" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 5%;height:485px">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #2478a9;color:#fff;padding:5px;">
+                <h4 class="modal-title" style="font-size:15px;">
+                    <span class="text-center">Chief Complaint Item</span>
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding: 2px 6px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#2478a9;padding: 4px;">
+                                <h5 class="text-white">Item Master</h5>
+                                <button onclick="$('#divChiefComplaintItem').slideToggle()" style="margin-top: -19px;" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus">&nbsp;</i>New</button>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding:5px 0;">
+                                <div id="divChiefComplaintItem" style="display:none">
+                                    <div class="col-md-8">
+                                        <div style="display:flex;margin-bottom:4px;">
+                                            <input type="text" id="txtChiefComplaintItemName" style="border-color: #007792;border-radius: 0;" class="form-control" autocomplete="off" placeholder="New Item Name" />
+                                            <button class="btn-success" onclick="InsertChiefComplaintItem()" style="background: #007792;border:none" id="btnSaveTemplate">Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" id="txtSearchGroup" class="form-control" autocomplete="off" placeholder="Search.." />
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="max-height: 315px;min-height: 315px;">
+                                        <table id="tblChiefComplaintItem" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 11%;">Eye</th>
+                                                    <th style="width:11%">Item Id</th>
+                                                    <th>Item Name</th>
+                                                    <th style="width:20%">Duration</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="InsertChiefComplaintPresItems()" style="margin:-12px 5px" class="btn btn-success pull-right"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPresMediTemplate" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top: 5% -9%;height:485px;width:1100px">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                    Prescribed Medicine
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12" id="TemplateMasterRight">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#007792;padding: 4px;">
+                                <h4 class="text-white">Template Items <span style="color:#fff;" id="hiddenTemplateMasterId"></span></h4>
+                                <button style="margin: -23px 5px;float:right" class="btn btn-primary" id="btnSaveMediTempInfo" onclick="InsertMedicinePresItems()"><i class="fa fa-plus">&nbsp;</i>Submit</button>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding:5px 8px;height: 397px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Type</label>
+                                            <select class="form-control" id="ddlSearchType">
+                                                <option value="ETHICAL">By Product</option>
+                                                <option value="BySaltName">By Salt</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Item Name</label>
+                                            <input type="text" id="txtSearchProduct" data-imp class="form-control text-uppercase" autocomplete="off" placeholder="Item Name" />
+                                            <div id="ItemList" style="display:none">
+                                                <table id="tblnavigate">
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <input type="text" id="txtItemID" class="form-control" style="display:none" />
+                                            <input type="text" id="txtIsCash" class="form-control" style="display:none" />
+                                        </div>
+                                        <div class="msg"></div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Dose</label>
+                                            <div class="select-editable">
+                                                <select id="ddlFreMaster" onchange="QtyCalculate()" class="form-control"></select>
+                                                <input type="text" id="txtFreqMaster" name="format" value="Select" class="form-control" placeholder="Dose" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Duration, Days, Quantity</label>
+                                        <div class="form-group" style="display:flex">
+                                            <input type="text" id="txtDuration" onkeyup="QtyCalculate()" data-imp data-int class="form-control text-uppercase" value="0" autocomplete="off" placeholder="Duration" />
+                                            <select id="ddlDays" class="form-control" data-imp><option>Days</option></select>
+                                            <input type="text" id="txtQty" data-imp data-int class="form-control text-uppercase" autocomplete="off" placeholder="Qty" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>When Take</label>
+                                            <div class="select-editable">
+                                                <select id="ddlIntake" class="form-control"></select>
+                                                <input type="text" id="txtIntake" name="format" class="form-control" value="Select" placeholder="In take" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Route</label>
+                                            <div class="select-editable">
+                                                <select id="ddlRoute" class="form-control">
+                                                    <option>Oral</option>
+                                                    <option>Nose</option>
+                                                </select>
+                                                <input type="text" id="txtRoute" name="format" class="form-control" placeholder="Route" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Remark</label>
+                                            <input type="text" id="txtRemark" data-imp class="form-control" autocomplete="off" placeholder="Remark" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <br />
+                                            <button class="btn btn-success" id="btnPresMediItem" onclick="AddMedicineTemplatge()"><i class="fa fa-plus">&nbsp;</i>Add</button>
+                                            <button style="display:none;" class="btn btn-primary" id="btnSaveMediTempInfo" onclick="InsertMedicineTemplateInfo()"><i class="fa fa-plus">&nbsp;</i>Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group" style="max-height: 270px;overflow:auto">
+                                            <img src="~/Content/logo/rx.png" style="width:15px;" />
+                                            <table class="table table-bordered MedicineTemplate" id="MedicineTemplate">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Eyes</th>
+                                                        <th>Name</th>
+                                                        <th>Dose</th>
+                                                        <th>Times</th>
+                                                        <th>Duration</th>
+                                                        <th>Meal</th>
+                                                        <th>Route</th>
+                                                        <th>Qty</th>
+                                                        <th>Remarks</th>
+                                                        <th>CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDistance" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top: 2% -9%;height:570px;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                    Spectacular Prescription
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="spec-title">Spherical</h3>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblSph">
+                                        <tr>
+                                            <td>0.00</td>
+                                            <td>+0.25</td>
+                                            <td>+0.50</td>
+                                            <td>+0.75</td>
+                                            <td>Plain</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Same</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+1.00</td>
+                                            <td>+1.25</td>
+                                            <td>+1.50</td>
+                                            <td>+1.75</td>
+                                            <td>+9.00</td>
+                                            <td>+9.50</td>
+                                            <td>+17.00</td>
+                                            <td>+17.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+2.00</td>
+                                            <td>+2.25</td>
+                                            <td>+2.50</td>
+                                            <td>+2.75</td>
+                                            <td>+10.00</td>
+                                            <td>+10.50</td>
+                                            <td>+18.00</td>
+                                            <td>+18.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+3.00</td>
+                                            <td>+3.25</td>
+                                            <td>+3.50</td>
+                                            <td>+3.75</td>
+                                            <td>+11.00</td>
+                                            <td>+11.50</td>
+                                            <td>+19.00</td>
+                                            <td>+19.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+4.00</td>
+                                            <td>+4.25</td>
+                                            <td>+4.50</td>
+                                            <td>+4.75</td>
+                                            <td>+12.00</td>
+                                            <td>+12.50</td>
+                                            <td>+20.00</td>
+                                            <td>+20.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+5.00</td>
+                                            <td>+5.25</td>
+                                            <td>+5.50</td>
+                                            <td>+5.75</td>
+                                            <td>+13.00</td>
+                                            <td>+13.50</td>
+                                            <td>+21.00</td>
+                                            <td>+21.50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+6.00</td>
+                                            <td>+6.25</td>
+                                            <td>+6.50</td>
+                                            <td>+6.75</td>
+                                            <td>+14.00</td>
+                                            <td>+14.50</td>
+                                            <td>+22.00</td>
+                                            <td>+25.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+7.00</td>
+                                            <td>+7.25</td>
+                                            <td>+7.50</td>
+                                            <td>+7.75</td>
+                                            <td>+15.00</td>
+                                            <td>+15.50</td>
+                                            <td>+23.00</td>
+                                            <td>+26.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+8.00</td>
+                                            <td>+8.25</td>
+                                            <td>+8.50</td>
+                                            <td>+8.75</td>
+                                            <td>+16.00</td>
+                                            <td>+16.50</td>
+                                            <td>+24.00</td>
+                                            <td>+27.00</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h3 class="spec-title">Cylindrical</h3>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblCyl">
+                                        <tr>
+                                            <td>0.00</td>
+                                            <td>+0.25</td>
+                                            <td>+0.50</td>
+                                            <td>+0.75</td>
+                                            <td>+3.00</td>
+                                            <td>+3.25</td>
+                                            <td>+3.50</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>+1.00</td>
+                                            <td>+1.25</td>
+                                            <td>+1.50</td>
+                                            <td>+1.75</td>
+                                            <td>+4.00</td>
+                                            <td></td>
+                                            <td>+4.50</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>+2.00</td>
+                                            <td>+2.25</td>
+                                            <td>+2.50</td>
+                                            <td>+2.75</td>
+                                            <td>+5.00</td>
+                                            <td></td>
+                                            <td>+5.50</td>
+                                            <td>+6.00</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h3 class="spec-title">Axis</h3>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblAxis">
+                                        <tr>
+                                            <td>5&deg;</td>
+                                            <td>30&deg;</td>
+                                            <td>55&deg;</td>
+                                            <td>80&deg;</td>
+                                            <td>95&deg;</td>
+                                            <td>120&deg;</td>
+                                            <td>145&deg;</td>
+                                            <td>170&deg;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10&deg;</td>
+                                            <td>35&deg;</td>
+                                            <td>60&deg;</td>
+                                            <td>85&deg;</td>
+                                            <td>100&deg;</td>
+                                            <td>125&deg;</td>
+                                            <td>150&deg;</td>
+                                            <td>175&deg;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>15&deg;</td>
+                                            <td>40&deg;</td>
+                                            <td>65&deg;</td>
+                                            <td>90&deg;</td>
+                                            <td>105&deg;</td>
+                                            <td>130&deg;</td>
+                                            <td>155&deg;</td>
+                                            <td>180&deg;</td>
+                                        </tr>
+                                        <tr>
+                                            <td>20&deg;</td>
+                                            <td>45&deg;</td>
+                                            <td>70&deg;</td>
+                                            <td></td>
+                                            <td>110&deg;</td>
+                                            <td>135&deg;</td>
+                                            <td>160&deg;</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>25&deg;</td>
+                                            <td>50&deg;</td>
+                                            <td>75&deg;</td>
+                                            <td></td>
+                                            <td>115&deg;</td>
+                                            <td>140&deg;</td>
+                                            <td>165&deg;</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h3 class="spec-title">VA</h3>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblVA">
+                                        <tr>
+                                            <td>6/4</td>
+                                            <td>6/5</td>
+                                            <td>6/6P</td>
+                                            <td>6/6</td>
+                                            <td>6/9P</td>
+                                            <td>6/9</td>
+                                            <td>6/12P</td>
+                                            <td>6/12</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6/18P</td>
+                                            <td>6/18</td>
+                                            <td>6/24P</td>
+                                            <td>6/24</td>
+                                            <td>6/36P</td>
+                                            <td>6/36</td>
+                                            <td>6/60</td>
+                                            <td>< 6/60</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-12 text-center" id="ChooseGlass" style="margin-top:60px;">
+                                <button class="btn SelectedGlass" data-glass="Left">Left Glass&nbsp;<i class="fa fa-check-circle">&nbsp;</i></button>
+                                <button class="btn" data-glass="Right">Right Glass</button>
+                            </div>
+                            <div class="col-md-12" style="margin:80px 0;">
+                                <h3 class="spec-title" style="color:#2478a9">Left Glass Value</h3>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Sph</label>
+                                        <input type="text" id="txtLeftSph" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Cyl</label>
+                                        <input type="text" id="txtLeftCyl" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Axis</label>
+                                        <input type="text" id="txtLeftAxis" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>VA</label>
+                                        <input type="text" id="txtLeftVA" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="margin:-50px 0;">
+                                <h3 class="spec-title" style="color:#2478a9">Right Glass Value</h3>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Sph</label>
+                                        <input type="text" id="txtRightSph" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Cyl</label>
+                                        <input type="text" id="txtRightCyl" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Axis</label>
+                                        <input type="text" id="txtRightAxis" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>VA</label>
+                                        <input type="text" id="txtRightVA" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <br />
+                                    <button class="btn btn-warning" onclick="DistanceSpecInfo()"><i class="fa fa-check-circle">&nbsp;</i>Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalVisualAcuity" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:20%;height:200px;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                    Visual Acuity
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @*<h3 class="spec-title">Spherical</h3>*@
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblSph">
+                                        <tr>
+                                            <td>1/60</td>
+                                            <td>2/60</td>
+                                            <td>3/60</td>
+                                            <td>4/60</td>
+                                            <td>5/60</td>
+                                            <td>6/60</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6/36</td>
+                                            <td>-6/24</td>
+                                            <td>6/18</td>
+                                            <td>6/12</td>
+                                            <td>6/9</td>
+                                            <td>6/6(P)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6/6</td>
+                                            <td>6/4</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalOtherServices" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:20%;height:255px;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                    Other Services
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4 text-center" style="border-right:1px solid #ddd">
+                                <div class="category"><span class="title">Ratina Sigment</span><button class="btn btn-success pull-right" style="margin:1px 36px;height: 22px;line-height:20px;visibility:hidden" disabled><i class="fa fa-check-circle">&nbsp;</i></button></div>
+                                <div style="min-height: 180px;max-height:180px;overflow:auto;border: 1px solid #2478a9;padding: 3px 5px;">
+                                    <img src="~/images/PostSig.png" class="img-responsive" style="padding:8px 0;" />
+                                    <label class="other-services-confirmation"><input id="PosteriorRatina" onchange="UpdateEyeOtherInfo()" type="checkbox" name="RatinaSigment" />&nbsp;Posterior Ratina Sigment</label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-5 text-center" style="border-right:1px solid #ddd">
+                                <div class="category"><span class="title">Eye Lens</span><button class="btn btn-success pull-right" style="margin:1px 94px;height: 22px;line-height:20px;visibility:hidden" disabled><i class="fa fa-check-circle">&nbsp;</i></button></div>
+                                <div style="min-height: 180px;max-height:180px;overflow:auto;border: 1px solid #2478a9;padding: 3px 5px;">
+                                    <img src="~/images/AnteriorSeg.png" class="img-responsive" style="padding:25px 43px" />
+                                    <label class="other-services-confirmation"><input id="EyeLens" onchange="UpdateEyeOtherInfo()" type="checkbox" name="Lens" />&nbsp;Eye Concave Lens</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="category"><span class="title"><button onclick="DeleteAllReport()" class="btn btn-danger btn-xs btnMore"><i class="fa fa-trash">&nbsp;</i>ALL</button>&nbsp;Report</span><button class="btn btn-success pull-right" style="margin:1px;height: 22px;line-height:20px" onclick="UpdateEyeOtherInfo()"><i class="fa fa-check-circle">&nbsp;</i></button></div>
+                                <div style="min-height: 180px;max-height:180px;overflow:auto;border: 1px solid #2478a9;padding: 3px 5px;">
+                                    <table class="table table-bordered" id="tblOtherInfo">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th class="text-center">L/F</th>
+                                                <th class="text-center">R/F</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="flex" style="border: 1px solid #00a65a;padding:0 !important;border-bottom: 1px solid #f9fafe"><button class="btn btn-success btn-xs btn-row">MCT</button></td>
+                                                <td><input type="text" class="form-control" /></td>
+                                                <td><input type="text" class="form-control" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="flex" style="border: 1px solid #00a65a;padding:0 !important"><button class="btn btn-success btn-xs btn-row">AT</button></td>
+                                                <td><input type="text" class="form-control" /></td>
+                                                <td><input type="text" class="form-control" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="flex" style="border-top: 1px solid #f9fafe;padding:0 !important"><button class="btn btn-success btn-xs btn-row">Gonioscopy</button></td>
+                                                <td>
+                                                    <select style="width:100%">
+                                                        <option>I</option>
+                                                        <option>II</option>
+                                                        <option>III</option>
+                                                        <option>IV</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select style="width:100%">
+                                                        <option>I</option>
+                                                        <option>II</option>
+                                                        <option>III</option>
+                                                        <option>IV</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalNear" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top: 2% -9%;height:300px;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                    Near Spectacular Prescription
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="flex" style="margin-bottom:7px;">
+                                    <label style="width: 80%;">Right Eye - Sph</label>
+                                    <input type="text" id="txtNearRightEyeSph" style="width:19%;height:25px" class="form-control" />
+                                </div>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblNearRightEyeSph">
+                                        <tr>
+                                            <td>+0.50</td>
+                                            <td>+0.75</td>
+                                            <td>+1.00</td>
+                                            <td>+1.25</td>
+                                            <td>+1.50</td>
+                                            <td>+1.75</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+2.00</td>
+                                            <td>+2.25</td>
+                                            <td>+2.50</td>
+                                            <td>+2.75</td>
+                                            <td>+3.00</td>
+                                            <td>+3.25</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="flex" style="margin-bottom:7px;">
+                                    <label style="width: 80%;">Right Eye - VA</label>
+                                    <input type="text" id="txtNearRightEyeVA" style="width:19%;height:25px" class="form-control" />
+                                </div>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblNearRightEyeVA">
+                                        <tr>
+                                            <td>N48</td>
+                                            <td>N36</td>
+                                            <td>N24</td>
+                                            <td>N18</td>
+                                            <td>N14</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>N12</td>
+                                            <td>N10</td>
+                                            <td>N8</td>
+                                            <td>N6</td>
+                                            <td>N5</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="flex" style="margin-bottom:7px;">
+                                    <label style="width: 80%;">Left Eye - Sph</label>
+                                    <input type="text" id="txtNearLeftEyeSph" style="width:19%;height:25px" class="form-control" />
+                                </div>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblNearLeftEyeSph">
+                                        <tr>
+                                            <td>+0.50</td>
+                                            <td>+0.75</td>
+                                            <td>+1.00</td>
+                                            <td>+1.25</td>
+                                            <td>+1.50</td>
+                                            <td>+1.75</td>
+                                        </tr>
+                                        <tr>
+                                            <td>+2.00</td>
+                                            <td>+2.25</td>
+                                            <td>+2.50</td>
+                                            <td>+2.75</td>
+                                            <td>+3.00</td>
+                                            <td>+3.25</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="flex" style="margin-bottom:7px;">
+                                    <label style="width: 80%;">Left Eye - VA</label>
+                                    <input type="text" id="txtNearLeftEyeVA" style="width:19%;height:25px" class="form-control" />
+                                </div>
+                                <div class="form-group" style="max-height: 270px;overflow:auto">
+                                    <table class="table table-bordered MedicineTemplate" id="tblNearLeftEyeVA">
+                                        <tr>
+                                            <td>N48</td>
+                                            <td>N36</td>
+                                            <td>N24</td>
+                                            <td>N18</td>
+                                            <td>N14</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>N12</td>
+                                            <td>N10</td>
+                                            <td>N8</td>
+                                            <td>N6</td>
+                                            <td>N5</td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <br />
+                        <button class="btn btn-warning" onclick="NearSpecInfo()"><i class="fa fa-check-circle">&nbsp;</i>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalTest" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top: 2% -9%;height:515px;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                    Test Prescription
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="category"><span class="title">Lab Test</span> <button id="btnNewTestTemplate" class="btn btn-warning btn-xs pull-right"><i class="fa fa-plus"></i></button> </div>
+                                <div id="divTemplate" style="display:none">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <select id="ddlDoctorTemplate" class="form-control" data-imp></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="" style="display:flex">
+                                                <input type="text" id="txtDoctorItemName" style="width:65%;margin-right: 10px;" data-imp class="form-control text-uppercase" placeholder="Item Name" />
+                                                <span data-categoryid style="display:none"></span>
+                                                <span id="hiddenDoctorTempItemId" style="display:none"></span>
+                                                <label>
+                                                    <input type="checkbox" value="1" name="IsFavourite" />&nbsp;Fav
+                                                </label>
+                                                <button id="btnSaveDoctorTemplate" style="margin-left: 6px;" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="min-height: 394px;max-height:394px;overflow:auto;margin-bottom:5px;border: 1px solid #2478a9;padding:5px">
+                                    <div class="search-box" style="display:flex">
+                                        <input type="text" class="form-control" id="txtSearchLaboratoryRadiology" style="width:70%" placeholder="Search Laboratory & Radiology Template" />
+                                        <button class="btn btn-success" onclick="FilteredTemplate('HospitalList','T00009','LaboratoryRadiologyList')"><i class="fa fa-medkit"></i></button>
+                                        <button class="btn btn-warning" onclick="FilteredTemplate('FavouriteList','T00009','LaboratoryRadiologyList')"><i class="fa fa-heart"></i></button>
+                                        <button class="btn btn-primary" onclick="FilteredTemplate('DoctorList','T00009','LaboratoryRadiologyList')"><i class="fa fa-stethoscope"></i></button>
+                                    </div>
+                                    <ul class="ListItems" id="LaboratoryRadiologyList" style="height:254px"></ul>
+                                    <div class="bottom-box">
+                                        <input type="text" class="form-control" placeholder="Write Other Investigation" />
+                                    </div>
+                                    <div class="bottom-box">
+                                        <textarea class="form-control" placeholder="Enter Laboratory & Radiology Remarks" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="category"><span class="title">Prescribed Test Info</span></div>
+                        <div style="min-height: 400px;max-height:400px;overflow:auto;margin-bottom:5px;border: 1px solid #2478a9;">
+
+                            <div class="prescribedItem" id="LaboratoryRadiologyItems">
+                                <templategroup id="T00009"><b>Investigation : </b></templategroup><br>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-warning" onclick="InsertTestPresItems()"><i class="fa fa-check-circle">&nbsp;</i>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<div class="modal fade" id="modalNextFollowUp" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 30%">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success">
+                <h4 class="modal-title">
+                    Next Follow-Up
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="date" id="txtFollowUpDate" data-imp class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" style="display:flex">
+                            <textarea class="form-control" id="txtFollowUpRemark" rows="1" placeholder="Follow-Up Remark"></textarea>
+                            <button id="btnSaveDoctorTemplate" style="margin-left: 6px;" class="btn btn-success">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPrevSpecInfo" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                   Previous Spec Info
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="divPrevSpecInfo">                                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPrevVisualAcuityInfo" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #007792;color:#fff;padding: 1px 10px;">
+                <h4 class="modal-title">
+                    Previous Visual Acuity Info
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="divPrevVisualAcuityInfo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

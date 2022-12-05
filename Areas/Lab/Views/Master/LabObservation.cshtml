@@ -1,0 +1,551 @@
+﻿
+@{
+    ViewBag.Title = "LabObservation";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Lab/JsModule/Labobservation.js"></script>
+
+<style>
+    .panel {
+        margin-bottom: 2px !important;
+    }
+
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 2px 0;
+        margin-top: 1px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    .modal-header {
+        min-height: 16.42857143px;
+        padding: 2px 12px;
+        border-bottom: 1px solid #dfe8f1;
+        background: #337ab7;
+    }
+
+    .select2-container .select2-selection--single {
+        height: 20px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        line-height: 16px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow b {
+        top: 40%;
+    }
+</style>
+
+<style>
+    .mycustom {
+        position: relative;
+    }
+
+        .mycustom input[type=text] {
+            border: none;
+            width: 100%;
+            padding-right: 123px;
+        }
+
+        .mycustom .input-group-prepend {
+            position: absolute;
+            right: -3px;
+            top: -2px;
+            bottom: 4px;
+            z-index: 9;
+        }
+</style>
+
+<div id="page-content">
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Investigation Link</h4>
+                </div>
+                <div class="panel-body" style="height:545px;overflow:auto; border: 1px solid #86b3de;">
+                    <div class="col-sm-10 form-group">
+                        <label>Sub Category</label>
+                        <select id="ddlSubCategory" class="form-control border-imp"></select>
+                    </div>
+
+                    <button style="margin-top: 22px;" type="submit" class="btn btn-xs btn-success" onclick="GetInvestigations();"><i class="fa fa-search fa-lg"></i></button>
+
+                    <input type="text" id="txtSearchInvestigation" class="form-control" autocomplete="off" placeholder="Search Test" style="border:1px solid #86b3de" />
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblinvestigation">
+                            <thead>
+                                <tr>
+                                    <th>Test Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Observation Details <span id="spntestname"></span></h4>
+                </div>
+                <div class="panel-body" style="border: 1px solid #86b3de;">
+                    <div class="col-sm-12 form-group" style="display:flex">
+                        <label style="width:40%; margin-right:2px">Observation List</label>
+                        <select id="ddlobservation" class="form-control border-imp"></select>
+                        <button style="width:10%;margin-left:5px" type="submit" class="btn btn-xs btn-success" onclick="AddInvestigationObservationLink()">Add</button>
+                        <button style="width:42%" type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#myModal">Create Observation</button>
+                        <button style="margin-left:35px;width:40%" type="button" class="btn btn-xs btn-info" onclick="ViewTestInterPretation()">Add Test Interpretation</button>
+                        <button style="width:35%;" type="button" class="btn btn-xs btn-danger" onclick="ViewTestComment()">Add Test Comment</button>
+
+                    </div>
+                    <div class="table-responsive" style="height:200px;overflow-y:auto;display:inline-block">
+                        <table class="table table-bordered" id="tblObservationDetails">
+                            <thead>
+                                <tr>
+                                    <th style="width:2%">Edit</th>
+                                    <th style="width:2%">S.No.</th>
+                                    <th style="width:30%">Observation Name</th>
+                                    <th style="width:3%">Header</th>
+                                    <th style="width:3%">Bold</th>
+                                    <th style="width:3%">Italic</th>
+                                    <th style="width:8%">Result Mandatory</th>
+                                    <th style="width:5%">Add Interpretation</th>
+                                    <th style="width:3%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-body form-inline" style="border: 1px solid #86b3de;">
+
+                    <button type="submit" id="btnAddDefaultValue" class="btn btn-xs btn-warning" onclick="ViewDefaultValues()">Add Default Value</button>
+
+                    <div class="form-group" style="margin-left:5px">
+                        <label>Method Name</label>
+                        <input type="text" id="txtMethod" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Decimal Value</label>
+                        <input type="text" id="txtDecVal" class="form-control" style="width:50px" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Show Delta</label>
+                        <input id="chkDelta" type="checkbox" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Value Type</label>
+                        <select id="ddlValueType" class="form-control">
+                            <option value="0">--Please Select--</option>
+                            <option value="Numeric" selected="selected">Numeric</option>
+                            <option value="Text">Text</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Test Unit</label>
+                        <input type="text" id="txtTestUnit" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" id="hidupdobservationid" />
+                        <input type="hidden" id="hidupdobservationname" />
+                        <input type="hidden" id="hidupdDefaultVal" />
+                        <input type="hidden" id="hidupdIsPrintable" />
+                        <input type="hidden" id="hidupdIsAutoApprove" />
+                        <input type="hidden" id="hidupdIsActive" />
+                        <button type="submit" id="btnUpdateObservation" class="btn btn-xs btn-success" onclick="UpdateObservation()">Update</button>
+                    </div>
+
+                </div>
+                <div class="panel-body" style="border: 1px solid #86b3de;" id="divobservationinfo">
+
+                    <div class="form-group" style="display:flex;">
+                        <label class="col-sm-1">Lab Name</label>
+                        <select id="ddlLabName" class="form-control" style="width:200px" onchange="SearchObservationByLabCode()"></select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Machine Name</label>
+                        <select id="ddlMachine" class="form-control border-imp" style="border:1px solid #86b3de"></select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Gender</label>
+                        <select id="ddlGender" class="form-control" style="border:1px solid #86b3de">
+                            <option value="0">-Please Select-</option>
+                            <option value="Male">Male</option>
+                            <option value="FeMale">FeMale</option>
+                            <option value="Both">Both</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>Fr Age(Y)</label>
+                        <input type="text" id="txtFromAgeY" class="form-control" style="border:1px solid #86b3de" onkeyup="onlynumeric(this,1);" />
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>To Age(Y)</label>
+                        <input type="text" id="txtToAgeY" class="form-control" style="border:1px solid #86b3de" onkeyup="onlynumeric(this,2);" />
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>Fr Age(D)</label>
+                        <input type="text" id="txtFromAgeD" class="form-control disabled" style="border:1px solid #86b3de;" />
+                    </div>
+
+                    <div class="col-sm-1 form-group">
+                        <label>To Age(D)</label>
+                        <input type="text" id="txtToAgeD" class="form-control disabled" style="border:1px solid #86b3de;" />
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>Min Value</label>
+                        <input type="text" id="txtMinValue" class="form-control" style="border:1px solid #86b3de" onkeyup="numericdecimal(this);" />
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>Max Value</label>
+                        <input type="text" id="txtMaxValue" class="form-control" style="border:1px solid #86b3de" onkeyup="numericdecimal(this);" />
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>Panic Low</label>
+                        <input type="text" id="txtPanicLow" class="form-control" style="border:1px solid #86b3de" onkeyup="numericdecimal(this);" />
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>Panic High</label>
+                        <input type="text" id="txtPanicHigh" class="form-control" style="border:1px solid #86b3de" onkeyup="numericdecimal(this);" />
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Method Name</label>
+                        <input type="text" id="txtMethod1" class="form-control" />
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Test Unit</label>
+                        <input type="text" id="txtTestUnit1" class="form-control" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Display Reading</label>
+                        <div class="input-group mycustom">
+                            <input id="txtDisplayReading" type="text" class="form-control disabled" placeholder="Display Reading" style="border:1px solid #86b3de">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModalReading">Add Reading</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <button type="submit" style="margin: 21px 0 0 0;" class="btn btn-xs btn-success" onclick="AddObservationInfo()">Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Observation Info Details </h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" style="height:150px;overflow-y:auto">
+                        <table class="table table-bordered" id="tblObservationInfo">
+                            <thead>
+                                <tr>
+                                    <th style="width:13%">Machine Name</th>
+                                    <th style="width:25%">Observation Name</th>
+                                    <th>Prefix</th>
+                                    <th>Gender</th>
+                                    <th>Age From</th>
+                                    <th>Age To</th>
+                                    <th>Low Value</th>
+                                    <th>High Value</th>
+                                    <th>Panic Low</th>
+                                    <th>Panic High</th>
+                                    @*<th>Is Reflex</th>*@
+                                    <th style="width:3%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="myModalTestInterpretation" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Test InterPretation <span id="spnInterpretation"></span></h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <textarea class="form-control" id="txtTestInterpretation" placeholder="Describe Test Interpretation here..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="margin-left: 10px;" class="btn btn-warning btn-xs pull-left" onclick="DeleteTestInterpretation()">Delete</button>
+                <button type="button" class="btn btn-success btn-xs" onclick="AddUpdateTestInterpretation()">Save</button>
+                <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalTestComment" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Test Comment <span id="spnComment" style="font-weight:bold"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <textarea class="form-control" id="txtTestComment" placeholder="Describe Test Comment here..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" style="margin-left: 10px;" class="btn btn-warning btn-xs pull-left" onclick="DeleteTestComment()">Delete</button>
+                <button type="button" class="btn btn-success btn-xs" onclick="AddUpdateTestComment()">Save</button>
+                <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create Observation</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel-body" style="">
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label>Observation Name</label>
+                            <input type="text" id="txtObservationName" class="form-control border-imp" />
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Method Name</label>
+                            <input type="text" id="txtMethodName" class="form-control border-imp" />
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Decimal Place</label>
+                            <input type="text" id="txtDecimalPlace" class="form-control border-imp" />
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Default Value</label>
+                            <input type="text" id="txtDefaultValue" class="form-control" />
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Value Type</label>
+                            <select id="ddlValueTypeName" class="form-control">
+                                <option value="0">--Please Select--</option>
+                                <option value="Numeric" selected="selected">Numeric</option>
+                                <option value="Text">Text</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Test Unit</label>
+                            <input type="text" id="txtTestUnitval" class="form-control" />
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-3 col-xs-4 form-group">
+                            <label>IsPrintable</label>
+                            <br />
+                            <label><input type="radio" value="1" name="IsPrintable"> Yes</label>
+                            <label><input type="radio" value="0" name="IsPrintable" checked=""> No</label>
+                        </div>
+
+                        <div class="col-md-3 col-xs-4 form-group">
+                            <label>Auto Appove</label>
+                            <br />
+                            <label><input type="radio" value="1" name="IsAutoAppove"> Yes</label>
+                            <label><input type="radio" value="0" name="IsAutoAppove" checked=""> No</label>
+                        </div>
+
+                        <div class="col-md-3 col-xs-4 form-group">
+                            <label>Is Delta Required</label>
+                            <br />
+                            <label><input type="radio" value="1" name="IsDeltaRequired"> Yes</label>
+                            <label><input type="radio" value="0" name="IsDeltaRequired" checked=""> No</label>
+                        </div>
+
+                        <div class="col-md-3 col-xs-4 form-group">
+                            <label>Is Active</label>
+                            <br />
+                            <label><input type="radio" value="1" name="IsActive" checked=""> Yes</label>
+                            <label><input type="radio" value="0" name="IsActive"> No</label>
+                        </div>
+                    </div>
+                    <input type="submit" id="btnObservation" class="btn btn-success btn-xs pull-right" value="Save" onclick="AddObservation();" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myModalInterpretation" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Interpretation</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12 form-group">
+                    <textarea class="form-control" id="txtInterpretation" placeholder="Describe About here..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="hidtestcodeIntpretation" />
+                <input type="hidden" id="hidObservationidIntpretation" />
+                <button type="button" class="btn btn-success btn-xs" onclick="UpdateInterpretation()">Save</button>
+                <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myModalReading" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Reading</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <textarea class="form-control" id="txtReading" placeholder="Describe Reading here..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-xs" onclick="AssignReading();">Save</button>
+                <button type="button" class="btn btn-danger btn-xs" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="myDefaultValueModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width:400px;">
+        <!-- Modal content-->
+        <div class="modal-content" style="width: 400px;margin: 0 auto;">
+            <div class="modal-header">
+                <button type="button" class="close text-red" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Default Value <span id="spnDefaultValue"></span></h4>
+            </div>
+            <div class="modal-body" style="padding:0">
+                <div class="panel-body" style="">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-7 form-group">
+                                <label>Default Value</label>
+                                <input type="text" id="txtdefaultName" class="form-control border-imp" />
+                            </div>
+                            <input type="submit" id="btnAddDefaultValue" class="btn btn-success btn-xs" value="Save" onclick="AddDefaultValue();" style="margin-top: 21px;" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="table-responsive" style="height:150px;overflow-y:auto;display:inline-block">
+                                    <table class="table table-bordered" id="tblDefaultvalueInfo">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:2%">Action</th>
+                                                <th style="width:48%">Observation Name</th>
+                                                <th style="width:48%">Default Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-xs pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        CKEDITOR.replace('txtInterpretation',
+            {
+                enterMode: CKEDITOR.ENTER_BR,
+                shiftEnterMode: CKEDITOR.ENTER_P,
+            });
+        CKEDITOR.replace('txtReading',
+            {
+                enterMode: CKEDITOR.ENTER_BR,
+                shiftEnterMode: CKEDITOR.ENTER_P,
+            });
+        CKEDITOR.replace('txtTestInterpretation',
+            {
+                enterMode: CKEDITOR.ENTER_BR,
+                shiftEnterMode: CKEDITOR.ENTER_P,
+            });
+        CKEDITOR.replace('txtTestComment',
+            {
+                enterMode: CKEDITOR.ENTER_BR,
+                shiftEnterMode: CKEDITOR.ENTER_P,
+            });
+    }
+</script>

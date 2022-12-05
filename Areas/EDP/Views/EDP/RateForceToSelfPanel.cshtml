@@ -1,0 +1,328 @@
+﻿
+@{
+    ViewBag.Title = "RateForceToSelfPanel";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/EDP/JsModule/RateForceToSelfPanel.js"></script>
+<style>
+    .section-header {
+        background: #ffffff;
+        min-height: 570px;
+        max-height: 570px;
+        padding: 3px;
+        margin-bottom: 3px;
+        border: 1px solid #2478a9;
+    }
+
+    .title {
+        background: #2478a9;
+        color: #fff;
+        padding: 3px 63px 2px 6px;
+        top: 3px;
+        position: relative;
+    }
+
+        .title:after {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            content: '';
+            border-right: -2px solid transparent;
+            border-left: 25px solid transparent;
+            border-top: 25px solid #fff;
+        }
+
+    .category {
+        font-weight: bold;
+        background: #fafcfe;
+        display: flow-root;
+        border: 1px solid #2478a9;
+    }
+
+    .section {
+        min-height: 142px;
+        max-height: 142px;
+        overflow: auto;
+        margin-bottom: 5px;
+        border: 1px solid #2478a9;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<style>
+    label.doctor {
+        width: 40%;
+        background: #3c8dbc;
+        height: 28px;
+        text-align: center;
+        padding: 4px;
+        color: #fff;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 373px;
+        max-width: 500px;
+        max-height: 310px;
+        overflow: hidden;
+        overflow-y: auto;
+        position: absolute;
+        z-index: 999;
+        background: #fff;
+        top: 28px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 0px;
+        border-radius: 3px;
+    }
+
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 180px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .msg {
+        color: #ffffff;
+        background: #dd8803;
+        width: max-content;
+        padding: 5px 14px;
+        position: absolute;
+        bottom: 39px;
+        z-index: 10;
+        left: 11px;
+        border-radius: 2px;
+        display: none;
+    }
+
+        .msg span {
+            background: #ff0049;
+            padding: 2px;
+            border-radius: 20px;
+            width: 13px;
+            height: 13px;
+            font-size: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    .col-md-3, .col-md-4 {
+        padding: 0;
+    }
+
+    .example-box-wrapper {
+        margin: 10px 20px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="ml15">
+                    <div class="category"><span class="title" style="top:0;padding:0px 50px 0px 6px">Panel List</span></div>
+                    <div class="section-header">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="text" id="txtSearch" onkeyup="searchTable('txtSearch','tblPanel')" autocomplete="off" class="form-control" placeholder="Search.." />
+                            </div>
+                        </div>
+                        <hr style="margin:5px;" />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="min-height:513px;overflow:auto">
+                                        <table id="tblPanel" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:1%">#</th>
+                                                    <th style="width:25%">Panel Name</th>
+                                                    <th style="width:1%">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="category"><span class="title" style="top:0;padding:0px 50px 0px 6px">Items and Panel Info</span></div>
+                        <div class="section-header" style="min-height: 570px;max-height: 570px;">
+                            <div id="selectedPanel" style="background: #e6f3fd;padding: 4px 6px;margin:1px 0 5px 0"><b>Selected Panel : </b><span></span> </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div style="display:flex">
+                                        <label class="doctor">Category </label>
+                                        <div style="width:100%">
+                                            <select class="form-control" onchange="GetSubCategory()" id="ddlCategory">
+                                                <option>Choose Category </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="display:flex">
+                                        <label class="doctor">Sub Category </label>
+                                        <div style="width:100%">
+                                            <select class="form-control" id="ddlSubCategory" onchange="ItemSearch('RateForce:ItemListBySubCat')">
+                                                <option>Choose Sub Category </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table table-responsive">
+                                        <div id="ProductList" style="min-height:215px">
+                                            <table id="tblItemInfo" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <div style="display:flex">
+                                                                <input type="text" id="txtDBSearch" style="height:20px;" class="form-control" placeholder="Direct Search.." />
+                                                                <input type="text" id="txtFilterSearch" style="height:20px;margin-left: 9px;" class="form-control" placeholder="Filter Item.." />
+                                                            </div>
+                                                        </th>
+                                                        <th style="width: 30%;">SubCatName</th>
+                                                        <th style="width: 1px;">Hierarchical</th>
+                                                        <th style="width: 1px;">IsPayable</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div style="background: #c6ebb3;padding: 4px 6px;margin:1px 0 5px 0"><b>Alloted Items Info </b></div>
+                                    <div class="table table-responsive">
+                                        <div id="ProductList" style="min-height:235px">
+                                            <table id="tblPanelItemInfo" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1%;">S.No.</th>
+                                                        <th>ItemName Name</th>
+                                                        <th style="width: 1px;">Hierarchical</th>
+                                                        <th style="width: 1px;">IsPayable</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

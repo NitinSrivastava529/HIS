@@ -1,0 +1,38 @@
+﻿@media print {
+	#print {
+		display: none;
+	}
+
+	@page {
+		padding: 0;
+		margin: 0 10px;
+		size: A4 portrait;
+	}
+	html {
+		left: 0% !important;
+	}
+}
+
+.box-purple {
+	border: 1px solid #ece9e9;
+	padding: 20px 5px;
+	margin: 10px 0;
+	line-height: 15px;
+	background: #fff;
+}
+
+body {	
+	background: #fff;
+	overflow: hidden auto;
+}
+
+.container {
+	margin-top: 10px;
+}
+.total {
+	line-height: 25px;
+	float: right;
+	background: #e2e2e2;
+	font-size: 18px;	
+	padding: 8px 20px;
+}

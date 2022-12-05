@@ -1,0 +1,279 @@
+﻿<script src="~/Content/ckeditor/ckeditor.js"></script>
+<script src="~/Areas/IPD/JsModule/DoctorView/_DischargeReport.js"></script>
+<style>
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+    /*.select2-container{
+        position:inherit !important;
+    }*/
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    .amount-section .col-md-2 {
+        text-align: center;
+        width: 12%;
+        padding: 0px 5px;
+    }
+
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 180px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .col-md-3, .col-md-4 {
+        padding: 0;
+    }
+
+    .headerInfo {
+        margin: 0;
+        background: #2478a9;
+        color: #fff;
+        padding: 2px 5px;
+        width: 99%;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .flex-margin {
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .select2-container {
+        position: inherit;
+        margin: -1px;
+        border: 1px solid #06a08b;
+    }
+
+    .example-box-wrapper {
+        margin: 0px 15px;
+    }
+
+    .dischargeSection {
+        margin-top: 10px;
+        border: 1px solid #c0d7e5;
+        height: 98px;
+    }
+
+        .dischargeSection label.head {
+            display: block;
+            background: #2478a9;
+            padding: 3px;
+            color: #fff;
+            margin: 1px 2px 4px 1px;
+        }
+
+    .amount-section {
+        margin-top: 10px;
+        border: 1px solid #c0d7e5;
+        height: 98px;
+        background: #aedbf5;
+    }
+
+        .amount-section input {
+            border: 0.5px solid #7a7a7a;
+            text-align: center;
+            font-size: 14px;
+            pointer-events: none;
+            font-weight: bold;
+            background: #e1e1e1;
+        }
+
+        .amount-section label.head {
+            display: block;
+            background: #2478a9;
+            padding: 3px;
+            color: #fff;
+            margin: 1px 2px 4px 1px;
+        }
+
+    .IsDischargeInit {
+        border-radius: 37px;
+        background: #e7e7e7;
+        padding: 6px 10px;
+        margin: 25px 10px;
+    }
+
+    .generateBill {
+        background: #2478a9;
+        color: #fff;
+        margin: 0;
+        width: 100%;
+        padding: 1px 4px;
+    }
+
+    .btnRC {
+        height: 30px;
+        margin: -1px;
+        border-radius: 0;
+    }
+
+    .cke_contents {
+        height: 130px !important;
+    }
+    #modalHeader,#modalTemplate {
+        z-index: 99999;
+    }
+   .bc {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-color: #06a08b;
+    }
+</style>
+<div class="example-box-wrapper">
+    <div class="row dischargeSection" style="height:345px">
+        <div class="" style="height:70px;padding:5px;">
+            <div class="col-md-4 flex-margin">
+                <label style="width:20%">Header</label>
+                <select id="ddlHeader" onchange="GetTemplateListByHeader()" class="form-control"></select>
+                <button class="btn btn-primary btnRC" onclick="$('#modalHeader').modal('show')"><i class="fa fa-plus-circle">&nbsp;</i></button>
+            </div>
+            <div class="col-md-4 flex-margin">
+                <label style="width:30%">Templates</label>
+                <select id="ddlTemplates" onchange="DischargeSummaryByTemplateId()" class="form-control"></select>
+                <button class="btn btn-primary btnRC" onclick="$('#modalTemplate').modal('show')"><i class="fa fa-plus-circle">&nbsp;</i></button>
+            </div>
+            <div class="col-md-12" style="margin:10px 0;">
+                <textarea class="form-control" id="txtTemplate" placeholder="Describe Test Interpretation here..."></textarea>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary pull-left" id="btnSave" onclick="InsertDischargeSummary('InsertDischargeSummary')" style="margin:-5px 0;"><i class="fa fa-sign-in">&nbsp;</i>Add Detail</button>
+                <button class="btn btn-warning pull-right" id="btnSave" onclick="InsertDischargeSummary('UpdateDischargeSummary')" style="margin:-5px 0;"><i class="fa fa-sign-in">&nbsp;</i>Update Detail</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive vertiscrl" style="overflow:auto;height:135px;margin:10px 0;border: 1px solid #2478a9;">
+            <label class="generateBill">Templates Info</label>
+            <table id="tblDischargeSummary" class="table table-bordered">
+                <thead style="background: #00a65a;color: #fff;">
+                    <tr>
+                        <th style="width:1%;text-align:center">#</th>                        
+                        <th>Content</th>
+                        <th>Date</th>
+                        <th style="width:1px;text-align:center">CMD</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalHeader" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 19.5%;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 2px 10px;background: #2478a9;color:#fff">
+                <p class="modal-title">
+                    Header Master
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-8 flex-margin">
+                        <label style="width:20%">Header</label>
+                        <input type="text" id="txtHeaderName" class="form-control bc" placeholder="Header" />
+                        <button id="btnSaveHeaderMaster" onclick="InsertUpdateHeader()" class="btn btn-primary btnRC" style="height:28px;"><i class="fa fa-plus-circle">&nbsp;</i></button>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive vertiscrl" style="overflow:auto;height:280px;margin:10px 0;border: 1px solid #2478a9;">
+                            <label class="generateBill">Header Info</label>
+                            <table id="tblHeaderMaster" class="table table-bordered">
+                                <thead style="background: #00a65a;color: #fff;">
+                                    <tr>
+                                        <th style="width:1%;text-align:center">#</th>
+                                        <th>Header</th>                                    
+                                        <th style="width:20%;">Date</th>
+                                        <th style="width:1px;text-align:center">CMD</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalTemplate" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 19.5%;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 2px 10px;background: #2478a9;color:#fff">
+                <p class="modal-title">
+                    Template Master
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-6 flex">
+                        <label style="width:20%">Header</label>
+                        <select id="ddlHeaderMaster" class="form-control"></select>                        
+                    </div>
+                    <div class="col-md-6 flex">
+                        <label style="width:35%">Template</label>
+                        <input type="text" id="txtTemplateName" class="form-control bc" placeholder="Template" />
+                        <button id="btnSaveTemplateMaster" onclick="InsertUpdateTemplate()" class="btn btn-primary btnRC" style="height:28px;"><i class="fa fa-plus-circle">&nbsp;</i></button>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="table-responsive vertiscrl" style="overflow:auto;height:280px;margin:10px 0;border: 1px solid #2478a9;">
+                            <label class="generateBill">Template Info</label>
+                            <table id="tblTemplateMaster" class="table table-bordered">
+                                <thead style="background: #00a65a;color: #fff;">
+                                    <tr>
+                                        <th style="width:1%;text-align:center">#</th>
+                                        <th>Template</th>
+                                        <th style="width:20%;">Date</th>
+                                        <th style="width:1px;text-align:center">CMD</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

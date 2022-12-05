@@ -1,0 +1,268 @@
+﻿<script src="~/Areas/IPD/JsModule/BillingView/_BillingFinalization.js"></script>
+<style>
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+    /*.select2-container{
+        position:inherit !important;
+    }*/
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    .amount-section .col-md-2 {
+        text-align: center;
+        width: 12%;
+        padding: 0px 5px;
+    }
+
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 180px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .col-md-3, .col-md-4 {
+        padding: 0;
+    }
+
+    .headerInfo {
+        margin: 0;
+        background: #2478a9;
+        color: #fff;
+        padding: 2px 5px;
+        width: 99%;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+        border: 1px solid #00a792;
+    }
+
+
+    .example-box-wrapper {
+        margin: 0px 15px;
+    }
+
+    .dischargeSection {
+        margin-top: 10px;
+        border: 1px solid #c0d7e5;
+        height: 98px;
+    }
+
+        .dischargeSection label.head {
+            display: block;
+            background: #2478a9;
+            padding: 3px;
+            color: #fff;
+            margin: 1px 2px 4px 1px;
+        }
+
+    .amount-section {
+        margin-top: 10px;
+        border: 1px solid #c0d7e5;
+        height: 98px;
+        background: #aedbf5;
+    }
+
+        .amount-section input {
+            border: 0.5px solid #7a7a7a;
+            text-align: center;
+            font-size: 14px;
+            pointer-events: none;
+            font-weight: bold;
+            background: #e1e1e1;
+        }
+
+        .amount-section label.head {
+            display: block;
+            background: #2478a9;
+            padding: 3px;
+            color: #fff;
+            margin: 1px 2px 4px 1px;
+        }
+
+    .IsDischargeInit {
+        border-radius: 37px;
+        background: #e7e7e7;
+        padding: 6px 10px;
+        margin: 25px 10px;
+    }
+
+    .generateBill {
+        background: #2478a9;
+        color: #fff;
+        margin: 0;
+        width: 100%;
+        padding: 1px 4px;
+    }
+
+    #tblGenerateBillInfo tbody td, #tblGenerateBillInfo tbody input[type=number] {
+        font-size: 13px;
+        font-weight: bold;
+    }
+    .bc {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-color: #06a08b;
+    }
+    .btnRC {
+        height: 30px;
+        margin: -1px;
+        border-radius: 0;
+    }
+    .finalBill {
+        background: #def5f3;
+        padding: 11px 5px;
+        border: 1px solid #201a132e;
+    }
+</style>
+<div class="example-box-wrapper">
+    <div class="row amount-section">
+        <label class="head">Billing Info</label>
+        <div class="col-md-2">
+            <label>Gross Amount</label>
+            <input type="text" id="txtGrossAmt" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Panel Discount</label>
+            <input type="text" id="txtPDiscount" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Adl. Discount</label>
+            <input type="text" id="txtAdlDiscount" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Total Discount</label>
+            <input type="text" id="txtDiscount" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Net Amount</label>
+            <input type="text" id="txtNetAmt" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Advance Amount</label>
+            <div class="flex">
+                <input type="text" id="txtAdvanceAmt" class="form-control" />
+                <button class="btn btn-primary pull-right" id="btnGenerateBill" onclick="$('#modalAdvancePayment').modal('show')" style="border-radius: 0;margin: -2px 0;height: 28px;"><i class="fa fa-plus">&nbsp;</i></button>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Balance Amount</label>
+            <input type="text" id="txtBalanceAmt" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Approval Amount</label>
+            <input type="text" id="txtApprovalAmt" class="form-control" />
+        </div>
+        <hr />
+    </div>
+    <div class="row dischargeSection" style="height:50px;padding: 5px 0;">
+        <div class="col-md-12">
+            <div class="row" style="height:50px;padding:5px;">
+                <div class="col-md-12" style="display: inline-flex;align-items: center;">
+                    <label>Billing Type : </label>
+                    <label><input type="radio" checked name="billing-type" value="OpenBill" />&nbsp;Open Bill</label>
+                    <label><input type="radio" name="billing-type" value="PackagedBill" />&nbsp;Packaged Bill</label>
+                    <label><input type="radio" name="billing-type" value="MixedBill" />&nbsp;Mixed Bill</label>
+                    <label><input type="radio" name="billing-type" value="MixedBill" />&nbsp;Mixed Bill</label>
+                    <textarea id="txtRemark" rows="1" style="width: 47%;margin: 0 10px;border-color: #ddd;height: 35px;" class="form-control1" placeholder="Remark.."></textarea>
+                    <button class="btn btn-primary pull-right btnRC" id="btnGenerateBill" onclick="GenerateBill()" style="margin:5px 0;"><i class="fa fa-sign-in">&nbsp;</i>Generate Bill</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding: 0;">
+            <div class="table-responsive vertiscrl" style="overflow:auto;height:80px;margin:10px 0;border: 1px solid #2478a9;">
+                <label class="generateBill">Generated Bill Info</label>
+                <table id="tblGenerateBillInfo" class="table table-bordered">
+                    <thead style="background: #00a65a;color: #fff;">
+                        <tr>
+                            <th>Billing Type</th>
+                            <th>Bill No</th>
+                            <th class="text-right">Total Amount</th>
+                            <th class="text-right">Panel Discount</th>
+                            <th class="text-right">Addl. Discount</th>
+                            <th class="text-right">Total Discount</th>
+                            <th class="text-right">Net Amount</th>
+                            <th class="text-right">Round off</th>
+                            <th class="text-right">Net Payable</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row finalBill">
+        <div class="col-md-4">
+            <button class="btn btn-primary btnRC" onclick="Receipt_IPDBillSummary()" id="btnPrintBill"><i class="fa fa-print">&nbsp;</i>Print Bill</button>
+            <button class="btn btn-warning btnRC" onclick="Receipt_IPDDischargeReport()" id="btnPrintBill"><i class="fa fa-print">&nbsp;</i>Print Discharge Bill</button>
+        </div>
+        <div class="col-md-3">
+            <div style="display:flex;align-items:center">
+                <label style="white-space: pre;">Panel Approval Amount : </label>
+                <input type="text" id="txtPanelApprovalAmount" style="margin:0 5px" class="form-control bc" placeholder="0" />
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div style="display:flex;align-items:center">
+                <label style="white-space: pre;">Co-Payment : </label>
+                <input type="text" id="txtCoPayment" class="form-control bc" placeholder="0" />
+                <button id="btnSaveApproval" onclick="SaveCloseApproval('SaveApprovalAmount')" class="btn btn-primary btnRC" style="height:28px;width:30%;margin:0 10px;"><i class="fa fa-plus-circle">&nbsp;</i>Save</button>
+                <button id="btnCloseBill" onclick="SaveCloseApproval('CloseBill')" class="btn btn-danger btnRC" style="height:28px;width:52%;"><i class="fa fa-window-close-o">&nbsp;</i>Close Bill</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAdvancePayment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 19.5%;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 2px 10px;background: #2478a9;color:#fff">
+                <p class="modal-title">
+                    Advance Payment
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-12">
+                        @Html.Partial("_AdvancePayment")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

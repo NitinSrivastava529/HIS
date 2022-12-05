@@ -1,0 +1,205 @@
+﻿
+<style>
+	input[type=text] {
+		height: 18px;
+	}
+
+	.Vital-title {
+		padding-bottom: 5px;
+		border: 1px solid #404040;
+		text-align: center;
+		color: #000;
+		font-family: Verdana, Arial, sans-serif;
+		font-weight: bold;
+	}
+
+	.Vital-body {
+		margin-top: 2px;
+		border: 1px solid #404040;
+		font-family: Verdana, Arial, sans-serif;
+	}
+
+	.btn-flat {
+		border-radius: 2px;
+		border: none;
+		padding: 0;
+	}
+	#tblVitalSign thead th {
+		background: #0076d0;
+		color: #fff;
+	}
+	.panel-body {
+		background: url(http://192.168.4.10/HIS/Images/patter.jpg);
+	}
+</style>
+<script src="~/Areas/OPD/JsModule/Prescription/VitalSign.js"></script>
+<div style="padding:0 2px">
+	<div class="Vital-title">
+		<span>Vital Examination</span>
+	</div>
+	<div class="Vital-body">
+		<div class="panel">
+			<div class="panel-heading" style="background:#0076d0;padding:1px 10px;">
+				<p class="text-white">Physical Examination : </p>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-1">
+								<label class="pull-left">
+									BP Sys
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtBpSys" type="text" maxlength="7" id="txtBpSys" tabindex="15" title="Enter BP" class="requiredField" onkeypress="return checkForSecond(this,event)" style="width:50px;">
+								<span class="style2">mm/Hg</span>
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									BP Dys
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtBpDys" type="text" maxlength="7" id="txtBpDys" tabindex="15" title="Enter BP" class="requiredField" onkeypress="return checkForSecond(this,event)" style="width:50px;">
+								<span class="style2">mm/Hg</span>
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									Pulse
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtPulse" type="text" maxlength="5" id="txtPulse" tabindex="16" title="Enter p" class="requiredField" onkeypress="return checkForSecondDecimal(this,event)" style="width:50px;">
+								<span class="style2">p-m</span>
+
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									Resp
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtResp" type="text" maxlength="5" id="txtResp" tabindex="17" title="Enter R" onkeypress="return checkForSecondDecimal(this,event)" style="width:50px;"><span class="style2">BPM</span><span style="color: Red; font-size: 8px;"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-1">
+								<label class="pull-left">
+									HT
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtHT" type="text" maxlength="5" id="txtHT" tabindex="19" title="Enter HT" onkeypress="return checkForSecondDecimal(this,event)" onkeyup="convfromcmeters();" style="width:50px;">
+
+								<span class="style2">CM</span>
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									WT
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtWT" type="text" maxlength="5" id="txtWT" tabindex="20" title="Enter WT" onkeypress="return checkForSecondDecimal(this,event)" onkeyup="convfromcmeters();" style="width:50px;">
+
+								<span class="style2">Kg</span>
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									Arm Span
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtArmSpan" type="text" maxlength="5" id="txtArmSpan" tabindex="20" title="Enter Arm Span" onkeypress="return checkForSecondDecimal(this,event)" style="width:50px;">
+								<span class="style2">CM</span>
+
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									Temp..
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtTemprarture" type="text" maxlength="5" id="txtTemprarture" tabindex="18" title="Enter T" onkeypress="return checkForSecondDecimal(this,event)" style="width:49px;">
+								<span class="style2">°C</span><span style="color: Red; font-size: 8px;"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-1">
+								<label class="pull-left">
+									IBW
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtIBW" type="text" maxlength="5" id="txtIBW" tabindex="20" title="Enter IBW" onkeypress="return checkForSecondDecimal(this,event)" style="width:50px;">
+								<span class="style2">Kg</span>
+
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									SPO2
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtSPO2" type="text" maxlength="5" id="txtSPO2" tabindex="20" title="Enter IBW Percentage" onkeypress="return checkForSecondDecimal(this,event)" style="width:50px;">
+								<input name="txtSPO2" type="text" maxlength="5" id="txtSPO2" tabindex="20" title="Enter IBW Percentage" onkeypress="return checkForSecondDecimal(this,event)" style="width:50px;">
+							</div>
+							<div class="col-md-1">
+								<label class="pull-left">
+									Sit Height
+								</label>
+								<b class="pull-right">:</b>
+							</div>
+							<div class="col-md-2">
+								<input name="txtSittingHeight" type="text" maxlength="5" id="txtSittingHeight" tabindex="20" title="Enter Sitting Height" onkeypress="return checkForSecondDecimal(this,event)" style="width:50px;">
+								<span class="style2">CM</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<button class="btn-primary btn-md" id="btnSaveVital">Save</button>
+								<button class="btn-warning btn-md" onclick="Clear()">Cancel</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<table class="table table-bordered" id="tblVitalSign">
+									<thead>
+										<tr>
+											<th>SR.NO.</th>
+											<th>BP</th>
+											<th>Pulse</th>
+											<th>Resp.</th>
+											<th>Temp.</th>
+											<th>Height(cm)</th>
+											<th>Weight(kg)</th>
+											<th>BMI</th>
+											<th>Arm Span</th>
+											<th>Arm Span</th>
+											<th>IBW</th>
+											<th>SPO2</th>
+											<th>Entry By</th>
+											<th>Entry Date Time</th>
+											<th>Edit</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

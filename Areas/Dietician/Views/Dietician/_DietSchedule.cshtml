@@ -1,0 +1,323 @@
+﻿<style>
+    .toolTipRemark {
+        z-index: 100;
+        position: absolute;
+        background: #fbef9cfa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 3px 7px;
+        font-size: 12px;
+        margin: -20px 10px;
+    }
+
+        .toolTipRemark:after {
+            content: '';
+            position: absolute;
+            left: 0px;
+            top: 24px;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #cf0d0dfa;
+            border-left: 6px solid transparent;
+            border-radius: 30px;
+        }
+    .bgLightGreen {
+        background: #fffee6 !important;
+    }
+
+        .bgLightGreen table td, .bgLightGreen table th {
+            background: #fffee6 !important;
+        }
+   
+    #tblDietItemDetail tr[class=AddItem] .form-control {
+        height: 25px;
+        margin-bottom: 2px;
+    }
+
+    #tblDietItemDetail tr[class=AddItem] {
+        background: #85bd9e;
+    }
+
+        #tblDietItemDetail tr[class=AddItem] input:disabled {
+            background: #ddd;
+            opacity: 1;
+        }
+
+    #patientInfo tbody td {
+        border: none;
+        font-size: 12px;
+        padding: 4px 0px;
+    }
+
+    .patientInfo {
+        border: 1px solid #efefef;
+        background: #fff8e5;
+        padding: 5px;
+        margin: 0 10px;
+        width: -webkit-fill-available;
+    }
+
+    .selected {
+        border-top: 5px groove #26b723 !important;
+    }
+
+    .btn-add {
+        border: none;
+        padding: 6px;
+        margin-left: 1px;
+    }
+
+    .btn-tbl {
+        border: none;
+        padding: 1px 9px;
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+        margin: 0 0 5px 0;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+
+    h3.modal-schedule {
+        margin: 0;
+        background: #2492b3;
+        color: #ffffff;
+        padding: 4px;
+        font-size: 16px;
+        border-bottom: 1px solid white;
+    }
+
+    #tblSchedule, #tblStatus {
+        margin: 0;
+        border: 1px solid #2492b3;
+        min-height: 130px;
+        max-height: 130px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .bcc {
+        border: 1px solid #f39c12;
+        border-radius: 0;
+    }
+
+    .btnRate {
+        height: 28px;
+        width: 30%;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    .patient-list {
+        border: 1px solid #e9e9e9;
+        margin: 4px 0;
+        background: #f3f3f3;
+        padding: 3px;
+    }
+
+    #tblInfo tr th, #tblInfo tr td {
+        padding: 1px;
+        color: #4b5056;
+        background-color: #d4ecfd;
+    }
+
+    .patient-list label {
+        font-size: 11px;
+    }
+
+    span1 {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .discharge {
+        background: #ddd;
+        width: 100%;
+        padding: 0px 3px;
+    }
+
+    .pfeedbackList {
+        height: 90%
+    }
+</style>
+<div class="row">
+    <div class="col-md-12 patientInfo">
+        <table id="patientInfo" class="table" style="margin:0">
+            <tr>
+                <td><b>IPD No.</b></td>
+                <td><b>:</b></td>
+                <td id="txtIPDNo"></td>
+                <td>&nbsp;</td>
+                <td><b>Patient Name</b></td>
+                <td><b>:</b></td>
+                <td id="txtPatientName"></td>
+            </tr>
+            <tr>
+                <td><b>Age</b></td>
+                <td><b>:</b></td>
+                <td id="txtAge"></td>
+                <td>&nbsp;</td>
+                <td><b>Gender</b></td>
+                <td><b>:</b></td>
+                <td id="txtGender"></td>
+            </tr>
+            <tr>
+                <td><b>Doctor Name</b></td>
+                <td><b>:</b></td>
+                <td id="txtDoctorId" style="display:none"></td>
+                <td id="txtDoctorName"></td>
+                <td>&nbsp;</td>
+                <td><b>Diet Recommended</b></td>
+                <td><b>:</b></td>
+                <td><span class='dietScheduled' id="txtDietRecommended"></span></td>
+            </tr>
+            <tr>
+                <td style="width: 22%;"><b>Medical Procedure</b></td>
+                <td><b>:</b></td>
+                <td style="width: 26%;" id="txtMedicalProcedure"></td>
+                <td>&nbsp;</td>
+                <td style="width: 22%;"><b>PreExis. Disease</b></td>
+                <td><b>:</b></td>
+                <td style="width: 26%;" id="txtPreExistingDisease"></td>
+                <td style="display:none" id="txtFloorName"></td>
+                <td style="display:none" id="txtRoomNo"></td>
+                <td style="display:none" id="txtBedNo"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3 form-group">
+        @*<label>Diet Category</label>
+        <select id="ddlDietCategory" onchange="GetAllDietForDietSchedule();" class="form-control"></select>*@
+        <label>Schedule Date</label>
+        <input type="date" id="txtScheduleDate" style="border-color: #f39c12;" class="form-control bc" />
+    </div>
+    <div class="col-xs-9 form-group">
+        <label>Diet Name</label>
+        <div class="flex">
+            <select id="ddlDietName" class="form-control bc"></select>
+            <button style="width:35%;height:28px;border-radius: 0;margin:0" id="btnGetDietInfoForSchedule" class="btn btn-success"><i class="fa fa-plus">&nbsp;</i>Add</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="scroll" style="height:150px;overflow:auto;border:1px solid #2492b3">
+            <table id="tblDietItemDetail" class="table table-bordered" style="margin-bottom:0">
+                <thead>
+                    <tr>
+                        <th style="width:20%">Item Name <button onclick="NutritionBreakup()" class="btn btn-warning btn-xs">Nut. Breakup</button></th>
+                        <th style="width:10%;text-align:right">Qty</th>
+                        <th style="width:10%;">Measurement</th>
+                        <th style="width:12%;text-align:right">T.Cal.Count( <span id="TotalCalCount"></span> )</th>
+                        <th style="width:1%">CMD</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-8 form-group">
+        <label>Remark : </label>
+        <input type="text" id="txtRemark" class="form-control" style="z-index: 2;position: absolute;width: 90%;" placeholder="Remark" />
+        <select id="ddlRemarks" class="form-control" style="position:relative"></select>
+    </div>
+    <div class="col-xs-4 form-group pull-right">     
+        <button id="btnInsertDietSchedule" style="height:27px;border-radius: 0;margin:23px 10px" onclick="InsertDietSchedule()" class="btn btn-warning"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+    </div>
+</div>
+<div style="background:#fff8e5;margin-bottom:3px;display:inline-block;border: 1px solid #e5d7b0;">
+    <label style="background:#f5e4b8;padding:3px 10px;">Scheduled Diet Info</label>
+    <div class="col-md-12">
+        <div class="scroll" style="height:130px;overflow:auto;border:1px solid #2492b3">
+            <table id="tblScheduledInfo" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width :1%">CMD</th>
+                        <th style="width:35%">Diet Name</th>
+                        <th style="width:20%">Diet Category</th>
+                        <th style="width:20%">Serving Date</th>                     
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    @*<div class="col-md-10 pull-right">
+            <div class="flex">
+                <label style="width:75%;">Re-Schedule Date : </label>
+                <input type="date" id="txtReScheduleDate" style="border-color: #00a65a;" class="form-control bc" />
+                <button style="width:60%;height:28px;border-radius: 0;margin:0" onclick="" class="btn btn-success"><i class="fa fa-sign-in">&nbsp;</i>Re-Schedule</button>
+            </div>
+        </div>*@
+</div>

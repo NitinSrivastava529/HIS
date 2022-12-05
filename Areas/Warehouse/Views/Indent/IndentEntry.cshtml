@@ -1,0 +1,183 @@
+﻿
+@{
+	ViewBag.Title = "IndentEntry";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/Indent/Indent.js?his-version-1.0"></script>
+
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 380px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	#ItemList {
+		box-shadow: 1px 1px 1px #ececec;
+		border: 0.5px solid #ececec;
+		width: 313px;
+		max-width: 313px;
+		max-height: 300px;
+		overflow-x: hidden;
+		position: absolute;
+		z-index: 1;
+		background: #fff;
+		top: 52px;
+	}
+
+		#ItemList table {
+			font-size: 11px;
+			line-height: 22px;
+			width: 100%;
+		}
+
+			#ItemList table td, #ItemListDetails table td, #ItemListDetails table th {
+				padding: 1px 0px 0px 10px;
+			}
+
+			#ItemList table tbody tr, #ItemListDetails table tbody tr {
+				border-bottom: 0.1px solid #eaeaea;
+			}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<input type="button" onclick="Clear()" class="btn btn-success" value="New" />
+								<h4 class="text-white pull-right">Indent Entry</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;">
+								<div class="col-xs-5">
+									<label>Select Cart</label>
+									<div class="form-group">
+										<select id="ddlCartList" class="form-control"></select>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<label>Order</label>
+									<div class="form-group">
+										<input type="text" id="txtOrder" class="form-control" placeholder="New" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<label style="visibility:hidden">Order</label>
+									<div class="form-group">
+										<input type="button" onclick="return CompleteOrder();" placeholder="New" class="btn btn-success" value="Complete Order" />
+									</div>
+								</div>
+							</div>
+                            <div class="panel-body">
+                                <div class="col-xs-5">
+                                    <label for="name" class="control-label">Product Name</label>
+                                    <input type="text" class="form-control" id="txtItemName" placeholder="Product Name">
+                                    <span style="display:none" id="spnitemid"></span>
+                                    <div id="ItemList" style="display:none">
+                                        <table id="tblnavigate">
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <label for="name" class="control-label">Quantity</label>
+                                    <input type="text" class="form-control" id="txtQty" placeholder="Quantity">
+                                </div>
+                                <div class="col-xs-3">
+                                    <label for="name" class="control-label">Remark</label>
+                                    <input type="text" class="form-control" id="txtUserRemark" placeholder="Remark">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label style="visibility:hidden">Order</label>
+                                    <div class="form-group">
+                                        <button id="btnAddItem" type="button" class="btn btn-primary btn-flat" onclick="return InsertUpdateItem()" placeholder="New"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <table class="table table-bordered" id="tblIndentOrrderList">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Indent No</th>
+                                                            <th>Item Code</th>
+                                                            <th>Item Name</th>
+                                                            <th>Order Qty</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

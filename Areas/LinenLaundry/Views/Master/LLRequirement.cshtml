@@ -1,0 +1,114 @@
+﻿
+@{
+	ViewBag.Title = "LLRequirement";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/LinenLaundry/JsModule/LLRequirement.js"></script>
+<style>
+	#tblRequestMaster tbody input[type=text] {
+		height:17px;
+		margin: 2px -4px;
+		border: 1px solid #ababab;
+	}
+	.flex{
+		display:flex;
+	}
+	.bn{
+		border-radius:0;
+		border:none;
+	}
+	.bc {
+		border-radius:0;
+		border-color: #00a65a;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-11">
+				<div class="panel">
+					<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+						<h4 class="text-white">Request Master</h4>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-5 flex">
+								<button class="btn-success bn text-left" style="width:33%">Ward List</button>
+								<select class="form-control bc" id="ddlNursing" onchange="GetReqMaster()" style="width:68%"></select>
+							</div>
+							<div class="col-md-3 flex">
+								<button class="btn-success bn text-left" style="width:40%">Floor List</button>								
+								<select class="form-control bc" id="ddlFloor" onchange="RoomListOfFloor()"></select>
+							</div>
+							<div class="col-md-4 flex form-group">
+								<button class="btn-success bn text-left" style="width:33%">Floor List</button>							
+								<select class="form-control bc" id="ddlRoomList"></select>
+							</div>
+							<div class="col-md-5 flex">
+								<button class="btn-success bn text-left" style="width:33%">No of Beds</button>								
+								<input type="text" id="txtTotalBeds" class="form-control text-right" data-int placeholder="No of Beds" autocomplete="off">
+							</div>
+							<div class="col-md-7 flex form-group">
+								<button class="btn-success bn text-left" style="width:14%">Item List</button>								
+								<div class="input-group" style="display:flex">
+									<select class="form-control bc" id="ddlItem" style="border: 1px solid #00a65a;">
+										<option>Select Item</option>
+									</select>
+									<button class="btn-success" style="width:25%;border: none;" onclick="SaveRequest()"><i class="fa fa-plus">&nbsp;</i>Submit</button>
+								</div>
+							</div>
+						</div>				
+						<div class="row">
+							<div class="col-md-12">
+								<div class="table-responsive" style="max-height: 500px;margin-top: 20px;">
+									<table class="table table-condensed" id="tblRequestMaster">
+										<thead style="position:absolute;top:0;width:98%;z-index:1">
+											<tr>
+												<th style="width:7%">Active</th>
+												<th style="width:7%">Item Id</th>
+												<th style="width:27%">Item Name</th>
+												<th style="width:5%">Beds</th>
+												<th style="width:6%">Tot.Stock/Bed</th>
+												<th style="width:7%">In Use/Bed</th>
+												<th style="width:6%">ReadyToUse/Bed</th>
+												<th style="width:6%">InTransit/Bed</th>
+												<th style="width:6%">Total</th>
+												<th style="width:6%">Action</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+									@*<div style="height:350px;overflow-y:scroll;margin-top: -16pt">
+											<table id="tblRequestMaster" class="table table-bordered table-fixed">
+												<thead>
+													<tr>
+														<th style="width:7%"></th>
+														<th style="width:7%"></th>
+														<th style="width:27%"></th>
+														<th style="width:5%"></th>
+														<th style="width:6%"></th>
+														<th style="width:6%"></th>
+														<th style="width:6%"></th>
+														<th style="width:6%"></th>
+														<th style="width:6%"></th>
+														<th style="width:6%"></th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>*@
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+

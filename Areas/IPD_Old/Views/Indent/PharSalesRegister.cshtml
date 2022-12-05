@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "PharSalesRegister";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/IPD/JsModule/Indent/PharSalesRegister.js"></script>
+<style>
+    .btn-custom {
+        border-radius: 0;
+        width: 27%;
+        margin: 0;
+        height: 28px;
+    }
+
+    #tblItemInfo td {
+        padding: 5px 5px;
+    }
+
+    #tblPatientInfo th, #tblPatientInfo td {
+        background: #e9e9e9;
+        padding: 2px;
+        border: none;
+        line-height: 21px;
+        font-size: 12px;
+    }
+
+    #tblTotalInfo th {
+        font-weight: bold;
+        font-size: 13px;
+        background: #fffaf0;
+        border: none;
+    }
+
+        #tblTotalInfo th:nth-child(3) {
+            text-align: right;
+        }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body" style="padding:5px 10px">
+                        <div class="col-md-2">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="date" id="txtFrom" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="date" id="txtTo" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <button class="btn btn-warning btn-custom" onclick="SaleRegister()"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                        </div>
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive" style="height:500px;overflow:auto;border:1px solid #2492b3">
+                                    <div id="AdmittedIPDPatient">
+                                        <table id="tblSalesRegister" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sale Date</th>
+                                                    <th>Sale Inv No</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Ref. Name</th>
+                                                    <th class="text-right">Total</th>
+                                                    <th class="text-right">Discount</th>
+                                                    <th class="text-right">Net</th>
+                                                    <th class="text-right">Received</th>
+                                                    <th class="text-right">Balance</th>
+                                                    <th>Pay Mode</th>
+                                                    <th style="width:1%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,221 @@
+﻿
+@{
+	ViewBag.Title = "Room";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Masters/JsModule/RoomAndBed.js?his-version-1.0"></script>
+<style>
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 450px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+	input:disabled span.slider{
+		background-color:#ddd !important;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Create And Update Room</h4>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-6">
+											<select id="ddlFloor" class="form-control">
+												<option>Select Floor</option>
+												<option>BASEMENT</option>
+												<option>GROUND FLOOR</option>
+												<option>FIRST FLOOR</option>
+												<option>SECOND FLOOR</option>
+												<option>THIRD FLOOR</option>
+												<option>FOURTH FLOOR</option>
+												<option>FIFTH FLOOR</option>
+												<option>SIXTH FLOOR</option>
+												<option>SAVENTH FLOOR</option>
+												<option>EIGHTH FLOOR</option>
+												<option>NINTH FLOOR</option>
+												<option>TENTH FLOOR</option>
+												<option>ELEVENTH FLOOR</option>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<select id="ddlRoomType" class="form-control">
+													<option>Select Room Type</option>
+													<option>OPD</option>
+													<option>ICU</option>												
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-6">
+											@*<input type="text" id="txtSearch" class="form-control" placeholder="Search.." />*@
+											<select id="ddlBillingCategory" class="form-control">
+												<option>Select Billing Category</option>
+												<option>OPD</option>
+												<option>ICU</option>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+												<input type="text" id="txtRoomNo" data-int data-count="3" class="form-control" placeholder="Room No" />
+												<input type="button" id="btnSaveRoom" class="btn-primary btn-action" onclick="CreateRoom()" value="Create" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr style="margin-top:0" />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll" style="max-height:400px">
+												<span data-itemname style="display:none"></span>
+												<span data-itemid style="display:none"></span>
+												<table id="tblRoom" class="table table-bordered">
+													<thead>
+														<tr>
+															<th style="width:1%">Action</th>
+															<th>Floor Name</th>
+															@*<th>Room Id</th>*@
+															<th style="width: 16%;">Room Name</th>
+															<th>Room Type</th>
+															<th>Billing Category</th>
+															<th>Room Full Name</th>
+															@*<th>On/Off</th>*@
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+											<input type="button" id="btnSaveRoom" class="btn-success pull-right" style="margin-top:10px;padding: 5px;" onclick="InsertRoom()" value="Submit" />
+										</div>										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								@*<input type="button" onclick="Clear()" class="btn btn-success" value="New" />*@
+								<h4 class="text-white text-right">Create And Update Bed</h4>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-6">
+											<select id="ddlFloorForBed" class="form-control">
+												<option>Select Floor</option>
+												<option>BASEMENT</option>
+												<option>GROUND FLOOR</option>
+												<option>FIRST FLOOR</option>
+												<option>SECOND FLOOR</option>
+												<option>THIRD FLOOR</option>
+												<option>FOURTH FLOOR</option>
+												<option>FIFTH FLOOR</option>
+												<option>SIXTH FLOOR</option>
+												<option>SAVENTH FLOOR</option>
+												<option>EIGHTH FLOOR</option>
+												<option>NINTH FLOOR</option>
+												<option>TENTH FLOOR</option>
+												<option>ELEVENTH FLOOR</option>
+											</select>
+										</div>
+										<div class="col-md-6">
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<select id="ddlRoomForBed" class="form-control">												
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-6">
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+												<input type="text" id="txtBedNo" data-int data-count="3" class="form-control" placeholder="Bed No" />
+												<input type="button" id="btnSave" class="btn-primary btn-action" onclick="CreateBed()" value="Create" />
+											</div>
+										</div>
+										<div class="col-md-6">
+											<input type="text" id="txtSearch" class="form-control" placeholder="Search.." />
+										</div>
+									</div>
+								</div>
+								<hr style="margin-top:0" />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll" style="max-height:400px">
+												<span data-itemname style="display:none"></span>
+												<span data-itemid style="display:none"></span>
+												<table id="tblBed" class="table table-bordered">
+													<thead>
+														<tr>
+															<th style="width:1%">Action</th>
+															<th>Floor Name</th>
+															<th>Room Name</th>
+															<th>Bed Name</th>															
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+											<input type="button" id="btnSaveBed" class="btn-success pull-right" style="margin-top:10px;padding: 5px;" onclick="InsertBed()" value="Submit" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

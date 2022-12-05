@@ -1,0 +1,98 @@
+﻿
+@{
+	ViewBag.Title = "PurchaseOrder";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Purchase/PurchaseOrder.js"></script>
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 380px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">							
+								<h4 class="text-white">Purchase Order</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: -1px 20px;">
+								<div class="col-md-7">
+									<div class="form-group" style="display:flex">
+										<label style="width:30%">Order No : </label>
+										<select id="ddlOrderList" class="form-control" data-imp>																					
+										</select>
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<input type="button" id="btnCreate" class="btn btn-success" value="Create" />
+										<input type="button" id="btnClose" class="btn btn-danger" value="Close" />																		
+									</div>
+								</div>					
+							</div>						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "EquipComplaints";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<script src="~/Areas/Assets/JsModule/NewComplaint.js?his-version-1.0"></script>
+<style>
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll-table {
+        width: 100%;
+        max-height: 510px;
+        background: #fff;
+        overflow: overlay;
+        height: 510px;
+        display: block;
+    }   
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-2">
+                            <span class="text-pink">Find : </span>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchComplaint" class="form-control input_pass" value="" placeholder="Search in List...">
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <span class="text-pink">Equip No : </span>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtEqNo" class="form-control input_pass" value="" placeholder="Track Asssets....">
+                                <span id="btnFilterByEq" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive">
+                                    <div id="scroll-table">
+                                        <table id="tblEqComplaint" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dept. Name</th>
+                                                    <th>Section Name</th>
+                                                    <th>Eq. No.</th>
+                                                    <th>Eq. Category</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#dff3ff">                                
+                                <h4 class="text-center pull-right">New Complaints</h4>
+                                <input type="button" id="btnDownloadExcel" class="btn btn-primary" value="Download Excel" />
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 8px 20px;">
+
+                                <div class="table-responsive">
+                                    <table class="table-striped custom-table">
+                                        <tr>
+                                            <td> <b>Dept. : </b><span data-dept></span></td>
+                                            <td><b>Section : </b><span data-section></span></td>
+                                            <td><b>Eq. No. : </b><span data-eqno></span></td>
+                                            <td> <b>Category : </b><span data-eqcategory></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"> <b>Description : </b><span data-description></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4"><span data-note></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <hr style="margin:0 0 10px 0;" />
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="fileinput-new" data-provides="fileinput">
+                                            <label>Complaint : </label>
+                                            <textarea id="txtComplaint" class="form-control"></textarea>
+                                        </div>
+                                        <p class="pull-left text-danger text-bold" style="margin:5px 0;">Last 10 Complaints.</p>
+                                        <input type="button" id="btnSaveComplaint" style="margin:5px 0;" value="Submit" class="btn btn-success pull-right" />
+                                    </div>
+                                </div>
+                                <div class="scroll-table">
+                                    <table id="tblAssetsComplaint" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Compl. Code</th>
+                                                <th>Complaint</th>
+                                                <th>Compl. Date</th>
+                                                <th>Closing Date</th>
+                                                <th>Client Status</th>
+                                                <th>Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+

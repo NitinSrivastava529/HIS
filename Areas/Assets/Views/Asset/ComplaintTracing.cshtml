@@ -1,0 +1,166 @@
+﻿
+@{
+	ViewBag.Title = "ComplaintTracing";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Assets/JsModule/ComplaintTracing.js?mis-version-1.0"></script>
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.panel-body {
+		padding: 15px 15px 0px 20px;
+		position: relative;
+	}
+
+	.table {
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 5px;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		max-height: 510px;
+		overflow: auto;
+		overflow-y: auto;
+	}
+
+	.btnArrow {
+		background: #06aaa8;
+		color: #FFF;
+		border: none;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="col-xs-2">
+							<div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+								<input type="text" id="txtComplaintCode" class="form-control input_pass" placeholder="Trace by Complaint Code...">
+								<input type="button" id="btnTrace" class="btn-success" value="Trace">
+							</div>
+						</div>
+						<div class="col-xs-8">
+							<div class="fileinput fileinput-new input-group select-row" style="width: max-content;padding:5px" data-provides="fileinput">
+							<span data-unit></span>
+							</div>
+						</div>
+						<div class="col-xs-2">
+							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+								<input type="text" id="txtSearchComplaint" class="form-control input_pass" placeholder="Search in List...">
+							</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="example-box-wrapper">
+								<div class="form-horizontal bordered-row">
+									<div class="scroll" style="max-height:300px;">
+										<table id="tblTraceComplaint" class="table table-bordered">
+											<thead>
+												<tr>
+													<th>Asset No.</th>
+													<th>Complaint Code</th>
+													<th>Complaint</th>
+													<th>Date</th>
+													<th>Client Status</th>
+													<th>Client Close Date</th>
+													<th>Head Close Date</th>
+													<th>Close By</th>
+													<th>Amount</th>
+													<th>Acc. Flag(Y/N)</th>
+													<th>Acc. Flag Date</th>
+													<th>Acc. App. By</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="panel">
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<h4>Communication Log</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="panel">
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="scroll" style="max-height: 170px;">
+									<table id="tblComplaintInfo" class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Date</th>
+												<th>Remark</th>
+												<th>Name Of Employee</th>
+											</tr>
+										</thead>
+										<tbody>										
+										</tbody>
+									</table>
+								</div>								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+
+

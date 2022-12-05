@@ -1,0 +1,409 @@
+﻿@{
+    ViewBag.Title = "IPDSafetyRoundFeedback";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/IPD/JsModule/FeedBack/IPDSafetyRoundFeedback.js?ver=1.5"></script>
+<style>
+    #IPDPatientList .table > tbody > tr > td, #IPDPatientList .table > tbody > tr > th, #IPDPatientList .table > tfoot > tr > td, #IPDPatientList .table > tfoot > tr > th,
+    #IPDPatientList .table > thead > tr > td, #IPDPatientList .table > thead > tr > th {
+        font-size: 12px;
+        padding: 4px 2px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: none;
+    }
+
+    .basic {
+        background: #0cdf7e6b;
+    }
+
+        .basic:nth-child(1) {
+            border-top: 5px solid white;
+            border-bottom: 5px solid white;
+        }
+
+    .request {
+        background: #f7e0e0;
+    }
+
+        .request:nth-child(1) {
+            border-top: 5px solid white;
+        }
+
+    .ambulance {
+        background: #fff4dc;
+    }
+
+    #tblEmployee tbody td {
+        padding: 2px;
+        border: 1px solid #ddd !important;
+    }
+
+    #tblAmbulanceMaster tbody tr
+    .btnDoc {
+        margin: 2px 0px;
+        font-size: 18px;
+        height: 17px;
+        line-height: 17px;
+    }
+
+    .btn-add {
+        border: none;
+        padding: 6px;
+        margin-left: 1px;
+    }
+
+    .btn-tbl {
+        border: none;
+        padding: 1px 9px;
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+        margin: 0 0 5px 0;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+
+    .section-feedback {
+        border-top: 2px solid #f39c12;
+        background: #fff;
+        padding: 5px;
+        border-radius: 2px;
+        margin: -12px 0px;
+    }
+
+    .section {
+        border-top: 2px solid #0076d0;
+        background: #fff;
+        padding: 5px;
+        border-radius: 2px;
+        margin: 9px 0px;
+    }
+
+        .section table {
+            margin: 0;
+        }
+
+            .section table th {
+                font-weight: bold;
+            }
+
+            .section table th, .section table td {
+                font-size: 12px;
+            }
+
+    h3.modal-schedule {
+        margin: 0;
+        background: #2492b3;
+        color: #ffffff;
+        padding: 4px;
+        font-size: 16px;
+        border-bottom: 1px solid white;
+    }
+
+    #tblSchedule, #tblStatus {
+        margin: 0;
+        border: 1px solid #2492b3;
+        min-height: 130px;
+        max-height: 130px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .bcc {
+        border: 1px solid #f39c12;
+        border-radius: 0;
+    }
+
+    .btnRate {
+        height: 28px;
+        width: 30%;
+        border-radius: 0;
+        margin: 0;
+    }
+
+    .patient-list {
+        border: 1px solid #e9e9e9;
+        margin: 4px 0;
+        background: #f3f3f3;
+        padding: 3px;
+    }
+
+    #tblInfo tr th, #tblInfo tr td {
+        padding: 1px;
+        color: #4b5056;
+        background-color: #d4ecfd;
+    }
+
+    .patient-list label {
+        font-size: 11px;
+    }
+
+    .ratecircle {
+        border: 2px solid #2f89e7;
+        color: #302f2f;
+        width: 30px;
+        height: 30px;
+        background: #eaffff;
+        border-radius: 40px;
+        line-height: 27px;
+        text-align: center;
+        font-size: 19px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .ratecircle-head {
+        border: 2px solid #e7c82f;
+        color: #ffffff;
+        width: 30px;
+        height: 30px;
+        background: #ff2d2d;
+        border-radius: 40px;
+        line-height: 27px;
+        text-align: center;
+        font-size: 19px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #tblQuest thead th p {
+        font-size: 9px;
+        text-align: center;
+        margin: 0;
+    }
+
+    .Inactive {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .overAllRate {
+        width: 40px;
+        background: #1569e7;
+        height: 40px;
+        border-radius: 30px;
+        font-size: 18px;
+        text-align: center;
+        padding: 4px;
+    }
+
+    #tblQuest tbody tr th {
+        border-bottom: 1px solid #ddd;
+    }
+
+        #tblQuest tbody tr th input[type=text] {
+            height: 27px;
+        }
+
+    #IPDPatientList {
+        background: #ddd;
+        min-height: 460px;
+        overflow: auto;
+        padding: 0px 5px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 pfeedbackList">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white text-center">IPD Safety Round </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-xs-1">
+                            <span class="text-pink">Filter</span>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchPatient" class="form-control input_pass" value="" placeholder="Search...">
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            <span class="text-pink">Floor</span>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <select class="form-control" id="ddlRoom"></select>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-1">
+                            <span class="text-pink">Room</span>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <select class="form-control" id="ddlRoomType"></select>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="col-md-12 scroll" id="IPDPatientList">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalIPDFeedback" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:0%;">
+            <div class="panel-heading" style="background:#0076d0;padding:5px;">
+                <h4 class="text-white text-center">IPD Safety-Round Feedback</h4>
+                <button class="btn btn-danger btn-xs pull-right" data-toggle="modal" data-target="#modalIPDFeedback" style="top: -21px;">x</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 pfeedback">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="col-md-12 scroll" id="IPDPatientList1" style="background:#ddd;min-height:80px;overflow:auto;padding: 0px 5px;">
+                                    <div class="section" style="background:#d4ecfd;">
+                                        <table class="table" id="tblInfo">
+                                            <tbody>
+                                                <tr>
+                                                    <th>IPD No</th>
+                                                    <th>:</th>
+                                                    <td id="txtpIPDNo">-</td>
+                                                    <th>&nbsp;</th>
+                                                    <th>Patient Name</th>
+                                                    <th>:</th>
+                                                    <td id="txtpPatientName">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Age</th>
+                                                    <th>:</th>
+                                                    <td id="txtpAge">-</td>
+                                                    <td style="display:none" id="txtpGender">-</td>
+                                                    <th>&nbsp;</th>
+                                                    <th>Room No</th>
+                                                    <th>:</th>
+                                                    <td id="txtpRoomNo">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Admitted Under</th>
+                                                    <th>:</th>
+                                                    <td colspan="5" id="txtpAdmittedUnder">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Admit Date</th>
+                                                    <th>:</th>
+                                                    <td colspan="5" id="txtpAdmitDate">
+                                                        <span></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="section-feedback">
+                                    <div class="col-xs-12 scroll" id="IPDPatientList2" style="overflow:auto;padding: 0px 5px;border: 1px solid #ddd;">
+                                        <table class="table" id="tblQuest">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:1%">Q.N.</th>
+                                                    <th style="width:35%">Question</th>
+                                                    <th colspan="3" style="text-align:center">Feedback</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                @*<div class="section-feedback">
+                                        <h5>Overall Remark</h5>
+                                        <div class="col-xs-12 scroll" id="IPDPatientList" style="height:117px;overflow:auto;padding: 0px 5px;border: 1px solid #ddd;">
+                                            <div class="row patient-list">
+                                                <div class="col-xs-9">
+                                                    <textarea id="txtOverallFeedback" placeholder="Max 500 Words." maxlength="500" autocomplete="off" rows="4" class="form-control"></textarea>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <div style="display:flex;margin-bottom:4px;align-items:center;flex-direction: column;">
+                                                        <label style="width:100%;font-size: 13px;padding: 0 10px;">Overall Rating </label>
+                                                        <div id="txtOverallRating" class="ratecircle-head overAllRate">0</div>
+                                                    </div>
+                                                    <button class="btn btn-success" id="btnFinalSubmit" onclick="if(confirm('Are you sure?'))FinalRating()"><i class="fa fa-sign-in">&nbsp;</i>Final Submit</button>
+                                                    <h5 class="text-success" id="txtIsCompletd"><b>Final Rating Submitted</b></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

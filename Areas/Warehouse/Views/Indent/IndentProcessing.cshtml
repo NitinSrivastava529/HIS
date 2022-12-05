@@ -1,0 +1,408 @@
+﻿
+@{
+    ViewBag.Title = "IndentProcessing";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Indent/IndentProcessing.js?his-version-1.0"></script>
+<style>
+    .panel {
+        margin: 5px 3px 0 5px !important;
+        border: 1px solid #bedbf6;
+    }
+
+    .panel-body {
+        border: 1px solid #e1dede;
+        padding: 5px 3px 3px 3px !important;
+    }
+
+    .panel-heading {
+        padding: 2px 5px !important;
+    }
+
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        padding: 5px 4px;
+    }
+
+    .form-group label {
+        padding: 3px 0 4px 10px !important;
+    }
+
+    input, .input, select, .select {
+        border: 1px solid #000 !important;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    highlight_row {
+        background-color: #d5e7f8;
+        color: #000;
+    }
+
+    .highlight {
+        background-color: red;
+    }
+
+    .text-white {
+        color: #fff;
+    }
+
+    #exTab3 {
+        margin-top: 5px;
+    }
+
+        #exTab3 .nav-pills > li > a {
+            border-radius: 0;
+        }
+
+        #exTab3 .tab-content {
+            color: white;
+            padding: 2px 2px;
+            /*border: 1px solid #a4cbe6;*/
+        }
+
+    .nav {
+        background: #0076d0 !important;
+    }
+
+        .nav > li > a {
+            padding: 5px;
+            color: #fff;
+        }
+
+    h4, .h4 {
+        font-size: 15px;
+    }
+
+    .divUserRemark {
+        padding: 5px;
+        background: #0076d0;
+        border-radius: 5px;
+        margin-top: 7px;
+        margin-right: 5px;
+        margin-left: 5px;
+        color: #fff;
+    }
+
+    #myModal.fade.in {
+        margin-left: 50%;
+        width: 665px;
+        height: 600px;
+        margin-top: 60px;
+    }
+
+    #myModal.modal-dialog {
+        margin: 2px auto;
+    }
+
+    .redrowcolor {
+        background-color: #ef0f0f87;
+    }
+</style>
+
+<div id="page-content">
+    <div class="">
+        <div class="col-lg-6">
+            <div class="panel panel-primary">
+                <div id="exTab3" style="height:575px;">
+                    <ul class="nav nav-pills">
+                        <li class="active">
+                            <a href="#1b" data-toggle="tab">Request</a>
+                        </li>
+                        <li>
+                            <a href="#2b" data-toggle="tab">Request Details</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="1b" style="height: 540px;overflow-y: auto;border: 1px solid #bdb9b9;">
+                            <div class="form-horizontal" style="display:flex">
+                                <div class="form-group">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="display:flex">
+                                <label for="firstname" class="col-sm-1">Cart</label>
+                                <div class="col-sm-4">
+                                    <select id="ddlCart" class="form-control"></select>
+                                </div>
+
+                                <label for="lastname" class="col-sm-1">From</label>
+                                <div class="col-sm-3">
+                                    <input type="date" id="txtFromDate" class="form-control" style="width:116px" />
+                                </div>
+
+                                <label for="lastname" class="col-sm-1">To</label>
+                                <div class="col-sm-3">
+                                    <input type="date" id="txttoDate" class="form-control" style="width:116px" />
+                                </div>
+                                <button type="button" id="btnIndentList" class="btn btn-success"><i class="fa fa-search"></i></button>
+
+                                <input type="hidden" id="hidrowid" />
+                                <input type="hidden" id="hidIndentno" />
+                                <input type="hidden" id="hidautoIdIndent" />
+                                <input type="hidden" id="hidCartIdForAllUse" />
+                                <input type="hidden" id="hidUpdatecellflag" />
+                                <input type="hidden" id="hidShowtab" value="0" />
+                                <input type="hidden" id="hidIndentnolog" />
+                                <input type="hidden" id="hiditemlog" />
+
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="tblIndentRequest">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:15%">Indent No</th>
+                                            <th style="width:15%">Indent Date</th>
+                                            <th style="width:15%">Tot. Indent. Qty</th>
+                                            <th style="width:15%">Tot. Trf. Qty</th>
+                                            <th style="width:20%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="2b">
+                            <div id="divRequestDetails" style="border:1px solid #bbb9b9;  height:335px; overflow-y:auto">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="tblIndentRequestDetails">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:12%">Indent Date</th>
+                                                <th style="width:8%">Item Id</th>
+                                                <th style="width:28%">Item Name</th>
+                                                <th>Wh. Stock</th>
+                                                <th>Cart Stock</th>
+                                                <th>Ind. Qty</th>
+                                                <th>Ver. Qty</th>
+                                                <th>Pd. Qty</th>
+                                                <th style="width:10%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div id="divPreviousPending" style="display:none;height:300px; overflow-y:auto">
+                                <div class="panel-body">
+                                    <h4 style="background:#0076d0;text-align:center;color:#fff;padding:2px">Previous Pendency of Item  <span id="seletedItem"></span></h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="tblPreviousPending">
+                                            <thead>
+                                                <tr>
+                                                    @*<th style="width:15%">Indent No</th>*@
+                                                    <th style="width:13%">Indent Date</th>
+                                                    <th style="width:8%">Item Id</th>
+                                                    <th style="width:28%">Item Name</th>
+                                                    <th>Wh. Stock</th>
+                                                    <th>Cart Stock</th>
+                                                    <th>Ind. Qty</th>
+                                                    <th>Ver. Qty</th>
+                                                    <th>Pd. Qty</th>
+                                                    <th style="width:10%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+
+            <div id="divUserRemark" class="divUserRemark">
+                <span id="spnUserRemark"></span>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                    <h4 class="text-white" style="display: inline-block;margin:4px">Action</h4>
+                    <input type="button" id="btnlotTransfer" style="display:none" class="btn btn-info btn-xs pull-right" data-target="#TransferlotModel" data-toggle="modal" value="Dispatch Indent Log" onclick="ShowDisptachIndentLog()" />
+                </div>
+                <div class="panel-body" style="background:#fff;">
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <label class="col-sm-2">Pending Qty</label>
+                            <div class="col-sm-2">
+                                <input type="text" id="txtpendqty" class="form-control" />
+                            </div>
+
+                            <label class="col-sm-2">Lot Number</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="txtlotno" class="form-control" />
+                            </div>
+
+                            <button type="button" id="btnComplete" class="btn btn-primary">Complete</button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="tblWarehouseStock">
+                                    <thead>
+                                        <tr>
+                                            <th>Manufacturer</th>
+                                            <th>Batch</th>
+                                            <th>Exp. date</th>
+                                            <th>Pack Type</th>
+                                            <th>Stock</th>
+                                            <th>Edit Qty</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" id="divDispListByCart">
+                        <div class="col-lg-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="tblDisplistByCart">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:30%">Item Name</th>
+                                            <th>Batch</th>
+                                            <th>Exp. Date</th>
+                                            <th>Pack Type</th>
+                                            <th>Pack Qty</th>
+                                            <th>Trf. Qty</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade pull-right" id="myModal" role="dialog" style="background: #fff;">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="background-color:#d1ebfb;box-shadow: 1px 1px 12px #78aec1;">
+            <div class="modal-header" style="border-bottom: 1px solid #f8fcff;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span style="text-align:center;width:100%" id="elProductName"></span>
+                <span style="display:none" id="hidoldItemId"></span>
+                <span style="display:none" id="hidoldIndentno"></span>
+                <input type="hidden" id="hidTablename" />
+            </div>
+            <div class="modal-body">
+                <div class="panel">
+                    <div class="panel-heading" style="background-color:#6aa5c5">
+                        <h5> Reject Quantity Remark  </h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-10">&nbsp;&nbsp;<input type="text" class="form-control" id="txtRejectRemark" autocomplete="off" /></div>
+                            <div class="col-md-2"><br /><input type="button" class="btn btn-warning btn-xs btn-block" id="btnRejectRemark" onclick="RejectQuantity()" value="Reject" /></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading" style="background-color:#6aa5c5">
+                        <h5> Verify Quantity  </h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-3">Edit Verify.Qty<input type="text" data-int class="form-control" id="txtVqty" autocomplete="off" /></div>
+                            <div class="col-md-7">Verify.Remark<input type="text" class="form-control" id="txtVRemark" autocomplete="off" /></div>
+                            <div class="col-md-2"><br /><input type="button" class="btn btn-success btn-xs btn-block" id="btnSaveVqty" onclick="UpdateVerifyQuantity()" value="Save" /></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-heading" style="background-color:#6aa5c5">
+                        <h5> Item Replacement  </h5>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">Search<input type="text" class="form-control" id="txtSearchProduct" autocomplete="off" /></div>
+                            <div class="col-md-1"><br /><span id="btnSearchProduct" onclick="SearchProduct();"><i class="fa fa-search fa-lg"></i></span></div>
+                            <div class="col-md-5">Product List <select id="ddlProduct" class="form-control"></select></div>
+                            <div class="col-md-2"><br /><input type="button" class="btn btn-info btn-xs btn-block" id="btnReplaceProduct" onclick="UpdateAndReplaceIndent();" value="Replace" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="TransferlotModel" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="text-primary">Dispatch Indent Log</h4>
+                <br />
+                <p id="pIndentItem"></p>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tblDispatchLogIndent">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Lot Date
+                                </th>
+                                <th>
+                                    Lot Number
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

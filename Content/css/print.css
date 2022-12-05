@@ -1,0 +1,10 @@
+﻿@media print {
+	@page {
+		padding: 0;
+		margin: 0 10px;
+		size: A4 portrait;
+	}
+	html{
+		left:0% !important;
+	}
+}

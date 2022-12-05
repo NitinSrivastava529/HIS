@@ -1,0 +1,558 @@
+﻿
+@{
+	ViewBag.Title = "Purchase Entry";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Content/js/tableHeadFixer.js?his-version-1.0"></script>
+<script src="~/Areas/Warehouse/JsModule/Purchase/PurchaseEntry.js?his-version-1.0"></script>
+<script src="~/Areas/Warehouse/JsModule/Purchase/ItemLinkToPackManufacturer.js?his-version-1.0"></script>
+<style>
+	.form-group {
+		margin-bottom: 38px;
+	}
+
+	.modal-header {
+		padding: 5px;
+	}
+
+	.panel-body {
+		padding: 10px 0px 5px 15px;
+	}
+
+	b {
+		font-size: 12px;
+	}
+
+	fieldset {
+		display: block;
+		margin-inline-start: 2px;
+		margin-inline-end: 2px;
+		padding-block-start: 0.35em;
+		padding-inline-start: 0.75em;
+		padding-inline-end: 0.75em;
+		padding-block-end: 0.625em;
+		min-inline-size: min-content;
+		border-width: 2px;
+		border-style: groove;
+		border-color: threedface;
+		border-image: initial;
+	}
+
+	legend {
+		display: block;
+		padding-inline-start: 2px;
+		padding-inline-end: 2px;
+		border-width: initial;
+		margin-bottom: 0px;
+		font-size: 15px;
+		border-style: none;
+		border-color: initial;
+		border-image: initial;
+	}
+
+	#tblPaymentDetails tbody tr td {
+		font-size: 12px;
+		font-weight: 800;
+	}
+
+	.scroll {
+		height: 230px;
+		overflow: hidden;
+		overflow-y: auto;
+		display: block;
+	}
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	#ItemList {
+		border: 1px solid #c2bebe;
+		width: 373px;
+		max-width: 500px;
+		max-height: 310px;
+		overflow: hidden;
+		overflow-y: auto;
+		position: absolute;
+		z-index: 1;
+		background: #fff;
+		top: auto;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		margin-left: 0px;
+		border-radius: 3px;
+	}
+
+		#ItemList table {
+			font-size: 12px;
+			line-height: 21px;
+			width: 100%;
+		}
+
+			/*#ItemList table td {
+				padding: 1px 0px 0px 10px;
+			}*/
+
+			#ItemList table tbody tr {
+				max-width: 100%;
+				/* padding: 1px 9px; */
+				user-select: none;
+				-webkit-user-select: none;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				/* border-bottom: 0.1px solid #eaeaea; */
+			}
+
+	[data-search] {
+		position: relative;
+	}
+
+	.link {
+		color: green;
+		cursor: pointer;
+		font-size: 17px;
+		margin: -4px 0px 0px 6px;
+		z-index: 1000;
+		position: absolute;
+	}
+
+	.discount {
+		color: green;
+		cursor: pointer;
+		font-size: 17px;
+		margin: -21px 0px 0px 60px;
+		z-index: 1000;
+		position: absolute;
+	}
+
+	.modal-title {
+		line-height: 1.42857143;
+		margin: 0;
+		font-family: none;
+	}
+
+	.text-white {
+		margin: 4px;
+		color: #fff;
+	}
+
+	#tblProductInfo tbody td, #BasicInfo tbody td {
+		padding: 2px 2px 0px 0px;
+	}
+
+	table tbody td input, select {
+		border: 1px solid #9c9c9c !important;
+	}
+
+	.paymode {
+		border: 1px solid #9c9c9c !important;
+		height: 28px;
+	}
+
+	.w60 {
+		width: 60px !important;
+	}
+
+	#tblnavigate tbody td {
+		padding-left: 6px !important;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white pull-right">Purchase Entry</h4>
+								<input type="button" class="btn btn-3d" value="UnCompleted Purchases" data-target="#modalUnCompPurchases" data-toggle="modal" />
+							</div>
+							<div class="panel-body">
+								<table class="table" id="BasicInfo">
+									<tbody>
+										<tr>
+											<td><b>Supplier</b></td>
+											<td><b>:</b></td>
+											<td style="max-width:320px !important">
+												<select class="form-control" id="ddlSupplier" data-imp></select>
+											</td>
+											<td><b>Grn Type</b></td>
+											<td><b>:</b></td>
+											<td style="width:20%">
+												<select class="form-control" id="ddlGrnType">
+													@*<option>Select GRN</option>*@
+													<option>Invoice</option>
+													<option>Challan</option>
+												</select>
+											</td>
+											<td class="invoice"><b><span class="iname">Invoice No.</span> & Date</b></td>
+											<td class="invoice"><b>:</b></td>
+											<td class="invoice">
+												<div style="display:flex">
+													<input type="text" class="form-control" data-imp id="txtInvoiceNo" placeholder="Invoice No." style="width:40%" />
+													<input type="date" class="form-control" id="txtInvoiceDate" placeholder="Date" data-imp style="width:60%" />
+												</div>
+											</td>
+										</tr>
+										<tr>
+
+											<td><b>Nature Of Purchase</b></td>
+											<td><b>:</b></td>
+											<td>
+												<select id="ddlNatureOfPurchase" class="form-control">
+													<option>Consumable</option>
+													<option>Assets</option>
+
+												</select>
+											</td>
+											<td> <b>eWay Bill No. & Date</b></td>
+											<td><b>:</b></td>
+											<td>
+												<div style="display:flex">
+													<input type="text" class="form-control" id="txtEwayBillNo" placeholder="eWay Bill No." style="width:60%" />
+													<input type="date" class="form-control" id="txtEwayBillDate" placeholder="Date" style="width:60%" />
+												</div>
+											</td>
+											<td><b>GRN Pay Mode</b></td>
+											<td><b>:</b></td>
+											<td style="display:flex">
+												<span class="paymode">
+													<label><input type="radio" name="PayMode" />  &nbsp;Credit</label> &nbsp; &nbsp;
+													<label><input type="radio" name="PayMode" />  &nbsp;Cash</label>&nbsp; &nbsp;
+												</span>
+												<input type="text" id="txtPurchaseId" class="form-control" value="Auto Generate" disabled="" style="width:65%;background:#fff;opacity:100%" placeholder="Purchase Id" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="table" id="tblProductInfo">
+									<tbody>
+										<tr style="background:#cce9ff">
+											<td style="width:15%;">
+												<label>Product Name</label>
+												<div data-search>
+													<input type="text" id="txtSearchProduct" data-imp class="form-control" autocomplete="off" placeholder="Search Product..." />
+													<div id="ItemList" style="display:none">
+														<table id="tblnavigate">
+															<tbody></tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+											<td style="width:10%;">
+												<label>Manufacturer <span onclick="GetRecord()" data-imp class="link" data-target="#ModalItemPackLink" data-toggle="modal"><i class="fa fa-plus-square"></i></span></label>
+												<select class="form-control" id="ddlManufacture">
+													<option>Manufacturer</option>
+												</select>
+											</td>
+											<td style="width:6%">
+												<label>HSN</label>
+												<input type="text" readonly="readonly" id="txtHsn" class="form-control" placeholder="HSN">
+											</td>
+											<td style="width:6%">
+												<label>Batch</label>
+												<input type="text" id="txtBatch" data-imp class="form-control" placeholder="Batch">
+											</td>
+											<td style="width:6%">
+												<label>Exp. Date</label>
+												<input type="text" maxlength="7" onkeyup="if (/[^\d-]/g.test(this.value)) this.value = this.value.replace(/[^\d-]/g, '')" id="txtExpDate" class="form-control" placeholder="mm-yy">
+											</td>
+											<td style="width:7%">
+												<label>P.Type</label>
+												<select id="ddlPackType" class="form-control" data-imp style="width:90px;">
+													<option>Pack Type</option>
+												</select>
+											</td>
+											<td style="width:6%">
+												<label>MRP</label>
+												<input type="text" id="txtMRP" data-imp maxlength="12" onkeyup=" if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control" placeholder="MRP">
+											</td>
+											<td style="width:6%">
+												<label>Pur-Rate</label>
+												<input type="text" id="txtTrade" data-imp maxlength="12" onkeyup="CalAmount();if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control" placeholder="Pur-Rate">
+											</td>
+
+											<td style="width:6%">
+												<label>Qty <span style="margin-left: 37px;">Stk. Qty.</span></label>
+												<div style="display:flex">
+													<input type="text" id="txtQty" data-imp maxlength="7" onkeyup="CalAmount();if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control w60" placeholder="Qty">
+													<input type="text" id="txtSQty" data-imp maxlength="7" disabled onkeyup="CalAmount();if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control w60" placeholder="0">
+												</div>
+											</td>
+											<td style="width:6%">
+												<label>Free</label>
+												<input type="text" id="txtFree" value="0" maxlength="12" data-int class="form-control" placeholder="Free">
+											</td>
+											<td style="width:8%">
+												<label>GST</label>
+												<select id="ddlGst" data-imp class="form-control"></select>
+											</td>
+											@*<td>
+													<label>Tax Rate</label>
+													<input type="text" id="txtTaxRate" disabled="disabled" class="form-control" placeholder="Tax Rate">
+												</td>*@
+											<td style="width:6%">
+												<label>Disc%</label>
+												<input type="text" id="txtDisc" value="0" maxlength="3" onkeyup=" if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control" placeholder="Disc%">
+											</td>
+											<td style="width:6%">
+												<label>Amount</label>
+												<input type="text" id="txtAmount" maxlength="12" readonly onkeyup=" if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control" placeholder="Amount">
+											</td>
+											<td>
+												<label style="visibility:hidden ">Amount</label>
+												<submit onclick="InsertPurchase()" class="btn btn-success"><i class="fa fa-plus"></i></submit>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="scroll">
+									<table class="table table-hover" id="tblPurchaseEntry">
+										<thead style="background:#fffaf0">
+											<tr>
+												<th style="width:218px;">
+													Product Name
+												</th>
+												<th>
+													Mfd. Name
+												</th>
+												<th>
+													HSN
+												</th>
+												<th>
+													Batch No
+												</th>
+												<th>
+													Exp. Date
+												</th>
+												<th>
+													Pack Type
+												</th>
+												<th>
+													MRP
+												</th>
+												<th>
+													Pur-Rate
+												</th>
+												<th>
+													NPR
+												</th>
+												<th>
+													Qty
+												</th>
+												<th>
+													Free
+												</th>
+												<th>
+													Tax Rate
+												</th>
+												<th>
+													Tax Amount
+												</th>
+												<th>
+													Amount
+												</th>
+
+												<th>
+													Dis Per.
+												</th>
+												<th>
+													Dis. Amount
+												</th>
+												<th>
+													Action
+												</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<form>
+									<fieldset>
+										<legend>Payment Details</legend>
+										<table class="table table" id="tblPaymentDetails">
+                                            <tr style="background:#cce9ff">
+                                                <td>
+                                                    <label>Total</label>
+                                                    <input type="text" id="txtTotal" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="Total">
+                                                </td>
+                                                <td>
+                                                    <label>Discount <span onclick="GetRecord()" data-imp class="discount" data-target="#modalDiscount" data-toggle="modal"><i class="fa fa-plus-square"></i></span></label>
+                                                    <input type="text" id="txtDiscount" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="Discount">
+                                                </td>
+                                                <td>
+                                                    <label>IGST</label>
+                                                    <input type="text" id="txtIGST" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="IGST">
+                                                </td>
+                                                <td>
+                                                    <label>CGST</label>
+                                                    <input type="text" id="txtCGST" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="CGST">
+                                                </td>
+                                                <td>
+                                                    <label>SGST</label>
+                                                    <input type="text" id="txtSGST" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="SGST" />
+                                                </td>
+                                                <td>
+                                                    <label>Total Tax</label>
+                                                    <input type="text" id="txtTax" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="Tax">
+                                                </td>
+                                                <td>
+                                                    <label>Net Amt</label>
+                                                    <input type="text" id="txtNetAmount" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="Net Amt">
+                                                </td>
+                                                <td>
+                                                    <label>Bill Amount</label>
+                                                    <input type="text" id="txtRoundOff" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="Round Off">
+                                                </td>
+                                                @*<td>
+                                                    <label>Bill Amount</label>
+                                                    <input type="text" id="txtBillAmount" readonly="readonly" style="background:#fff;opacity:100%" class="form-control" placeholder="Bill Amount" />
+                                                </td>*@
+                                            </tr>
+										</table>
+									</fieldset>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalUnCompPurchases" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header bg-success">
+					<h4 class="modal-title">
+						UnComplete Purchase
+						<button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+					</h4>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="text" class="form-control" id="txtSearch" placeholder="Search..." />
+							<div class="table table-responsive scroll" style="max-height:400px;">
+								<table class="table table-bordered" id="tblUnCompPurchase">
+									<thead>
+										<tr>
+											<th>Purchase Id</th>
+											<th>Invoice No</th>
+											<th>Invoice Date</th>
+											<th>Vendor Name</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="ModalItemPackLink" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header" style="background: #0072a9;color:#fff">
+					<h4 class="modal-title">
+						<span data-itemname></span>-<span data-itemid></span>
+						<button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+					</h4>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-4">
+							<input type="text" class="form-control" id="txtSearchItemLink" placeholder="Search..." />
+							<div class="scroll" style="max-height: 460px;">
+								<table class="table table-bordered" id="tblItem">
+									<thead>
+										<tr>
+											<th>Item Id</th>
+											<th>Item Name</th>
+											<th style="width:1%">Action</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="fileinput-new input-group" data-provides="fileinput">
+								<select class="form-control" id="ddlLinkPack"></select>
+								<span id="btnLinkPack" class="input-group-addon btn btn-primary">
+									<i class="fa fa-plus"></i>
+								</span>
+							</div>
+							<div class="scroll" style="max-height: 460px;">
+								<table class="table table-bordered" id="tblLinkPack">
+									<thead>
+										<tr>
+											<th>Pack Name</th>
+											<th style="width:1%">Action</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="fileinput-new input-group" data-provides="fileinput">
+								<select class="form-control" id="ddlLinkManufacturer"></select>
+								<span id="btnLinkManufacturer" class="input-group-addon btn btn-primary">
+									<i class="fa fa-plus"></i>
+								</span>
+							</div>
+							<div class="scroll" style="max-height: 460px;">
+								<table class="table table-bordered" id="tblLinkManufacturer">
+									<thead>
+										<tr>
+											<th>Manufacturer</th>
+											<th style="width:1%">Action</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalDiscount" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content" style="margin-top:180px;">
+				<!-- Modal Header -->
+				<div class="modal-header bg-success">
+					<h4 class="modal-title">
+						Purchase  Discount
+						<button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+					</h4>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xs-12">
+							<div style="display:flex">
+								<input type="text" disabled="disabled" class="form-control" id="txtDisTotal" value="0" />
+								<input type="text" class="form-control border-imp" id="txtDiscountAmount" onkeyup="disCheck()" placeholder="Discount Amount" />
+								<input type="text" class="btn btn-success" id="btnProcessDiscount" onclick="DiscountReprocess()" value="Submit" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

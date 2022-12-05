@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewBag.Title = "SampleDispatch";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Lab/JsModule/SampleDispatch.js"></script>
+<style>
+    .pat-group {
+        background: #f3cecca6;
+    }
+
+    .lab-group {
+        background: #d2ebfe;
+    }
+
+    .cat-group {
+        background: #f7c7c7;
+    }
+
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        /*max-height: 450px;*/
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="panel-heading" style="background-color:#026cbd; color:white; padding: 1px;margin-left: 26px;">
+                <h4 class="text-left" style="margin: 4px 2px;">SampleDispatch</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn pull-left" style="font-size:13px;width:13%;">Lab</button>
+                                            <select id="ddlCategory" class="form-control bn"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn pull-left" style="width:30%; font-size:14px;">From</button>
+                                            <input type="date" class="form-control" id="txtFrom"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn pull-left" style="width:15%; font-size:14px;">To</button>
+                                            <input type="date" class="form-control" id="txtTo" />
+                                            <button class="btn btn-warning bn" style="width:23%;" onclick="GetTestListForDispatch()">Get</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="height:370px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                            <table class="table table-bordered" id="tblDispatch">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:1%;">S.No</th>
+                                                        <th style="width:3%;">Test Code</th>
+                                                        <th style="width:12%">Test Name</th>
+                                                        <th style="width:5%">Sample Type</th>
+                                                        <th style="width:1%;"><input type="checkbox" style="margin:0px;" /></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin:10px;" />
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-right:10px;">
+                                        <div class="form-group flex">
+                                            <input type="text" class="form-control bn" id="txtEmpName" style="width:45%" placeholder="Search By Name..">
+                                            <button id="btnGetEmp" class="btn btn-success bn" style="width:13%">Get</button>&nbsp;&nbsp;
+                                            <select id="ddlEmployee" class="form-control"></select>
+                                            <button class="btn btn-warning bn" style="width:27%" onclick="Dispatch();"><span class="fa fa-sign-in"></span>Transfer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">                                    
+                                        <button class="btn btn-warning" onclick="GetDispatchNoList();">Dispatch No List</button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="height:505px;  display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                            <table class="table table-bordered" id="tblDispatchNo">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:1%;">S.No</th>
+                                                        <th style="width:7%;">Dispatch No</th>
+                                                        <th style="width:5%">No Of Item</th>
+                                                        <th style="width:5%">Date</th>
+                                                        <th style="width:9%">DeliveryBoy</th>
+                                                        <th style="width:1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

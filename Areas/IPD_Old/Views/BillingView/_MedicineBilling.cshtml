@@ -1,0 +1,179 @@
+﻿
+<link href="~/Content/css/MenuMaster.css?his-version-1.0" rel="stylesheet" />
+<script src="~/Areas/IPD/JsModule/BillingView/_MedicineBilling.js"></script>
+<style>
+    #ddlFilterBy {
+        border-radius: 0;
+        margin-right: 14px;
+        border-color: #00a65a;
+        width: 45%;
+    }
+
+    #txtSearchIPDNO {
+        border-right: none;
+        width: 45%;
+        border-color: #00a65a;
+        border-radius: 0;
+    }
+
+    div#skill .circle {
+        position: relative;
+        height: 25px;
+        width: 25px;
+        border: 3px solid #ff934c;
+        border-top-color: #e60000;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+        top: -10px;
+        left: -5px;
+    }
+
+    div#skill {
+        /* background-color: rgba(144, 0, 64, 0.8); */
+        color: #fff;
+        padding: 9px 0;
+        position: absolute;
+        display: none;
+    }
+
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 5px 0px 10px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .billrecpt {
+        font-size: 12px;
+        color: #005aff;
+        font-weight: bold;
+    }
+
+    #tblIPDInfo td {
+        font-size: 13px;
+        color: #242222;
+    }
+</style>
+<div class="row" style="padding:5px">
+    <div class="col-md-12">
+        <div class="row" style="margin-bottom:1%">
+            <div class="col-xs-4 flex">
+                <label style="width:25%">Search : </label>
+                <input type="text" id="txtSearchIPDNO" value="57715" class="form-control" placeholder="IPD Number" autocomplete="off" onkeypress="return EnterKeyPress(event);" maxlength="20" />
+                <select id="ddlFilterBy" class="form-control">
+                    <option>Credit</option>
+                    <option>ALL</option>
+                    <option>Cash</option>
+                </select>
+                <span class="input-group-btn"><button style="height:28px;margin: -15px;" type="button" class="btn btn-success btnc" onclick="IPDSalebyIPDNo()"><div id='skill'><div class='circle'></div></div><i class="fa fa-search"></i></button></span>
+            </div>
+            <div class="col-xs-1">
+                <button id="btnVerify" class="btn btn-warning" onclick="Verify()"><i class="fa fa-sign-in">&nbsp;</i>Verify</button>
+            </div>
+            <div class="col-xs-3">
+                <div class="flex">
+                    <label style="width: 35%;">From : </label>
+                    <input type="date" id="txtFilterFrom" class="form-control" />
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="flex">
+                    <label style="width: 35%;">To</label>
+                    <input type="date" id="txtFilterTo" class="form-control" />
+                    <button id="btnFilter" style="width: 38%;" class="btn btn-warning" onclick="DownloadExcel()"><i class="fa fa-file-excel-o">&nbsp;</i>Excel</button>
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <button id="btnSave" class="btn btn-success" onclick="ItemInsert()"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+            </div>
+        </div>
+        <div class="table table-responsive">
+            <div class="table-responsive vertiscrl" style="overflow:auto;height:450px;border: 1px solid #2478a9;">
+                <table id="tblIPDInfo" class="table table-bordered">
+                    <thead style="background: #00a65a;color: #fff;">
+                        <tr>
+                            <th>#</th>
+                            <th>Indent No</th>
+                            <th>Indent Status</th>
+                            <th>IC</th>
+                            <th>Sale Status</th>
+                            <th>Sale Inv No</th>
+                            <th>SC</th>
+                            <th class="text-right">Total</th>
+                            <th class="text-right">Discount</th>
+                            <th class="text-right">Amount</th>
+                            <th style="width:2%">Pay Mode</th>
+                            <th style="width:10%">Card No.</th>
+                            <th style="width:8%">Verified By</th>
+                            <th style="width:8%">Verify Date</th>
+                            <th style="width:1%"><input type="checkbox" /></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

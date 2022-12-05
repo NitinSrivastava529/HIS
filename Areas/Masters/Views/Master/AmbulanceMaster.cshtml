@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "AmbulanceMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Masters/JsModule/AmbulanceMaster.js"></script>
+<style>
+    #tblAmbulanceMaster tbody tr
+    .btnDoc {
+        margin: 2px 0px;
+        font-size: 18px;
+        height: 17px;
+        line-height: 17px;
+    }
+
+    .btn-add {
+        border: none;
+        padding: 6px;
+        margin-left: 1px;
+    }
+
+    .btn-tbl {
+        border: none;
+        padding: 1px 9px;
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Ambulance Master</h4>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table-condensed" style="width:100%">
+                                    <tr>
+                                        <th>Ambulance Name</th>
+                                        <th>:</th>
+                                        <td><input type="text" id="txtAmbulanceName" class="form-control" placeholder="Ambulance Name" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ambulance No.</th>
+                                        <th>:</th>
+                                        <td class="flex">
+                                            <input type="text" id="txtAmbulanceNo" class="form-control bc" placeholder="Ambulance No." />
+                                            <button id="btnSave" style="width: 37%;height: 28px;" class="btn-success btn-add bn" onclick="InsertAmbulance()"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr style="margin: 10px;" />
+                                <div class="example-box-wrapper">
+                                    <div class="table table-responsive">
+                                        <div class="scroll" style="height:480px;overflow:auto;border:1px solid #2492b3">
+                                            <table id="tblAmbulanceMaster" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:1%">CMD</th>
+                                                        <th style="width:3%">Ambulance Id</th>
+                                                        <th style="width:25%">Ambulance Name</th>
+                                                        <th style="width:25%">Ambulance No</th>
+                                                        <th style="width:1%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Ambulance Driver Master</h4>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table-condensed" style="width:100%">
+                                    <tr>
+                                        <th>Emp Code</th>
+                                        <th>:</th>
+                                        <td class="flex">
+                                            <input type="text" id="txtEmployeeCode" class="form-control" style="border:1px solid #f39c12;border-radius:0" placeholder="Employee Code" />
+                                            <button id="btnGetEmp" onclick="GetChandanEmpInfo()" style="width: 40%;height: 28px;margin:0" class="btn-warning btn-add"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 15%;">Driver Name</th>
+                                        <th>:</th>
+                                        <td>
+                                            <input type="text" id="txtDriverName" class="form-control" placeholder="Driver Name" />
+                                        </td>
+                                        <th style="width: 13%;">Mobile No.</th>
+                                        <th>:</th>
+                                        <td class="flex">
+                                            <input type="text" id="txtMobileNo" class="form-control bc" placeholder="Mobile No" />
+                                            <button id="btnGetEmp" style="width: 53%;height: 28px;" onclick="InsertDriver()" class="btn-success btn-add bn"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <hr style="margin: 10px;" />
+                                <div class="example-box-wrapper">
+                                    <div class="table table-responsive">
+                                        <div class="scroll" style="height:480px;overflow:auto;border:1px solid #2492b3">
+                                            <table id="tblDriverMaster" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:10%">Driver Id</th>
+                                                        <th style="width:25%">Driver Name</th>
+                                                        <th style="width:10%">Mobile No</th>
+                                                        <th style="width:1%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

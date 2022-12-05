@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmconferenceRoom";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<style>
+    .bg1 {
+        background: #ffc1c1;
+    }
+    .bg2 {
+        background: #e2efff;
+    }
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+
+    .name-group {
+        background: #d2d6de;
+    }
+
+    #tblDConferenceDetails thead th {
+        white-space: nowrap;
+    }
+</style>
+<script src="~/Areas/OT/JsModule/ConfirmconferenceRoom.js"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="col-md-9">
+            <div class="">
+                <div class="">
+                    <div class="panel">
+                        <div class="panel-heading" style="background:#0076d0;padding:4px;">
+                            <h4 class="text-white">Confirm Conference Room</h4>
+                        </div>
+                        <div class="panel-body" style="background:#fff;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>From</label>
+                                    <input type="date" class="form-control" id="txtFrom" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>To</label>
+                                    <input type="date" class="form-control" id="txtTo" />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <button class="btn btn-success bn" style="margin-top: 22px;" onclick="ConferneceSchedule();"><i class="fa fa-user">&nbsp;</i>Search</button>&nbsp;&nbsp;
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="scroll">
+                                        <table class="table table-bordered" id="tblDConferenceDetails" style="padding-bottom: 7px;display: block;border: 1px solid #009688;max-height:350px;overflow:auto">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:1%;">S.No</th>
+                                                    <th style="width: 5%;">Booking Id</th>
+                                                    <th style="width: 9%;">Booking Type</th>
+                                                    <th style="width: 13%;">Booking Date</th>
+                                                    <th style=" width: 3%;">Start Date</th>
+                                                    <th style=" width: 3%;">End Date</th>
+                                                    <th style=" width: 11%;">Subject</th>
+                                                    <th>Remark</th>
+                                                    <th style=" width: 13%;">Book By</th>
+                                                    <th style=" width: 6%;">Status</th>
+                                                    <th style="width:1%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="">
+                <div class="">
+                    <div class="panel">
+                        <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                            <h4 class="text-white">Confirmation Details</h4>
+                        </div>
+                        <div class="panel-body" style="background:#fff;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="scroll" style="height:340px;">
+                                        <table class="table table-bordered" id="" style="border: 1px solid #009688;font-size: 13px;margin: 0px 0px 30px 0px;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:25%">BookingId</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtBookingId"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:32%">Booking Type</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtBookingType"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:25%">Book By</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtBookBy"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:25%">Subject</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtSubject"></span></td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <textarea id="txtConfirmRemark" placeholder="Remark" rows="4" cols="41"></textarea>
+                                    </div>
+                                    <div class="col-md-2 input-group-btn">
+                                        <button class="btn btn-success bn" id="btnConfirm" onclick="ApproveAndCancle('Approve')" style="margin-left: 24px; margin-right: -76px;margin-top: -200px;"><i class="fa fa-sign-in">&nbsp;</i>Confirm</button>
+                                        <button class="btn btn-danger bn" id="btnCancel" onclick="ApproveAndCancle('Cancel')" style="margin-top: -200px; margin-left: 118px;"><i class="fa fa-times">&nbsp;</i>Cancel</button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

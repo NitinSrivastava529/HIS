@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "CategoryMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Masters/JsModule/CategorySubcategory.js"></script>
+<style>
+    .panel {
+        margin-bottom: 2px !important;
+        margin-left: 2px !important;
+    }
+
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 2px 0;
+        margin-top: 1px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+</style>
+
+<div id="page-content">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Create Category </h4>
+                </div>
+                <div class="panel-body" id="divCategory">
+                    <div class="col-sm-3 form-group">
+                        <label>Category Name</label>
+                        <input type="text" id="txtCategoryName" class="form-control" style="border:1px solid #86b3de;height:42px" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Description</label>
+                        <textarea type="text" id="txtCategoryDescription" class="form-control" style="border:1px solid #86b3de"></textarea>                        
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Abbreviation</label>
+                        <textarea type="text" id="txtCategoryAbbreviation" data-count="10" class="form-control" style="border:1px solid #86b3de"></textarea>                        
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <input type="hidden" id="hidcatautoid" />
+                        <button type="submit" id="btndaddupdatecategory" style="margin: 21px 0 0 0;" class="btn btn-xs btn-success" value="Save" onclick="AddUpdateCategory()">Save</button>                        
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="display:flex">
+                    <h4 style="width:20%">Category Details </h4> <input type="text" id="txtSeachCategory" class="form-control" style="width:80%" placeholder="Search Category" />
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" style="height:450px;overflow-y:auto">
+                        <table class="table table-bordered" id="tblCategoryDetails">
+                            <thead>
+                                <tr>
+                                    <th style="width:35%">Category</th>
+                                    <th>Description</th>
+                                    <th style="width:15%">Abbreviation</th>                                    
+                                    <th style="width:5%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Create Subcategory </h4>
+                </div>
+                <div class="panel-body" id="divSubcategory">
+                    <div class="col-sm-3 form-group">
+                        <label>Sub Category Name</label>                        
+                        <input type="text" id="txtSubcategoryName" class="form-control" style="border:1px solid #86b3de;height:42px" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Description</label>
+                        <textarea type="text" id="txtSubcategoryDescription" class="form-control" style="border:1px solid #86b3de"></textarea>                        
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Abbreviation</label>
+                        <textarea type="text" id="txtSubcategoryAbbreviation" data-count="10" class="form-control" style="border:1px solid #86b3de"></textarea>
+                        
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <input type="hidden" id="hidsubcatautoid" />
+                        <input type="hidden" id="hidcatid" />                        
+                        <button type="submit" id="btndaddupdatesubcategory" style="margin: 21px 0 0 0;" class="btn btn-xs btn-success" value="Save" onclick="AddUpdateSubCategory();">Save</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="display:flex">
+                    <h4 style="width:25%">SubCategory Details </h4> <input type="text" id="txtSeachSubcategory" class="form-control" style="width:75%" placeholder="Search Subcategory" />
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" style="height:450px;overflow-y:auto">
+                        <table class="table table-bordered" id="tblSubcategoryDetails">
+                            <thead>
+                                <tr>                                    
+                                    <th style="width:35%">Sub Category</th>
+                                    <th>Description</th>
+                                    <th style="width:15%">Abbreviation</th>
+                                    <th style="width:8%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

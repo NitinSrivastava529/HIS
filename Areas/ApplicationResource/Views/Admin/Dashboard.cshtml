@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@*<script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>*@
+<script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.debug.js"></script>
+
+<script type="text/javascript">
+    function launchSaveToOneDrive() {       
+        let odOptions = {
+            clientId: "ed5d147e-70fe-4ada-a9d2-665ff82e2982",
+            action: "save",
+            sourceInputElementId: "fileUploadControl",
+            sourceUri: "",
+            fileName: "CAPTURE.PNG",
+            openInNewWindow: true,
+            advanced: {
+                redirectUri: "http://localhost:54687/Admin/Dashboard"
+            },
+            success: function (files) { console.log('ok'); },
+            progress: function (percent) { console.log(percent); },
+            cancel: function () { /* cancel handler */ },
+            error: function (error) { console.log(error); }
+        };
+        OneDrive.save(odOptions);
+    }
+    //function launchSaveToOneDrive() {
+    //    var odOptions = {
+    //        clientId: "ed5d147e-70fe-4ada-a9d2-665ff82e2982",
+    //        action: "save",
+    //        sourceInputElementId: "fileUploadControl",
+    //        sourceUri: "",
+    //        fileName: "CAPTURE.PNG",
+    //        openInNewWindow: false,
+    //        advanced: {
+    //            redirectUri: "http://localhost:54687/Admin/Dashboard"
+    //        },
+    //        success: function (files) { console.log(files) },
+    //        progress: function (percent) { console.log(percent) },
+    //        cancel: function (can) { console.log(can) },
+    //        error: function (error) { console.log(error) }
+    //    }
+    //    OneDrive.save(odOptions);
+    //}
+</script>
+
+<input id="fileUploadControl" name="fileUploadControl" type="file" />
+<button onclick="launchSaveToOneDrive()">Save to OneDrive</button>

@@ -1,0 +1,1089 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Masters/JsModule/DoctorRegistraion.js?ver=1.5"></script>
+<style>
+    #RateModal h5, #RateModal input[type=checkbox]{
+        margin: 0
+    }
+    #RateModal .panel-heading{padding:2px 10px}
+    .btn-add {
+        width: 14%;
+        height: 28px;
+        border: none;
+    }
+
+    .btn-tbl {
+        border: none;
+        padding: 1px 9px;
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<style>
+    #MiscellaneousModal h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .box-header.with-border {
+        background: #f7f7f7;
+        padding: 5px 7px;
+        border-bottom: 1px solid #f4f4f4;
+    }
+
+    .box {
+        border: 1px solid #ddd;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    highlight_row {
+        background-color: #d5e7f8;
+        color: #000;
+    }
+
+    .highlight {
+        background-color: red;
+    }
+
+    .text-white {
+        color: #fff;
+        margin: 5px 0px !important;
+    }
+
+    .nav > li > a {
+        padding: 5px 5px;
+        color: #fff;
+    }
+
+    .nav > li.active > a {
+        color: #fff;
+        background: #00bca;
+    }
+
+    .nav-tabs {
+        padding: 0;
+        border: 0;
+    }
+
+    .modal-xl {
+        width: 1140px !important;
+    }
+
+    .panel-heading {
+        padding: 1px 4px;
+    }
+
+
+
+    .modal-header {
+        padding: 5px 22px;
+        background: #337ab7;
+    }
+
+    .close {
+        right: 17px;
+        position: absolute;
+        color: red;
+        opacity: 100;
+    }
+
+    label {
+        font-size: 11px;
+        color: #3e4855;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Doctors List</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-8">
+                                    <label>
+                                        <input type="radio" name="status" value="Y" checked />Active
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="status" value="N" />Deactive
+                                    </label>
+                                    <span class="btn btn-success" onclick="BindDoctorList()"><i class="fa fa-refresh">&nbsp;</i></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="txtSearch" autocomplete="off" class="form-control" placeholder="Search.." />
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="table table-responsive">
+                                        <div class="scroll" style="min-height:480px;overflow:auto">
+                                            <span data-itemname style="display:none"></span>
+                                            <span data-itemid style="display:none"></span>
+                                            <table id="tblDoctorsList" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:3%">Doctor Id</th>
+                                                        <th style="width:25%">Doctor Name</th>
+                                                        <th style="width:1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <button class="btn btn-default" onclick="Clear()"><i class="fa fa-flash">&nbsp;</i>New</button>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#RateModal"><i class="fa fa-edit">&nbsp;</i>Edit Rate</button>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#MiscellaneousModal"><i class="fa fa-edit">&nbsp;</i>Miscellaneous</button>
+                        <span style="display:none" id="txtDoctorInfo" class="text-white pull-right"></span>
+                        <button class="btn btn-danger pull-right" onclick="AddUpdateDoctorProfile()" id="btnSaveDoctor">Save</button>
+                    </div>
+                    <div class="panel-body" style="background:#fff;padding: 8px 15px;">
+                        <div class="row">
+                            <div class="col-md-3" style="border-right: 1px solid #ddd;padding-bottom: 5px;">
+                                <img id="imgdoctors" class="img-circle" src="~/Content/logo/noImage.png" style="width: 125px; height: 120px;">
+
+                                <input type="file" id="docImage" onchange="readURL(this)" style="display:none">
+
+                                <button id="btnBrowse" class="btn btn-success">Upload Image</button>
+                                <input type="hidden" id="hidcombinepath">
+                                <input type="hidden" id="hidimgname">
+                            </div>
+                            <div class="col-md-9">
+                                <table class="table-condensed" style="width: 100%;">
+                                    <tr>
+                                        <th style="width:18%">Dr. Type</th>
+                                        <th>:</th>
+                                        <td>
+                                            <div class="flex">
+                                                <select id="ddlDoctorType" class="form-control">
+                                                    <option value="0">Select</option>
+                                                    <option value="Consultant">Consultant</option>
+                                                    <option value="Anesthetic">Anesthetic</option>
+                                                </select>
+                                                <input type="text" id="txtHISDoctorId" class="form-control" placeholder="HIS DoctorId" />
+                                                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#EmployeeModal" style="width:67%">Get Emp</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>:</th>
+                                        <td class="flex">
+                                            <div style="width:36%">
+                                                <select id="ddlPrefix" class="form-control">
+                                                    <option value="Dr.">Dr.</option>
+                                                </select>
+                                            </div>
+                                            <input type="text" id="txtDoctorName" class="form-control" placeholder="Doctor Name" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Gender</th>
+                                        <th>:</th>
+                                        <td class="flex">
+                                            <select id="ddlGender" class="form-control">
+                                                <option value="0">Select</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                            <input type="text" id="txtChandanEmpCode" class="form-control" placeholder="Emp Code" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <input type="checkbox" name="IsDirector" />Is Director
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="checkbox" name="IsOPD" />IS OPD
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="checkbox" name="IsProfile" />Profile Flag
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="checkbox" name="IsFreeOPD" />Free OPD
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="checkbox" name="IsExamRoomByPass" />Is Exam Room
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <table class="table-condensed" style="width: 100%;border-top: 1px solid #ddd;">
+                                <tr>
+                                    <th>Designation</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="text" id="txtDesignation" class="form-control" placeholder="Designation" />
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Phone</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="text" id="txtPhone" data-int class="form-control" placeholder="Phone" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Mobile</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="text" id="txtMobile" data-int class="form-control" placeholder="Mobile No." />
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Specialization</th>
+                                    <th>:</th>
+                                    <td class="flex">
+                                        <select id="ddlSpecialization" class="form-control"></select>
+                                        <button style="width:13%" data-toggle="modal" data-target="#SpecModal" class="btn-add btn-warning"><i class="fa fa-plus">&nbsp;</i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Degree Des</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="text" id="txtDegreeDes" class="form-control" placeholder="Degree Descriptive" />
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Degree</th>
+                                    <th>:</th>
+                                    <td class="flex">
+                                        <select id="ddlDegree" class="form-control"></select>
+                                        <button style="width:13%" data-toggle="modal" data-target="#DegreeModal" class="btn-add btn-warning"><i class="fa fa-plus">&nbsp;</i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Department</th>
+                                    <th>:</th>
+                                    <td class="flex">
+                                        <select id="ddlDepartment" class="form-control"></select>
+                                        <button style="width:13%" class="btn-add btn-warning" data-toggle="modal" data-target="#DepartmentModal"><i class="fa fa-plus">&nbsp;</i></button>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Address</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="text" id="txtAddress" class="form-control" placeholder="Address" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>IMA RegNo</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="text" id="txtRegImaNo" class="form-control" placeholder="IMA Reg. No." />
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Reg. Date</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="date" id="txtRegDate" class="form-control" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Floor No</th>
+                                    <th>:</th>
+                                    <td>
+                                        <select id="ddlFloorNo" onchange="GetRoomsByFloor()" class="form-control"></select>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Room No</th>
+                                    <th>:</th>
+                                    <td>
+                                        <select id="ddlRoomNo" class="form-control"></select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Fee Freq.</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="text" id="txtFeeFreq" data-int class="form-control" placeholder="Fee Freq." />
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Duration</th>
+                                    <th>:</th>
+                                    <td>
+                                        <select id="ddlDuration" class="form-control">
+                                            <option value="">Select</option>
+                                            <option value="5">5</option>
+                                            <option value="10" selected>10</option>.
+                                            <option value="15">15</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Emer. Avail</th>
+                                    <th>:</th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="Emrgavail" value="Y" checked />Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="Emrgavail" value="N" />No
+                                        </label>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Doctor Share</th>
+                                    <th>:</th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="docshare" value="Y" checked />Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="docshare" value="N" />No
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Online Appt</th>
+                                    <th>:</th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="onlineAppoint" value="Y" checked />Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="onlineAppoint" value="N" />No
+                                        </label>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th>Is Token Req.</th>
+                                    <th>:</th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="Token" value="Y" checked />Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="Token" value="N" />No
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>:</th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="drstatus" value="Y" checked />Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="drstatus" value="N" />No
+                                        </label>
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <th colspan="3"></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" id="divDoctorScheduleandLeave">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0; display:flex;padding: 1px 4px;">
+                        <div class="col-md-8">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab1primary" data-toggle="tab">By Days</a></li>
+                                <li><a href="#tab2primary" data-toggle="tab">Leave & Re-Schedule</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <span style="float:right" class="text-white" id="EditDocId"></span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1primary" style="padding:0;">
+                                <div class="col-lg-12">
+                                    <div class="form-group" style="font-weight:bold">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="daysname" value="Monday">Mon
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="daysname" value="Tuesday">Tue
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="daysname" value="Wednesday">Wed
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="daysname" value="Thursday">Thu
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="daysname" value="Friday">Fri
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="daysname" value="Saturday">Sat
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="daysname" value="Sunday">Sun
+                                        </label>
+                                    </div>
+                                </div>
+                                <table class="table-condensed" style="width: 100%;">
+                                    <tr>
+                                        <th>Shift</th>
+                                        <th>:</th>
+                                        <td>
+                                            <select id="ddlShift" class="form-control">
+                                                <option value="">Please Select </option>
+                                                <option value="Morning">Morning</option>
+                                                <option value="Evening">Evening</option>
+                                            </select>
+                                        </td>
+                                        <td>&nbsp;</td>
+                                        <th></th>
+                                        <th></th>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="white-space: pre;font-size:11px;">Start Time</th>
+                                        <th>:</th>
+                                        <td>
+                                            <input type="time" id="txtStartTime" class="form-control" />
+                                        </td>
+                                        <td>&nbsp;</td>
+                                        <th style="white-space: pre;font-size:11px;">End Time</th>
+                                        <th>:</th>
+                                        <td>
+                                            <input type="time" id="txtEndTime" class="form-control" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="white-space: pre;font-size:11px;">Patient Limit</th>
+                                        <th>:</th>
+                                        <td>
+                                            <input type="text" id="txtpatientLimit" data-int class="form-control" minlength="1" maxlength="2" />
+                                        </td>
+                                        <td>&nbsp;</td>
+                                        <th></th>
+                                        <th></th>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <div class="form-group row">
+                                    <input type="button" id="btnAddSlot" class="btn btn-primary pull-right" value="Add" onclick="return AddUpdateDoctorSlot();" />
+                                </div>
+                                <div class="">
+                                    <div class="panel-heading" style="background:#0076d0;">
+                                        <h4 class="text-white">Slot Time</h4>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="tblopdSchedule">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 1%;">Days</th>
+                                                    <th style="width: 2%;">St. Time</th>
+                                                    <th style="width: 2%;">Ed. Time</th>
+                                                    <th style="width: 4%;">Patient Limit</th>
+                                                    <th style="width: 1%;">Shift</th>
+                                                    <th style="width: 1%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab2primary">
+                                <div class="form-group row" style="display:flex">
+                                    <label class="col-sm-2">From</label>
+                                    <div class="col-sm-4">
+                                        <input type="date" id="txtFromDate" class="form-control" />
+                                    </div>
+                                    <label class="col-sm-2">To</label>
+                                    <div class="col-sm-4">
+                                        <input type="date" id="txttoDate" class="form-control" />
+                                    </div>
+                                    <span style="margin: 2px 0 0 2px;background: #0076d0;padding: 3px 9px 0 7px;color: #fff;height: 22px;" onclick="return GenerateRow();">
+                                        <i class="fa fa-plus"></i>
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="tbldynamic">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <input type="button" id="btnAddDrLeave" class="btn btn-primary pull-right" onclick="InsertDoctorLeave()" value="Save" />
+                                </div>
+                                <div class="form-group row">
+                                    <div class="panel-heading" style="background:#0076d0;color:#fff">
+                                        <span id="lblLeave"></span>
+                                    </div>
+                                    <div class="panel-body" style="display:flex" id="divSearchOldLeave">
+                                        <input type="checkbox" class="checkbox chkEnableOldSearchDate" />
+                                        <label class="col-sm-2">From</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" id="txtFrom" class="form-control" />
+                                        </div>
+
+                                        <label class="col-sm-2">To</label>
+                                        <div class="col-sm-4">
+                                            <input type="date" id="txtto" class="form-control" />
+                                        </div>
+                                        <span style="margin: 2px 0 0 2px;background: #0076d0;padding: 3px 9px 0 7px;color: #fff;height: 22px;" onclick="return SearchDoctorLeave();">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="tblLeaveDetails">
+                                            <thead>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Detail</th>
+                                                    <th>Att. Type</th>
+                                                    <th>Status</th>
+                                                    @*<th>Action</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="RateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-xl" style="width: 900px !important;" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px;background: #009688;color:#fff">
+                <div style="display:flex">
+                    <h4 class="modal-title" id="myModalLabel">Add Rate &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                    <button id="btnLoad" class="btn btn-success btn-xs" type="button" onclick="return OnLoadGetRateRoomVisit()">LOAD</button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<h4 class="modal-title"><span class="txtModalDocName"></span></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+            <div class="modal-body" style="padding: 5px 10px;">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h5>Rate List</h5></div>
+                            <div class="panel-body">                                
+                                    <input type="text" id="txtSearchRateList" style="border-radius: 0;border-color: #06a08b;" class="form-control" placeholder="Search Rate Panel List" />                                                                 
+                                <div class="table-responsive" style="height:200px;overflow:auto;overflow-y:scroll">
+                                    <table class="table table-bordered" id="tblPanels">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:1%"><input type="checkbox" id="chkallPanels" class="checkbox" /></th>
+                                                <th>Panels</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h5>Visits</h5></div>
+                            <div class="panel-body">
+                                <div class="table-responsive" style="height:227px;overflow:auto;overflow-y:scroll">
+                                    <table class="table table-bordered" id="tblVisit">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:1%">Select</th>
+                                                <th style="width:60%">Visit</th>
+                                                <th>Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>                          
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h5>Room Billing Category</h5></div>
+                            <div class="panel-body">
+                                <div class="table-responsive" style="height:227px;overflow:auto;overflow-y:scroll">
+                                    <table class="table table-bordered" id="tblRoomType">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:1%"><input type="checkbox" id="chkallRooms" class="checkbox" /></th>
+                                                <th>Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading"><h5>Panel Rate List</h5></div>
+                            <div class="panel-body">
+                                <div class="flex" style="margin: 2px 6px;">
+                                    <input type="text" id="txtSearchPanelRateList" style="border-radius: 0;border-color: #06a08b;" class="form-control" placeholder="Search Rate Panel List" />
+                                    <button id="btnRateList" style="width: 15%;height: 28px;margin: 0;border-radius: 0;" type="button" class="btn btn-primary btn-xs" onclick="SaveRateList()"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+                                </div>                                
+                                <div class="table-responsive" style="height:200px;overflow:auto;overflow-y:scroll">
+                                    <table class="table table-bordered" id="tblPanelRateList">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Rates</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>         
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MiscellaneousModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-xl" style="" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px;background: #009688;color:#fff">
+                <div style="display:flex">
+                    <h4 class="modal-title" id="myModalLabel">Add Miscellaneous &nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<h4 class="modal-title"><span class="txtModalDocName"></span></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border" style="display:flex">
+                                <h3 style="width:95%">Specialized Area</h3> <button type="button" class="btn btn-danger btn-xs pull-right" onclick="SetSeqOfFeatures('tblspecialization');">SET ROW</button>
+                            </div>
+                            <br />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Description:</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="txtFeatureSpecialization" rows="4" cols="50" placeholder="Describe Specialization here..."></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-success btn-xs pull-right" style="line-height:1.5" onclick="InsertDoctorFeatures('Specialization')">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div id="divSpecialization" class="table-responsive" style="margin: 0 10px 0 10px">
+                                    <table class="table table-bordered" id="tblspecialization" style="height:150px;overflow:auto;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:11%">Seq No</th>
+                                                <th>Description</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="connectedSortable"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border" style="display:flex">
+                                <h3 style="width:95%">About</h3> <button type="button" class="btn btn-danger btn-xs pull-right" onclick="SetSeqOfFeatures('tblabout');">SET ROW</button>
+                            </div>
+                            <br />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Description:</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="txtFeatureAbout" rows="4" cols="50" placeholder="Describe Specialization here..."></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-success btn-xs pull-right" style="line-height:1.5" onclick="InsertDoctorFeatures('About')">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div id="divAbout" class="table-responsive" style="margin: 0 10px 0 10px">
+                                    <table class="table table-bordered" id="tblabout" style="height:150px;overflow:auto;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:11%">Seq No</th>
+                                                <th>Description</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="connectedSortable"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border" style="display:flex">
+                                <h3 style="width:95%">Educational</h3> <button type="button" class="btn btn-danger btn-xs pull-right" onclick="SetSeqOfFeatures('tblEducation');">SET ROW</button>
+                            </div>
+                            <br />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Description:</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="txtFeatureEducation" rows="4" cols="50" placeholder="Describe Specialization here..."></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-success btn-xs pull-right" style="line-height:1.5" onclick="InsertDoctorFeatures('Education')">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div id="divEducation" class="table-responsive" style="margin: 0 10px 0 10px">
+                                    <table class="table table-bordered" id="tblEducation" style="height:150px;overflow:auto;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:11%">Seq No</th>
+                                                <th>Description</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="connectedSortable"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border" style="display:flex">
+                                <h3 style="width:95%">Journey</h3> <button type="button" class="btn btn-danger btn-xs pull-right" onclick="SetSeqOfFeatures('tblJourney');">SET ROW</button>
+                            </div>
+                            <br />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Description:</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="txtFeatureJourney" rows="4" cols="50" placeholder="Describe Journey here..."></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-success btn-xs pull-right" style="line-height:1.5" onclick="InsertDoctorFeatures('Journey')">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div id="divJourney" class="table-responsive" style="margin: 0 10px 0 10px">
+                                    <table class="table table-bordered" id="tblJourney" style="height:150px;overflow:auto;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:11%">Seq No</th>
+                                                <th>Description</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="connectedSortable"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border" style="display:flex">
+                                <h3 style="width:95%">Experience</h3> <button type="button" class="btn btn-danger btn-xs pull-right" onclick="SetSeqOfFeatures('tblExperience');">SET ROW</button>
+                            </div>
+                            <br />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Description:</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="txtFeatureExperience" rows="4" cols="50" placeholder="Describe Experience here..."></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-success btn-xs pull-right" style="line-height:1.5" onclick="InsertDoctorFeatures('Experience')">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div id="divExperience" class="table-responsive" style="margin: 0 10px 0 10px">
+                                    <table class="table table-bordered" id="tblExperience" style="height:150px;overflow:auto;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:11%">Seq No</th>
+                                                <th>Description</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="connectedSortable"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border" style="display:flex">
+                                <h3 style="width:95%">Membership</h3> <button type="button" class="btn btn-danger btn-xs pull-right" onclick="SetSeqOfFeatures('tblMembership');">SET ROW</button>
+                            </div>
+                            <br />
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-2">Description:</label>
+                                    <div class="col-sm-8">
+                                        <textarea id="txtFeatureMembership" rows="4" cols="50" placeholder="Describe Membership here..."></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="button" class="btn btn-success btn-xs pull-right" style="line-height:1.5" onclick="InsertDoctorFeatures('Membership')">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div id="Membership" class="table-responsive" style="margin: 0 10px 0 10px">
+                                    <table class="table table-bordered" id="tblMembership" style="height:150px;overflow:auto;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:11%">Seq No</th>
+                                                <th>Description</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="connectedSortable"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="SpecModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px;background: #a5a5a5c7;color:#1b1b1b">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Specialization</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Specialization</label>
+                    <input type="text" class="form-control" id="txtSpec">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea type="text" class="form-control" id="txtSpecDesc"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="return AddSpecialization();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DepartmentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px;background: #a5a5a5c7;color:#1b1b1b">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Department</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table table-responsive">
+                    <div class="scroll" style="min-height:300px;overflow:auto">
+                        <table id="tblDepartment" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:3%">Dept Id</th>
+                                    <th style="width:10%">Department Name</th>
+                                    <th style="width:40%">Department Descriptive</th>
+                                    <th style="width:1%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DegreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px;background: #009688;color:#fff">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Degree</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Degree</label>
+                    <input type="text" class="form-control" id="txtDegree">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea type="text" class="form-control" id="txtDegDesc"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="return AddDegree();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EmployeeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px;background: #a5a5a5c7;color:#1b1b1b">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Get Employee</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" id="txtChandanEmployee" class="form-control" autocomplete="off" placeholder="Search Employee" />
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <button type="button" class="btn btn-success" onclick="GetEmployeeInfo()">Get Employee Record</button>
+                    </div>
+                </div>
+                <div class="table table-responsive">
+                    <div class="scroll" style="min-height:300px;overflow:auto">
+                        <table id="tblEmployee" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%;">Emp Id</th>
+                                    <th style="width: 15%;">Employee Name</th>
+                                    <th style="width: 20%;">Designation</th>
+                                    <th style="width: 2%;">Mobile</th>
+                                    <th style="width:1%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,230 @@
+﻿
+@{
+	ViewBag.Title = "NewMember";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Utility/JsModule/HealthCard.js"></script>
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.panel-body {
+		padding: 15px 15px 0px 20px;
+		position: relative;
+	}
+
+	.table {
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 5px;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.Inactive {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+
+	.scroll {
+		max-height: 510px;
+		overflow: auto;
+		overflow-y: auto;
+	}
+	.IsMember {
+		background: #ffa9a9;
+		width: 30%;
+		display: block;
+		padding: 3px;
+		margin: 0 3px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="fileinput fileinput-new input-group" style="display:flex">
+									<span style="width:33%" class=""><b>Mobile No </b></span>
+									<span style="width:5%" class=""><b>:</b></span>
+									<input type="text" id="txtMobile" maxlength="10" style="width:62%" class="form-control" placeholder="Mobile No" />
+									<input type="hidden" id="hidgetotp" />
+									<label style="width:35%;display:block" class="IsMember">
+										<input type="checkbox" name="IsMemeber" onchange="IsMember()" />&nbsp;Is Member
+									</label>
+									<button id="btnGetOTP" class="btn btn-warning" style="width:30%;display:none" onclick="SendSMS()">Send OTP</button>
+									<input type="text" id="txtOTP" class="form-control" style="width:40%;" placeholder="Enter OTP" />
+									<button id="btnVerify" class="btn btn-success" style="width:20%;" onclick="verifyOtp()">Verify</button>
+								</div>
+							</div>
+						</div>
+						<div class="info Inactive">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:25%" class=""><b>Card Holder</b></span>
+										<span style="width:2%" class=""><b>:</b></span>
+										<input type="text" class="form-control" id="txtCardHolder" placeholder="Card Holder" />										
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:55%" class=""><b>Gender </b></span>
+										<span style="width:0%;margin-right: 10px;" class=""><b>:</b></span>
+										<select class="form-control" id="ddlGender">
+											<option>Select Gender</option>
+											<option>Male</option>
+											<option>Female</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:50%" class=""><b>Date of Birth </b></span>
+										<span style="width:3%" class=""><b>:</b></span>
+										<input type="date" class="form-control" id="txtDOB" />
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:55%" class=""><b>Area </b></span>
+										<span style="width:0%;margin-right: 10px;" class=""><b>:</b></span>
+										<input type="text" class="form-control" id="txtArea" placeholder="Area" />
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:50%" class=""><b>Locality </b></span>
+										<span style="width:3%" class=""><b>:</b></span>
+										<input type="text" class="form-control" id="txtLocality" placeholder="Locality" />
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:55%" class=""><b>Email </b></span>
+										<span style="width:0%;margin-right: 10px;" class=""><b>:</b></span>
+										<input type="text" class="form-control" id="txtEmail" placeholder="Email" />
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:50%" class=""><b>Pin </b></span>
+										<span style="width:3%" class=""><b>:</b></span>
+										<input type="text" class="form-control" max="6" id="txtPin" placeholder="Pin" />
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:53%" class=""><b>State </b></span>
+										<span style="width:0%;margin-right: 10px;" class=""><b>:</b></span>
+										<select class="form-control" id="ddlState" onchange="GetDistrict()"></select>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" style="display:flex">
+										<span style="width:50%" class=""><b>District </b></span>
+										<span style="width:3%" class=""><b>:</b></span>
+										<select class="form-control" id="ddlDistrict"></select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="fileinput fileinput-new input-group" style="display:flex">										
+										<span id="btnAddMember" class="form-group" style="background: #ffe2ae;width:80%;padding: 5px;">Add Members</span>
+										<button id="btnSave" class="btn btn-success" style="width:20%;">Save</button>
+									</div>
+								</div>
+							</div>
+							<div class="row form-group" style="background:#ddd;padding:5px;">
+								<div class="col-xs-3">
+									<label>Member Name</label>
+									<input type="text" id="txtMemberName" class="form-control" placeholder="Member Name" />
+								</div>
+								<div class="col-xs-3">
+									<label>Gender</label>
+									<select class="form-control" id="ddlMemberGender">
+										<option>Select Gender</option>
+										<option>Male</option>
+										<option>Female</option>
+									</select>
+								</div>
+								<div class="col-xs-3">
+									<label>DOB</label>
+									<input type="date" id="txtMemberDOB" class="form-control" />
+								</div>
+								<div class="col-xs-3">
+									<label>Mobile No</label>
+									<div style="display:flex">
+										<input type="text" id="txtMemberMobile" maxlength="10" class="form-control" placeholder="Mobile No" />
+										<button id="btnSave" class="btn btn-success" onclick="InsertMember()"><i class="fa fa-plus"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="scroll">
+							<table class="table table-bordered" id="tblCardInfo">
+								<thead>
+									<tr>
+										<th>Type Name</th>
+										<th>Member Name</th>
+                                        <th>Gender</th>
+										<th>Date of Birth</th>
+										<th>Mobile No</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

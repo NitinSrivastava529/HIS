@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "PanelToPanel";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Content/js/tableHeadFixer.js?his-version-1.0"></script>
+<script src="~/Areas/Corporate/JsModule/PanelToPanel.js?his-version-1.0"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Panel List</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-3">
+                                    <span class="btn btn-success" onclick="GetPanel()">Load Panel</span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span class="text-pink">Search</span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <table id="tblPanel" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Panel Id</th>
+                                                            <th>Company Name</th>                                                          
+                                                            <th>Credit Flag</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>         
+        </div>
+    </div>
+</div>
+

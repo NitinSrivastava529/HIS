@@ -1,0 +1,184 @@
+﻿
+@{
+	ViewBag.Title = "StockIssueReport";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/Report/StockIssueReport.js"></script>
+<style>
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	#ItemList {
+		box-shadow: 1px 1px 1px #ececec;
+		border: 0.5px solid #ececec;
+		width: 326px;
+		max-width: 330px;
+		max-height: 300px;
+		overflow-x: hidden;
+		position: absolute;
+		z-index: 1;
+		background: #fff;
+		top: 27px;
+		left: 113px;
+	}
+
+		#ItemList table {
+			font-size: 11px;
+			line-height: 22px;
+			width: 100%;
+		}
+
+			#ItemList table td {
+				padding: 1px 0px 0px 10px;
+			}
+
+			#ItemList table tbody tr {
+				border-bottom: 0.1px solid #eaeaea;
+			}
+
+	.btn-flat {
+		padding: 5px;
+		border: navajowhite;
+	}
+
+	.flex {
+		display: flex !important;
+		align-items: center;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Stock Issue Report</h4>
+							</div>
+							<div class="panel-body" style="padding:4px 10px;">
+								<div class="row">
+									<div class="col-md-6 form-group">
+										<div class="flex">
+											<span style="width:30%">
+												<label>From Cart</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<select id="ddlFromCart" class="form-control"><option>Select</option></select>
+										</div>
+									</div>
+									<div class="col-md-6 form-group">
+										<div class="flex">
+											<span style="width:30%">
+												<label>To Cart</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<select id="ddlToCart" class="form-control"><option>Select</option></select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 form-group">
+										<div class="flex">
+											<span style="width:30%">
+												<label>From Date</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<input type="date" id="txtFrom" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-6 form-group">
+										<div class="flex">
+											<span style="width:30%">
+												<label>To Date</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<input type="date" id="txtTo" class="form-control" />
+										</div>
+									</div>
+								</div>								
+								<div class="row">
+									<div class="col-md-6 form-group">
+										<div class="flex">
+											<span style="width:30%">
+												<label>Item Name</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<input type="text" class="form-control" id="txtItemName" autocomplete="off" placeholder="Product Name">
+											<input type="hidden" id="hiditemId" />
+											<div id="ItemList" style="display:none">
+												<table id="tblnavigate">
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 form-group">
+										<div class="flex">
+											<span style="width:22%">
+												<label>Report Type</label>
+											</span>
+											<span style="width:4%">
+												<label>:</label>
+											</span>
+											<label>
+												<input type="radio" name="ReportType" value="Detailed" />&nbsp;Detailed
+											</label>
+											<label>
+												<input type="radio" name="ReportType" value="Summarised" />&nbsp;Summarised
+											</label>
+										</div>
+									</div>
+								</div>						
+								<div class="row">
+									<div class="col-md-12 text-center form-group">
+									<input type="button" value="Download Report" onclick="DownloadExcel()" class="btn-success btn-flat" />									
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

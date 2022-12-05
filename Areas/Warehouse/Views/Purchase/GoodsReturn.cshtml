@@ -1,0 +1,249 @@
+﻿
+@{
+	ViewBag.Title = "GoodsReturn";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Purchase/GoodsReturn.js?his-version-1.0"></script>
+<style>
+	.select2-container {
+		width: 330px !important;
+	}
+
+	.title {
+		color: #fff;
+		margin: 4px 5px;
+	}
+
+	.scroll {
+		height: 230px;
+		overflow: hidden;
+		overflow-y: auto;
+		display: block;
+	}
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	#ItemList {
+		border: 1px solid #c2bebe;
+		width: 334px;
+		max-width: 500px;
+		max-height: 310px;
+		overflow: hidden;
+		overflow-y: auto;
+		position: absolute;
+		z-index: 1;
+		background: #fff;
+		top: auto;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		margin-left: 0px;
+		border-radius: 3px;
+	}
+
+	#divpopup {
+		position: absolute;
+		z-index: 10;
+		box-shadow: 0px 1px 3px #c1c1c1;
+		border: 2px solid #b1c5d4;
+		top: 28px;
+		left: -148px;
+		width: 500px;
+	}
+
+	#tblStock {
+		margin: 0;
+	}
+
+		#tblStock thead tr th:nth-child(1) {
+			width: 30% !important;
+		}
+
+	#ItemList table {
+		font-size: 12px;
+		line-height: 21px;
+		width: 100%;
+	}
+
+		#ItemList table td {
+			padding: 1px 0px 0px 10px;
+		}
+
+		#ItemList table tbody tr {
+			max-width: 100%;
+			/* padding: 1px 9px; */
+			user-select: none;
+			-webkit-user-select: none;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			/* border-bottom: 0.1px solid #eaeaea; */
+		}
+
+	[data-search] {
+		position: relative;
+	}
+
+	iframe {
+		margin: 2px 11px;
+		height: 387px;
+		box-shadow: 1px 1px 1px #ddd;
+		border: 1px solid #ddd;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#026cbd;padding:2px 4px;">
+								<h4 class="title pull-right">Goods Return [GR]</h4>
+								<input type="button" class="btn btn-default" value="Hold Goods Return" onclick="HoldGoodsReturn()" data-target="#modalHoldGoodsReturn" data-toggle="modal" />
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-6 pull-left">
+										<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+											<input type="text" id="txtPurchReturnId" class="form-control input_pass" disabled value="Auto Generate" placeholder="Purchase Return Id">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+											<input type="button" id="btnComplete" class="btn btn-success pull-right" onclick="CompleteGoodsReturn()" value="Complete">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div id="BasicInfo">
+										<div class="col-md-6">
+											<label>Vendor Type</label>
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<label>
+													<input type="radio" name="Vendor" checked value="Same" /> Same Vendor
+												</label>&nbsp;
+												<label>
+													<input type="radio" disabled="disabled" name="Vendor" value="Any" /> Any Vendor
+												</label>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<label>Choose Vendor</label>
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<select id="ddlVendor" class="form-control" style="max-width:230px"></select>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<label>Product Name</label>
+										<div data-search>
+											<input type="text" id="txtSearchProduct" data-count="50" class="form-control" autocomplete="off" placeholder="Search Product..." />
+											<span data-itemid style="display:none"></span>
+											<span data-masterkey style="display:none"></span>
+											<div id="ItemList" style="display:none">
+												<table id="tblnavigate">
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<label>Stock Qty  -  Quantity</label>
+										<div class="fileinput fileinput-new input-group" style="display:flex" data-provides="fileinput" data-search>
+											<input type="text" id="txtStockQty" data-count="5" readonly="readonly" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control input_pass" value="" placeholder="Stock Qty">
+											<input type="text" id="txtQuantity" data-count="5" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g, '');qtyCheck()" class="form-control input_pass" value="" placeholder="Quantity">
+											<div id="divpopup" class="divcenter table-responsive" style="display:none">
+												<table id="tblStock" class="table table-bordered">
+													<thead>
+														<tr class="text-left">
+															<th style='width: 24% !important'>Master-Key-Id</th>
+															<th>Batch No</th>
+															<th>Qty</th>
+															<th>Mfd.</th>
+															<th>p. Type</th>
+															<th style='width: 17% !important'>Exp.</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+
+									</div>
+									<div class="col-md-3">
+										<label style="visibility:hidden">Order Quantity</label>
+										<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+											<input type="button" id="btnSubmit" class="btn btn-success btn-block" onclick="PurchaseReturnInsert()" value="Submit">
+										</div>
+									</div>
+								</div>
+
+								<div class="table table-responsive scroll" style="height:300px;">
+									<table id="PurchaseReturnInfo" class="table table-bordered ">
+										<thead>
+											<tr>
+												<th>Master Key Id</th>
+												<th>Item Name</th>
+												<th>MRP</th>
+												<th>Trade</th>
+												<th>NPR</th>
+												<th>Quantity</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<div class="col-md-3 pull-right">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtAmount" class="form-control" readonly="readonly" placeholder="Amount" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalHoldGoodsReturn" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="header-custom">
+					<h5 class="modal-title">
+						Hold Goods Return
+						<button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+					</h5>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="text" class="form-control" id="txtSearch" placeholder="Search..." />
+							<div class="table table-responsive scroll" style="max-height:400px;">
+								<table class="table table-bordered" id="tblHoldGoodsReturn">
+									<thead>
+										<tr>
+											<th>Purchase Return Id</th>
+											<th>Return Date</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "RefShareReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+
+    .tbl-btn {
+        border: none;
+        padding: 1px 8px;
+    }
+
+    .flex-btn {
+        border: none;
+        border-radius: 0;
+        height: 28px;
+    }
+
+    .bc {
+        border-radius: 0;
+        border-color: #00a65a;
+    }
+
+    .active {
+        color: green;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    #btnSyncProcess {
+        border: none;
+        border-radius: 0;
+        padding: 6px 15px;
+    }
+</style>
+<script src="~/Areas/Referral/JsModule/jsCommision/RefShareReport.js"></script>
+<div id="page-content">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white">Reports</h4>
+                    </div>
+                    <div class="col-md-4">
+                        Report
+                        <select class="form-control" id="ddlReports">
+                            <option value="ReferralShare:Processed" selected="selected">Processed</option>
+                            <option value="ReferralShare:NotProcessed">Pending</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">From Date<input type="date" class="form-control" id="txtFrom" autocomplete="off" placeholder="dd/mm/yyyy" data-date-format="DD-MM-YYYY" /></div>
+                    <div class="col-md-2">To Date<input type="date" class="form-control" id="txtTo" autocomplete="off" placeholder="dd/mm/yyyy" /></div>
+                    <div class="col-md-2">
+                        . <button id="btnGetReport" type="button" class="btn btn-warning btn-block" onclick="GetReport('Data')">
+                            Get Report
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        . <button id="btnNewReqList" type="button" class="btn btn-warning btn-block" onclick="GetReport('Excel')">
+                            XL Report
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="example-box-wrapper">
+                        <div class="form-horizontal bordered-row">
+                            <div class="table table-responsive">
+                                <div class="scroll" style="height:800px;border: 1px solid #ddd;">
+                                    <table id="tblPatient" class="table table-bordered" style="font-size:11px;">
+                                        <thead>
+                                            <tr>
+                                                <th>IPD No</th>
+                                                <th>Bill Date</th>
+                                                <th>Patient Name</th>
+                                                <th>Panel Name</th>
+                                                <th>Amount</th>
+                                                <th>Exclusion</th>
+                                                <th>Net</th>
+                                                <th>Comm %</th>
+                                                <th>Comm</th>
+                                                <th>PayTo</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white">Share Info</h4>
+                    </div>
+                    <div class="panel-body">
+                        <hr style="margin:0;" />
+                        <hr style="margin-top: 5px;" />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive">
+                                    <div class="scroll">
+                                        <table id="tblCommissionList" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Category Name</th>
+                                                    <th>Amount</th>
+                                                    <th>Exclusion</th>
+                                                    <th>Net</th>
+                                                    <th>Comm.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+</div>
+
+

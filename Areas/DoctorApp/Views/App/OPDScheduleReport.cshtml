@@ -1,0 +1,72 @@
+﻿
+@{
+	ViewBag.Title = "OPDScheduleReport";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+	.notAllowed {
+		background: #ffd6d6
+	}
+
+	.btnTransfer {
+		margin-right: 5px;
+		cursor: pointer;
+		padding: 2px 5px;
+		border-radius: 1px;
+	}
+
+	.bn {
+		border-radius: 0;
+		border: none;
+	}
+
+	.bc {
+		border-radius: 0;
+		border-color: #00a65a;
+	}
+
+	.panel {
+		margin: 5px 3px 0 5px !important;
+		border: 1px solid #bedbf6;
+	}
+
+	.panel-body {
+		border: 1px solid #e1dede;
+		padding: 5px 3px 3px 3px !important;
+	}
+
+	.text-white {
+		color: #fff;
+	}
+</style>
+<script src="~/Areas/DoctorApp/JsModule/OPDScheduleReport.js"></script>
+<div id="page-content">
+	<div class="panel">
+		<div class="panel-body" style="height:560px; overflow-y:auto">
+			<div class="col-md-10">
+				<div class="panel">
+					<div class="panel-heading" style="background:#0076d0;padding:2px;">
+						<h4 class="text-white">OPD Schedule Report</h4>
+					</div>
+					<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+						<div class="form-group row">
+							<div class="col-md-3">
+								<input type="date" id="txtFrom" class="form-control" />
+							</div>
+							<div class="col-md-3">
+								<input type="date" id="txtTo" class="form-control" />
+							</div>
+							<div class="col-md-4" style="display:flex">
+								<select class="form-control" id="ddlDoctor"></select>
+							</div>
+							<div class="col-md-2">
+								<button type="button" id="btnDownloadXL" onclick="DownloadXL()" class="btn-primary btn pull-right bn"><i class="fa fa-file-excel-o">&nbsp;</i>Download Excel</button>
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

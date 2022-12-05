@@ -1,0 +1,137 @@
+﻿
+@{
+	ViewBag.Title = "PackageType";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Master/PackageType.js?his-version-1.0"></script>
+<style>	
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 380px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<input type="button" onclick="Clear()" class="btn btn-success" value="New" />
+								<h4 class="text-white pull-right">Create Pack Type</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: -1px 20px;">
+								<div class="col-md-2">
+									<div class="form-group">
+										<label style="visibility:hidden"> Pack Qty</label>
+										<input type="text" id="txtPackQty" data-imp data-int data-count="4" class="form-control" placeholder="Pack Qty" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>NOS </label>
+										<select id="ddlNOS" class="form-control" data-imp>
+											<option>Select NOS</option>
+											<option>Kg</option>
+											<option>Ltr</option>
+											<option>ml</option>
+											<option>Nos</option>
+											<option>Amp</option>
+											<option>Pkt</option>
+											<option>Gm</option>
+											<option>Test</option>
+											<option>Pad</option>
+											<option>Cap</option>
+											<option>Tab</option>
+											<option>Mg</option>
+											<option>Vail</option>
+											<option>Tube</option>											
+											<option>Mtr</option>											
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label> Pack Type</label>
+										<span data-packid style="display:none"></span>
+										<div style="display:flex">
+											<input type="text" id="txtPackType" disabled="disabled" data-imp class="form-control" placeholder="Pack Type" />										
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label> P. Qty</label>									
+										<div style="display:flex">
+											<input type="text" id="txtPQty" data-imp data-int data-count="5" class="form-control" placeholder="P. Qty" />
+											<input type="button" id="btnSavePackType" class="btn-success" value="Submit" />
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-10">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<button type="button" class="btn-success" onclick="GetPackTypeList()">Load</button>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll">
+												<table id="tblPackType" class="table table-bordered">
+													<thead>
+														<tr>
+															<th>Pack Type</th>
+															<th class="text-center" style="width:62px;">Pack Qty</th>														
+															<th style="width:1%">On/Off</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

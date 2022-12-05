@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "CreateItem";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/StockReport/ItemTransactionPartial.js"></script>
+
+<style>
+    .panel {
+        margin-bottom: 2px !important;
+    }
+
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 2px 0;
+        margin-top: 1px;
+    }
+
+    .form-group {
+        padding:5px;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+</style>
+
+<div class="col-lg-4" style="padding: 0 5px 0 0 !important;">
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="display:flex">
+            <h4 style="width:30%;"> Item Transaction</h4>  <input type="text" id="txtSeachItems" class="form-control" style="width:60%;margin-left:5%" placeholder="Search Items">
+        </div>
+        <div class="panel-body" style="border: 1px solid #86b3de; height:500px;overflow:auto">
+            <div class="form-group">
+                <label>Select Cart</label>
+                <select id="ddlCart" class="form-control border-imp" style="border:1px solid #86b3de"></select>
+            </div>
+            <div class="form-group">
+                <label onclick="SearchByItemName();">Search Item <i style="padding:5px" class="btn btn-success btn-xs fa fa-search fa-lg"></i></label>
+                <input id="txtItem" class="form-control border-imp" style="border:1px solid #86b3de" autocomplete="off" />
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tbItemDetails">
+                    <thead>
+                        <tr>
+                            <th style="width:80%">Item Name</th>
+                            <th style="width:7%">Item Id</th>
+                            <th style="width:7%">Status</th>
+                            <th style="width:6%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-8" style="padding: 0 5px 0 0 !important;">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4>Item Details: <span id="spnItemName"></span> <span id="spncurrentStock"></span> </h4>
+        </div>
+        <div class="panel-body" style="border: 1px solid #86b3de;height:500px;overflow:auto;">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="tblItemTransPartial">
+                    <thead>
+                        <tr>
+                            <th>Tran Type</th>
+                            <th>Trans Id</th>
+                            <th>Doc Date</th>
+                            <th>Qty</th>
+                            <th>From Cart</th>
+                            <th>To Cart</th>
+                            @*<th>Item Id</th>*@
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

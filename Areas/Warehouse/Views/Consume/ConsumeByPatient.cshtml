@@ -1,0 +1,376 @@
+﻿
+@{
+    ViewBag.Title = "ConsumeByEmployee";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Consumption/ConsumeByPatient.js?his-version-1.0"></script>
+<style>
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    #AdmittedIPDPatient {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 510px;
+        display: block;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 373px;
+        max-width: 500px;
+        max-height: 310px;
+        overflow: hidden;
+        overflow-y: auto;
+        position: absolute;
+        z-index: 10;
+        background: #fff;
+        top: 50px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 0px;
+        border-radius: 3px;
+    }
+
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+
+    .btn-flat {
+        padding: 5px;
+        border: navajowhite;
+    }
+
+    #divpopup {
+        background: #fff;
+        z-index: 1;
+        top: 15px;
+        width: 420px;
+        max-width: 460px;
+        box-shadow: 0px 1px 3px #868686;
+        border: 1px solid #d4d4d4;
+        position: absolute;
+    }
+
+    table[id=ddlReqBy] {
+        width: 100%;
+        margin-top: -1px;
+        padding-left: 11px;
+        display: block;
+        font-size: 12px;
+        border: 1px solid rgb(237, 235, 235);
+        box-shadow: 1px 1px 12px #efefef;
+        overflow: hidden;
+    }
+
+        table[id=ddlReqBy] tbody, table[id=ddlReqBy] thead {
+            width: 100%;
+            line-height: 22px;
+            max-height: 330px;
+            font-size: 12px;
+            display: block;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+
+            table[id=ddlReqBy] tbody tr td {
+                width: 195px;
+                display: list-item;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                position: absolute;
+                position: relative;
+            }
+
+            table[id=ddlReqBy] tbody tr {
+                border-bottom: 1px solid #f1f1f1;
+            }
+
+    #txtReqBy {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-decoration: none;
+        width: 237px;
+    }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        width: 100%;
+        line-height: 22px;
+        max-height: 291px;
+        font-size: 12px;
+        display: block;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .msg {
+        color: #ffffff;
+        background: #dd8803;
+        width: max-content;
+        padding: 5px 14px;
+        position: absolute;
+        bottom: 39px;
+        z-index: 10;
+        left: 11px;
+        border-radius: 2px;
+        display: none;
+    }
+
+        .msg span {
+            background: #ff0049;
+            padding: 2px;
+            border-radius: 20px;
+            width: 13px;
+            height: 13px;
+            font-size: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    [data-search] {
+        position: relative;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-1">
+                            <span class="text-pink">Filter</span>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchPatient" class="form-control input_pass" value="" placeholder="Search...">
+                            </div>
+                        </div>
+                        <div class="col-xs-1">
+                            <span class="text-pink">Floor</span>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <select class="form-control" id="ddlRoom">
+                                    <option>Choose Type</option>
+                                    <option>Urgent</option>
+                                    <option>Normal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive">
+                                    <div id="AdmittedIPDPatient">
+                                        <table id="tblAdmittedIPDPatient" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>IPD N.</th>
+                                                    <th>Patient Name</th>
+                                                    <th>UHID No.</th>
+                                                    <th>Doctor</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="panel panel-info">
+                            <div class="panel-body" style="background:#efefef;padding: 8px 5px;">
+                                <div class="table-responsive">
+                                    <table class="table-hover custom-table">
+                                        <tr>
+                                            <td> <b>Patient Name : </b><span data-pname></span></td>
+                                            <td><b>Gender : </b><span data-gender></span></td>
+                                            <td> <b>Age : </b><span data-age></span></td>
+                                            <td><b>Ad. Date : </b><span data-admiteddate></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Current Doctor : </b><span data-doctor></span></td>
+                                            <td><b>UHID : </b><span data-uhid></span></td>
+                                            <td> <b>IPD No. : </b><span data-ipd></span></td>
+                                            <td><b>Room No. : </b><span data-roomno></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Panel Name : </b> <span data-companyname></span></td>
+                                            <td><b>Panel Id : </b><span data-panelid></span></td>
+                                            <td colspan="2"><input type="button" id="btnConsumeStock" onclick="ConsumeStock()" value="Issue To Patient" class="btn btn-success pull-right" /></td>
+                                        </tr>
+                                    </table>
+                                    <div style="visibility:hidden">
+                                        <span data-department></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin:0" />
+                            <div class="panel-body" style="background:#fff;padding: 8px 5px;">
+                                <div class="col-xs-12">
+                                    <label>Select Cart</label>
+                                    <div class="form-group">
+                                        <select id="ddlCartList" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-5" data-search>
+                                    <label for="name" class="control-label">Product Name</label>
+                                    <input type="text" class="form-control" id="txtItemName" placeholder="Product Name" autocomplete="off">
+                                    <input type="hidden" id="hiditemId" />
+                                    <input type="hidden" id="hidmasterkey" />
+                                    <div id="ItemList" style="display:none;">
+                                        <table id="tblnavigate">
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div id="divpopup" style="display:none;" class="divcenter table-responsive">
+                                        <table id="tblStock" class="table table-bordered">
+                                            <thead>
+                                                <tr class="text-left">
+                                                    <th style="width: 28% !important;">Master-Key-Id</th>
+                                                    <th>Pack Type</th>
+                                                    <th>Batch No</th>
+                                                    <th>Pack Qty</th>
+                                                    <th>Expiry Date</th>
+                                                    <th>Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="">
+                                        <div class="form-group col-md-2" data-search>
+                                            <label for="name" class="control-label">In Stock</label>
+                                            <input type="text" class="form-control" id="txtInStock" placeholder="In Stock">
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label for="name" class="control-label">Pack Type</label>
+                                            <input type="text" class="form-control" id="txtPackType" readonly="readonly" placeholder="Pack Type">
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label for="name" class="control-label">Pack Qty</label>
+                                            <input type="text" class="form-control" id="txtPackQty" readonly="readonly" placeholder="Pack Qty">
+                                        </div>
+
+                                        <div class="form-group col-md-2">
+                                            <label for="name" class="control-label">Quantity</label>
+                                            <input type="text" class="form-control" id="txtQty" onkeyup="CheckQty()" data-int maxlength="5" placeholder="Quantity" autocomplete="off">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label for="name" class="control-label">Remark</label>
+                                            <div style="display:flex">
+                                                <input type="text" class="form-control" id="txtRemark" placeholder="Remark..">
+                                                <button id="btnStockTransaction" type="button" class="btn btn-primary btn-flat" onclick="AddStock();"><i class="fa fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="example-box-wrapper">
+                                        <div class="form-horizontal bordered-row">
+                                            <div class="table table-responsive">
+                                                <div class="scroll" style="max-height: 220px;">
+                                                    <table id="tblStockTransaction" class="table table-bordered">
+                                                        <thead>
+                                                            <tr class="text-left">
+                                                                <th>Master-Key-Id</th>
+                                                                <th style="width: 28%;">Item Name</th>
+                                                                <th>Pack Type</th>
+                                                                <th>Pack Qty.</th>
+                                                                <th>Batch No</th>
+                                                                <th>Expiry Date</th>
+                                                                <th>Remark</th>
+                                                                <th>Quantity</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

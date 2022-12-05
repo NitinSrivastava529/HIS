@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "DoctorSignature";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Lab/JsModule/LabDoctorSignature.js"></script>
+<style>
+    .panel {
+        margin-bottom: 2px !important;
+    }
+
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 2px 0;
+        margin-top: 1px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    input[type='file'] {
+        height: 23px !important;
+    }
+</style>
+
+
+<div id="page-content">
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Doctor List</h4>
+                </div>
+                <div class="panel-body" style="height:545px;overflow:auto; border: 1px solid #86b3de;">
+                    <div class="col-sm-10 form-group">
+                        <label>Department</label>
+                        <select id="ddlDepartment" class="form-control border-imp"></select>
+                    </div>
+
+                    <button style="margin-top: 22px;" type="submit" class="btn btn-xs btn-success" onclick="GetDoctors();"><i class="fa fa-search fa-lg"></i></button>
+
+                    <input type="text" id="txtSearchDoctors" class="form-control" autocomplete="off" placeholder="Search Test" style="border:1px solid #86b3de" />
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblDoctors">
+                            <thead>
+                                <tr>
+                                    <th>Doctor Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Doctor Signature</></h4>
+                </div>
+                <div class="panel-body" style="border: 1px solid #86b3de;">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Doctor Name</label>
+                            <input type="text" id="txtDoctorName" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Degree</label>
+                            <textarea id="txtDegree" class="form-control" rows="2" cols="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Signature</label>
+                            <input type="file" id="Uploadsign" class="form-control" />
+                        </div>
+                        <input type="hidden" id="hidsignvirpath" />
+                        <input type="hidden" id="hidsignphypath" />
+                        <input type="hidden" id="hidsignid" />
+                        <input type="hidden" id="hidcombinepath" />
+                        <input type="button" id="btnSaveUpdate" class="btn btn-info btn-xs pull-right" value="Save" onclick="SaveDoctorSignature()" />
+                    </div>
+                    <div class="col-lg-4 form-group">
+                        <label>Signature</label>
+                        <div>
+                            <img id="signimg" src="~/images/sigreq.jpg" style="width:160px;height:80px;border:1px solid #86b3de" alt="signature" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Doctor Details</> <input type="button" class="btn btn-warning btn-xs pull-right" value="Show All List" onclick="GetAllDoctorList()" style="margin-top: -3px;" /></h4>
+                </div>
+
+                <div class="panel-body" style="border: 1px solid #86b3de;">
+                    <div class="table-responsive" style="height:300px;overflow-y:auto">
+                        <table class="table table-bordered" id="tblSignatureInfo">
+                            <thead>
+                                <tr>
+                                    <th style="width:3%">Action</th>
+                                    <th style="width:10%">Doctor Id</th>
+                                    <th style="width:30%">Doctor Name</th>
+                                    <th style="width:35%">Degree</th>
+                                    <th>Image</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+
+

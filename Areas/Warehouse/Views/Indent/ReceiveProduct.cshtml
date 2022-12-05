@@ -1,0 +1,141 @@
+﻿@{
+	ViewBag.Title = "ReceiveProduct";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/Indent/ReceiveProduct.js?his-version-1.0"></script>
+<style>
+    .panel {
+        margin: 5px 3px 0 5px !important;
+        border: 1px solid #bedbf6;
+    }
+
+    .panel-body {
+        border: 1px solid #e1dede;
+        padding: 5px 3px 3px 3px !important;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+        .form-group label {
+            padding: 3px 0 4px 10px !important;
+        }
+
+    input, .input, select, .select {
+        border: 1px solid #000 !important;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    highlight_row {
+        background-color: #d5e7f8;
+        color: #000;
+    }
+
+    .table-bordered {
+        border: 1px solid #90c6f8;
+    }
+
+    .highlight {
+        background-color: red;
+    }
+
+    .text-white {
+        color: #fff;
+    }
+</style>
+
+<div id="page-content">
+    <div class="panel">
+        <div class="panel-body" style="height:560px; overflow-y:auto">
+            <div class="col-lg-5">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:2px;">
+                                <h4 class="text-white">Receive Product</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 8px 20px;">
+                                <div class="form-group row">
+                                    <label class="col-sm-3">Select Cart : </label>
+                                    <div class="col-sm-6">
+                                        <select id="ddlCartList" class="form-control"></select>
+                                    </div>
+                                    <button type="button" id="btnPendingTransaction" onclick="return GetPendingTransaction();" class="btn btn-success">Get</button>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="tblPendingTransaction">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Transaction Id</th>
+                                                        <th>Date</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:2px;">
+                                <h4 class="text-white">Product By Transaction - Id</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 8px 20px;">
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <label class="col-sm-2">Transaction Id</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="txtTransId" class="form-control" />
+                                        </div>
+
+                                        <button type="button" id="btnReceive" onclick="return ReceiveProduct()" class="btn btn-primary pull-right">Receive</button>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="tblTransactionDetails">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Master Key</th>
+                                                        <th>Item Name</th>
+                                                        <th>Batch</th>
+                                                        <th>Expiry date</th>
+                                                        <th>Pack Type</th>
+                                                        <th>Pack Qty</th>
+                                                        <th>Qty</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

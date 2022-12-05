@@ -1,0 +1,291 @@
+﻿
+@{
+    ViewBag.Title = "PanelMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<link href="~/Content/css/multiselect.css" rel="stylesheet" />
+<script src="~/Content/js/multiselect.js"></script>
+<script src="~/Areas/Masters/JsModule/PanelMaster.js"></script>
+
+<style type="text/css">
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 5px 0;
+    }
+
+    .form-group {
+        margin-bottom: 2px !important;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    .btn-xs {
+        height: 20px
+    }
+
+    .navbar {
+        min-height: 37px;
+        margin-bottom: 2px;
+    }
+
+    .navbar-form {
+        padding: 0;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 230px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    label {
+        margin-bottom: 0 !important;
+        font-size: 12px !important;
+        margin-top: 5px;
+    }
+
+    .multiselect {
+        width: 200px;
+        height: 20px;
+        border: solid 1px #c0c0c0;
+        overflow: auto;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .open > .dropdown-menu {
+        display: block;
+        max-height: 500px;
+        overflow: scroll;
+        background: #9bcbfb;
+        /*width: 100% !important;*/
+        overflow: hidden !important;
+    }
+
+    .multiselect-search {
+        width: 95% !important;
+    }
+</style>
+
+<div id="page-content">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="display:flex">
+                    <h4 style="width:25%">Panel Details </h4> <input type="text" id="txtSeachPanel" class="form-control" style="width:65%" placeholder="Search Panel" />
+                    <button type="button" class="btn btn-info btn-xs" onclick="BindPanel('')">Show All Panel</button>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" style="height:530px;overflow-y:auto">
+                        <table class="table table-bordered" id="tblPanelDetails">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th style="width:30%">Panel Name</th>
+                                    <th style="width:25%">Address</th>
+                                    @*<th style="width:10%">Ref-Rate (IPD Panel)</th>
+                                        <th style="width:10%">Ref-Rate (IPD Panel)</th>*@
+                                    <th style="width:10%">Contact Person</th>
+                                    <th style="width:5%">Date From</th>
+                                    <th style="width:5%">Date To</th>
+                                    <th style="width:10%">Credit Limit</th>
+                                    @*<th style="width:5%">Service Offered</th>*@
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="panel panel-primary" style="height:565px;overflow-y:auto;background:#d3eaff">
+                <div class="panel-heading">
+                    <h4 style="display:inline-block">Create Panel </h4>
+                    <input type="hidden" id="hidPanelId" />
+                    <button type="submit" id="btndaddupdate" class="btn btn-xs btn-success btn-flat pull-right" onclick="AddUpdatePanel()">Save</button>
+                    <button type="submit" class="btn btn-xs btn-warning btn-flat pull-right" onclick="ClearValues()">New</button>
+                </div>
+                <div class="panel-body">
+                    <h5 class="text-danger font-size-12 font-bold mrg10L"> <b>NOTE:</b> Co-Payment Payble By Customer </h5>
+                    <div class="col-sm-4 form-group">
+                        <label>Panel Name</label>
+                        <input type="text" id="txtPanelName" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Group Type</label>
+                        <select id="ddlGroupType" class="form-control" style="border:1px solid #86b3de">
+                            <option value="PANEL">PANEL</option>
+                            <option value="TPA">TPA</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Panel Type</label>
+                        <select id="ddlPanelType" class="form-control" style="border:1px solid #86b3de">
+                            <option value="0">Cash</option>
+                            <option value="1">Credit</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Addess 1</label>
+                        <input type="text" id="txtAddress1" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Addess 2</label>
+                        <input type="text" id="txtAddress2" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Contact Person</label>
+                        <input type="text" id="txtContactPerson" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Contact No</label>
+                        <input type="text" id="txtContactNo" class="form-control" data-int data-count="10" style="border:1px solid #86b3de" />
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Phone No</label>
+                        <input type="text" id="txtPhoneNo" class="form-control" data-int style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Email</label>
+                        <input type="text" id="txtEmail" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Fax No</label>
+                        <input type="text" id="txtFaxNo" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Valid From</label>
+                        <input type="date" id="txtValidFrom" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Valid To</label>
+                        <input type="date" id="txtValidTo" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+
+
+                    <div class="col-sm-4 form-group">
+                        <label>Payment Mode</label>
+                        <select id="ddlPaymentMode" class="form-control" multiple="multiple" style="border:1px solid #86b3de">
+                            <option value="1">Cash</option>
+                            <option value="2">Cheque</option>
+                            <option value="3">Demand Draft</option>
+                            <option value="4">Bank Cards</option>
+                            <option value="5">Internet Banking</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Rate Panel</label>
+                        <select id="ddlRatePanel" class="form-control" style="border:1px solid #86b3de">                            
+                        </select>
+                    </div>
+
+                    @*<div class="col-sm-4 form-group">
+                            <label>Refer Rate (IPD)</label>
+                            <select id="ddlReferRateIpd" class="form-control" style="border:1px solid #86b3de">
+                                <option value="1">Cash</option>
+                                <option value="2">Cheque</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Refer Rate (OPD)</label>
+                            <select id="ddlReferRateOpd" class="form-control" style="border:1px solid #86b3de">
+                                <option value="1">Cash</option>
+                                <option value="2">Cheque</option>
+                            </select>
+                        </div>*@
+                    <div class="col-sm-4 form-group">
+                        <label>Credit Limit</label>
+                        <input type="text" id="txtCreditLimit" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+
+                    <div class="form-group-lg col-sm-4">
+                        <label class="control-label">Rate Type</label>
+                        <div class="form-group-lg">
+                            <label>Self (OPD)</label>
+                            <input id="chkselfopd" name="chkratetype" value="SelfOpd" type="checkbox" />
+
+                            <label>Self (IPD)</label>
+                            <input id="chkselfipd" name="chkratetype" value="SelfIpd" type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Show Printout</label>
+                        <select id="ddlShowPrint" class="form-control" style="border:1px solid #86b3de">
+                            <option value="1" selected>Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Hide Rate</label>
+                        <select id="ddlHideRate" class="form-control" style="border:1px solid #86b3de">
+                            <option value="0" selected>No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Co-Payment On</label>
+                        <select id="ddlCoPaymentOn" class="form-control" style="border:1px solid #86b3de">
+                            <option value="1" selected>On Service</option>
+                            <option value="2">On Bill</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Co-Payment In (%)</label>
+                        <input type="text" id="txtCoPaymentIn" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Follow Currency</label>
+                        <select id="ddlCurrency" class="form-control" style="border:1px solid #86b3de">
+                            <option value="1" selected>INR</option>
+                            <option value="2">USD</option>
+                        </select>
+                    </div>
+
+                    <div class="col-sm-4 form-group">
+                        <label>Allow Partial Pay</label>
+                        <select id="ddlAllowPartialPay" class="form-control" style="border:1px solid #86b3de">
+                            <option value="0" selected>No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

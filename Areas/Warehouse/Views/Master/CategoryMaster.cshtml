@@ -1,0 +1,139 @@
+﻿
+@{
+	/**/
+
+	ViewBag.Title = "CategoryMaster";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Master/CategoryMaster.js?his-version-1.0"></script>
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 380px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<input type="button" onclick="Clear()" class="btn btn-success" value="New" />
+								<h4 class="text-white pull-right">Create Category</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: -1px 20px;">
+								<div class="col-md-6">
+									<div class="form-group">
+									<select id="ddlMainCategory" class="form-control" data-imp>
+										<option>SELECT CATEGORY</option>
+										<option>GENERAL ITEM</option>
+										<option>MEDICAL ITEM</option>
+									</select>								
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<input type="text" id="txtCatName" data-imp class="form-control text-uppercase" placeholder="Category Name" />
+										<span data-categoryid style="display:none"></span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<input type="button" id="btnSaveCategory" class="btn btn-success" value="Submit" />
+									</div>
+								</div>
+								<div class="col-md-9">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<span class="btn btn-success" onclick="GetCategoryList()">Load List</span>
+									</div>
+								</div>
+							</div>
+							<div class="panel-body">
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll">
+												<table id="tblCategory" class="table table-bordered">
+													<thead>
+														<tr>
+															<th style="width:1%">Edit</th>															
+															<th style="width:15%">Category Id</th>
+															<th>Category Name</th>
+															<th style="width:1%">On/Off</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

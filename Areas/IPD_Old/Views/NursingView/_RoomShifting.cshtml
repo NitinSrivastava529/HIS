@@ -1,0 +1,28 @@
+﻿
+<div class="row">
+    <div class="col-md-12" style="margin:2px 0;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="RoomBed"><b>Room Bed Name : </b>
+                <span id="txtRoomBedId" style="display:none"></span>
+                <span id="txtRoomBedName"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div style="display:flex;align-items:center">
+                    <label style="width: 28%;">Admission Date & Time : </label>
+                    <div style="border-radius:0;border: 1px solid #00a65a;display:flex;align-items:center">
+                        <input id="txtAdmissionDate" style="border:none;height:25px" type="date" class="form-control">
+                        <input id="txtAdmissionTime" style="border:none;height:25px;border-left:1px solid #ddd" type="time" class="form-control">
+                    </div>
+                    <button class="btn btn-success" onclick="IPDRoomShift()" style="width: 12%;height:27px;margin:0;border-radius:0;padding: 0 2px;"><i class="fa fa-sign-in">&nbsp;</i>Shift</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="overflow:auto;height:490px">
+        @Html.Partial("_BedAvailability")
+    </div>
+</div>
+<script src="~/Areas/IPD/JsModule/NursingView/_RoomShifting.js"></script>
+

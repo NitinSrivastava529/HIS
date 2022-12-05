@@ -1,0 +1,842 @@
+﻿<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.js'></script>
+<script src="~/Areas/OPD/JsModule/Prescription/PrescriptionAdvice.js"></script>
+<link href="~/Content/css/Accordian.css" rel="stylesheet" />
+<script src="~/Areas/OPD/JsModule/Prescription/CPOE_DoctorTemplate.js"></script>
+<script src="~/Areas/OPD/JsModule/Prescription/InsertPrescribedItems.js"></script>
+<script src="~/Areas/OPD/JsModule/Prescription/MedicineTemplate.js"></script>
+<style>
+    .tab-content::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    .tab-content::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    .tab-content::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+        /* Handle on hover */
+        .tab-content::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+	.pdfViewer {
+		width: 41%;
+		position: relative;
+		top: 50px;
+		background: rgb(53 53 53);
+		padding: 5px;
+		color: rgb(232 232 232);
+		text-align: left;
+	}
+
+	.msg {
+		color: #ffffff;
+		background: #dd8803;
+		width: max-content;
+		padding: 5px 14px;
+		position: absolute;
+		bottom: 39px;
+		z-index: 10;
+		left: 11px;
+		border-radius: 2px;
+		display: none;
+	}
+
+		.msg span {
+			background: #ff0049;
+			padding: 2px;
+			border-radius: 20px;
+			width: 13px;
+			height: 13px;
+			font-size: 9px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			text-align: center;
+			cursor: pointer;
+		}
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+
+	#ItemList {
+		border: 1px solid #c2bebe;
+		width: 373px;
+		max-width: 500px;
+		max-height: 310px;
+		overflow: hidden;
+		overflow-y: auto;
+		position: absolute;
+		z-index: 11111;
+		background: #fff;
+		top: 49px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		margin-left: 0px;
+		border-radius: 3px;
+	}
+
+
+		#ItemList table {
+			font-size: 12px;
+			line-height: 21px;
+			width: 100%;
+		}
+
+			#ItemList table td {
+				padding: 1px 0px 0px 10px;
+			}
+
+			#ItemList table tbody tr {
+				max-width: 100%;
+				/* padding: 1px 9px; */
+				user-select: none;
+				-webkit-user-select: none;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				/* border-bottom: 0.1px solid #eaeaea; */
+			}
+</style>
+<div style="padding:0 2px">
+	<div class="" style="width:29%;float:right;float:left">
+		<div class="example-box-wrapper">
+			<div class="panel-group" id="accordion">
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#TransferReferralForConsultation" aria-expanded="false" class="collapsed">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Transfer/Referral For Consultation
+							</a>
+						</h4>
+					</div>
+					<div id="TransferReferralForConsultation" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body text11">
+							<div class="row" style="margin-bottom:5px;">
+								<div class="col-md-5">
+									<label class="pull-left">Department</label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-7">
+									<select class="form-control" id="ddlTransferDept">
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<label class="pull-left">Refer to</label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-7">
+									<select class="form-control" id="ddlTransferReferTo">
+										<option>Select</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<label class="pull-left">Refer Type</label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-7">
+									<label>
+										<input type="radio" name="TransferRefertype" value="Urgent" />&nbsp;Urgent
+									</label>
+									<label>
+										<input type="radio" name="TransferRefertype" value="Routine" />&nbsp;Routine
+									</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<label class="pull-left">Consultation Type</label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-7">
+									<label>
+										<input type="radio" name="TransferConsultationType" value="Refer" />&nbsp;Refer
+									</label>
+									<label>
+										<input type="radio" name="TransferConsultationType" value="Transfer" />&nbsp;Transfer
+									</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label class="pull-left">Impression/Diagnosis :</label>
+								</div>
+								<div class="col-md-12">
+									<textarea rows="4" class="form-control" id="txtTransferDoctorDiagnosis"></textarea>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-5">
+									<label class="pull-left">Remarks</label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-12">
+									<textarea rows="4" class="form-control" id="txtTransferDoctorRemark"></textarea>
+								</div>
+								<div class="col-md-12 text-center">
+									<button class="btn btn-success" onclick="InsertPrescAdvice()">Submit</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#ProvisionalDiagnosis" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Provisional Diagnosis
+							</a>
+							<span class="circle-add pull-right" id="T00001"><i class="fa fa-edit"></i></span>
+						</h4>
+					</div>
+					<div id="ProvisionalDiagnosis" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="search-box" style="display:flex">
+										<input type="text" class="form-control" id="txtSearchProvisionalDiagnosis" style="width:70%" placeholder="Search Provisional Diagnosis Template" />
+										<button class="btn btn-success" onclick="FilteredTemplate('HospitalList','T00001','ProvisionalDiagnosisList')"><i class="fa fa-medkit"></i></button>
+										<button class="btn btn-warning" onclick="FilteredTemplate('FavouriteList','T00001','ProvisionalDiagnosisList')"><i class="fa fa-heart"></i></button>
+										<button class="btn btn-primary" onclick="FilteredTemplate('DoctorList','T00001','ProvisionalDiagnosisList')"><i class="fa fa-stethoscope"></i></button>
+									</div>
+									<ul class="ListItems" id="ProvisionalDiagnosisList" style="height:300px"></ul>
+									<div class="bottom-box">
+										<textarea class="form-control" id="txtProvisionalDiagnosis" placeholder="Reamrk" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#ChiefComplaint" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Chief Complaint
+							</a>
+							<span class="circle-add pull-right" id="T00002"><i class="fa fa-edit"></i></span>
+						</h4>
+					</div>
+					<div id="ChiefComplaint" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="search-box" style="display:flex">
+										<input type="text" class="form-control" id="txtSearchChiefComplaint" style="width:70%" placeholder="Search Chief Complaint Template" />
+										<button class="btn btn-success" onclick="FilteredTemplate('HospitalList','T00002','ChiefComplaintList')"><i class="fa fa-medkit"></i></button>
+										<button class="btn btn-warning" onclick="FilteredTemplate('FavouriteList','T00002','ChiefComplaintList')"><i class="fa fa-heart"></i></button>
+										<button class="btn btn-primary" onclick="FilteredTemplate('DoctorList','T00002','ChiefComplaintList')"><i class="fa fa-stethoscope"></i></button>
+									</div>
+									<ul class="ListItems" id="ChiefComplaintList" style="height:300px"></ul>
+									<div class="bottom-box">
+										<textarea class="form-control" placeholder="Reamrk" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#SignSymptoms" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Sign & Symptoms
+							</a>
+							<span class="circle-add pull-right" id="T00003"><i class="fa fa-edit"></i></span>
+						</h4>
+					</div>
+					<div id="SignSymptoms" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="search-box" style="display:flex">
+										<input type="text" class="form-control" id="txtSearchSignSymptoms" style="width:70%" placeholder="Search Sign Symptoms Template" />
+										<button class="btn btn-success" onclick="FilteredTemplate('HospitalList','T00003','SignSymptomsList')"><i class="fa fa-medkit"></i></button>
+										<button class="btn btn-warning" onclick="FilteredTemplate('FavouriteList','T00003','SignSymptomsList')"><i class="fa fa-heart"></i></button>
+										<button class="btn btn-primary" onclick="FilteredTemplate('DoctorList','T00003','SignSymptomsList')"><i class="fa fa-stethoscope"></i></button>
+									</div>
+									<ul class="ListItems" id="SignSymptomsList" style="height:300px"></ul>
+									<div class="bottom-box">
+										<textarea class="form-control" placeholder="Reamrk" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#LaboratoryRadiologyAdvicePackages" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Laboratory & Radiology Advice & Packages
+							</a>
+							<span class="circle-add pull-right" id="T00009"><i class="fa fa-edit"></i></span>
+						</h4>
+					</div>
+					<div id="LaboratoryRadiologyAdvicePackages" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="search-box" style="display:flex">
+										<input type="text" class="form-control" id="txtSearchLaboratoryRadiology" style="width:70%" placeholder="Search Laboratory & Radiology Template" />
+										<button class="btn btn-success" onclick="FilteredTemplate('HospitalList','T00009','LaboratoryRadiologyList')"><i class="fa fa-medkit"></i></button>
+										<button class="btn btn-warning" onclick="FilteredTemplate('FavouriteList','T00009','LaboratoryRadiologyList')"><i class="fa fa-heart"></i></button>
+										<button class="btn btn-primary" onclick="FilteredTemplate('DoctorList','T00009','LaboratoryRadiologyList')"><i class="fa fa-stethoscope"></i></button>
+									</div>
+									<ul class="ListItems" id="LaboratoryRadiologyList" style="height:300px"></ul>
+									<div class="bottom-box">
+										<input type="text" class="form-control" placeholder="Write Other Investigation" />
+									</div>
+									<div class="bottom-box">
+										<textarea class="form-control" placeholder="Enter Laboratory & Radiology Remarks" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#DoctorNotes" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Doctor Notes
+							</a>
+							<span class="circle-add pull-right" id="T00005"><i class="fa fa-edit"></i></span>
+						</h4>
+					</div>
+					<div id="DoctorNotes" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="search-box" style="display:flex">
+										<input type="text" class="form-control" id="txtSearchDoctorNotes" style="width:70%" placeholder="Search Doctor Notes Template" />
+										<button class="btn btn-success" onclick="FilteredTemplate('HospitalList','T00005','DoctorNotesList')"><i class="fa fa-medkit"></i></button>
+										<button class="btn btn-warning" onclick="FilteredTemplate('FavouriteList','T00005','DoctorNotesList')"><i class="fa fa-heart"></i></button>
+										<button class="btn btn-primary" onclick="FilteredTemplate('DoctorList','T00005','DoctorNotesList')"><i class="fa fa-stethoscope"></i></button>
+									</div>
+									<ul class="ListItems" id="DoctorNotesList" style="height:300px"></ul>
+									<div class="bottom-box">
+										<textarea class="form-control" placeholder="Reamrk" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#Allergies" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Allergies, History, Past Medication, Doctor Advice
+							</a>
+						</h4>
+					</div>
+					<div id="Allergies" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12 ahpd-group">
+									<ul class="ListItems" id="AllergiesList" style="display:none;"></ul>
+									<div class="bottom-box">
+										<textarea class="form-control" data-id="AllergiesItems" placeholder="Allergy" rows="2"></textarea>
+									</div>
+									<div class="bottom-box">
+										<textarea class="form-control" data-id="HistoryItems" placeholder="History" rows="2"></textarea>
+									</div>
+									<div class="bottom-box">
+										<textarea class="form-control" data-id="PastMedicationItems" placeholder="Past Medication" rows="2"></textarea>
+									</div>
+									<div class="bottom-box">
+										<textarea class="form-control" data-id="DoctorAdviceItems" placeholder="Doctor Advice" rows="2"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#PrescribedProcedure" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Prescribed Procedure
+							</a>
+							<span class="circle-add pull-right"><i class="fa fa-edit"></i></span>
+						</h4>
+					</div>
+					<div id="PrescribedProcedure" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="search-box" style="display:flex">
+										<input type="text" class="form-control" id="txtSearchPrescribedProcedures" style="width:70%" placeholder="Search Laboratory & Radiology Template" />
+										<button class="btn btn-success" onclick="FilteredTemplate('HospitalList','T00009','LaboratoryRadiologyList')"><i class="fa fa-medkit"></i></button>
+										<button class="btn btn-warning" onclick="FilteredTemplate('FavouriteList','T00009','LaboratoryRadiologyList')"><i class="fa fa-heart"></i></button>
+										<button class="btn btn-primary" onclick="FilteredTemplate('DoctorList','T00009','LaboratoryRadiologyList')"><i class="fa fa-stethoscope"></i></button>
+									</div>
+									<ul class="ListItems" id="PrescribedProcedureList" style="height:300px"></ul>
+									<div class="bottom-box">
+										<textarea class="form-control" placeholder="Enter Prescribed Procedure" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#PrescribedMedicine" class="collapsed" aria-expanded="false">
+								<span class="circle"><i class="fa fa-plus-circle"></i></span>Prescribed Medicine
+							</a>
+							<span id="btnMediTemp" class="btn-rx pull-right"><img src="~/Content/logo/rx.png" style="width:12px;" />+</span>
+						</h4>
+					</div>
+					<div id="PrescribedMedicine" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="search-box" style="display:flex">
+										<input type="text" class="form-control" id="txtSearchPrescribedMedicine" style="width:70%" placeholder="Search Prescribed Medicine Template" />
+										<button id="btnCPOEMediTemp" class="btn btn-success"><i class="fa fa-plus"></i></button>
+										@*<button class="btn btn-warning"><i class="fa fa-heart"></i></button>
+											<button class="btn btn-primary"><i class="fa fa-stethoscope"></i></button>*@
+									</div>
+									<ul class="ListItems" id="PrescribedMedicineList" style="height:300px;"></ul>
+									<div class="bottom-box">
+										<textarea class="form-control" placeholder="Reamrk" rows="4"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					@*<button class="btn btn-primary btn-xs">New Template</button>
+						<button class="btn btn-primary btn-xs" onclick="InsertItemsForPres()">Save</button>
+						<button class="disabled btn btn-des">Print</button>*@
+				</div>
+				<b style="font-size: 12px; margin-left:10px;">Notes:-</b>
+				<ul style="padding: 0;color:red">
+					<li style="font-size: 12px; margin-left: 22px;">Double Click On Prescription Item To Remove.</li>
+					<li style="font-size: 12px; margin-left: 22px;">Single Click On Medicine Item To Select.</li>
+				</ul>
+			</div>
+			<div class="row">
+				<div class="col-md-12 bottom-tab">
+					<ul class="nav nav-tabs" style="margin:0">
+						<li class="active"><a data-toggle="tab" href="#PatientVisits">Patient Visits</a></li>
+						<li><a data-toggle="tab" href="#menu1">IPD Discharge Summary</a></li>
+					</ul>
+					<div class="tab-content" style="max-height:158px;overflow:auto">
+						<div id="PatientVisits" class="tab-pane fade in active">
+                            <table id="tblPatientVisits" class="table table-bordered"><tbody></tbody></table>
+							@*<label class="currentVisit">Current Visit <b onclick="AdvicePreview()" style="float:right;color:#a72121;font-size: 15px;" class="fa fa-print"></b></label>*@
+						</div>
+						<div id="menu1" class="tab-pane fade">
+							<label class="currentVisit">Current Visit <b style="float:right;color:#a72121;font-size: 15px;" class="fa fa-print"></b></label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="OPDPrintPreview">
+		<div class="col-md-12 bottom-tab">
+			<ul class="nav nav-tabs" style="margin:0">
+				<li class="active"><a data-toggle="tab" href="#PatientVisits1">Edit</a></li>
+				<li><a data-toggle="tab" href="#menu11" onclick="PresPreview()">View</a></li>
+			</ul>
+			<div class="tab-content" style="max-height:550px;overflow:auto">
+				<div id="PatientVisits1" class="tab-pane fade in active">
+					<div class="">
+						<label style="font-size: 10px;position: relative;-webkit-transform: rotate(-90deg); top: 171px; left: -93px;"> Powered By : Chandan Hospital Ltd.</label>
+						<div class="OPDPrintPreview-header" style="display:block">
+							<div class="row">
+								<div class="col-md-2">
+									<label class="pull-left"><b>Patient Name</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblPreviewPatientName" class="header-value">Mrs.SULTANA  </label>
+								</div>
+								<div class="col-md-2">
+									<label class="pull-left"><b>UHID</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblPreviewUHID" class="header-value">CH/20/028364</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2">
+									<label class="pull-left"><b>Age/Sex</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblPreviewAgeSex" class="header-value">54 YRS/Female</label>
+								</div>
+								<div class="col-md-2">
+									<label class="pull-left"><b>App. Date</b></label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblAppDate" class="header-value">03-Nov-2020</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2">
+									<label class="pull-left"><b>Doctor</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblPreviewDoctorName" class="header-value">Dr. Manish Kumar Jha</label>
+								</div>
+								<div class="col-md-2">
+									<label class="pull-left"><b>App. Type</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblVisitType" class="header-value">Emergency Visit</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2">
+									<label class="pull-left"><b>Mobile No.</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblMobileNo" class="header-value">9453823765</label>
+								</div>
+								<div class="col-md-2">
+									<label class="pull-left"><b>Valid To.</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblValidTo" class="header-value">06-Nov-2020</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2">
+									<label class="pull-left"><b>Panel</b>  </label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label id="lblPreviewPanel" class="header-value">CASH</label>
+								</div>
+								<div class="col-md-2">
+
+									<label class="pull-left"><b>BarCode</b></label>
+									<b class="pull-right">:</b>
+								</div>
+								<div class="col-md-4">
+									<label style="font-size: 12px; display: none" id="lblBillPaidAmount">COB/20-21/0071188/Rs:1500</label>
+									<img id="imgBarcode" style="width: 120px;" src="">
+								</div>
+							</div>
+						</div>
+						<div class="OPDPrintPreview-body">
+							<div class="row">
+								<div class="col-md-3 OPDPrintPreview-body-left">
+									<br />
+									<div class="prescribedItem" id="VitalSignItems" style="display:block">
+										<TemplateGroup id="VitalSign"><b>Vital Sign :</b> </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="LaboratoryRadiologyItems">
+										<TemplateGroup id="T00009"><b>Investigation : </b></TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="PrescribedProcedureItems">
+										<TemplateGroup id="T00010"><b>Procedure : </b></TemplateGroup><br />
+									</div>
+									
+								</div>
+								<div class="col-md-9 OPDPrintPreview-body-right">
+									<br />
+									<div class="prescribedItem" id="ProvisionalDiagnosisItems">
+										<TemplateGroup id="T00001">Provisional Diagnosis : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="ChiefComplaintItems">
+										<TemplateGroup id="T00002">Chief Complaint : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="SignSymptomsItems">
+										<TemplateGroup id="T00003">Sign Symptoms : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="PrescribedMedicine">
+										<TemplateGroup id="PrescribedMedicine"></TemplateGroup><br />
+										<img src="~/Content/logo/rx.png" style="width:15px;" />
+										<table class="table table-bordered MedicineTemplate" style="font-size: 11px;">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Dose</th>
+													<th>Times</th>
+													<th>Duration</th>
+													<th>Meal</th>
+													<th>Route</th>
+													<th>Qty</th>
+													<th>Remarks</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+									<div class="prescribedItem" id="VaccinationStatusItems">
+										<TemplateGroup id="T00004">Vaccination Status : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="DoctorNotesItems">
+										<TemplateGroup id="T00005">Doctor Notes : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="AllergiesItems">
+										<TemplateGroup id="T00006">Allergies : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="HistoryItems">
+                                        <TemplateGroup id="T00015">History : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="PastMedicationItems">
+										<TemplateGroup id="T00007">Past Medication : </TemplateGroup><br />
+									</div>
+									<div class="prescribedItem" id="DoctorAdviceItems">
+										<TemplateGroup id="T00008">Doctor Advice : </TemplateGroup><br />
+									</div>
+									<div class="OPDPrintPreview-body-right-doctor">
+										<div class="doctorName" id="doctorName">Dr. Mukul Misra</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="menu11" class="tab-pane fade">
+					<div style="margin: -49px 0;text-align:center;z-index:1">
+						<h4 class="pdfViewer">Patient Visits Report</h4>						
+						<iframe src="" id="PresPreview" frameborder="0" height="550px" width="100%"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+
+<div class="modal fade" id="modalTemplate" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content" style="margin-top: 30%">
+			<!-- Modal Header -->
+			<div class="modal-header bg-success">
+				<h4 class="modal-title">
+					Manage Template
+					<button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+				</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<select id="ddlDoctorTemplate" class="form-control" data-imp></select>
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="form-group" style="display:flex">
+							<input type="text" id="txtDoctorItemName" style="width:65%;margin-right: 10px;" data-imp class="form-control text-uppercase" placeholder="Item Name" />
+							<span data-categoryid style="display:none"></span>
+							<span id="hiddenDoctorTempItemId" style="display:none"></span>
+							<label>
+								<input type="checkbox" value="1" name="IsFavourite" />&nbsp;Favourite
+							</label>
+							<button id="btnSaveDoctorTemplate" style="margin-left: 6px;" class="btn btn-success"><i class="fa fa-plus"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalPresMediTemplate" role="dialog">
+	<div class="modal-dialog modal-lg" style="width: 1180px;">
+		<div class="modal-content" style="margin-top: 8%;height:485px">
+			<!-- Modal Header -->
+			<div class="modal-header bg-success" style="background: #007792;color:#fff">
+				<h4 class="modal-title">
+					Prescribed Medicine
+					<button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+				</h4>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-4" id="TemplateMasterLeft">
+						<div class="panel">
+							<div class="panel-heading" style="background:#007792;padding: 4px;">
+								<input type="button" onclick="ClearTemplateMaster()" value="New" />
+								<h4 class="text-white pull-right">Template Master</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding:5px 0;">
+								<div class="col-md-12">
+									<div class="form-group">
+										<input type="text" id="txtTemplateName" data-imp class="form-control text-uppercase" autocomplete="off" placeholder="Template Name" />
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group" style="display:flex">
+										<input type="text" id="txtDescription" class="form-control text-uppercase" autocomplete="off" placeholder="Description" />
+										<button class="btn-success" id="btnSaveTemplate">Save</button>
+									</div>
+								</div>
+								<div class="table table-responsive">
+									<div class="scroll" style="height: 300px;">
+										<table id="tblTemplateMaster" class="table table-bordered">
+											<thead>
+												<tr>
+													<th>Template Name</th>
+													<th>Description</th>
+													<th style="width:18%">Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-8" id="TemplateMasterRight">
+						<div class="panel">
+							<div class="panel-heading" style="background:#007792;padding: 4px;display: flex;">
+								<h4 class="text-white">Template Items <span style="color:#fff;" id="hiddenTemplateMasterId"></span></h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding:5px 8px;height: 397px;">
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Type</label>
+											<select class="form-control" id="ddlSearchType">
+												<option value="ETHICAL">By Product</option>
+												<option value="BySaltName">By Salt</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Item Name</label>
+											<input type="text" id="txtSearchProduct" data-imp class="form-control text-uppercase" autocomplete="off" placeholder="Item Name" />
+											<div id="ItemList" style="display:none">
+												<table id="tblnavigate">
+													<tbody></tbody>
+												</table>
+											</div>
+											<input type="text" id="txtItemID" class="form-control" style="display:none" />
+											<input type="text" id="txtIsCash" class="form-control" style="display:none" />
+										</div>
+										<div class="msg"></div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Dose</label>
+											<div class="select-editable">
+												<select id="ddlFreMaster" onchange="QtyCalculate()" onkeydown="NextFocus('txtDuration')" class="form-control"></select>
+												<input type="text" id="txtFreqMaster" onkeydown="NextFocus('ddlFreMaster')" name="format" value="Select" class="form-control" placeholder="Dose" />
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<label>Duration, Days, Quantity</label>
+										<div class="form-group" style="display:flex">
+											<input type="text" id="txtDuration" onkeyup="QtyCalculate()" onkeydown="NextFocus('ddlDays')" data-imp data-int class="form-control text-uppercase" value="0" autocomplete="off" placeholder="Duration" />
+											<select id="ddlDays" class="form-control" onkeydown="NextFocus('txtQty')" data-imp><option>Days</option></select>
+											<input type="text" id="txtQty" onkeydown="NextFocus('txtIntake')" data-imp data-int class="form-control text-uppercase" autocomplete="off" placeholder="Qty" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>When Take</label>
+											<div class="select-editable">
+												<select id="ddlIntake" onkeydown="NextFocus('txtRoute')" class="form-control"></select>
+												<input type="text" id="txtIntake" onkeydown="NextFocus('ddlIntake')" name="format" class="form-control" value="Select" placeholder="In take" />
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Route</label>
+											<div class="select-editable">
+												<select id="ddlRoute" onkeydown="NextFocus('txtRemark')" class="form-control">
+													<option>Oral</option>
+													<option>Nose</option>
+												</select>
+												<input type="text" id="txtRoute" onkeydown="NextFocus('ddlRoute')" name="format" class="form-control" placeholder="Route" />
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label>Remark</label>
+											<input type="text" id="txtRemark" data-imp class="form-control text-uppercase" autocomplete="off" placeholder="Remark" />
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<br />
+											<button class="btn btn-success" id="btnPresMediItem" onclick="AddMedicineTemplatge()"><i class="fa fa-plus">&nbsp;</i>Add</button>
+											<button style="display:none;" class="btn btn-primary" id="btnSaveMediTempInfo" onclick="InsertMedicineTemplateInfo()"><i class="fa fa-plus">&nbsp;</i>Save</button>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group" style="max-height: 270px;overflow:auto">
+											<img src="~/Content/logo/rx.png" style="width:15px;" />
+											<table class="table table-bordered MedicineTemplate" id="MedicineTemplate">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Dose</th>
+														<th>Times</th>
+														<th>Duration</th>
+														<th>Meal</th>
+														<th>Route</th>
+														<th>Qty</th>
+														<th>Remarks</th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+											<table class="table table-bordered" id="MedicineTemplateForDB">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Dose</th>
+														<th>Times</th>
+														<th>Duration</th>
+														<th>Meal</th>
+														<th>Route</th>
+														<th>Qty</th>
+														<th>Remarks</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

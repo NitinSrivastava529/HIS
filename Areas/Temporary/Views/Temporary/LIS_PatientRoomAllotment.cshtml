@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "LIS_PatientRoomAllotment";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Content/js/tableHeadFixer.js?his-version-1.0"></script>
+<script src="~/Areas/Temporary/JsModule/PatientRoomAllotment.js?his-version-1.0"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Patient List</h4>
+                            </div>
+                            <div class="panel-body">
+
+                                <div class="col-xs-2">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="date" id="txtDate" class="form-control input_pass" value="" placeholder="Search By Date...">
+                                    </div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <select class="form-control" id="ddlStatus">
+                                            <option>Pending</option>
+                                            <option>Assigned</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <span class="btn btn-success" onclick="GetPatient()">Fill Data</span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <table id="tblPatient" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Visit No</th>
+                                                            <th>Patient Name</th>
+                                                            <th>Gender</th>
+                                                            <th>Age</th>
+                                                            <th>Amount</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,37 @@
+﻿@media print {
+    #print {
+        display: none;
+    }
+
+    @page {
+        padding: 0;
+        margin: 0;
+        size: A4 landscape;
+    }
+}
+
+.box-purple {
+ border: 1px solid #bfbfbf;
+    padding: 10px 12px;  
+    background: #fff;
+}
+
+body {
+    background: #fff;
+}
+
+.container {
+    margin-top: 10px;
+}
+.table{
+    font-size:11px;
+    line-height:0px;
+}
+.table-bordered td, .table-bordered th {
+    border: .3px solid #afafaf;
+}
+.table td, .table th {
+    padding: 9px;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}

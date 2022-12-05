@@ -1,0 +1,204 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DoctorDisplay</title>
+    @Html.Partial("_header")
+    <script src="~/JsModule/global.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/Areas/OPD/JsModule/DoctorDisplay.js"></script>   
+    <style type="text/css">
+        body {
+            overflow: hidden;
+        }
+
+        .AllPending {
+         overflow: hidden;
+        }
+
+        .AllConsulting {
+            max-height: 170px !important;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+        #tblConsulting > tbody > tr > td {
+            font-size: 25px;
+            font-weight: bold;
+            color: #fff;
+            border: 3px solid #fff;
+            background: #66a60e;
+            padding: 7px 6px
+        }
+
+        .table > tbody > tr > td {
+            font-size: 25px;
+            font-weight: bold;
+            border: 3px solid #fff;
+            background: #d7d5d3;
+            padding: 7px 6px;
+        }
+
+            .table > tbody > tr > td:nth-child(odd) {
+                width: 15%;
+            }
+
+        .DoctorDisplay {
+            overflow: hidden;
+            padding: 2px;
+            border: 1px solid #89bdbd;
+            margin: .3% 1%;
+            background: #fff;
+            width: 99.30vw;            
+        }
+
+        .color-pending {
+            font-size: 20px;
+            text-align: center;
+            display: block;
+            padding: 2px 20px;
+            border-radius: 30px;
+            background: #adaaa7 !important;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .color-in-room {
+            font-size: 20px;
+            text-align: center;
+            display: block;
+            padding: 2px 20px;
+            border-radius: 30px;
+            background: #8dd38c !important;
+            color: #524a4a;
+            font-weight: bold;
+        }
+
+        .color-absent {
+            font-size: 20px;
+            text-align: center;
+            display: block;
+            padding: 2px 20px;
+            border-radius: 30px;
+            background: #ff6a00 !important;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .DoctorInfo img {
+            width: 138px;
+            border-radius: 80px;
+        }
+
+        .DoctorInfo {
+            display: inline-flex;
+            border-radius: 2px;
+            height: 150px;
+            background: #8bc8f3;
+            padding: 8px;
+            /*border: 1px solid #cfcfcf;*/
+            width: 100%;
+        }
+
+            .DoctorInfo .info {
+                line-height: 27px;
+                /*display: inline-grid;*/
+            }
+
+            .DoctorInfo doctor-name {
+                font-weight: bold;
+                font-size: 28px;
+            }
+
+            .DoctorInfo degree {
+                color: #4e4b4b;
+                font-size: 23px;
+            }
+
+            .DoctorInfo designation {
+                font-weight: bold;
+                font-size: 28px;
+            }
+
+            .DoctorInfo department {
+                color: #4e4b4b;
+                font-size: 23px;
+            }   
+
+            .DoctorInfo .info hr {
+                margin: 5px 0;
+                width: 100%;
+                border-top: 2px solid #f5f5f5;
+                border-radius: 30px;
+            }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="DoctorDisplay">
+            <div class="DoctorInfo">
+                <div class="col-md-2">
+                    <img src="" />
+                </div>
+                <div class="col-md-10 info">
+                    <doctor-name>-</doctor-name><br />
+                    <degree>-</degree><br />
+                    <hr />
+                    <designation>-</designation><br />
+                    <department>-</department>
+                </div>
+            </div>
+            <div class="AllConsulting">
+                <table class="table tblConsulting" id="tblConsulting" style="margin-bottom: 0;">
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="AllPending">
+                <table class="table tblAllPendingAbsent1" id="tblAllPendingAbsent1" style="margin-bottom: 0;">
+                    <tbody></tbody>
+                </table>
+                <marquee class="myMarquee" id="myMarquee" direction="up" scrollAmount="4">
+                    <table class="table tblAllPendingAbsent" id="tblAllPendingAbsent">
+                        <tbody></tbody>
+                    </table>
+                </marquee>
+            </div>
+        </div>
+        <div class="DoctorDisplay">
+            <div class="DoctorInfo">
+                <div class="col-md-2">
+                    <img src="" />
+                </div>
+                <div class="col-md-10 info">
+                    <doctor-name>-</doctor-name><br />
+                    <degree>-</degree><br />
+                    <hr />
+                    <designation>-</designation><br />
+                    <department>-</department>
+                </div>
+            </div>
+            <div class="AllConsulting">
+                <table class="table tblConsulting" id="tblConsulting" style="margin-bottom: 0;">
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="AllPending">
+                <table class="table tblAllPendingAbsent1" id="tblAllPendingAbsent1" style="margin-bottom: 0;">
+                    <tbody></tbody>
+                </table>
+                <marquee class="myMarquee" id="myMarquee1" direction="up" scrollAmount="4">
+                    <table class="table tblAllPendingAbsent" id="tblAllPendingAbsent">
+                        <tbody></tbody>
+                    </table>
+                </marquee>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

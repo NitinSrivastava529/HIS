@@ -1,0 +1,73 @@
+﻿
+
+/*Generate Order table fix*/
+#tblUnCompleteOrder {
+    overflow: hidden;
+    width: 100%;
+}
+
+    #tblUnCompleteOrder thead, #tblUnCompleteOrder tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    #tblUnCompleteOrder tbody {
+        border: 1px solid #eaeaea;
+        background: #fff;
+        max-height: 320px;
+        overflow: overlay;
+        display: block;
+    }
+
+        #tblUnCompleteOrder tbody tr td, #tblUnCompleteOrder thead th {
+            text-overflow: ellipsis;
+            border-bottom: 1px solid #f1f1f1 !important;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+            #tblUnCompleteOrder tbody tr td:nth-child(1) {
+                width: 5% !important;
+            }
+
+    #tblUnCompleteOrder thead tr th:nth-child(1) {
+        width: 5% !important;
+    }
+
+/*Generate Transfer Stock table fix*/
+
+/*Generate Stock table fix*/
+#tblStock {
+    overflow: hidden;
+    width: 100%;
+}
+
+    #tblStock thead, #tblStock tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    #tblStock tbody {
+        border: 1px solid #eaeaea;
+        background: #fff;
+        max-height: 320px;
+        overflow: overlay;
+        display: block;
+    }
+
+        #tblStock tbody tr td, #tblStock thead th {
+            text-overflow: ellipsis;
+            border-bottom: 1px solid #f1f1f1 !important;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+            #tblStock tbody tr td:nth-child(1) {
+                width: 14% !important;
+            }
+
+    #tblStock thead tr th:nth-child(1) {
+        width: 19% !important;
+    }

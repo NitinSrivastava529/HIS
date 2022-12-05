@@ -1,0 +1,126 @@
+﻿
+@{
+	ViewBag.Title = "Role";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+</style>
+<script src="~/Areas/ApplicationResource/JsModule/MenuMaster.js?his-version-1.0"></script>
+<div id="page-content">
+	<div class="container">
+		@*<div id="page-title">
+				<h2>Manage Role And Main Menu </h2>
+				<p>Menu Master.</p>
+			</div>*@
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="col-xs-6">
+							<span class="text-pink">Manage Role</span>
+						</div>
+						<div class="col-xs-6">
+							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+								<input type="text" id="txtSearchRole" class="form-control input_pass" value="" placeholder="Search Role..">
+							</div>
+						</div>
+						<hr />
+						<div class="example-box-wrapper">
+							<div class="form-horizontal bordered-row">
+								<div class="form-group">
+									@*<label class="col-sm-3 control-label">Role Name</label>*@
+									<div class="col-sm-8">
+										<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+											<input type="text" id="txtRoleName" class="form-control input_pass" value="" placeholder="Role Name">
+											<span id="btnSaveRole" class="input-group-addon btn btn-primary">
+												<i class="fa fa-plus"></i>
+											</span>
+											<span id="btnUpdateRole" style="display:none" class="input-group-addon btn btn-danger">
+												<i class="fa fa-edit"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="scroll">
+									<table id="tblRole" class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Role-ID</th>
+												<th>Role Name</th>
+												<th>Flag</th>
+												<th>Created On</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="col-xs-6">
+							<span class="text-pink">Manage Main Menu</span>
+						</div>
+						<div class="col-xs-6">
+							<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+								<input type="text" id="txtSearchMenu" class="form-control input_pass" value="" placeholder="Search Menu..">
+							</div>
+						</div>
+						<hr />
+						<div class="example-box-wrapper">
+							<div class="form-horizontal bordered-row">
+								<div class="form-group">
+									<div class="col-md-6">
+										<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+											<select id="ddlRole" class="form-control"></select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+											<input type="text" id="txtMenuName" class="form-control input_pass" value="" placeholder="Menu Name">
+											<span id="btnSaveMainMenu" class="input-group-addon btn btn-primary">
+												<i class="fa fa-plus"></i>
+											</span>
+											<span id="btnUpdateMenu" style="display:none" class="input-group-addon btn btn-danger">
+												<i class="fa fa-edit"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="scroll">
+									<table id="tblMainMenu" class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Menu-ID</th>
+												<th>Role Name</th>
+												<th>Menu Name</th>
+												<th>Flag</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+

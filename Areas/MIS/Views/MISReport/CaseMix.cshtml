@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "CaseMix";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/MIS/JsModule/MISReport.js?his-version-1.0"></script>
+
+<div id="page-content">
+    <section class="content">
+        <div class="row">
+            <div class="box box-purple">
+                <div class="box-body">
+                    <div class="row">
+                       <div class="col-md-2">
+                            caseType
+                            <select id="ddlCaseType" class="form-control"></select>
+                        </div>
+                        <div class="col-md-2">
+                            Year
+                            <select id="ddlYear" class="form-control"></select>
+                        </div>
+                        <div class="col-md-1">
+                            Command
+                            <button id="btnXLCaseMix" type="button" class="btn btn-success btn-block" onclick="MIS_ReportCaseMix();">XL Report </button>
+                            <span id="spnStatus"></span>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            DropDownCaseMix();
+        </script>
+    </section>
+
+</div>

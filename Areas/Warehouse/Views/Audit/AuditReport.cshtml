@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "AuditReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Audit/AuditReport.js?his-version-1.2"></script>
+<style>
+    .panel {
+        margin: 5px 3px 0 5px !important;
+        border: 1px solid #bedbf6;
+    }
+
+    .panel-body {
+        border: 1px solid #e1dede;
+        padding: 5px 3px 3px 3px !important;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+        .form-group label {
+            padding: 3px 0 4px 10px !important;
+        }
+
+    input, .input, select, .select {
+        border: 1px solid #000 !important;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    highlight_row {
+        background-color: #d5e7f8;
+        color: #000;
+    }
+
+    .highlight {
+        background-color: red;
+    }
+
+    .text-white {
+        color: #fff;
+    }
+
+    .cart-group {
+        background: #d1ebfb;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#026cbd;padding:1px 10px;">
+                                <p class="text-white">Audit Report</p>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row" id="">
+                                    <div class="col-md-12">
+                                        <label>
+                                            <input type="radio" name="Product" value="Pending" />Pending
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="Product" value="Processed" />Processed
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="date" id="txtFrom" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="date" id="txtTo" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-warning" onclick="GetPendingReport('GetProcessedAudit');">Get</button>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="example-box-wrapper">
+                                    <div class="table table-responsive">
+                                        <div class="scroll" style="height:400px;overflow:auto;">
+                                            <span data-itemname style="display:none"></span>
+                                            <span data-itemid style="display:none"></span>
+                                            <table id="tblDetails" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th> Audit No</th>
+                                                        <th style="width:18%;">Date</th>
+                                                        <th style="width:1%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white">Audit Report Detail</h4>
+                    </div>
+                    <div class="panel-body" style="background:#fff;">
+                        <div class="form-group row">
+                            <button type="button" id="btnAuditReport" class="btn btn-success" onclick="InsertAuditComplete()" style="margin-left:22px;">Complete</button>
+                            <button type="button" id="btnDownload" class="btn btn-warning" onclick="DownloadExcel()">Download Excel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-body" style="background:#fff;">
+                        <div class="table-responsive">
+                            <div class="scroll" style="height:450px;overflow:auto;">
+                                <table class="table table-bordered" id="tblAuditReport">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:30%">Item Name</th>
+                                            <th style="width:20%">Manufacturer</th>
+                                            <th>Batch No</th>
+                                            <th>Exp. Date</th>
+                                            <th>P. Type</th>
+                                            <th>P. Qty</th>
+                                            <th>Qty</th>
+                                            <th>MRP</th>
+                                            <th>Amount</th>
+                                            <th>UPR</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

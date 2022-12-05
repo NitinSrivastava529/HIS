@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "DietInfo";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    table td {
+        padding: 0 5px !important;
+    }
+    .cat-group {    
+        background: #ddd;
+    }
+    .SelectedDiet {
+        margin: 0;
+        color: #fff;
+        font-size: 16px;
+        padding: 0px 6px;
+    }
+</style>
+<script src="~/Areas/Dietician/JsModule/DietInfo.js?v1.2"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:1px;">
+                                <button class="btn btn-danger" id="btnClearDiet"><i class="fa fa-tag">&nbsp;</i>New</button>
+                                <h4 class="text-white pull-right">Diet Master Info</h4>
+                            </div>
+                            <div class="panel-body" style="padding:2px 6px;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Diet Name</label>
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtDietName" autocomplete="off" class="form-control" placeholder="Enter Diet Name..">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Diet Type</label>
+                                        <div style="width:100%">
+                                            <select class="form-control" id="ddlDietType">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Diet Category</label>
+                                        <div style="width:100%">
+                                            <select class="form-control" id="ddlDietCategory">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Diet Day</label>
+                                        <div class="fileinput fileinput-new input-group" style="display:flex">
+                                            <div style="width:100%">
+                                                <select class="form-control" id="ddlDietDay">
+                                                    <option>Select</option>
+                                                    <option>ALL-Day</option>
+                                                    <option>Sunday</option>
+                                                    <option>Monday</option>
+                                                    <option>Tuesday</option>
+                                                    <option>Wednesday</option>
+                                                    <option>Thursday</option>
+                                                    <option>Friday</option>
+                                                    <option>Saturday</option>
+                                                </select>
+                                            </div>
+                                            <button class="btn-success" id="btnSaveDiet" onclick="InsertDietMaster()" style="border:none;padding:4px 13px;">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="height:500px;overflow:auto;border:1px solid #2492b3">
+                                            <table id="tblDietMaster" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:15%"><label class="switch"><input type="checkbox" class="statusflag" id="chkActive" checked=""><span class="slider round"></span></label></th>
+                                                        <th>Search Diet : <input type="text" id="txtSearchDiet" style="color: #363535;width:50%" onkeyup="searchTable('txtSearchDiet','tblDietMaster')" placeholder="Search.." /></th>
+                                                        <th>Diet Day</th>
+                                                        <th style="width:1%;text-align:right">Cal.Count</th>
+                                                        <th style="width:0%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:1px;">
+                                <p class="SelectedDiet">Diet Name : <span class="SpanDietName" style="font-weight:bold;">xxxxxxx</span></p>
+                                <h4 style="margin:-21px 10px" class="text-white pull-right">Diet Item Link</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding:2px 6px;">                               
+                                <div class="col-md-6">
+                                    <label>Item List</label>
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <select class="form-control" id="ddlItemList">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Qty</label>
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex;">
+                                        <input type="text" id="txtQty" autocomplete="off" class="form-control text-center" style="width:96px;" placeholder="Qty" />
+                                        <button class="btn-success" onclick="InsertDietitemLink()" style="border:none;padding:4px 11px;"><span class="fa fa-plus">&nbsp;</span></spn>Add</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="scroll" style="min-height:500px;overflow:auto;border:1px solid #2492b3">
+                                        <table id="tblDietItemDetail" class="table table-bordered">
+                                            <thead>
+                                                <tr>                                                    
+                                                    <th style="width:20%">Item Name</th>
+                                                    <th style="width:10%;text-align:right">Qty</th>
+                                                    <th style="width:10%;text-align:right">Cal. Count</th>
+                                                    <th style="width:0%">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

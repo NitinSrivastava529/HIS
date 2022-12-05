@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "UserwiseCollectionReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/MIS/JsModule/Finance/UserwiseCollectionReport.js"></script>
+<style>
+    #tblReport thead th {
+        background: #2a86cd !important;
+        color: #fff;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#026cbd;padding: 4px;">
+                                <h4 class="text-white">Userwise Collection Report</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-3">
+                                    <label>Users</label>
+                                   <select id="ddlUsers" class="form-control"></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>From</label>
+                                    <input type="date" id="txtFrom" class="form-control" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label>To</label>
+                                    <div class="flex">
+                                        <input type="date" id="txtTo" class="form-control" />
+                                        <button style="width:30%" id="btnSearch" class="btn btn-primary" onclick="CollectionSummaryReport()"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                                        <button style="width:60%" id="btnSearch" class="btn btn-warning" onclick="PrintReport()"><i class="fa fa-sign-in">&nbsp;</i>Print Report</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top:10px">
+                                    <dic class="scroll" style="max-height: 530px;overflow: auto;">
+                                        <table id="tblReport" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th colspan="4" class="text-center">Collection</th>
+                                                    <th colspan="4" class="text-center">Cancel/Refunds</th>
+                                                    <th colspan="4" class="text-center">Net Collection</th>
+                                                    <th></th>
+                                                </tr>
+                                                <tr>
+                                                    <th>User Name</th>
+                                                    <th>Cash</th>
+                                                    <th>Swipe Card</th>
+                                                    <th>Cheque</th>
+                                                    <th>NEFT</th>
+                                                    <th>Cash</th>
+                                                    <th>Swipe Card</th>
+                                                    <th>Cheque</th>
+                                                    <th>NEFT</th>
+                                                    <th>Cash</th>
+                                                    <th>Swipe Card</th>
+                                                    <th>Cheque</th>
+                                                    <th>NEFT</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </dic>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,76 @@
+﻿
+<script src="~/Areas/IPD/JsModule/NursingView/_RMOClearance.js"></script>
+<style>
+    label.doctor {
+        width: 35%;
+        background: #3c8dbc;
+        height: 28px;
+        text-align: center;
+        padding: 4px;
+        color: #fff;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 180px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .example-box-wrapper {
+        margin: 10px 20px;
+    }
+
+    .col-md-3, .col-md-4 {
+        padding: 0;
+    }
+
+    .headerInfo {
+        margin: 0;
+        background: #2478a9;
+        color: #fff;
+        padding: 2px 5px;
+        width: 99%;
+    }
+</style>
+<div class="example-box-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+           @Html.Partial("_DischargeStatus")
+        </div>      
+        <hr />
+    </div>
+</div>

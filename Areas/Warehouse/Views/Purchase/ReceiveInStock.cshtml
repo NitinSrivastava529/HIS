@@ -1,0 +1,220 @@
+﻿
+@{
+	ViewBag.Title = "ReceiveInStock";
+	Layout   = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Content/js/tableHeadFixer.js?his-version-1.0"></script>
+<script src="~/Areas/Warehouse/JsModule/Purchase/ReceiveInStock.js?his-version-1.0"></script>
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Receive In Stock</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-md-12">
+									<input type="text" class="form-control" id="txtSearch" placeholder="Search..." />
+									<div class="scroll">
+										<table class="table table-bordered" id="tblUnReceivedPurchase">
+											<thead>
+												<tr>
+													<th>Purchase Id</th>
+													<th>Invoice No</th>
+													<th>Invoice Date</th>
+													<th style="width:2%">Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<input type="button" onclick="ReceivePurchase(this)" class="btn btn-3d" value="Receive" />
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<table class="table" id="BasicInfo">
+									<tbody>
+										<tr>
+											<td><b>Supplier : </b><span data-supplier></span></td>
+											<td><b>Grn Type : </b> <span data-grntype></span></td>
+											<td class="invoice"><b><span class="iname">Invoice</span> No. & Date : </b> <span data-invoice></span></td>
+										</tr>
+										<tr>
+											<td><b>eWay Bill No. : </b> <span data-ewaybillno></span></td>
+											<td><b>eWay Bill Date : </b><span data-ewaybilldate></span></td>
+											<td><b>Purchase Id : </b><span data-purchaseid></span></td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="scroll table table-responsive" style="max-height:350px;">
+									<table class="table table-bordered" id="tblReceivePurchase">
+										<thead>
+											<tr>
+												<th>
+													Product Name
+												</th>
+												<th>
+													Tax Rate
+												</th>
+												<th>
+													Batch No
+												</th>
+												<th>
+													Exp. Date
+												</th>
+												<th>
+													MRP
+												</th>
+												<th>
+													Trade
+												</th>
+												<th>
+													NPR
+												</th>
+												<th>
+													Pack Type
+												</th>
+												<th>
+													Qty
+												</th>
+												<th>
+													Free
+												</th>
+												<th>
+													Dis Per.
+												</th>
+												<th>
+													Dis. Amount
+												</th>
+												<th>
+													Tax Amount
+												</th>
+												<th>
+													Amount
+												</th>
+												<th>
+													Mfd. Name
+												</th>
+												<th>
+													HSN
+												</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<form>
+									<b style="font-size:13px;">Payment Details</b>
+									<table class="table table" id="tblPaymentDetails">
+										<tr>
+											<td>
+												<b>Total : </b><span data-total></span>
+											</td>
+											<td>
+												<b>Discount : </b> <span data-discount></span>
+											</td>
+											<td>
+												<b>Tax : </b> <span data-tax></span>
+											</td>
+											<td>
+												<b>Net Amt : </b> <span data-netamount></span>
+											</td>
+											<td>
+												<b>Round Off : </b> <span data-roundoff></span>
+											</td>
+											<td>
+												<b>IGST : </b> <span data-igst></span>
+											</td>
+											<td>
+												<b>CGST : </b> <span data-cgst></span>
+											</td>
+											<td>
+												<b>SGST : </b> <span data-sgst></span>
+											</td>
+											<td>
+												<b>Bill Amount :</b> <span data-billamount></span>
+											</td>
+										</tr>
+									</table>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

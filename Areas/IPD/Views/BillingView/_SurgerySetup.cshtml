@@ -1,0 +1,279 @@
+﻿<script src="~/Areas/IPD/JsModule/BillingView/_SurgerySetup.js"></script>
+<style>
+    #txtAmount, #txtSurgeonCharge {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    label.doctor {
+        width: 35%;
+        background: #3c8dbc;
+        height: 28px;
+        text-align: center;
+        padding: 4px;
+        color: #fff;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 373px;
+        max-width: 500px;
+        max-height: 310px;
+        overflow: hidden;
+        overflow-y: auto;
+        position: absolute;
+        z-index: 999;
+        background: #fff;
+        top: 28px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 0px;
+        border-radius: 3px;
+    }
+
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 180px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .msg {
+        color: #ffffff;
+        background: #dd8803;
+        width: max-content;
+        padding: 5px 14px;
+        position: absolute;
+        bottom: 39px;
+        z-index: 10;
+        left: 11px;
+        border-radius: 2px;
+        display: none;
+    }
+
+        .msg span {
+            background: #ff0049;
+            padding: 2px;
+            border-radius: 20px;
+            width: 13px;
+            height: 13px;
+            font-size: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    .col-md-3, .col-md-4 {
+        padding: 0;
+    }
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        padding: 0 0 0 3px;
+        text-align: right;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+        padding: 0 0 0 3px;
+        text-align: right;
+    }
+
+    .example-box-wrapper {
+        margin: 10px 20px;
+    }
+
+    .doctorInfo {
+        width: 98%;
+        position: relative;
+    }
+
+        .doctorInfo .select2-selection {
+            height: 25px;
+            border-color: #cfbaba;
+            padding: 4px;
+        }
+
+    #tblSurguryItemCalculation .form-control, #tblItemInfo .form-control {
+        border-color: #cfbaba;
+        text-align: right;
+        font-size: 12px;
+        border-radius: 0;
+        height: 25px;
+    }
+
+    .calPanel {
+        display: flex;
+        align-items: center;
+    }
+
+        .calPanel button {
+            width: 80%;
+            padding: 0;
+            border-radius: 0;
+            margin: 0;
+            height: 28px;
+        }
+
+        .calPanel input {
+            text-align:right;
+            border-color: #06a08b;
+            border-radius: 0;
+        }
+</style>
+<div class="example-box-wrapper">
+    <div class="row">
+        <div class="col-md-4">
+            <div style="display:flex">
+                <label class="doctor">Sub Category </label>
+                <div style="width:100%">
+                    <select class="form-control" id="ddlSubCategory" onchange="ItemListBySubCatId()"></select>
+                </div>
+            </div>
+        </div>
+        <hr />
+    </div>
+    <div class="row">
+        <div class="col-md-7" style="padding:0">
+            <div class="table table-responsive">
+                <div id="ProductList">
+                    <table id="tblSurgeryInfo" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 1px;">SN</th>
+                                <th>Surgery Name</th>
+                                <th style="width: 30%;">Sub Category</th>
+                                <th style="width: 10%;" class="text-right">Amount</th>
+                                <th style="width: 10%;" class="text-right">Surg. Chrg</th>
+                                <th style="width: 1px;">CMD</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" style="padding:0">
+            <div class="table table-responsive">
+                <div id="ProductList">
+                    <table id="tblItemInfo" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 1px;"><input type="checkbox" /></th>
+                                <th>Item Name</th>
+                                <th style="width: 2%;" class="text-right">Perc(%)</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="row" style="padding:13px 0;background: #d1d1d1;margin: 0px -7px;border: 1px solid #ddd;">
+                <div class="col-md-12">
+                    <label>Surgery Charge</label>
+                    <div class="calPanel">
+                        <input type="text" id="txtAmount" class="form-control" />
+                        <button class="btn btn-primary" onclick="CalSurgeryAmount(this)">Calculate</button>
+                    </div>
+                </div>
+                <div class="col-md-12" style="margin-top:10px">
+                    <label>Surgeon Charge</label>
+                    <div class="calPanel">
+                        <input type="text" id="txtSurgeonCharge" class="form-control" />
+                        <button class="btn btn-primary" onclick="CalSurgeryAmount(this)">Calculate</button>
+                    </div>
+                </div>
+                <div class="col-md-12 text-center">
+                   <button class="btn btn-success" onclick="ItemInsert()" style="height: 28px;margin-top:10px;border-radius: 0;"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="padding:0">
+            <div class="table table-responsive">
+                <div id="ProductList" style="height:260px">
+                    <table id="tblSurguryItemCalculation" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:1%">SN</th>
+                                <th>Item Name</th>
+                                <th style="width: 20%;">Doctor Name</th>                                
+                                <th style="width: 2%;" class="text-right">Distr(%)</th>
+                                <th style="width: 10%;" class="text-right">Charge</th>
+                                <th style="width: 10%;" class="text-right">Disc(%)</th>
+                                <th style="width: 10%;" class="text-right">Disc Amount</th>
+                                <th style="width: 10%;" class="text-right">Net Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

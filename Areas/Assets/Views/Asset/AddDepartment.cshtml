@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "AddDepartment";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Assets/JsModule/DeptSection_master.js?his-version-1.0"></script>
+<style>
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+    .scroll-table {
+        width: 100%;
+        max-height: 460px;
+        background: #fff;
+        overflow: overlay;
+        height: 510px;
+        display: block;
+    }
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+</style>
+<div id="page-content">
+    <div class="container">
+        @*<div id="page-title">
+                <h2>Manage Department And Section </h2>
+                <p>Assets.</p>
+            </div>*@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-6">
+                            <span class="text-pink">Manage Department</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchDept" class="form-control input_pass" value="" placeholder="Search Department..">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="form-group">
+                                    @*<label class="col-sm-3 control-label">Role Name</label>*@
+                                    <div class="col-sm-4">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtEmpName" class="form-control input_pass" value="" placeholder="Employee Name">
+                                            <span id="btnGetDeptHead" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <select id="ddlDeptHead" class="form-control">
+                                                <option>Select Employee</option>
+                                            </select>
+                                            @*<span id="btnShowAssignUnit" class="input-group-addon btn btn-primary btn-xs" style="background:#06a08b;display:none;">
+                                                    <i class="fa fa-plus"> Assign Unit</i>
+                                                </span>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtDeptName" class="form-control input_pass" value="" placeholder="Department Name">
+                                            <span id="btnSaveDept" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                            <span id="btnUpdateDept" style="display:none" class="input-group-addon btn btn-warning">
+                                                <i class="fa fa-edit"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <div class="scroll-table">
+                                        <table id="tblDept" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dept-Code</th>
+                                                    <th>Dept-Name</th>
+                                                    <th>Dept-Head</th>
+                                                    <th>Created On</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-6">
+                            <span class="text-pink">Manage Section</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchSec" class="form-control input_pass" value="" placeholder="Search Section..">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <select id="ddlDept" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtSectionName" class="form-control input_pass" value="" placeholder="Section Name">
+                                            <span id="btnSaveSection" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                            <span id="btnUpdateSection" style="display:none" class="input-group-addon btn btn-danger">
+                                                <i class="fa fa-edit"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <div class="scroll-table">
+                                        <table id="tblSection" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    @*<th>Section-Code</th>*@
+                                                    <th>Dept-Name</th>
+                                                    <th>Section Name</th>
+                                                    <th>Created On</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

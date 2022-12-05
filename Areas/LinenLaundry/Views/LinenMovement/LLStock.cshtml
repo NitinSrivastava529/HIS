@@ -1,0 +1,87 @@
+﻿
+@{
+	ViewBag.Title = "LLStock";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/LinenLaundry/JsModule/LLStock.js"></script>
+
+<style>	
+	.bn {
+		border: none;
+	}
+
+	.bc {
+		border-color: #06a08b;
+		border-radius: 0;
+	}
+
+
+	.form-group {
+		margin-bottom: 5px;
+	}
+
+	.panel-body {
+		border: 1px solid #e1dede;
+		padding: 5px 3px 3px 3px !important;
+	}
+
+	.form-group label {
+		padding: 3px 0 4px 10px !important;
+	}
+
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+	.bg1 {
+		background: #fff2c1;
+	}
+	.text-white {
+		color: #fff;
+	}
+</style>
+
+<script src="~/Areas/LinenLaundry/JsModule/LLaundryReceiving.js"></script>
+<div id="page-content">
+	<div class="col-md-8">
+		<div class="">
+			<div class="">
+				<div class="panel">
+					<div class="panel-heading" style="background:#0076d0;padding:2px;">
+						<h4 class="text-white">Laundry Stock</h4>
+					</div>
+					<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+						<div class="form-group">
+							<div class="col-md-8" style="display:flex">
+								<button type="button" style="width: 15%;" class="btn-success bn">Cart</button>
+								<select class="form-control" id="ddlCartList"></select>
+								<button type="button" id="btnGetStock" style="width: 26%;" onclick="GetStock()" class="btn-success bn"><i class="fa fa-sign-in">&nbsp;</i>Get Stock</button>
+							</div>
+							<div class="col-md-4">								
+								<button type="button" id="btnXL" style="border-radius:0;padding:2px 7px" onclick="DownloadExcel()" class="btn btn-warning bn pull-right"><i class="fa fa-file-excel-o">&nbsp;</i>Excel Download</button>
+							</div>
+						</div>
+						<div class="col-md-12" style="margin-top:10px;">
+							<div class="table-responsive" style="max-height: 500px;">
+								<table class="table table-bordered" id="tblLLStock">
+									<thead>
+										<tr>
+											<th style="width:1%">S.N.</th>
+											<th style="width:10%">Item-Id</th>
+											<th style="width:60%">Item Name</th>
+											<th style="width:10%">Stock Qty</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

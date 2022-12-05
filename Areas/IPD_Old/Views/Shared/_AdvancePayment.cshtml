@@ -1,0 +1,162 @@
+﻿<script src="~/Areas/IPD/JsModule/IPD/_AdvancePayment.js"></script>
+<style>
+    #tblPaymentDetails input[type=text], .AdvanceSection select {
+        border: 1px solid #c3c3c3 !important;
+        height: 20px !important;
+    }
+    .AdvanceSection .select2-container--default .select2-selection--single {
+        background-color: #fff;
+        border: 1px solid #e5e1e1;
+        border-radius: 1px;
+        height: 22px;
+        margin-bottom: 2px;
+    }
+    #tblPaymentDetails tbody tr:not(.pay){
+        display:none;
+    }
+    .AdvanceSection .title1 {
+        background: #cfcfcf;
+        padding: 1px 4px;
+        width: 100%;
+    }
+    .PaymentInfo {
+        border: 1px solid #cfcfcf;
+        /* padding: 0; */
+        margin: 5px;
+        width: 98%;
+        padding: 1px;
+    }
+    .advnc-amount-section {
+        border: 1px solid #c0d7e5;
+        height: 65px;
+        background: #d0eeff;
+        margin: -5px 5px 5px;
+        padding: 5px;
+    }
+        .advnc-amount-section .col-md-3 {
+            padding: 0 2px;
+            pointer-events: none;
+        }
+        .advnc-amount-section .form-control {
+            border: 0.5px solid #7a7a7a;
+            text-align: center;
+            font-size: 14px;
+            pointer-events: none;
+            font-weight: bold;
+            background: #e1e1e1;
+        }
+</style>
+<div class="row AdvanceSection">
+    <div class="advnc-amount-section">                            
+        <div class="col-md-3">
+            <label>Net Amount</label>
+            <input type="text" id="txtNetAmt" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>Advance Amount</label>
+            <input type="text" id="txtAdvanceAmt" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>Balance Amount</label>
+            <input type="text" id="txtBalanceAmt" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <label>Approval Amount</label>
+            <input type="text" id="txtApprovalAmt" class="form-control" />
+        </div>
+        <hr />
+    </div>
+    <div class="col-md-12">
+        <label><input type="radio" checked name="Advance-type" value="Advance" data-adv="Advance" />&nbsp;Advance Amount</label>
+        <label><input type="radio" name="Advance-type" value="Advance" data-adv="AdvanceReturn" />&nbsp;Advance Return</label>
+        <label><input type="radio" name="Advance-type" value="FinalSettlement" data-adv="FinalSettlement"/>&nbsp;Final Settlement</label>
+        <button class="btn btn-primary pull-right" id="btnGenerateBill" onclick="PatientAdvance()" style="margin:0px 10px;"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+    </div>
+    <div class="col-md-12 PaymentInfo">
+        <label class="title1">Payment Info</label>
+        <div class="form-group">
+            <span style="width:70%">
+                <label>
+                    <input type="checkbox" onkeyup="removeMinus(this)" name="PaymentMode" class="cash" value="Cash" checked />Cash
+                </label>
+                <label>
+                    <input type="checkbox" onkeyup="removeMinus(this)" name="PaymentMode" value="Cheque" />Cheque
+                </label>
+                <label>
+                    <input type="checkbox" onkeyup="removeMinus(this)" name="PaymentMode" value="Swipe Card" />Swipe Card
+                </label>
+                <label>
+                    <input type="checkbox" onkeyup="removeMinus(this)" name="PaymentMode" value="NEFT/RTGS/Online" />NEFT/RTGS/Online
+                </label>
+            </span>
+        </div>
+        <div class="paymentSection">
+            <table id="tblPaymentDetails" class="table table-bordered" style="margin-bottom:0">
+                <thead>
+                    <tr>
+                        <th style="width:15%;white-space:nowrap">Payment Mode</th>
+                        <th style="width:13%">Amount</th>
+                        <th>Currency</th>
+                        <th style="width:25%">Bank Name</th>
+                        <th style="width:13%">Ref No.</th>
+                        <th>Machine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="pay">
+                        <td>Cash</td>
+                        <td><input type="text" data-int class="form-control" value="0" /></td>
+                        <td>INR</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Cheque</td>
+                        <td><input type="text" class="form-control" value="0" /></td>
+                        <td>INR</td>
+                        <td><select class="form-control BankName"></select></td>
+                        <td><input type="text" class="form-control" /></td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Swipe Card</td>
+                        <td><input type="text" class="form-control" value="0" /></td>
+                        <td>INR</td>
+                        <td><select class="form-control BankName"></select></td>
+                        <td><input type="text" class="form-control" /></td>
+                        <td>
+                            <select class="form-control MachineName"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>NEFT/RTGS/Online</td>
+                        <td><input type="text" class="form-control" value="0" /></td>
+                        <td>INR</td>
+                        <td><select class="form-control BankName"></select></td>
+                        <td><input type="text" class="form-control" /></td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive vertiscrl" style="overflow:auto;height:112px;margin:6px 0;border: 1px solid #2478a9;">
+            <table id="tblPaymentInfo" class="table table-bordered">
+                <thead style="background: #00a65a;color: #fff;">
+                    <tr>
+                        <th style="width:1px;">#</th>
+                        <th>Date</th>
+                        <th>Receipt No</th>
+                        <th class="text-right">Amount</th>
+                        <th>Pay Mode</th>
+                        <th>Remark</th>
+                        <th style="width:1px;">CMD</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div> 

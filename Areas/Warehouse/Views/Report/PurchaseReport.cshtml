@@ -1,0 +1,224 @@
+﻿
+@{
+	ViewBag.Title = "PurchaseReport";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/Report/PurchaseReport.js"></script>
+<style>
+	.remove {
+		background: red;
+		line-height: 10px;
+		border-radius: 13px;
+		width: 12px;
+		height: 12px;
+		position: absolute;
+		font-size: 11px;
+		font-weight: bold;
+		text-align: center;
+		cursor: pointer;
+		margin-right: 2px;
+	}
+	.ItemIds items {
+		font-size: 12px;
+		background: #026cbd;
+		padding: 3px;
+		margin:2px;
+		color: #fff;
+		line-height:24px;
+	}
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	#ItemList {
+		box-shadow: 1px 1px 1px #ececec;
+		border: 0.5px solid #ececec;
+		width: 336px;
+		max-width: 330px;
+		max-height: 300px;
+		overflow-x: hidden;
+		position: absolute;
+		z-index: 1;
+		background: #fff;
+		top: 27px;
+		left: 102px;
+	}
+
+		#ItemList table {
+			font-size: 11px;
+			line-height: 22px;
+			width: 100%;
+		}
+
+			#ItemList table td {
+				padding: 1px 0px 0px 10px;
+			}
+
+			#ItemList table tbody tr {
+				border-bottom: 0.1px solid #eaeaea;
+			}
+
+	.Reports {
+		margin-bottom: 10px;
+		background: #ffffff;
+		padding: 3px 15px;
+	}
+
+	#ReportForm {
+		margin: 0px;
+		padding: 7px;
+		border: 1px solid #dedede;
+		background: #f1f1f1;
+	}
+
+	#ReportButton {
+		right: 18px;
+		float: right !important;
+		top: 3px;
+		position: absolute;
+	}
+
+	.btn-flat {
+		padding: 5px;
+		border: navajowhite;
+	}
+
+	.flex {
+		display: flex !important;
+		align-items: center;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Purchase Report</h4>
+								<span id="ReportButton" class="pull-right"></span>
+							</div>
+							<div class="panel-body" style="padding:4px 10px;">
+								<div class="row">
+									<div class="col-md-12">
+
+										<div class="row">
+											<div id="ReportSummary">
+												@*<div class="col-md-3">
+														<label>
+															<input type="radio" name="report" />&nbsp;Purchase Repprt
+														</label>
+													</div>*@
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div id="ReportForm" class="row">
+									<div class="col-md-3">
+										<div class="flex">
+											<span style="width:55%">
+												<label>From Date</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<input type="date" id="txtFromDate" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="flex">
+											<span style="width:55%">
+												<label>To Date</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<input type="date" id="txtToDate" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="flex">
+											<span style="width:30%">
+												<label>Vendor</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<span style="width:77%">
+												<select id="ddlVendor" class="form-control"></select>
+											</span>
+										</div>
+									</div>
+									<div class="col-md-3 form-group">
+										<div class="flex">
+											<span style="width:35%">
+												<label>Category</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<select id="ddlCategory" class="form-control"></select>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="flex">
+											<span style="width:35%">
+												<label>Item Name</label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<input type="text" class="form-control" id="txtItemName" autocomplete="off" placeholder="Product Name">
+											<input type="hidden" id="hiditemId" />
+											<div id="ItemList" style="display:none">
+												<table id="tblnavigate">
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="flex">
+											<div class="ItemIds">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

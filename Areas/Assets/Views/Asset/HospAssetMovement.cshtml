@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "HospAssetMovement";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<div id="page-content">
+    <script src="~/Areas/Assets/JsModule/asset_movement.js?his-version-1.0"></script>
+    <section class="content">
+
+        <div class="box box-purple">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="button" style="font-size:15px;font-weight:bold" class="btn btn-success btn-block" value="Asset List To Move" id="btnMoveList" />
+                </div>
+                <div class="col-md-6">
+                    <input type="button" style="font-size:15px;font-weight:bold" class="btn btn-success btn-block" value="Asset List To Receive" id="btnRecList" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <input type="text" placeholder="Search asset no" style="width:100%" id="myInput" class="form-control" />
+                </div>
+                <div class="col-md-5">
+                    <input type="button" style="font-size:15px;font-weight:bold" class="form-control btn-warning" value="Get Asset" id="btnGetAsset" onclick="AssetListByNo()" />
+                </div>
+            </div>
+
+            <div class="box-body" style="height:200px;overflow-y:scroll;">
+                <table id="tblAssetList" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:8%;text-align:left"></th>
+                            <th style="width:20%;text-align:left">Asset No</th>
+                            <th style="width:62%;text-align:left">Name</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <br />
+            <div class="box-body" style="height:250px;overflow-y:scroll;">
+                <div class="well">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td colspan="2" style="text-align:left;vertical-align:top"><input type="text" id="txtAssetNo" class="form-control" readonly="readonly" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:left;vertical-align:top" id="tdAssetName"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:left;vertical-align:top" id="tdAssetLocation"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:left;vertical-align:top"><input type="button" style="font-size:14px;font-weight:bold" id="btnLog" class="form-control btn-warning" value="Get Log" onclick="showDialog()" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="width:50%;text-align:left;vertical-align:top"><input type="button" style="font-size:14px;font-weight:bold" id="btnReceive" class="form-control btn-success" value="Receive"  /></td>
+                            </tr>
+                            <tr>
+                                 <td colspan="2" style="width:50%;text-align:left;vertical-align:top"><input type="button" style="font-size:14px;font-weight:bold" id="btnCancel" class="form-control btn-danger" value="Cancel" /></td>
+                            </tr>
+
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                </div>
+                <div class="well" id="transferBlock">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <textarea placeholder="Transfer Remark if any" id="txtRemark" class="form-control" style="width:100%"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select class="form-control" id="ddlDept" onchange="SectionList();">
+                                <option value="Select Department">Select Department</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <select class="form-control" id="ddlTransferTo">
+                                <option value="Select Section">Select Section</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <input id="btnMove" type="button" class="form-control btn btn-success" style="font-size:14px;font-weight:bold" value="Transfer" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td><input type="text" class="form-control" id="txtAssetNoForLog" placeholder="Asset No" /></td>
+                            <th><input type="button" class="btn-success" id="btnGetAssetDetail" onclick="AssetTransferLog()" value="Get Detail" /></th>
+                        </tr>
+
+                    </table>
+                    <div class="row">
+                        <div class="col-md-3">Asset Name</div>
+                        <div class="col-md-9" id="txtAsset"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">Location</div>
+                        <div class="col-md-9" id="txtLocation"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">Transfer To</div>
+                        <div class="col-md-9" id="txtTransferTo"></div>
+                    </div>
+                    <div style="width:100%;overflow-y:scroll;height:150px">
+                        <table id="tblTransferLog" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td>Transfer Date</td>
+                                    <th>Transfer From</th>
+                                    <th>Transfer By</th>
+                                    <th>Transfer To</th>
+                                    <th>Received By</th>
+                                    <th>Received Date</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#tblAssetList tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</div>
+

@@ -1,0 +1,16 @@
+﻿
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group flex">
+			<span style="width:20%">Upload</span>
+			<span style="width:4%">:</span>
+			<span style="width:76%;margin-right:7px">
+				<input type="file" id="txtNewAttachment" onchange="IsValid(this)" class="form-control border-imp" />
+				<span style="width:66%;position: absolute;">
+					<span id="UploadingStatus" style="background:#107d3a;position: absolute;text-align:center;color: #fff;"></span>
+				</span>
+			</span>
+			<input type="button" id="btnSave" class="btn-success btn-flat" onclick="UploadDocumentInfo()" value="Upload" />
+		</div>
+	</div>
+</div>

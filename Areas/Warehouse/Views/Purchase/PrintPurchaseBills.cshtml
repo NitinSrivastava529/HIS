@@ -1,0 +1,115 @@
+﻿
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>PrintPurchaseBills</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css?his-version-1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js?his-version-1.0"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js?his-version-1.0"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js?his-version-1.0"></script>
+	<script src="~/JsModule/config.js?his-version-1.0"></script>
+	<script src="~/JsModule/global.js?his-version-1.0"></script>
+	<script src="~/Areas/Warehouse/JsModule/Purchase/PrintPurchaseBills.js?his-version-1.2"></script>
+	<link href="~/Content/css/print.css?his-version-1.0" rel="stylesheet" />
+	<style>
+		html {
+			zoom: 0.8;
+			width: 70%;
+			top: 2%;
+			position: absolute;
+			left: 16%;
+			background: #585858;
+		}
+		body {
+			-webkit-print-color-adjust: exact;
+		}
+
+		td.bg {
+			background: #ddd !important;
+		}
+
+		.box-purple {
+			padding: 10px 10px;
+			background: #fff;
+			margin: 4px 10px;
+		}
+
+		body {
+			background: #fff;
+			overflow: hidden auto;
+		}
+
+		.table {
+			font-size: 15px;
+			line-height: 0px;
+		}
+
+		.table-bordered td, .table-bordered th {
+			border: .3px solid #000;
+		}
+
+		.table th {
+			white-space: nowrap;
+			padding: 9px;
+			vertical-align: top;
+			border-top: 1px solid #dee2e6;
+		}
+
+		.table tbody td {
+			white-space: nowrap;
+			text-align: left;
+			/*padding: 28px 2px;*/
+			height: 10px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-purple">
+				<div class="box-body">
+					<div class="row">
+						<div class="col-md-12">
+							<h3 class="text-center">General Store Purchase Report.(Chandan Hospital)<hr style="margin: 7px 0 -8px;" /></h3>
+							<p>Date Range from : <span data-from></span> to <span data-to></span></p>
+						</div>
+						<div class="col-md-12">
+							<div class="">
+								<div class="scroll">
+									<table class="table table-hover" border="0" id="tblPurchaseBills">
+										<thead>
+                                            <tr>
+                                                <th>Purch Id</th>
+                                                <th>Inv No</th>
+                                                <th>Inv Date</th>
+                                                <th>Feeding</th>
+                                                <th>Count</th>
+                                                <th>Inv Total</th>
+                                                <th>Inv Tax</th>
+                                                <th>Disc</th>
+                                                <th>Inv Amount</th>
+                                                <th>CGST</th>
+                                                <th>SGST</th>
+                                                <th>IGST</th>
+                                                <th>TCS</th>         
+                                            </tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

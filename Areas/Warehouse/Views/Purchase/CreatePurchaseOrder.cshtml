@@ -1,0 +1,126 @@
+﻿
+@{
+	ViewBag.Title = "CreatePurchaseOrder";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white pull-right">Create Purchase Order</h4>
+								<input type="button" class="btn btn-3d" value="New" />
+							</div>
+							<div class="panel-body">
+								<div class="col-xs-6">
+									<span class="text-pink">Create Purchase Order</span><br />
+									<span class="text-primary">Note : Be Sure to Complete Order for Displaying in Warehouse. </span>
+								</div>
+								<div class="col-xs-4">
+									<label>Order No.</label>
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtOrderNo" class="form-control input_pass" disabled value="New" placeholder="Order No..">								
+									</div>
+								</div>
+								<div class="col-md-2">
+									<label style="visibility:hidden">Order Quantity</label>
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="button" id="btnSubmit" class="btn btn-warning" value="Post">
+									</div>
+								</div>
+								<hr />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="">
+											<div class="col-md-3">
+												<label>Product Name</label>
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<input type="text" id="txtItemName" class="form-control input_pass" value="" placeholder="Product Name" />
+												</div>
+											</div>
+											<div class="col-md-3">
+												<label>Pack Type</label>
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<input type="text" id="txtPackType" class="form-control input_pass" value="" placeholder="Pack Type">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<label>Order Quantity</label>
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<input type="text" id="txtPQuantity" class="form-control input_pass" value="" placeholder="Order Quantity">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<label style="visibility:hidden">Order Quantity</label>
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<input type="button" id="btnSubmit" class="btn btn-success" value="Submit">
+												</div>
+											</div>			
+										</div>
+
+										<div class="table table-responsive">
+											<table id="tblOrder" class="table table-bordered ">
+												<thead>
+													<tr>
+														<th>Item Id</th>
+														<th>Item Name</th>
+														<th>Pack type</th>
+														<th>Order Quantity</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>ITM6754</td> 
+														<td>Item Name-1</td>
+														<td>1x10 Pack</td>
+														<td>234</td>
+														<td><button class="btn-danger">Delete</button></td>
+													</tr>
+													<tr>
+														<td>ITM6754</td>
+														<td>Item Name-1</td>
+														<td>1x10 Pack</td>
+														<td>234</td>
+														<td><button class="btn-danger">Delete</button></td>
+													</tr>
+													<tr>
+														<td>ITM6754</td>
+														<td>Item Name-1</td>
+														<td>1x10 Pack</td>
+														<td>234</td>
+														<td><button class="btn-danger">Delete</button></td>
+													</tr>
+													<tr>
+														<td>ITM6754</td>
+														<td>Item Name-1</td>
+														<td>1x10 Pack</td>
+														<td>234</td>
+														<td><button class="btn-danger">Delete</button></td>
+													</tr>
+													<tr>
+														<td>ITM6754</td>
+														<td>Item Name-1</td>
+														<td>1x10 Pack</td>
+														<td>234</td>
+														<td><button class="btn-danger">Delete</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

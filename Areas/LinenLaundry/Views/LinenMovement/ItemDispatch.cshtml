@@ -1,0 +1,157 @@
+﻿
+@{
+	ViewBag.Title = "ItemDispatch";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+	.btn-tbl {
+		border: 0;
+		padding: 1px 7px;
+	}
+
+	#tblLinenStocks td {
+		padding: 5px 5px;
+	}
+
+	#tblLinenStocks input:disabled {
+		opacity: 100%;
+		background: #eaeaea;
+	}
+
+	.flex {
+		display: flex !important;
+		align-items: center;
+	}
+
+	.bn {
+		margin: 0px;
+		font-size: 10pt;
+		padding: 0px 10px;
+		border-radius: 0;
+		text-align: left;
+		height: 30px;
+	}
+
+	.bc {
+		border: 1px solid #00a65a;
+		border-radius: 0;
+	}
+
+	.panel {
+		margin: 5px 3px 0 5px !important;
+		border: 1px solid #bedbf6;
+	}
+
+	.panel-body {
+		border: 1px solid #e1dede;
+		padding: 5px 3px 3px 3px !important;
+	}
+
+	.form-group {
+		margin-bottom: 5px;
+	}
+
+		.form-group label {
+			padding: 3px 0 4px 10px !important;
+		}
+
+	.table-bordered {
+		border: 1px solid #90c6f8;
+	}
+
+	.text-white {
+		color: #fff;
+	}
+</style>
+
+<script src="~/Areas/LinenLaundry/JsModule/ItemDispatch.js"></script>
+<div id="page-content">
+	<div class="panel">
+		<div class="panel-body" style="height:560px; overflow-y:auto">
+			<div class="col-md-5">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:2px;">
+								<h4 class="text-white">Item Dispatch</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="form-group">
+									<div class="col-md-12" style="display:flex">
+										<select id="ddlCartList" class="form-control bc"></select>
+										<button class="btn-success bn" onclick="GetIndentInfo()" style="width:30%;height: 28px;border: 0;">Get Pending</button>
+									</div>
+								</div>
+								<div class="col-md-12" style="margin-top:10px;">
+									<div class="table-responsive" style="max-height: 500px;">
+										<table class="table table-bordered" id="tblIemStocks">
+											<thead>
+												<tr>
+													<td>CMD</td>
+													<td>Item Name</td>
+													<td style="width: 1%">Req.Qty</td>
+													<td style="width: 1%">Pend.Qty</td>
+													<td style="width: 1%">Action</td>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:2px;">
+								<h4 class="text-white">Transfer List-<span id="txtItemId"></span></h4>
+								<button class="btn btn-warning pull-right" style="margin: -21px 0px;border-radius: 0;height: 22px;" onclick="DispatchComplete()"><i class="fa fa-sign-in">&nbsp;</i>Transfer</button>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="form-group">
+									<div class="col-md-3">
+										<div class="form-group flex bc">
+											<button class="btn btn-success bn" style="width:60%;">Stock</button>
+											<input type="text" id="txtStock" style="background: #e8e8e8;" disabled class="form-control bn text-right" placeholder="0" />
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group flex">
+											<button class="btn btn-success bn" style="width: 30%;">Qty</button>
+											<input type="text" id="txtQty" data-int style="border-color:#00a65a" class="form-control bn text-right" placeholder="Qty"/>
+											<button class="bn btn-warning" id="btnAdd" style="width: 60%;border:0"><i class="fa fa-plus">&nbsp;</i>Add</button>
+										</div>
+									</div>
+									<div class="col-md-5">
+										<input type="text" id="txtLotNo" readonly class="form-control" autocomplete="off" value="New" />
+									</div>
+								</div>
+								<div class="col-md-12" style="margin-top:10px;">
+									<div class="table-responsive" style="max-height: 500px;">
+										<table class="table table-bordered" id="tblItemByLot">
+											<thead>
+												<tr>
+													<th style="width:15%">Item Id</th>
+													<th>Item Name</th>
+													<th style="width:12%">Qty</th>
+													<th style="width:1%">Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

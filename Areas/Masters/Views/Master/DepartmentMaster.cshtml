@@ -1,0 +1,397 @@
+﻿
+@{
+    ViewBag.Title = "DepartmentMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    .selected {
+        background-color: #666;
+        color: #fff;
+    }
+
+    .btn-add {
+        border: none;
+        padding: 6px;
+        margin-left: 1px;
+    }
+
+    .btn-tbl {
+        border: none;
+        padding: 1px 9px;
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+
+   .switch{
+        float: right;
+        top: -19px;
+    }
+</style>
+<script src="~/Areas/Masters/JsModule/DepartmentMaster.js"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Department List</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-3 flex">
+                                    <label>Status</label><br />
+                                    <select id="ddlStatus">
+                                        <option value="Y">Active</option>
+                                        <option value="N">InActive</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 flex">
+                                    <label>Department</label>
+                                    <select id="ddlDepartment">
+                                        <option>Please Select</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-warning pull-left" id="btnRefersh"><span class="fa fa-refresh"></span></button>
+                                </div>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:4px;">
+                                <h4 class="text-white">About Department</h4>
+                                @*<label class="switch">
+                                    <input type="checkbox" class="IsActive" id="chkActive" onchange="UpdateStatus()">
+                                    <span class="slider round"></span>
+                                </label>*@
+                                <div id="Status"></div>
+                            </div>
+                            <div class="panel-body" style="height:300px;overflow:auto">
+                                <table class="table-condensed" style="width:100%">
+                                    <tr>
+                                        <th>Department Name</th>
+                                        <th>:</th>
+                                        <td><input type="text" id="txtDepartmentName" autocomplete="off" class="form-control" placeholder="Department Name" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Short Name</th>
+                                        <th>:</th>
+                                        <td class="flex">
+                                            <input type="text" id="txtDepartmentShortName" autocomplete="off" class="form-control" placeholder="Department Short Name" />
+                                            <button id="btnDept" class="btn-success btn-add" onclick="AddDepartment()" style="width:17%;">Add</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <textarea class="form-control" id="txtAbout" placeholder="About" rows="5"></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0; padding:3px;">
+                                <a class="btn btn-warning " style="margin-left: 379px;" onclick="UpdateDoctorSequenceByDepartment()">Update Sequence</a> @**@
+                                <h4 class="text-white flex" style="margin-top:-22px;">DOCTOR LIST</h4>
+                            </div>
+                            <div class="panel-body" style="height:300px;overflow:auto">
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="width:100%">
+                                        <table id="tblDoctorList" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:8%">Seq No</th>
+                                                    <th style="width:25%">Doctor Name</th>
+                                                    <th style="width:13%">Designation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <a class="btn btn-warning " style="margin-left: 430px;" onclick="SetWhatWeTreatSeq()">SET ROW</a>
+                                <h4 class="text-white flex" style="margin-top:-22px;">WHAT WE TREAT HEADING DESCRIPTION</h4>
+                            </div>
+                            <table class="table-condensed" style="width:100%">
+                                <tr>
+                                    <th>Heading</th>
+                                    <th>:</th>
+                                    <td class="flex">
+                                        <input type="text" id="txtHeading" autocomplete="off" class="form-control" placeholder="" />
+                                        <button id="btnAdd" class="btn-success btn-add" onclick="AddFeatures()" style="width: 13%;"><span class="fa fa-plus"></span>Add</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="panel-body" style="height:300px;overflow:auto">
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="width:100%">
+                                        <table id="tblWhatWeTreatList" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:2%">Seq No</th>
+                                                    <th style="width:25%">Heading</th>
+                                                    <th style="width:8%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:4px;">
+                                <a class="btn btn-warning " style="margin-left: 430px;" onclick="SetMediaSeq()">SET ROW</a>
+                                <h4 class="text-white flex" style="margin-top:-22px;">MEDIA DESCRIPTION</h4>
+                            </div>
+                            <table class="table-condensed" style="width:100%" id="tblMediaDescription">
+                                <tr>
+                                    <th>Media Type</th>
+                                    <th>:</th>
+                                    <td>
+                                        <select id="ddlMediaType">
+                                            <option>Please Select</option>
+                                            <option>Video</option>
+                                            <option>Image</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr id="fileAttach" style="display:none;">
+                                    <th>UploadFile</th>
+                                    <th>:</th>
+                                    <td>
+                                        <input type="file" name="MediafileUpload" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="MediaLink">Link Name</th>
+                                    <th class="MediaLink">:</th>
+                                    <td class="flex">
+                                        <input type="text" id="txtMediaLink" autocomplete="off" class="form-control MediaLink" />
+                                        <button id="" class="btn-success btn-add" style="width:17%;" onclick="AddMedia()"><span class="fa fa-plus"></span>Add</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <textarea class="form-control" id="txtMediaTagDesc" placeholder="About" rows="5"></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="panel-body" style="height:300px;overflow:auto">
+                                <div class="table table-responsive">
+                                    <div class="scroll" style="width:100%">
+                                        <table id="tblMediaList" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:10%;">Seq No</th>
+                                                    <th style="width:25%">Link</th>
+                                                    <th style="width:25%">Description</th>
+                                                    <th style="width:1%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---DepartmentMaster Modal-->
+<div class="modal fade" id="modalDepartmentInfo" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:5%;">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Heading Detail</h4>
+                            </div>
+                            <div class="panel-body" style="overflow:auto">
+                                <table class="table-condensed" style="width:100%">
+                                    <tr>
+                                        <th>Department Name</th>
+                                        <th>:</th>
+                                        <td><input type="text" id="txtDepartment" readonly="readonly" class="form-control" placeholder="Department Name" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Heading</th>
+                                        <th>:</th>
+                                        <td class="flex">
+                                            @*<input type="text" id="txtHeading1" class="form-control" placeholder="Heading" />*@
+                                            <input type="text" id="txtDeptHeading" class="form-control" placeholder="Heading" />
+                                            <button id="btnHead" onclick="UpdateHeading();" class="btn-success btn-add">Update</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="panel-heading" style="background:#0076d0;padding:4px;">
+                                    <h4 class="text-white">Add Description</h4>
+                                </div>
+                                <div class="panel-body" style="height:500px;overflow:auto">
+                                    <table class="table-condensed" style="width:100%">
+                                        <tr>
+                                            <td colspan="3">
+                                                <textarea class="form-control" id="txtAbout1" placeholder="About" rows="5"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="file" id="txtfileUpload" name="fileUpload">
+                                            </td>
+                                            <td class="flex">
+                                                <select class="form-control" id="ddlPostion">
+                                                    <option value="Top">Top</option>
+                                                    <option value="Bottom">Bottom</option>
+                                                </select>
+                                                <button id="btnAdd" class="btn-success btn-add" onclick="AddWhatWeTreatDetail()" style="width:22%;"><span class="fa fa-plus"></span>Add</button>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                        <h4 class="text-white">What We Treat Discription</h4>
+                                    </div>
+                                    <div id="divTreat" class="table-responsive">
+                                        <table class="table table-bordered" id="tblTreat">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:10%;">Action</th>
+                                                    <th>Content</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Content/plugins/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    CKEDITOR.config.toolbar_Basic = [
+        ['Cut', 'Copy', 'Paste', '-'],
+        ['Undo', 'Redo', '-', 'SelectAll', 'RemoveFormat'],
+        ['Bold', 'Italic', 'Underline', '-', 'Subscript', 'Superscript'],
+        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'CreateDiv'],
+        ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+        ['Table', 'HorizontalRule', 'SpecialChar', 'PageBreak'],
+        ['Styles', 'Format', 'Font', 'FontSize'],
+        ['TextColor', 'BGColor'],
+        ['ShowBlocks', '-', 'Source']
+    ];
+    CKEDITOR.config.toolbar = 'Basic';
+    CKEDITOR.config.height = 100;
+    CKEDITOR.replace('txtAbout');
+    CKEDITOR.replace('txtAbout1');
+    //CKEDITOR.replace('txtTreatTagDesc');
+    CKEDITOR.replace('txtMediaTagDesc');
+        //CKEDITOR.replace('txtTreatHeadingDesc');
+</script>

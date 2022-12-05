@@ -1,0 +1,511 @@
+﻿
+@{
+    ViewBag.Title = "IPDRegistration";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    .title {
+        background: #2478a9;
+        color: #fff;
+        padding: 3px 63px 2px 6px;
+        top: 3px;
+        position: relative;
+    }
+
+    .category {
+        font-weight: bold;
+        background: #fafcfe;
+        display: flow-root;
+        border: 1px solid #2478a9;
+    }
+
+    .title:after {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        content: '';
+        border-right: -2px solid transparent;
+        border-left: 25px solid transparent;
+        border-top: 25px solid #fff;
+    }
+
+    .section-header {
+        background: #fff6ed00;
+        min-height: 215px;
+        max-height: 215px;
+        padding: 10px;
+        margin-bottom: 3px;
+        border: 1px solid #2478a9;
+    }
+
+    #tblPrevInfo th, #tblPrevInfo td {
+        border: none;
+        padding: 3px 0;
+        font-size: 13px;
+    }
+
+    #tblPrevInfo tr th {
+        font-weight: bold;
+        text-align: left;
+        width: 17%;
+    }
+
+    #tblPrevInfo td {
+        text-align: left;
+    }
+
+    .block {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <!-----OPD Patient Basic Info----->
+            @Html.Partial("OPDPatientInfo")
+            <div class="col-md-12" style="padding-right: 0;">
+                <div class="ml15" style="margin-right: 5px;">
+                    <div class="category"><span class="title" style="top:0;padding:0px 50px 2px 6px">Booking Basic Information</span></div>
+                    <div class="section-header" style="background:#fff6ed">
+                        <div class="row basicInfo">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Panel</label>
+                                        <select id="ddlPanel" class="form-control"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Patient Type</label>
+                                        <select id="ddlPatientType" class="form-control">
+                                            <option>Self</option>
+                                            <option>Staff</option>
+                                            <option>Insured</option>
+                                            <option>VIP</option>
+                                            <option>Sponcered</option>
+                                            <option>Other</option>
+                                            <option>Doctor Self</option>
+                                            <option>Staff Dependant</option>
+                                            <option>Camp</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Policy No.</label>
+                                        <input type="text" id="txtPolicyNo" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Reference No</label>
+                                        <input type="text" id="txtReferenceNo" class="form-control" placeholder="Reference No" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Referral</label>
+                                        <div class="flex">
+                                            <input type="text" style="width: 65px;" id="txtRefBy" disabled class="form-control" placeholder="Ref By" />
+                                            <input type="text" id="txtRefName" disabled class="form-control" placeholder="Ref Name" />
+                                            <button data-target="#modalReferral" data-toggle="modal" class="btn btn-warning"><i class="fa fa-search">&nbsp;</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>Department</label>
+                                        <select id="ddlDept" onchange="GetDoctorByDept()" class="form-control"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Doctor</label>
+                                        <select id="ddlDoctor" class="form-control"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Admission Date</label>
+                                        <input type="date" id="txtAdmissionDate" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Admission Time</label>
+                                        <input type="time" id="txtAdmissionTime" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Admission Type</label>
+                                        <select id="ddlAdmissionType" class="form-control">
+                                            <option>IPD</option>
+                                            <option>OPD</option>
+                                            <option>Emergency</option>
+                                            <option>MLC Case</option>
+                                            <option>Attendant</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Room/Bed</label>
+                                        <div class="flex">
+                                            <input type="text" style="width: 95px;" id="txtRoomBedId" disabled class="form-control" placeholder="Room Bed Id" />
+                                            <input type="text" id="txtRoomBedName" disabled class="form-control" placeholder="Room Bed Name" />
+                                            <button data-target="#modalBedAvailability" data-toggle="modal" class="btn btn-warning"><i class="fa fa-bed">&nbsp;</i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Billing Category</label>
+                                        <select id="ddlBillingCategory" class="form-control"></select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Rquest Room</label>
+                                        <select id="ddlRquestRoom" class="form-control">
+                                            <option>Option-1</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Referral Source</label>
+                                        <select id="ddlReferralSource" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label>MLC Type</label>
+                                        <select id="ddlMLCType" class="form-control">
+                                            <option>RTA</option>
+                                            <option>Poisoning</option>
+                                            <option>Burns</option>
+                                            <option>Hanging</option>
+                                            <option>Assault</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Source</label>
+                                        <select id="ddlSource" class="form-control">
+                                            <option>Option-1</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Attendant Name</label>
+                                        <input type="text" id="txtAttendantName" class="form-control" placeholder="Attendant Name" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Attendant Contact No-1</label>
+                                        <input type="text" id="txtAttendantContactNo1" class="form-control" placeholder="Attendant Contact No-1" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Attendant Contact No-2</label>
+                                        <div class="flex">
+                                            <input type="text" id="txtAttendantContactNo2" class="form-control" placeholder="Attendant Contact No-2" />
+                                            <button class="btn btn-success" onclick="IPDRegistration()" style="width:60%;"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-right: 0;">
+                <div class="ml15">
+                    <div class="category"><span class="title" style="top:0;padding:0px 50px 2px 6px">Registration Details</span></div>
+                    <div class="section-header" style="min-height:140px">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-responsive" id="tblPrevInfo">
+                                    <tr>
+                                        <th>IPD No.</th>
+                                        <td>:</td>
+                                        <td id="txtPrevIPDNo"></td>
+                                        <td>&nbsp;</td>
+                                        <th>Patient Name</th>
+                                        <td>:</td>
+                                        <td id="txtPrevPatientName"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Doctor</th>
+                                        <td>:</td>
+                                        <td id="txtPrevDoctor"></td>
+                                        <td>&nbsp;</td>
+                                        <th>Room/Bed</th>
+                                        <td>:</td>
+                                        <td id="txtPrevRoomBed"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Billing Category</th>
+                                        <td>:</td>
+                                        <td id="txtPrevBillingCategory"></td>
+                                        <td>&nbsp;</td>
+                                        <th>Rquest Room</th>
+                                        <td>:</td>
+                                        <td id="txtPrevRquestRoom"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:22%">Attendant Name</th>
+                                        <td>:</td>
+                                        <td id="txtPrevAttendantName" colspan="5"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-right: 0;">
+                <div class="ml15 AdvanceInfo block">
+                    <div class="category">
+                        <span class="title" style="top:0;padding:0px 50px 2px 6px">Advance Info</span>
+
+                    </div>
+                    <div class="section-header" style="min-height:140px;padding:0px 6px">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group flex">
+                                    <span style="width:70%">
+                                        <label>
+                                            <input type="checkbox" name="PaymentMode" class="cash" value="Cash" checked />Cash
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="PaymentMode" value="Cheque" />Cheque
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="PaymentMode" value="Swipe Card" />Swipe Card
+                                        </label>
+                                        <label>
+                                            <input type="checkbox" name="PaymentMode" value="NEFT/RTGS/Online" />NEFT/RTGS/Online
+                                        </label>
+                                    </span>
+                                    <span style="width:30%">
+                                        <button class="btn btn-warning pull-right" id="btnPrintReceipt" style="margin:1px 5px;height: 22px;line-height:20px"><i class="fa fa-print">&nbsp;</i>Print</button>&nbsp;
+                                        <button onclick="PatientAdvance()" class="btn btn-success pull-right" style="margin:1px 5px;height: 22px;line-height:20px"><i class="fa fa-check-circle">&nbsp;</i>Save</button>
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row paymentSection" style="padding:0">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="">
+                                        <div class="">
+                                            <table id="tblPaymentDetails" class="table table-bordered" style="margin-bottom:0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:15%;white-space:nowrap">Payment Mode</th>
+                                                        <th style="width:13%">Amount</th>
+                                                        <th>Currency</th>
+                                                        <th style="width:25%">Bank Name</th>
+                                                        <th style="width:13%">Ref No.</th>
+                                                        <th>Machine</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="pay">
+                                                        <td>Cash</td>
+                                                        <td><input type="text" data-int class="form-control" value="0" /></td>
+                                                        <td>INR</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Cheque</td>
+                                                        <td><input type="text" class="form-control" value="0" /></td>
+                                                        <td>INR</td>
+                                                        <td><select class="form-control BankName"></select></td>
+                                                        <td><input type="text" class="form-control" /></td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Swipe Card</td>
+                                                        <td><input type="text" class="form-control" value="0" /></td>
+                                                        <td>INR</td>
+                                                        <td><select class="form-control BankName"></select></td>
+                                                        <td><input type="text" class="form-control" /></td>
+                                                        <td>
+                                                            <select class="form-control MachineName"></select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>NEFT/RTGS/Online</td>
+                                                        <td><input type="text" class="form-control" value="0" /></td>
+                                                        <td>INR</td>
+                                                        <td><select class="form-control BankName"></select></td>
+                                                        <td><input type="text" class="form-control" /></td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---Old Patient Search Modal---->
+<div class="modal fade" id="modalOldPatient" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:10%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Old Patient Search</h5>
+                <span data-dismiss="modal" class="btn-close">x</span>
+            </div>
+            <div class="modal-body" style="height:360px;">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group flex">
+                            <span style="width:26%"><b>Search</b></span>
+                            <span style="width:4%"><b>:</b></span>
+                            <span style="width:40%">
+                                <select id="ddlSearchKey" class="form-control border-imp" style="width: 90px !important;">
+                                    <option value="UHID">UHID</option>
+                                    <option value="MobileNo" selected="selected">Mobile No</option>
+                                    <option value="HealthCardNo">Health Card No</option>
+                                    <option value="AppointmentNo">Appointment No</option>
+                                    <option value="IPDNo">IPD No</option>
+                                </select>
+                            </span>
+                            <input type="text" id="txtSearchValue" class="form-control text-uppercase border-imp" placeholder="Search Input" />
+                            <input type="button" id="btnSearchOldPatient" class="btn-success btn-flat" value="Search" />
+                            <input type="button" id="btnNewPatient" class="btn-danger btn-flat" style="display:none" value="New" />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br />
+                        <table id="tblOldPatient" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:1%">Action</th>
+                                    <th>UHID No</th>
+                                    <th>Patient Name</th>
+                                    <th>Gender</th>
+                                    <th>DOB</th>
+                                    <th>Age</th>
+                                    <th>Mobile No</th>
+                                    <th>Address</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---Doctor Bed Availability Modal---->
+<div class="modal fade" id="modalBedAvailability" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg" style="width:1280px">
+        <div class="modal-content" style="margin-top:5%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Bed Availability Status </h5>
+                <span data-dismiss="modal" class="btn-close">x</span>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_BedAvailability")
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalReferral" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:10%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Add New Referral</h5>
+                <span data-dismiss="modal" class="btn-close">x</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group flex">
+                            <span style="width:26%"><b>Search</b></span>
+                            <span style="width:4%"><b>:</b></span>
+                            <span style="width:60%">
+                                <input type="text" id="txtSearchReferral" class="form-control text-uppercase border-imp" placeholder="Search Referral" autocomplete="off" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="height:500px;overflow:auto;border:1px solid #009688;padding: 0;">
+                        <table id="tblReferral" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:1%">Action</th>
+                                    <th style="white-space:nowrap">Referral Code</th>
+                                    <th>Referral Name</th>
+                                    <th>Mobile</th>
+                                    <th>Degree</th>
+                                    <th>Address</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" style="display:none">
+                    <div class="col-md-6">
+                        <div class="form-group flex">
+                            <span style="width:20%">Name</span>
+                            <span style="width:4%">:</span>
+                            <span style="width:76%">
+                                <input type="text" id="txtReferalName" class="form-control text-uppercase border-imp" placeholder="Referral Name" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group flex">
+                            <span style="width:26%">Mobile No.</span>
+                            <span style="width:4%">:</span>
+                            <span style="width:70%">
+                                <input type="text" id="txtReferalMobile" data-int data-count="10" class="form-control text-uppercase" placeholder="Mobile No." />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group flex">
+                            <span style="width:20%">Degree</span>
+                            <span style="width:4%">:</span>
+                            <span style="width:76%">
+                                <input type="text" id="txtReferalDegree" class="form-control text-uppercase" placeholder="Degree" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group flex">
+                            <span style="width:26%">Address</span>
+                            <span style="width:4%">:</span>
+                            <span style="width:70%">
+                                <input type="text" id="txtReferalAddress" class="form-control text-uppercase" placeholder="Address" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group flex">
+                            <span style="width:20%">State</span>
+                            <span style="width:4%">:</span>
+                            <span style="width:76%">
+                                <select id="ddlReferralState" class="form-control border-imp"></select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group flex">
+                            <span style="width:26%">City</span>
+                            <span style="width:4%">:</span>
+                            <span style="width:70%">
+                                <select id="ddlReferralCity" class="form-control border-imp"></select>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <br />
+                            <p class="text-center">
+                                <input type="button" class="btn btn-success" onclick="InsertReferal()" value="Submit" />
+                                <input type="button" class="btn btn-danger" value="Close" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Areas/IPD/JsModule/IPD/IPDRegistration.js"></script>

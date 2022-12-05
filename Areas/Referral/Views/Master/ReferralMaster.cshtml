@@ -1,0 +1,330 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "ReferalMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Referral/JsModule/ReferralMaster.js?1.0"></script>
+
+<style>
+    .btn-add {
+        width: 14%;
+        height: 28px;
+        border: none;
+    }
+
+    .btn-tbl {
+        border: none;
+        padding: 1px 9px;
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<style>
+    #txtLocality {
+        position: relative;
+        top: -28px;
+        width: 88%;
+        border-radius: 0;
+    }
+
+    .locality {
+        width: 245px;
+        margin-top: 10px;
+    }
+
+    #MiscellaneousModal h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .box-header.with-border {
+        background: #f7f7f7;
+        padding: 5px 7px;
+        border-bottom: 1px solid #f4f4f4;
+    }
+
+    .box {
+        border: 1px solid #ddd;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    highlight_row {
+        background-color: #d5e7f8;
+        color: #000;
+    }
+
+    .highlight {
+        background-color: red;
+    }
+
+    .text-white {
+        color: #fff;
+        margin: 5px 0px !important;
+    }
+
+    .nav > li > a {
+        padding: 5px 5px;
+        color: #fff;
+    }
+
+    .nav > li.active > a {
+        color: #fff;
+        background: #00bca;
+    }
+
+    .nav-tabs {
+        padding: 0;
+        border: 0;
+    }
+
+    .modal-xl {
+        width: 1140px !important;
+    }
+
+    .panel-heading {
+        padding: 1px 4px;
+    }
+
+
+
+    .modal-header {
+        padding: 5px 22px;
+        background: #337ab7;
+    }
+
+    .close {
+        right: 17px;
+        position: absolute;
+        color: red;
+        opacity: 100;
+    }
+</style>
+
+<div id="page-content">
+    <div class="col-md-7">
+        <div class="ml15">
+            <div class="">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <button type="submit" class="btn btn-xs btn-success" onclick="LoadAll('Y','LoadAllRefrerrals')">Approved Referral</button>
+                        <button type="submit" class="btn btn-xs btn-warning" onclick="LoadAll('N','LoadAllRefrerrals')">Pending Referral</button>
+                        <h4 class="text-white pull-right">Referral List</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3 flex">
+                            <input type="text" id="txtReferralSearch" class="form-control" placeholder="Search Referral" style="border-radius: 0;border: 1px solid #00a65a;">
+                            <button class="btn btn-success bn" style="height: 28px;width: 52%;" onclick="SearchReferrals()">Search</button>
+                        </div>
+                        <div class="col-md-6 flex">
+                            <select id="ddlProName"></select>
+                            <button class="btn btn-warning bn" id="btnFilterByPRO" style="height: 28px;width: 15%;">Get</button>
+                            <button class="btn btn-success" onclick="DownloadXL()" style="height: 28px;width: 25%;"><i class="fa fa-file-excel-o">&nbsp;</i>Excel</button>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="txtSearch" autocomplete="off" class="form-control" placeholder="Search.." />
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="table table-responsive">
+                                <div class="scroll" style="min-height:480px;overflow:auto">
+                                    <table class="table table-bordered" id="tblReferralDetails">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 1%;">CMD</th>
+                                                <th style="width: 9%;white-space: nowrap;">Ref Code</th>
+                                                <th style="width: 15%;">Ref Name</th>
+                                                <th style="width: 5%;">Degree</th>
+                                                <th style="width: 5%;">Speciality</th>
+                                                <th style="width: 5%;">City</th>
+                                                <th style="width: 5%;">Locality</th>
+                                                <th style="width: 15%;">Clinic Name</th>
+                                                <th style="width: 12%;">Mobile No</th>
+                                                <th style="width: 10%;">Address</th>
+                                                <th style="width: 1%;">CMD</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="display-inline">Referral Details</h4>
+                    <button type="submit" class="btn btn-xs btn-warning btn-flat" onclick="ClearAll()">New</button>
+                    <button id="btnApprove" style="display:none" class="btn btn-xs btn-success" onclick="ApproveReferral('ApproveReferral')">Approve</button>
+                </div>
+                <div class="panel-body" style="height:500px;overflow:auto;">
+                    <div class="col-sm-4 form-group">
+                        <label>Business Type</label>
+                        <select id="ddlBusinessType" class="form-control">
+                            <option value="0">--Please Select--</option>
+                            <option value="Diagnostic">Diagnostic</option>
+                            <option value="Hospital">Hospital</option>
+                            <option value="Corporate">Corporate</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Referral Name</label>
+                        <input type="text" id="txtReferralName" class="form-control border-imp" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Degree</label>
+                        <select id="ddlDegree" class="form-control border-imp"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Speciality</label>
+                        <select id="ddlSpeciality" class="form-control"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="txtDob" class="form-control" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Clinic Name</label>
+                        <input type="text" id="txtClinicName" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Address</label>
+                        <textarea type="text" id="txtAddress" class="form-control" rows="2" autocomplete="off"></textarea>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Locality</label>
+                        <div class="locality">
+                            <select id="ddlLocality" class="form-control"></select>
+                            <input type="text" id="txtLocality" class="form-control border-imp" placeholder="Locality" />
+                        </div>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Country</label>
+                        <select id="ddlCountry" class="form-control border-imp" onchange="GetStateByCountry()"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>State</label>
+                        <select id="ddlState" class="form-control border-imp" onchange="GetCityByState()"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>City</label>
+                        <select id="ddlCity" class="form-control border-imp"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Phone</label>
+                        <input type="text" id="txtPhone" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Mobile</label>
+                        <input type="text" id="txtMobile" data-int data-count="10" class="form-control border-imp" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Email</label>
+                        <input type="text" id="txtEmail" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>PRO</label>
+                        <input type="text" id="txtProEmpCode" class="form-control" autocomplete="off" placeholder="Please enter minimum 4 character" />
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <button style="margin-top:21px" type="button" id="btnFindEmployee" class="btn btn-success btn-xs" onclick="FindEmployee()" value="Find">FIND</button>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Select Employee</label>
+                        <select id="ddlEmpCode" class="form-control"></select>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <button type="button" id="btnSaveUpdate" class="btn btn-success btn-xs pull-right" onclick="InsertUpdateReferralMaster()">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+

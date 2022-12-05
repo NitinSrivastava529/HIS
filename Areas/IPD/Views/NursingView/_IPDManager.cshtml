@@ -1,0 +1,194 @@
+﻿<script src="~/Areas/IPD/JsModule/NursingView/_IPDManager.js"></script>
+<style>
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+    /*.select2-container{
+        position:inherit !important;
+    }*/
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    .amount-section .col-md-2 {
+        text-align: center;
+        width: 12%;
+        padding: 0px 5px;
+    }
+    .amount-section {
+        margin-top: 10px;
+        border: 1px solid #c0d7e5;
+        height: 60px;
+        background: #aedbf5;
+    }
+
+        .amount-section input {
+            text-align: center;
+            font-size: 14px;
+            pointer-events: none;
+            font-weight: bold;
+            background: #e1e1e1;
+        }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 180px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .col-md-3, .col-md-4 {
+        padding: 0;
+    }
+
+    .headerInfo {
+        margin: 0;
+        background: #2478a9;
+        color: #fff;
+        padding: 2px 5px;
+        width: 99%;
+    }
+    .flex {
+        display: flex;
+        align-items: center;
+        border: 1px solid #00a792;
+    }
+
+
+    .example-box-wrapper {
+        margin: 0px 15px;
+    }
+
+    .dischargeSection {      
+        margin-top: 10px;
+        border: 1px solid #c0d7e5;
+        height: 98px;       
+    }
+        .dischargeSection label.head {
+            display: block;
+            background: #2478a9;
+            padding: 3px;
+            color: #fff;
+            margin: 1px 2px 4px 1px;
+        }
+    .IsDischargeInit {
+        border-radius: 37px;
+        background: #e7e7e7;
+        padding: 6px 10px;
+        margin: 25px 10px;
+    }
+</style>
+<div class="example-box-wrapper">
+    <div class="row amount-section">
+        <div class="col-md-2">
+            <label>Gross Amount</label>
+            <input type="text" id="txtGrossAmt" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Panel Discount</label>
+            <input type="text" id="txtPDiscount" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Adl. Discount</label>
+            <input type="text" id="txtAdlDiscount" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Total Discount</label>
+            <input type="text" id="txtDiscount" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Net Amount</label>
+            <input type="text" id="txtNetAmt" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Advance Amount</label>
+            <input type="text" id="txtAdvanceAmt" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Balance Amount</label>
+            <input type="text" id="txtBalanceAmt" class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <label>Approval Amount</label>
+            <input type="text" id="txtApprovalAmt" class="form-control" />
+        </div>
+        <hr />
+    </div>
+    <div class="row dischargeSection">
+        <label class="head">Discharge Info</label>
+        <div class="col-md-2">
+            <label>Discharge Date & Time</label>
+            <input type="datetime-local" id="txtDischargeDate" class="form-control" style="border-radius:0;height:33px;border: 1px solid #00a792;" />
+        </div>
+        <div class="col-md-4">
+            <label>Discharge Type</label>
+            <div class="flex">
+                <select class="form-control" id="ddlDischargeType" style="border:none">
+                    <option>Select</option>
+                    <option>Normal</option>
+                    <option>Lama</option>
+                    <option>Absconding</option>
+                    <option>Discharge On Request</option>
+                    <option>Death</option>
+                    <option>Patient On Leave</option>
+                    <option>Referred</option>
+                </select>
+                <button class="btn btn-primary" id="btnDischarge" onclick="SaveDischargeStatus()" style="width:33%;margin: 3px;border-radius: 0;"><i class="fa fa-sign-in">&nbsp;</i>Discharge</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label class="IsDischargeInit">Discharge is not Initiated By Doctor</label>
+        </div>
+    </div>
+    <div class="row dischargeSection deathSection" style="width:100%;height:100px">
+        <label class="head">In Case Of Death</label>
+        <div class="col-md-2">
+            <label>Death Date & Time</label>
+            <input type="datetime-local" id="txtDeathDateTime" class="form-control" style="border-radius:0;" />
+        </div>
+        <div class="col-md-2">
+            <label>Cause Of Death</label>
+            <input type="text" id="txtCauseOfDeath" class="form-control" style="border-radius:0;" placeholder="Cause Of Death" />
+        </div>
+        <div class="col-md-3">
+            <label>Remark</label>
+            <textarea id="txtDeathRemark" class="form-control" rows="1" placeholder="Remark"></textarea>
+        </div>
+        <div class="col-md-2">
+            <label>Type of Death</label>
+            <select class="form-control" id="ddlTypeOfDeath" style="border:none">
+                <option>Select</option>
+                <option>Normal</option>
+                <option>Emergency</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label style="margin-top:25px"><input type="checkbox" name="DeathOver45Hours" />&nbsp;Cause Of Death Over 45 Hours</label>          
+        </div>
+    </div>
+</div>

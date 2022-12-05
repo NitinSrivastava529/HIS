@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "CSRReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 pfeedbackList">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white text-center">Clinical Safety Round Report</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-xs-1">
+                            <span class="text-pink">Floor</span>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <select class="form-control" id="ddlFlloeName"></select>
+                            </div>
+                            <input type="button" value="Print" onclick="PrintDoc();" />
+                        </div>
+                        <div class="col-xs-8"></div>
+                        <hr />
+                        <div class="col-md-12 scroll" id="IPDPatientList"></div>
+                    </div>
+                  
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+

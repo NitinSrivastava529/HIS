@@ -1,0 +1,137 @@
+﻿
+@{
+	ViewBag.Title = "LLaundryTransfer";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+	#tblLinenStocks td {
+		padding: 5px 5px;
+	}
+
+	#tblLinenStocks input:disabled {
+		opacity: 100%;
+		background: #eaeaea;
+	}
+
+	.bn {
+		border: none;
+	}
+
+	.bc {
+		border-color: #06a08b;
+		border-radius: 0;
+	}
+
+	.panel {
+		margin: 5px 3px 0 5px !important;
+		border: 1px solid #bedbf6;
+	}
+
+	.panel-body {
+		border: 1px solid #e1dede;
+		padding: 5px 3px 3px 3px !important;
+	}
+
+	.form-group {
+		margin-bottom: 5px;
+	}
+
+		.form-group label {
+			padding: 3px 0 4px 10px !important;
+		}
+
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	highlight_row {
+		background-color: #d5e7f8;
+		color: #000;
+	}
+
+	.table-bordered {
+		border: 1px solid #90c6f8;
+	}
+
+	.highlight {
+		background-color: red;
+	}
+
+	.text-white {
+		color: #fff;
+	}
+</style>
+
+<script src="~/Areas/LinenLaundry/JsModule/LLaundryTransfer.js"></script>
+<div id="page-content">
+	<div class="panel">
+		<div class="panel-body" style="height:560px; overflow-y:auto">
+			<div class="col-md-8">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:2px;">
+								<h4 class="text-white">Laundry Transfer</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="form-group">
+									<div class="col-md-6">
+										<select id="ddlCartList" onchange="LinenStocks()" class="form-control"></select>
+									</div>
+									<div class="col-md-6">
+										<input type="text" id="txtSearchProduct" class="form-control" autocomplete="off" placeholder="Search Product.." />
+									</div>
+								</div>
+								<div class="col-md-12" style="margin-top:10px;">
+									<div class="table-responsive" style="max-height: 500px;">
+										<table class="table table-condensed" id="tblLinenStocks">
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:2px;">
+								<h4 class="text-white">Laundry Transfer List</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="form-group">
+									<div class="col-md-6">
+										<input type="text" id="txtLotNo" readonly class="form-control" autocomplete="off" value="New" />
+									</div>
+									<div class="col-md-6">
+										<button class="btn btn-success pull-right" onclick="DispatchComplete()"><i class="fa fa-sign-in">&nbsp;</i>Transfer</button>
+									</div>
+								</div>
+								<div class="col-md-12" style="margin-top:10px;">
+									<div class="table-responsive" style="max-height: 500px;">
+										<table class="table table-bordered" id="tblItemByLot">
+											<thead>
+												<tr>
+													<th>Item Name</th>
+													<th style="width:13%">T.Qty</th>
+													<th style="width:20%">Damage Qty</th>
+													<th style="width:1%">Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

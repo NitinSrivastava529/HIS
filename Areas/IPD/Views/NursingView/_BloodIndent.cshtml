@@ -1,0 +1,94 @@
+﻿<script src="~/Areas/IPD/JsModule/NursingView/_BloodIndent.js"></script>
+<style>
+    .component-section .col-md-6 {
+        width: 48%;
+        padding: 1px 15px;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .bc {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-color: #06a08b;
+    }
+
+    .btnRC {
+        height: 30px;
+        margin: -1px;
+        border-radius: 0;
+    }       
+    .select2-container--default .select2-selection--single {
+        height: 25px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+    }
+
+    .fullHeight {
+        min-height: 590px !important;
+    }
+
+    .tblDonorInfo td {
+        font-size: 12px;
+        border: none !important;
+        padding-top: 4px !important;
+    }
+
+    #btnSaveComponent {
+        position: absolute;
+        top: 255px;
+        left: -9px;
+        padding: 0px 7px;
+        width: 60px;
+    }
+
+    .error {
+        border-color: red !important;
+    }
+</style>
+<div class="row component-section">
+    <div class="col-md-6">
+        <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:497px;border: 1px solid #2478a9;">
+            <table id="tblComponentInfo" class="table table-bordered" style="margin-bottom:6px">
+                <thead style="background: #00a65a;color: #fff;">
+                    <tr>
+                        <th style="width:1%;"><input type="checkbox" /> </th>
+                        <th>Component Name</th>
+                        <th>Short Name</th>
+                        <th style="width: 10%;text-align:right">Qty</th>                       
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-2 text-center" style="width:4%;padding: 0;">
+        <button id="btnSaveComponent" onclick="InsertIndentInfo()" class="btn btn-success"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+    </div>
+    <div class="col-md-6 pull-right">
+        <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:497px;border: 1px solid #2478a9;">
+            <table id="tblAllotedComponentInfo" class="table table-bordered" style="margin-bottom:6px">
+                <thead style="background: #00a65a;color: #fff;">
+                    <tr>
+                        <th>#</th>
+                        <th>Component Name</th>
+                        <th>Short Name</th>
+                        <th style="width: 1%;text-align:right">CMD</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,217 @@
+﻿
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Chandan Health Care Ltd.</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css?his-version-1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js?his-version-1.0"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js?his-version-1.0"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js?his-version-1.0"></script>
+	<script src="~/JsModule/config.js?his-version-1.0"></script>
+	<script src="~/JsModule/global.js?his-version-1.0"></script>
+	<script src="~/Areas/Warehouse/JsModule/Purchase/GoodsReturnPrint.js?his-version-1.0"></script>
+	<link href="~/Content/css/printGoodsReturn.css?his-version-1.0" rel="stylesheet" />	
+	<style type="text/css">
+		html {
+			zoom: 0.8;
+			width: 80%;
+			top: 2%;
+			position: absolute;
+			left: 11%;
+			background: #585858;
+		}		
+		#tblRight tbody {
+			background: #f7f6f6;
+			border: 1px solid #d8d5d5;
+			line-height: 21px;
+			margin: 10px;
+			position: absolute;
+			padding: 12px;
+		}
+
+		.tblRight {
+			float: right !important;
+			right: 0;
+			position: absolute;
+			bottom: 0;
+		}
+
+		body {
+			-webkit-print-color-adjust: exact;
+		}
+
+		td.bg {
+			background: #ddd !important;
+		}
+
+		.table {
+			font-size: 15px;
+			line-height: 0px;
+		}
+
+		.table-bordered td, .table-bordered th {
+			border: .3px solid #000;
+		}
+
+		.table th {
+			white-space: nowrap;
+			padding: 9px;
+			vertical-align: top;
+			border-top: 1px solid #dee2e6;
+		}
+
+		.table tbody td {
+			white-space: nowrap;
+			text-align: left;
+			/*padding: 28px 2px;*/
+			height: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="box box-purple">
+				<div class="box-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<h3 class="text-center">Credit Note<hr style="margin: 7px 0 -8px;" /></h3>
+							<div class="row" style="margin-bottom: 25px;">
+								<div class="col-sm-3">
+									<h4><b>From</b><hr /></h4>
+									<table>
+										<tbody style="line-height: 20px;">
+											@*<tr>
+													<td colspan="3"><b>Purchase Bill Information</b></td>
+												</tr>*@
+											<tr>
+												<td>Chandan GHealth Care Ltd.</td>
+											</tr>
+											<tr>
+												<td>Biotech Park Kurshi Road</td>
+											</tr>
+											<tr>
+												<td>Lucknow, Uttar Pradesh</td>
+											</tr>
+											<tr>
+												<td>GSTIN : 9AACCC1996N1Z2</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-sm-6">
+									<h4><b>To</b><hr /></h4>
+									<table>
+										<tbody>
+											@*<tr>
+													<td colspan="3"><b>Purchase Bill Information</b></td>
+												</tr>*@
+											<tr>
+												<td><b>Vendor</b></td>
+												<td>: </td>
+												<td><span data-vendorname></span></td>
+											</tr>
+											<tr>
+												<td><b>Address</b></td>
+												<td>: </td>
+												<td><span data-address></span>,<br /><span data-district></span></td>
+											</tr>
+											<tr>
+												<td><b>Contact</b></td>
+												<td>: </td>
+												<td><span data-contactno></span></td>
+											</tr>
+											<tr>
+												<td><b>GSTN</b></td>
+												<td>: </td>
+												<td><span data-gstin></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-sm-3">
+									<h4>.<hr /></h4>
+									<table id="tblRight">
+										<tbody>
+											<tr>
+												<td><b>Date</b></td>
+												<td>: </td>
+												<td><span data-returndate></span></td>
+											</tr>
+											<tr>
+												<td><b>Reference No</b></td>
+												<td>: </td>
+												<td><span data-purchaseid></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-sm-12">
+							<div class="">
+								<div class="scroll">
+									<table class="table table-hover" border="0" id="tblGoodsDetails">
+										<thead>
+											<tr>
+												<th style="width:30%">Item Name</th>
+												<th>Batch No</th>
+												<th>Exp Date</th>
+												<th class='text-right'>MRP</th>
+												<th class='text-right'>Trade</th>
+												<th class='text-right'>Quantity</th>
+												<th class='text-right'>CGST</th>
+												<th class='text-right'>SGST</th>
+												<th class='text-right'>IGST</th>
+												<th class='text-right'>Amount</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+								<div class="total">
+									<table>
+										<tbody>
+											<tr>
+												<td>Total Amount</td>
+												<td> : </td>
+												<td class='text-right'><b><span data-total></span></b></td>
+											</tr>
+											<tr>
+												<td>CGST</td>
+												<td> : </td>
+												<td class='text-right'><b><span data-cgst></span></b></td>
+											</tr>
+											<tr>
+												<td>SGST</td>
+												<td> : </td>
+												<td class='text-right'><b><span data-sgst></span></b></td>
+											</tr>
+											<tr>
+												<td>IGST</td>
+												<td> : </td>
+												<td class='text-right'><b><span data-igst></span></b></td>
+											</tr>
+											<tr>
+												<td>Net Amount</td>
+												<td> : </td>
+												<td class='text-right'><b><span data-netamount></span></b></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

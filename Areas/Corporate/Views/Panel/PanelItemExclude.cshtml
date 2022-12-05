@@ -1,0 +1,244 @@
+﻿
+@{
+    ViewBag.Title = "Panel Item Exclude";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Corporate/JsModule/PanelItemExclude.js?his-version-1.0"></script>
+<style>
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 441px;
+        max-width: min-content;
+        max-height: 310px;
+        /* overflow: scroll; */
+        overflow-x: hidden;
+        position: absolute;
+        z-index: 1;
+        background: #fff;
+        top: 76px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 10px;
+        border-radius: 3px;
+    }
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+
+    #ProductList {
+        width: 100%;
+        line-height: 22px;
+        max-height: 291px;
+        font-size: 12px;
+        display: block;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .msg {
+        color: #ffffff;
+        background: #dd8803;
+        width: max-content;
+        padding: 5px 14px;
+        position: absolute;
+        bottom: 39px;
+        z-index: 10;
+        left: 11px;
+        border-radius: 2px;
+        display: none;
+    }
+
+        .msg span {
+            background: #ff0049;
+            padding: 2px;
+            border-radius: 20px;
+            width: 13px;
+            height: 13px;
+            font-size: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Panel List</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-3">
+                                    <span class="btn btn-success" onclick="GetPanel()">Load Panel</span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span class="text-pink">Search</span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <table id="tblPanel" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Panel Id</th>
+                                                            <th>Company Name</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <span data-panelid class="text-white">Panel</span>
+                                <span data-pid style="display:none;"></span>
+                                <h4 class="text-white pull-right">Excluding Item from Panel</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 8px 20px;">
+                                <hr />
+                                <div class="col-md-8">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearchProduct" class="form-control" placeholder="Search Product..." />
+                                        <span class="btn btn-success" onclick="InsertPanelItemExclude()"><i class="fa fa-plus"></i></span>
+                                        <input type="text" id="txtItemID" class="form-control" style="display:none" />
+                                    </div>
+                                    <div class="msg"></div>
+                                </div>
+
+                                <div id="ItemList" style="display:none">
+                                    <table id="tblnavigate">
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table table-responsive">
+                                        <div class="scroll">
+                                            <table id="tblItem" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Item Id</th>
+                                                        <th>Item Name</th>
+                                                        <th>Created By</th>
+                                                        <th>Creation Date</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

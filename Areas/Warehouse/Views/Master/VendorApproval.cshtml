@@ -1,0 +1,142 @@
+﻿
+@{
+	ViewBag.Title = "VendorApproval";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/Master/VendorApproval.js?his-version-1.0"></script>
+<style>
+	.active {
+		color: green;
+	}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+	.LedgerInfo {
+		width: 440px;
+		background: #f9f5e9;
+		color: #000000;
+		position: absolute;
+		right: 0;
+		top: -46px;
+		z-index: 10;
+		height: 0px;
+		display:none;
+	}
+		.LedgerInfo table td {
+			background: #fdf5cd;
+		}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Vendor Approval</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-xs-3">
+									<select id="ddlFilter" class="form-control">
+										<option value="N">Not Approve</option>
+										<option value="Y">Approve</option>										
+									</select>
+								</div>
+								<div class="col-xs-3">
+									<span class="btn btn-success" id="btnLoad">Load List</span>
+								</div>
+								<div class="col-xs-6">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+									</div>
+								</div>
+								<hr />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											@*style="top: 85px;background:#fff7e1;color:#000;position:relative;display:none">*@
+											<div class="LedgerInfo">
+												<table id="tblLedger" class="table table-bordered">
+													<tbody>
+														<tr>
+															<td style="width: 20%;">Ledger id</td>
+															<td style="width: 1%;"> :</td>
+															<td></td>
+														</tr>
+														<tr>
+															<td style="width: 20%;">Ledger Name</td>
+															<td style="width: 1%;"> :</td>
+															<td></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="scroll">
+												<table id="tblVendor" class="table table-bordered">
+													<thead>
+														<tr>
+															<th>Approve</th>
+															<th style="width: 10%;">Vendor Id</th>
+															<th style="width: 35%;">Vendor Name</th>
+															<th>Contact No</th>
+															<th>Gst No</th>
+															<th>Status</th>
+															<th style="display:none">View</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+</div>

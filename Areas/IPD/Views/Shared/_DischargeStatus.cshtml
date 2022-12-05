@@ -1,0 +1,249 @@
+﻿
+<script src="~/Areas/IPD/JsModule/IPD/_DischargeStatus.js"></script>
+<style>
+    .DischargeStatus {
+        padding-left: 56px;
+    }
+    .Status {
+        padding: 0 6px;
+        height: 42px;
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+        border: 1px solid #06a08b;
+    }
+    .Authorized .count {
+        background: #1eaa97 !important;
+        border: 6px double #ffffff !important;
+    }
+    .Authorized::before {
+        border-left: 30px solid #1eaa97 !important;
+    }
+    .Status::before {
+        position: absolute;
+        /* top: -4px; */
+        left: 40px;
+        display: -webkit-inline-box;
+        content: '';
+        border-right: 0px solid transparent;
+        border-bottom: 30px solid #c3c3c300;
+        border-left: 30px solid #b9b8b8;
+        transform: rotate3d(1,1,11,315deg);
+    }    
+    .Status .count {
+        border: 6px double #ffffff;
+        position: absolute;
+        margin-top: 5px;
+        left: -7px;
+        padding: 1px;
+        color: #ffffff;
+        width: 40px;
+        height: 40px;
+        line-height: 27px;
+        background: #9d9d9d;
+        text-align: center;
+        border-radius: 30px;
+    }
+
+        .Status .lblName {
+            width: 40%;
+        }
+
+        .Status .datetime {
+            border-color: #06a08b;
+            width: 65%;
+        }
+
+        .Status .lblRemark {
+            margin-left: 7px;
+            width: 10%;
+        }
+
+        .Status .remark {
+            border-radius: 0;
+            border-color: #b9b9b9;
+            width: 40%;
+        }
+    .proceed .remark {
+        border-radius: 0;
+        border-color: #1eaa97;
+        width: 40%;
+    }
+    .Status .btnSave {
+        border-color: #afafaf;
+        background: #a9a9a9 !important;
+        margin: 0;
+        width: 10%;
+        visibility: hidden;
+        padding: 0 2px;
+        height: 28px;
+        border-radius: 0;
+    }
+    .proceed .btnSave {
+        border-color: #1eaa97;
+        background: #1eaa97 !important;
+        margin: 0;
+        width: 10%;
+        visibility: initial;
+        padding: 0 2px;
+        height: 28px;
+        border-radius: 0;
+    }
+    .Status .lblStatus {
+        margin: 0 5px;
+        font-size: 11px;
+        line-height: 0;
+        width: 10%;
+        height: 20px;
+        background: #b3b9ad !important;
+        border-radius: 50px;
+        border: 1px solid #00c0ef;
+        padding: 0;
+    }
+
+        .Status .lblStatusDateTime {
+            width: 27%;
+            font-size:12px;
+            text-align: center;
+        }
+
+    .FirstGroup {
+        display: inline-flex;
+        width: 40%;
+        float: left;
+        align-items: center;
+    }
+
+    .SecondGroup {
+        width: 60%;
+        float: right;
+        display: inline-flex;
+        align-items: center;
+    }
+    .Done {
+        background: #d3ffcb !important;
+        pointer-events: none;
+    }
+    .Done button.btnSave{       
+        visibility: hidden !important;
+    }
+    .UnAuthorized {
+        opacity: 0.9;
+        pointer-events: none;
+        background:#ddd;
+    }
+    .unlock {
+        visibility: inherit !important;
+    }
+   
+</style>
+<div class="row">
+    <div class="col-md-12 DischargeStatus">
+        <div class="Status" style="margin-top:0;">
+            <div class="FirstGroup">
+                <label class="count">01</label>
+                <label class="lblName">Discharge Time</label>
+                <input type="datetime-local" class="form-control datetime" />
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="Discharge"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>
+        <div class="Status">
+            <div class="FirstGroup">
+                <label class="count">02</label>
+                <label class="lblName">RMO Discharge</label>
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="RMO">Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>
+        <div class="Status">
+            <div class="FirstGroup">
+                <label class="count">03</label>
+                <label class="lblName">Consultant Clearance</label>
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="Consultant">Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>
+        <div class="Status">
+            <div class="FirstGroup">
+                <label class="count">04</label>
+                <label class="lblName">Medicine Clearance</label>
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="Medicine">Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>
+        <div class="Status">
+            <div class="FirstGroup">
+                <label class="count">05</label>
+                <label class="lblName">Nursing Audit</label>
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="Nursing">Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>
+        <div class="Status">
+            <div class="FirstGroup">
+                <label class="count">06</label>
+                <label class="lblName">IPD Manager Audit</label>
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="IPDManager">Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>
+        <div class="Status">
+            <div class="FirstGroup">
+                <label class="count">07</label>
+                <label class="lblName">Pharmacy</label>
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="Pharmacy">Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>
+        <div class="Status">
+            <div class="FirstGroup">
+                <label class="count">08</label>
+                <label class="lblName">IPD Billing</label>
+            </div>
+            <div class="SecondGroup">
+                <label class="lblRemark">Remark</label>
+                <input type="text" class="form-control remark" placeholder="Reamrk.." />
+                <button class="btn btn-primary btnSave" data-callby="IPDBilling">Save</button>
+                <button class="btn btn-success lblStatus">Done</button>
+                <label class="lblStatusDateTime">-</label>
+            </div>
+        </div>       
+    </div>
+</div>

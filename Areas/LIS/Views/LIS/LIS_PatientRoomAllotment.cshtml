@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "LIS_PatientRoomAllotment";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<script src="~/Areas/LIS/JsModule/PatientRoomAllotment.js?his-version-1.0"></script>
+<div id="page-content">
+
+    <section class="content">
+        <div class="row">
+            <div class="box box-purple">
+                <div class="box-body">
+                    <div class="col-md-2"><input type="date" id="txtDate" class="form-control input_pass" value="" placeholder="Search By Date..."></div>
+                    <div class="col-md-2">
+                        <select class="form-control" id="ddlStatus">
+                            <option>Assigned</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" id="ddlBookBy">
+                            <option value="ALL" selected="selected">ALL</option>
+                            <option value="2109">CHL Diagnostic</option>
+                            <option value="5">Chandan Hospital</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button id="btnPayedList" type="button" class="btn btn-success btn-block" onclick="GetPatient();">Fill Data<span id="spnPay" class="badge"></span></button>
+                    </div>
+                    <div class="col-md-7">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="box box-purple">
+                <div class="box-body" style="height:500px;overflow-y:scroll">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search.." />
+                    <table id="tblPatient" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Booking From</th>
+                                <th>Visit No</th>
+                                <th>Patient Name</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                                <th>Amount</th>
+                                <th>Test Name</th>
+                                <th>ReportStatus</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val();
+                $("#tblPatient tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+</div>
+
+
+

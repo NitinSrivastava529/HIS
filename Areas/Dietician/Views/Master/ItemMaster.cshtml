@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewBag.Title = "ItemMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    #ulLinkedDietName {
+        background: #fff;
+        border: 1px solid #ebdfbc;
+        padding: 4px 20px;
+        line-height: 25px;
+    }
+
+    .toggleBlock {
+        opacity: 0.3;
+        pointer-events: none;
+    }
+
+    .NOS {
+        color: #fff;
+        background: #db6e4d;
+        line-height: 16px;
+        border-radius: 23px;
+        cursor: pointer;
+        height: 16px;
+        width: 16px;
+        text-align: center;
+    }
+
+    .active {
+        color: green;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    #btnCalorieCount {
+        border: none;
+        padding: -2px 8px;
+        margin-top: 25px;
+        white-space: nowrap;
+        height: 26px;
+    }
+</style>
+<script src="~/Areas/Dietician/JsModule/ItemMaster.js?v1.3"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:1px;">
+                                <button class="btn btn-warning" id="btnClearItem"><i class="fa fa-tag">&nbsp;</i>New</button>
+                                <h4 class="text-white pull-right" style="margin-left:6px;">Item Master</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-4">
+                                    <label>Item Name</label>
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtItemName" autocomplete="off" class="form-control" style="margin-left:-10px;" placeholder="Enter Item Name..">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Measuring</label>
+                                    <div class="fileinput fileinput-new input-group" style="display:flex">
+                                        <div style="width:100%">
+                                            <select class="form-control" id="ddlMeasuring">
+                                                <option>Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Fluid Val.(ml)</label>
+                                    <div class="fileinput fileinput-new input-group" style="display:flex">
+                                        <input type="text" id="txtFluidValue" autocomplete="off" class="form-control" style="margin-left:-10px;" placeholder="Fluid Value">
+                                        <button class="btn-success" id="btnSaveItem" onclick="InsertItemMaster()" style="border:none;">Save</button>
+                                    </div>
+                                </div>
+                                <div class="example-box-wrapper">
+                                    <div class="table table-responsive">
+                                        <div class="scroll" style="height:450px;overflow:auto;border:1px solid #2492b3">
+                                            <table id="tblItemDetail" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:21%"><label class="switch"><input type="checkbox" class="statusflag" id="chkActive" checked=""><span class="slider round"></span></label></th>
+                                                        <th><input type="text" id="txtSearchItem" style="color: #363535;width:90%" onkeyup="searchTable('txtSearchItem','tblItemDetail')" placeholder="Search Item.." /></th>
+                                                        <th style="text-align:right">Cal. Cnt</th>
+                                                        <th style="text-align:right">Fluid Val</th>
+                                                        <th style="text-align:right">In Diet</th>
+                                                        <th style="width:0%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:1px;">
+                                <h4 class="text-white">Item Detail</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;">
+                                <table class="table-condensed" style="margin-left:1px;width:100%;margin-bottom:4px;">
+                                    <tr style="background-color:#e6f4ff">
+                                        <th style="width:17%;">Item Name</th>
+                                        <th style="width:3%">:</th>
+                                        <td>
+                                            <span class="spanItemName" style="font-weight:bold;">xxxxxxx</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div class="col-md-4" style="margin-left:-8px;">
+                                    <label>Nutrition Name</label>
+                                    <select id="ddlNutritionName" class="form-control">
+                                        <option></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label style="white-space:nowrap;">Value in Gram</label>
+                                    <input type="text" id="txtNutritionValue" class="form-control text-center" placeholder="value" />
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    @*<button class="btn-primary" id="btnCalorieCount">Calorie Count</button>*@
+                                    <button class="btn-success" onclick="InsertDietItemNutrition()" style="margin-top:25px;margin-left:0px;padding:5px 9px;border:none;">Add</button>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <div class="scroll" style="min-height:420px;overflow:auto;border:1px solid #2492b3">
+                                        <table id="tblDietNutrition" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:10%">Nutrition Name</th>
+                                                    <th style="width:1%">Value</th>
+                                                    <th style="width:1%">Measuring</th>
+                                                    <th style="width:4%;text-align:right">Cal.Count/Gram</th>
+                                                    <th style="width:4%;text-align:right">Total Cal.Count</th>
+                                                    <th style="width:0%">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="CalorieCountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding:4px;background-color:#2478a9;">
+                @*<a class="btn btn-default" onclick="clear()">New</a>*@<b class="text-white">CalorieCountPerGram</b>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body" style="margin-bottom:-45px">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label>Nutrition Name</label>
+                        <div class="fileinput fileinput-new input-group" style="border:1px solid green">
+                            <input type="text" id="txtNutritionCalorieCount" class="form-control" autocomplete="off" placeholder="Enter NutritionName" />
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <label>Calorie Count</label>
+                        <div class="fileinput fileinput-new flex" style="border:1px solid green">
+                            <input type="text" class="form-control" autocomplete="off" style="border-radius:0" placeholder="Enter CalorieCount" id="txtCalorieCount" />
+                            <button class="btn btn-success bn" onclick="InsertCaloriCount();" style="border-radius:initial;width:28%;margin: 0;height:28px;" id="btnCaloriCount">Save</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="example-box-wrapper">
+                    <div class="form-horizontal bordered-row">
+                        <div class="table table-responsive">
+                            <div class="scroll-table">
+                                <table id="tblCalorieCount" class="table table-bordered" style="border:1px solid #589cd3;white-space:nowrap;">
+                                    <thead>
+                                        <tr>
+                                            <th>Nutrition Name</th>
+                                            <th style="width:7%;">Calorie Count</th>
+                                            <th style="width:1%;">CMD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDietLinked" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header" style="padding:4px;background-color:#2478a9;">
+                @*<a class="btn btn-default" onclick="clear()">New</a>*@<b class="text-white">Diet Linked</b>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:10px;background:#fff8e4">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul id="ulLinkedDietName"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

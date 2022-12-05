@@ -1,0 +1,150 @@
+﻿
+@{
+	ViewBag.Title = "LeaveApproval";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Masters/JsModule/LeaveApproval.js"></script>
+<style>
+	.btn-tbl {		
+		padding: 2px 5px;
+		height: 20px;
+		line-height: 14px;
+		margin: 1px 0px;
+	}
+	.btn-close {
+		right: 5px;
+		opacity: 100%;
+		position: absolute;
+		color: #fff !important;
+		font-weight: bold;
+		font-size: 12px;
+		padding: 0px 6px;
+		background: #b92c02;
+		height: 16px;
+		border-radius: 2px;
+		cursor: pointer;
+	}
+
+	.flex {
+		display: flex !important;
+		align-items: center;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.btn-flat {
+		padding: 2px;
+		border: none;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 450px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.note {
+		list-style: disc;
+		color: red;
+		font-size: 11px;
+		font-weight: bold;
+		background: #f7f7f7;
+		border: 1px solid #d86c6c;
+	}
+
+	.bn {
+		margin: 0px;
+		font-size: 10pt;
+		padding: 0px 10px;
+		border-radius: 0;
+		text-align: left;
+		height: 30px;
+	}
+
+	.bc {
+		border: 1px solid #00a65a;
+		border-radius: 0;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Leave Approval</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-xs-5 flex">
+									<select id="ddlApproveType" class="form-control bc">
+										<option value="N">Pending</option>
+										<option value="Y,X">Approved/Cancel</option>
+									</select>
+									<button class="btn btn-success bn" onclick="GetDoctorLeaveForApproval()" style="width:30%;height: 28px;"><i class="fa fa-sign-in">&nbsp</i>Get</button>
+								</div>							
+								<div class="col-xs-7">
+									<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+										<input type="text" id="txtSearch" autocomplete="off" class="form-control input_pass" value="" placeholder="Search...">
+									</div>
+								</div>
+								<hr />
+								<div class="example-box-wrapper">
+									<div class="table table-responsive">
+										<div class="scroll">
+											<table id="tblDoctorLeave" class="table table-bordered">
+												<thead>
+													<tr>
+														<th>Date</th>
+														<th>Start Time</th>
+														<th>End Time</th>
+														<th>Remark</th>
+														<th>Marking Date</th>
+														<th>Appr. By</th>
+														<th>Appr. Date</th>													
+														<th style="width:1%">Action</th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+</div>
+

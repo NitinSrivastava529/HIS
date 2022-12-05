@@ -1,0 +1,928 @@
+﻿
+@{
+	ViewBag.Title = "ServiceBooking";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+	.btnvalidate {
+		border: rgb(255 222 173);
+		background: rgb(14 150 253);
+		color: rgb(255 255 255);
+	}
+
+	.form-control {
+		border-radius: 0;
+	}
+
+	.serviceInfo {
+		overflow: hidden;
+		overflow-y: auto;
+		height: 120px;
+		border: 1px solid rgb(221 221 221);
+		margin-bottom: 2px;
+	}
+
+	.nullInfo counter {
+		background: rgb(241 0 0);
+		border: 2px solid rgb(255 255 255);
+		border-radius: 22px;
+		font-size: 10px;
+		padding: 0px 3px;
+	}
+
+	#tblItemInfoNull {
+		z-index: 1;
+		margin-bottom: 0px;
+		overflow: auto;
+		max-height: 110px;
+		display: none;
+		background: rgb(255 255 255);
+	}
+
+	.nullInfo {
+		display: none;
+		float: right;
+		margin-top: -17px;
+		right: 195px;
+		position: absolute;
+		z-index: 1;
+		background: rgb(241 0 0);
+		padding: 0px 10px;
+		color: rgb(255 255 255);
+		font-size: 12px;
+		font-weight: 600;
+		cursor: pointer;
+		border-radius: 1px;
+	}
+
+	#tblItemInfo tbody .pover, #tblItemInfoNull tbody .pover {
+		max-width: 180px;
+	}
+
+	table .pover {
+		display: inline-block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 500px;
+	}
+
+	#tblItemInfo th {
+		padding: 0 1px;
+	}
+
+	#btnGrounp button {
+		text-align: left;
+		padding-left: 10px;
+	}
+
+	#tblDiscount td:nth-child(odd) {
+		font-size: 81%;
+		width: 14%;
+		color: rgb(255 255 255);
+		background: #949494;
+		border: 1px solid rgb(255 255 255 / 0%);
+		white-space: nowrap;
+		padding: 3px 3px;
+		border-left: 1px solid #fff;
+	}
+
+	#tblDiscount td i {
+		font-size: 9px;
+	}
+
+	#tblDiscount td:nth-child(even) {
+		padding: 0;
+		border: 1px solid #949494;
+		border-left: none;
+	}
+
+	#tblDiscount td input {
+		border: none;
+		height: 20px;
+		padding: -13px;
+	}
+
+	.discountSection {
+		margin-bottom: 1px !important;
+		border: 1px solid rgb(221 221 221) !important;
+		padding: 1px 7px !important;
+		background: rgb(255 237 209) !important;
+	}
+
+	.paymentSection {
+		padding: 0px 6px !important;
+	}
+
+	.search {
+		border: 1px solid rgb(220 220 220);
+		margin: 4px 0px;
+		padding: 4px;
+	}
+
+	.selected {
+		background-color: dodgerblue;
+		color: #fff;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	#ItemList tbody td:nth-child(1) {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		/* width: 25px; */
+		white-space: nowrap;
+	}
+
+	#PaymentInformation input[type=text] {
+		height: 17px;
+		font-size: 12px !important;
+	}
+</style>
+<script src="~/Areas/OPD/JsModule/ServiceBooking.js"></script>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<!-----OPD Patient Basic Info----->
+			@Html.Partial("OPDPatientInfo")
+			<div class="col-md-6" style="padding-right: 0;">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:1px 5px;">
+								<h5 class="text-white">Transaction Related Information</h5>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 1px 8px;" id="AnonymousInformation">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="" style="padding: 6px 1px;background-color: #f31c1236;margin-bottom:3px;">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group flex">
+														<span style="width:28%">Panel</span>
+														<span style="width:1.5%">:</span>
+														<div class="input-group-prepend" style="width:70%;display:flex">
+															<select id="ddlPanel" class="form-control border-imp"></select>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group flex">
+														<span style="width:27%">Department</span>
+														<span style="width:3%">:</span>
+														<div style="width:70%">
+															<select id="ddlDept" onchange="GetDoctorByDept()" class="form-control border-imp"></select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group flex">
+														<span style="width:27%">Doctor</span>
+														<span style="width:3%">:</span>
+														<div style="width:58%">
+															<select id="ddlDoctor" class="form-control border-imp">
+																<option>Select</option>
+															</select>
+														</div>
+														<button id="btnDoctorSchedule" data-toggle="modal" title="Doctor Schedule" data-target="#modalDoctorAvailability" class="btn-warning btn-flat btn-view"><i class="fa fa-clock-o"></i></button>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group flex">
+														<span style="width:33%">Referral</span>
+														<span style="width:4%">:</span>
+														<div style="width:70%">
+															<span style="width:70%">
+																<select id="ddlReferral" class="form-control border-imp"></select>
+															</span>
+														</div>
+														<input type="button" title="Create New Referral" id="btnSaveReferal" data-target="#modalReferral" data-toggle="modal" class="btn-success btn-flat" value="Search" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group flex">
+													<span style="width:27%">Policy No.</span>
+													<span style="width:3%">:</span>
+													<span style="width:70%">
+														<input type="text" id="txtPolicyNo" class="form-control text-uppercase" placeholder="Policy No." />
+													</span>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group flex">
+													<span style="width:27%">Ref. No</span>
+													<span style="width:3%">:</span>
+													<span style="width:70%">
+														<input type="text" id="txtReferalNo" class="form-control text-uppercase" placeholder="Ref. No" />
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="form-group flex">
+													<span style="width:27%">Patient Type</span>
+													<span style="width:3%">:</span>
+													<span style="width:70%">
+														<select id="ddlPatientType" class="form-control">
+															<option value="1">SELF</option>
+															<option value="2">STAFF</option>
+															<option value="3">Insured</option>
+															<option value="4">VIP</option>
+															<option value="5">Sponsored</option>
+															<option value="6">Other</option>
+															<option value="7">Doctor self</option>
+															<option value="8">STAFF DEPENDENT</option>
+															<option value="9">Camp</option>
+														</select>
+													</span>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="form-group flex">
+													<span style="width:32%">Source</span>
+													<span style="width:4%">:</span>
+													<div style="width:68%">
+														<span style="width:70%">
+															<select id="ddlSource" class="form-control">
+																<option>Select</option>
+															</select>
+														</span>
+													</div>
+													<input type="button" title="Create New Source" id="btnNewSource" data-toggle="modal" data-target="#modalSource" class="btn-success btn-flat disabled" value="New" />
+												</div>
+											</div>
+										</div>
+										<div class="row search">
+											<div class="col-md-6 filter-left" style="border-right:1px solid #ddd">
+												<div class="row">
+													<div class="col-md-12">
+														<div class="form-group flex">
+															<span style="width:1000%">
+																<label>
+																	<input type="radio" name="type" value="ALL" />ALL
+																</label>
+																<label>
+																	<input type="radio" name="type" value="Investigations" />Investigations
+																</label>
+																<label>
+																	<input type="radio" name="type" value="Procedures" />Procedures
+																</label>
+																<label>
+																	<input type="radio" name="type" value="Other" />Other
+																</label>
+															</span>
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="form-group flex">
+															<span style="width:32%">Category</span>
+															<span style="width:4%">:</span>
+															<div style="width:68%">
+																<span style="width:70%">
+																	<select id="ddlCategory" onchange="GetSubCategory()" class="form-control"></select>
+																</span>
+															</div>
+															<input type="button" title="Create New Source" id="btnNewSource" style="width: 88px;" class="btn-success btn-flat disabled" value="CPOE" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="form-group flex">
+															<span style="width:32%">Sub. Cat.</span>
+															<span style="width:4%">:</span>
+															<div style="width:68%">
+																<span style="width:70%">
+																	<select id="ddlSubCategory" class="form-control"></select>
+																</span>
+															</div>
+															<input type="button" title="Create New Source" id="btnNewSource" style="width: 88px;" class="btn-success btn-flat disabled" value="Booking" />
+														</div>
+													</div>
+													<div class="col-md-12">
+														<div class="form-group flex">
+															<span style="width:32%">Dis. Mode</span>
+															<span style="width:4%">:</span>
+															<div style="width:68%">
+																<span style="width:70%">
+																	<select id="ddlDisMode" class="form-control"></select>
+																</span>
+															</div>
+															<input type="button" title="Create New Source" id="btnNewSource" style="width: 88px;" class="btn-danger btn-flat disabled" value="Count:100" />
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6 filter-right">
+												<div class="form-group flex">
+													<input type="text" id="txtSearchCPT" autocomplete="off" style="width:24%;border-color: #0e96fd;" class="form-control text-uppercase" placeholder="CPT Code" />
+													<span style="width:100%;display:flex;">
+														<input type="text" id="txtSearchItemName" autocomplete="off" style="width:95%;border-color: #0e96fd;" class="form-control" placeholder="Item Name" />
+														<button id="btnValidateCoupon" onclick="expandWindow()" class="btnvalidate"><i class="fa fa-expand"></i></button>
+													</span>
+												</div>
+												<table class="table table-bordered" id="ItemList" style="max-height:134px;overflow:auto;display:block">
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 1px 5px;">
+								<h5 class="text-white text-left">Payment Information</h5>
+								<span class="nullInfo"><counter>0</counter></span>
+								@*<input type="button" id="btnGiveDiscount" onclick="GiveDiscount()" style="margin-top: -18px;" class="btn-warning pull-right" value="Enable Item-Wise Discount" />*@
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 1px 8px;" id="PaymentInformation">
+								@*<div class="row">
+										<div class="col-md-12">
+											<label id="txtError"></label>
+											<span class="form-group flex" style="float:right;">
+												<span style="width:100%;">
+													<button class="btn-success">
+														Last Token : <span id="txtLastTokenNo" class="btn-circle">0</span>
+													</button>
+													<button class="btn-primary">
+														Reg. Charge : <span id="txtLastTokenNo" class="btn-circle">0</span>
+													</button>
+													<button class="btn-warning">
+														Online Bookings : <span id="txtLastTokenNo" class="btn-circle">0</span>
+													</button>
+												</span>
+											</span>
+										</div>
+									</div>*@
+								<div id="PaymentDivision">
+									<div class="serviceInfo">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<div id="tblItemInfoNull">
+														<table class="table table-bordered">
+															<thead>
+																<tr>
+																	<th style="width:5%">ItemId</th>
+																	<th style="width:25%">Item Name</th>
+																	<th style="width:60%;text-align:left">Error Msg</th>
+																	<th style="text-align:center;padding: 2px">x</th>
+																</tr>
+															</thead>
+															<tbody></tbody>
+														</table>
+													</div>
+													<div class="">
+														<div style="margin-bottom:0;overflow:auto;max-height:110px">
+															<table id="tblItemInfo" class="table table-bordered">
+																<thead>
+																	<tr>
+																		<th style="width:10%;">ItemId</th>
+																		<th style="width:30%;white-space:nowrap">Item Name</th>
+																		<th style="width:8%;text-align:center">Rate</th>
+																		<th style="width:8%;text-align:center">P.Disc</th>
+																		<th style="width:8%;text-align:center">P.Rate</th>
+																		<th style="width:9%;text-align:center">Disc[%]</th>
+																		<th style="width:8%;text-align:center"> DiscAmt</th>
+																		<th style="width:8%;text-align:center">T.Disc</th>
+																		<th style="width:8%;text-align:center">NetAmt</th>
+																		<th style="width:2%;text-align:center;">x</th>
+																		<th style="width:2%;text-align:center;">U</th>
+																	</tr>
+																</thead>
+																<tbody></tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="discountSection paymentSection">
+										<div class="row">
+											<div class="col-md-4">
+												<div class="form-group flex">
+													<span style="width:50%">Coupon Code</span>
+													<span style="width:5%">:</span>
+													<span style="width:55%;display:flex;">
+														<input type="text" id="txtCouponCode" placeholder="Coupon" autocomplete="off" style="border-color: #0e96fd;" class="form-control" />
+														<button id="btnValidateCoupon" onclick="ValidateCoupon()" class="btnvalidate"><i class="fa fa-check"></i></button>
+													</span>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group flex">
+													<span style="width:50%">Discount Amt</span>
+													<span style="width:5%">:</span>
+													<span style="width:55%">
+														<input type="text" id="txtDiscountByAmt" data-int onkeyup="OverAllDiscount('ByAmount')" value="0" class="form-control" />
+													</span>
+												</div>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group flex">
+													<span style="width:50%">Discount %</span>
+													<span style="width:5%">:</span>
+													<span style="width:55%">
+														<input type="text" id="txtDiscountByPer" data-int onkeyup="OverAllDiscount('ByPercent')" value="0" class="form-control" />
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row paymentSection">
+										<div class="col-md-12">
+											<div class="form-group flex">
+												<span style="width:17%">Payment Mode</span>
+												<span style="width:5%">:</span>
+                                                <span style="width:70%">
+                                                    <label>
+                                                        <input type="checkbox" name="PaymentMode" class="cash" value="Cash" checked />Cash
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="PaymentMode" value="Cheque" />Cheque
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="PaymentMode" value="Swipe Card" />Swipe Card
+                                                    </label>
+                                                    <label>
+                                                        <input type="checkbox" name="PaymentMode" value="NEFT/RTGS/Online" />NEFT/RTGS/Online
+                                                    </label>
+                                                
+                                                    <label>
+                                                        <input type="checkbox" name="Credit" disabled="disabled" value="Credit" />Credit
+                                                    </label>
+                                                </span>
+											</div>
+										</div>
+									</div>
+
+									<div class="row paymentSection">
+										<div class="col-md-12">
+											<div class="form-group">
+												<div class="">
+													<div class="">
+														<table id="tblPaymentDetails" class="table table-bordered" style="margin-bottom:0">
+															<thead>
+																<tr>
+																	<th style="width:15%">Payment Mode</th>
+																	<th style="width:13%">Paid Amount</th>
+																	<th>Currency</th>
+																	<th style="width:25%">Bank Name</th>
+																	<th style="width:13%">Ref No.</th>
+																	<th>Machine</th>																	
+																</tr>
+															</thead>
+															<tbody>
+																<tr class="pay">
+																	<td>Cash</td>
+																	<td><input type="text" data-int class="form-control" value="0" /></td>
+																	<td>INR</td>
+																	<td>-</td>
+																	<td>-</td>
+																	<td>-</td>																	
+																</tr>
+																<tr>
+																	<td>Cheque</td>
+																	<td><input type="text" class="form-control" value="0" /></td>
+																	<td>INR</td>
+																	<td><select class="form-control BankName"></select></td>
+																	<td><input type="text" class="form-control" /></td>
+																	<td>-</td>																	
+																</tr>
+																<tr>
+																	<td>Swipe Card</td>
+																	<td><input type="text" class="form-control" value="0" /></td>
+																	<td>INR</td>
+																	<td><select class="form-control BankName"></select></td>
+																	<td><input type="text" class="form-control" /></td>
+																	<td>
+																		<select class="form-control MachineName"></select>
+																	</td>																
+																</tr>
+																<tr>
+                                                                    <td>NEFT/RTGS/Online</td>
+																	<td><input type="text" class="form-control" value="0" /></td>
+																	<td>INR</td>
+																	<td><select class="form-control BankName"></select></td>
+																	<td><input type="text" class="form-control" /></td>
+																	<td>-</td>																	
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+												<hr class="hr-pay" />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-2" id="btnGrounp" style="line-height:40px;">
+											<div class="row">
+												<div class="col-md-12 form-group">
+													<button style="width: 90%;background-color: #0e96fd !important;border:none" onclick="Opd_ServiceBooking()" id="btnFinalSubmit" class="btn-primary btn-pay-ctrl"><i class="fa fa-plus">&nbsp;</i>Save</button>
+												</div>
+											</div>
+											<div class="row" style="margin-top:0px;line-height:40px;padding:0">
+												<div class="col-md-12 form-group">
+													<span id="txtTnxIdForPrint" style="display:none"></span>
+													<button style="width: 90%;background-color: #0e96fd !important;border:none" id="btnPrintReceipt" class="btn-primary btn-pay-ctrl"><i class="fa fa-print">&nbsp;</i>Receipt</button>
+												</div>
+												<div class="col-md-12 form-group">
+													<button style="width: 90%;background-color: #0e96fd !important;border:none" id="btnClearAll" class="btn-primary btn-pay-ctrl"><i class="fa fa-refresh">&nbsp;</i>Reset</button>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-10 paymentSection">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group flex">
+														<span style="width:100%">
+															<table id="tblDiscount" class="table table-bordered" style="margin: 0;border: none;">
+																<tr>
+																	<td><i class="fa fa-inr">&nbsp;</i>Gross Amount</td>
+																	<td><input type="text" id="txtGrossAmount" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																	<td><i class="fa fa-inr">&nbsp;</i>Pannel Disc</td>
+																	<td><input type="text" id="txtPDiscount" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																	<td><i class="fa fa-inr">&nbsp;</i>Manual Disc</td>
+																	<td><input type="text" id="txtADiscount" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																	<td><i class="fa fa-inr">&nbsp;</i>Total Disc</td>
+																	<td><input type="text" id="txtTDiscount" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																</tr>
+															</table>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group flex">
+														<span style="width:100%">
+															<table id="tblDiscount" class="table table-bordered" style="margin: 0;border: none;">
+																<tr>
+																	<td><i class="fa fa-inr">&nbsp;</i>Net Amt</td>
+																	<td><input type="text" id="txtNetAmount" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																	<td><i class="fa fa-inr">&nbsp;</i>Patient Payable</td>
+																	<td><input type="text" id="txtPayable" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																	<td><i class="fa fa-inr">&nbsp;</i>Panel Payable</td>
+																	<td><input type="text" id="txtPanelPayable" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																	<td><i class="fa fa-inr">&nbsp;</i>Balance</td>
+																	<td><input type="text" id="txtBalance" disabled="disabled" value="0" class="form-control payment-input" /></td>
+																</tr>
+															</table>
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group flex">
+														<span style="width:22%">Discount Type</span>
+														<span style="width:2.5%">:</span>
+														<div style="width:67%">
+															<span style="width:70%">
+																<select id="ddlDiscountType" class="form-control"></select>
+															</span>
+														</div>
+														<input type="button" title="Create New Source" id="btnNewSource" data-toggle="modal" data-target="#modalDiscountType" class="btn-success btn-flat" value="New" />
+													</div>
+												</div>
+												<div class="col-md-12">
+													<div class="form-group flex">
+														<span style="width:22%">Dis. Resason</span>
+														<span style="width:2.5%">:</span>
+														<span style="width:76%">
+															<input type="text" id="txtDisResason" class="form-control" placeholder="Discount Reason" />
+														</span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group flex">
+														<span style="width:23%">Approved By</span>
+														<span style="width:2.5%">:</span>
+														<span style="width:78%">
+															<select id="ddlApprovedBy" class="form-control"></select>
+														</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!---Source Modal---->
+<div class="modal fade" id="modalSource" tabindex="-1" role="dialog" aria-labelledby="True">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" style="margin-top:70%;">
+			<div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+				<h5 class="text-white">Add New Source</h5>
+				<span data-dismiss="modal" class="btn-close">x</span>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group flex">
+							<span style="width:20%">Source</span>
+							<span style="width:4%">:</span>
+							<span style="width:76%">
+								<input type="text" id="txtNewSourceName" data-char style="font-family:Mangal" class="form-control text-uppercase border-imp" placeholder="Source Name" />
+							</span>
+							<input type="button" id="btnSaveSource" class="btn-success btn-flat" onclick="InsertSource()" value="Save" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!---Referral Modal---->
+<div class="modal fade" id="modalReferral" tabindex="-1" role="dialog" aria-labelledby="True">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content" style="margin-top:10%;">
+			<div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+				<h5 class="text-white">Add New Referral</h5>
+				<span data-dismiss="modal" class="btn-close">x</span>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group flex">
+							<span style="width:26%"><b>Search</b></span>
+							<span style="width:4%"><b>:</b></span>
+							<span style="width:60%">
+								<input type="text" id="txtSearchReferral" class="form-control text-uppercase border-imp" placeholder="Search Referral" autocomplete="off" />
+							</span>
+						</div>
+					</div>
+					<div class="col-md-12" style="height:500px;overflow:auto;border:1px solid #009688;padding: 0;">						
+						<table id="tblReferral" class="table table-bordered">
+							<thead>
+								<tr>
+									<th style="width:1%">Action</th>
+									<th style="white-space:nowrap">Referral Code</th>
+									<th>Referral Name</th>
+									<th>Mobile</th>
+									<th>Degree</th>
+									<th>Address</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row" style="display:none">
+					<div class="col-md-6">
+						<div class="form-group flex">
+							<span style="width:20%">Name</span>
+							<span style="width:4%">:</span>
+							<span style="width:76%">
+								<input type="text" id="txtReferalName" class="form-control text-uppercase border-imp" placeholder="Referral Name" />
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group flex">
+							<span style="width:26%">Mobile No.</span>
+							<span style="width:4%">:</span>
+							<span style="width:70%">
+								<input type="text" id="txtReferalMobile" data-int data-count="10" class="form-control text-uppercase" placeholder="Mobile No." />
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group flex">
+							<span style="width:20%">Degree</span>
+							<span style="width:4%">:</span>
+							<span style="width:76%">
+								<input type="text" id="txtReferalDegree" class="form-control text-uppercase" placeholder="Degree" />
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group flex">
+							<span style="width:26%">Address</span>
+							<span style="width:4%">:</span>
+							<span style="width:70%">
+								<input type="text" id="txtReferalAddress" class="form-control text-uppercase" placeholder="Address" />
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group flex">
+							<span style="width:20%">State</span>
+							<span style="width:4%">:</span>
+							<span style="width:76%">
+								<select id="ddlReferralState" class="form-control border-imp"></select>
+							</span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group flex">
+							<span style="width:26%">City</span>
+							<span style="width:4%">:</span>
+							<span style="width:70%">
+								<select id="ddlReferralCity" class="form-control border-imp"></select>
+							</span>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<br />
+							<p class="text-center">
+								<input type="button" class="btn btn-success" onclick="InsertReferal()" value="Submit" />
+								<input type="button" class="btn btn-danger" value="Close" />
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!---Purpose of Visit Modal---->
+<div class="modal fade" id="modalPurpose" tabindex="-1" role="dialog" aria-labelledby="True">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" style="margin-top:80%;">
+			<div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+				<h5 class="text-white">Add New Purpose of Visit</h5>
+				<span data-dismiss="modal" class="btn-close">x</span>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group flex">
+							<span style="width:20%">Purpose</span>
+							<span style="width:4%">:</span>
+							<span style="width:76%">
+								<input type="text" id="txtVisitPurpose" class="form-control text-uppercase border-imp" placeholder="Purpose of Visit" />
+							</span>
+							<input type="button" id="btnSaveSource" class="btn-success btn-flat" onclick="InsertVisitPurpose()" value="Save" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!---Doctor Date Availability Modal---->
+<div class="modal fade" id="modalDoctorAvailability" tabindex="-1" role="dialog" aria-labelledby="True">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content" style="margin-top:20%;">
+			<div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+				<h5 class="text-white">Doctor Availability Status</h5>
+				<span data-dismiss="modal" class="btn-close">x</span>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table id="tblDoctorSchedule" class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Doctor Name</th>
+									<th>Shift Start</th>
+									<th>Shift End</th>
+									<th>Shift Name</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+					<div class="col-md-12">
+						<hr />
+						<table class="table table-bordered" id="tblDoctorLeave">
+							<thead>
+								<tr>
+									<th>Input Date</th>
+									<th>Start Time</th>
+									<th>End Time</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!---Old Patient Search Modal---->
+<div class="modal fade" id="modalOldPatient" tabindex="-1" role="dialog" aria-labelledby="True">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="margin-top:10%;">
+			<div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+				<h5 class="text-white">Old Patient Search</h5>
+				<span data-dismiss="modal" class="btn-close">x</span>
+			</div>
+			<div class="modal-body" style="height:360px;">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group flex">
+							<span style="width:26%"><b>Search</b></span>
+							<span style="width:4%"><b>:</b></span>
+							<span style="width:40%">
+								<select id="ddlSearchKey" class="form-control border-imp" style="width: 90px !important;">
+									<option value="UHID">UHID</option>
+									<option value="MobileNo" selected="selected">Mobile No</option>
+									<option value="HealthCardNo">Health Card No</option>
+									<option value="AppointmentNo">Appointment No</option>
+									<option value="IPDNo">IPD No</option>
+								</select>
+							</span>
+							<input type="text" id="txtSearchValue" class="form-control text-uppercase border-imp" placeholder="Search Input" />
+							<input type="button" id="btnSearchOldPatient" class="btn-success btn-flat" value="Search" />
+							<input type="button" id="btnNewPatient" class="btn-danger btn-flat" style="display:none" value="New" />
+						</div>
+					</div>
+					<div class="col-md-12">
+						<br />
+						<table id="tblOldPatient" class="table table-bordered">
+							<thead>
+								<tr>
+									<th style="width:1%">Action</th>
+									<th>UHID No</th>
+									<th>Patient Name</th>
+									<th>Gender</th>
+									<th>DOB</th>
+									<th>Age</th>
+									<th>Mobile No</th>
+									<th>Address</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!---Doctor Time Availability Modal---->
+<div class="modal fade" id="modalTimeAvailability" tabindex="-1" role="dialog" aria-labelledby="True">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="margin-top:5%;">
+			<div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+				<h5 class="text-white">Doctor Time Availability Status</h5>
+				<span data-dismiss="modal" class="btn-close">x</span>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="TimeSlot-Title"><span id="txtDrTimeSlots"></span> Time Schedule 	<input type="date" style="width: 252px;margin-left: 50px;" id="txtTimeSlotsByDate" class="form-control" /></div>
+						<div class="TimeFrame">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!---Source Modal---->
+<div class="modal fade" id="modalDiscountType" tabindex="-1" role="dialog" aria-labelledby="True">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content" style="margin-top:70%;">
+			<div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+				<h5 class="text-white">Add New Discount Type</h5>
+				<span data-dismiss="modal" class="btn-close">x</span>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group flex">
+							<span style="width:50%">Discount Type</span>
+							<span style="width:4%">:</span>
+							<span style="width:76%">
+								<input type="text" id="txtNewDiscountType" data-char style="font-family:Mangal" class="form-control text-uppercase border-imp" placeholder="Discount Type" />
+							</span>
+							<input type="button" id="btnSaveDiscountType" class="btn-success btn-flat" onclick="InsertDiscountType()" value="Save" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

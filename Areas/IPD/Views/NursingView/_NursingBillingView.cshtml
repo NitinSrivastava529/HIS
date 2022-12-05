@@ -1,0 +1,499 @@
+﻿<link href="~/Content/css/Anim.css" rel="stylesheet" />
+<script src="~/Areas/IPD/JsModule/NursingView/_NursingBillingView.js"></script>
+<script src="~/Areas/IPD/JsModule/IPD/_IPDCommunication.js"></script>
+<style>
+    label.doctor {
+        width: 35%;
+        background: #3c8dbc;
+        height: 28px;
+        text-align: center;
+        padding: 4px;
+        color: #fff;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    .amount-section {
+        padding: 6px 4px;
+        background: #cdebf7;
+        border-radius: 2px;
+        border: 1px solid #ddd;
+    }
+
+        .amount-section input[type=text] {
+            pointer-events: none;
+            color: #484545;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            background: #e7e7e7;
+            border: 1px solid #7dcfa8;
+        }
+
+        .amount-section .col-md-2 {
+            text-align: center;
+            width: 11%;
+            padding: 0px 5px;
+        }
+
+    #btnRemarkLog {
+        cursor: pointer;
+        color: #fff;
+        display: inline-block;
+        border-radius: 0;
+        margin: 25px 0 0 -11px;
+        background: #337ab7;
+        width: 87px;
+        height: 23px;
+        line-height: 22px;
+        text-align: left;
+        padding: 0 7px;
+    }
+
+        #btnRemarkLog span.count {
+            position: absolute;
+            padding: 0px 8px;
+            background: #F39C16;
+            border-radius: 33px;
+            font-size: 11px;
+        }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    #ProductList {
+        border: 1px solid #2478a9;
+        width: 99%;
+        line-height: 22px;
+        height: 180px;
+        font-size: 12px;
+        display: block;
+        overflow: auto;
+    }
+
+    .col-md-3, .col-md-4 {
+        padding: 0;
+    }
+
+    .headerInfo {
+        margin: 0;
+        background: #2478a9;
+        color: #fff;
+        padding: 2px 5px;
+        width: 99%;
+    }
+
+    #tblItemsInfo .txtAdlDis {
+        border-color: #d1d1d1;
+        width: 100%;
+        height: 22px;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 0;
+        margin: 1px 0px;
+        color: #000;
+    }
+
+    #tblItemsInfo button.btnAdlDis {
+        margin: 1px 0;
+        border: none;
+        background: #b9b9b9 !important;
+        border-radius: 0;
+        width: 1%;
+    }
+
+    .txtAdlDis {
+        border-color: #488acf;
+        width: 100%;
+        height: 22px;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 0;
+        margin: 1px 0px;
+        color: #000;
+    }
+
+    button.btnAdlDis {
+        margin: 1px 0;
+        border: none;
+        background: #488acf !important;
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .example-box-wrapper {
+        margin: 0px 15px;
+    }
+
+    .form-control[readonly] {
+        opacity: 1;
+    }
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        padding: 0 0 0 3px;
+        text-align: right;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+        padding: 0 0 0 3px;
+        text-align: right;
+    }
+
+    .header-control {
+        border: 1px solid #ffffff;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background: #488acf;
+    }
+
+        .header-control input[type=checkbox] {
+            margin: 0 5px;
+        }
+
+    .height235 {
+        height: 310px !important;
+    }
+
+    .height430 {
+        height: 430px !important;
+    }
+
+    #tblItemsInfo a.IsPackage {
+        color: #488acf;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .btnNavigation {
+        width: 4%;
+        position: fixed;
+        left: 47.5%;
+        top: 50%;
+        line-height: 35px;
+        z-index: 100;
+    }
+
+    #modalPackage .col-md-6 {
+        width: 48%;
+    }
+
+    .flex {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    #modalPackage input[type='radio'], input[type='checkbox'] {
+        margin: 0px 4px 2px;
+        line-height: normal;
+    }
+
+    #modalPackage table tbody td, #modalPackage table thead th {
+        padding: 0 3px !important;
+    }
+
+    .entryBy {
+        padding: 5px 0px;
+        color: #c37700;
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+    .entryByName {
+        display: none;
+        position: absolute;
+        background: #fffed7;
+        border: 1px solid #c9c8a1;
+        border-radius: 3px;
+        padding: 3px 5px;
+        left: 30%;
+        margin-top: -2px;
+        z-index: 1111;
+    }
+</style>
+<div class="example-box-wrapper">
+     <div class="row catDiv">
+        <div class="col-md-12" style="padding:0">
+            <div class="table table-responsive">
+                @*<label class="headerInfo">Current Applied Visits Info</label>*@
+                <div id="ProductList" style="height: 182px;">
+                    <table id="tblBillingInfo" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 1px;">SNo.</th>
+                                <th>Category</th>
+                                <th class="text-right">Qty</th>
+                                <th style="width: 1%;">CMD</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row itemDiv">
+        <div class="col-md-12" style="padding:0">
+            <div class="table table-responsive">
+                @*<label class="headerInfo">Applied Visits Info</label>*@
+                <div id="ProductList" class="height235">
+                    <table id="tblItemsInfo" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 28%;">
+                                    Item Name
+                                </th>
+                                <th style="width: 3%;padding:3.5px !important;text-align:right">
+                                    Qty
+                                </th>
+                                <th style="width: 12%;line-height: 25px;">Doctor Name</th>
+                                <th style="width:2%;text-align: center;"><button onclick="FullPageHeight()" class="btn btn-warning btn-xs"><i class="fa fa-expand">&nbsp;</i></button></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalFilterByDate" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="margin-top: 80%;width: 350px !important;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 4px 10px;background: #dbdbdb;">
+                <p class="modal-title">
+                    FIlter By Date
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-5">
+                        <label>From : </label>
+                        <input type="date" id="txtFrom" value="1" class="form-control" style="border-radius:0;border-color:#00a65a" />
+                    </div>
+                    <div class="col-md-7">
+                        <label>To : </label>
+                        <div style="display:flex;align-items: center;">
+                            <input type="date" id="txtTo" value="1" class="form-control" style="border-radius:0;border-color:#00a65a" />
+                            <button class="btn btn-success" style="height: 28px;margin: 0;border-radius: 0;width: 45%;"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDoctorShift" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="margin-top: 80%;width: 350px !important;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 4px 10px;background: #dbdbdb;">
+                <p class="modal-title">
+                    Doctor Shift
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-12">
+                        <label>Choose Doctor</label>
+                        <div style="display:flex">
+                            <div style="width:80%">
+                                <select id="ddlDoctor" class="form-control"></select>
+                            </div>
+                            <button class="btn btn-warning" onclick="DoctorShift()" style="height: auto;padding-right: 18px;"><i class="fa fa-sign-in">&nbsp;</i>Shift</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalCancelItem" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="margin-top: 80%;width: 350px !important;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 4px 10px;background: #dbdbdb;">
+                <p class="modal-title">
+                    Cancel Item
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-12">
+                        <label>Remark</label>
+                        <div style="display:flex">
+                            <input type="text" id="txtCancelRemark" class="form-control" placeholder="Remark.." />
+                            <button class="btn btn-danger" onclick="CancelItem()" style="height: auto;padding-right: 18px;"><i class="fa fa-sign-in">&nbsp;</i>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalRemark" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="margin-top: 80%;width: 350px !important;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 4px 10px;background: #dbdbdb;">
+                <p class="modal-title">
+                    Item Remark
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-12">
+                        <label>Remark</label>
+                        <textarea id="txtItemRemark" class="form-control" placeholder="Item Remark"></textarea>
+                        <button class="btn btn-warning" onclick="SubmitRemark()" style="height: auto;padding-right: 18px;float:right"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPackage" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1200px !important;">
+        <div class="modal-content" style="margin-top:10%;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 4px 10px;background: #dbdbdb;">
+                <p class="modal-title">
+                    Package Item Info
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="padding:0">
+                            <div class="table table-responsive">
+                                <label class="headerInfo">Non-Packaged Item</label>
+                                <div id="ProductList" style="height: 450px;">
+                                    <table id="tblNonPackaged" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 1%;"><input type="checkbox"></th>
+                                                <th style="width: 14%;">Date</th>
+                                                <th>Item Name</th>
+                                                <th style="width: 1%;" class="text-right">Qty</th>
+                                                <th style="width: 17%;" class="text-right">Net Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btnNavigation">
+                        <button class="btn btn-success btn-block" style="margin-bottom: 15px;" onclick="MoveItemToPackage()"><i class="fa fa-arrow-circle-right">&nbsp;</i></button>
+                        <button class="btn btn-danger btn-block" onclick="RemoveItemFromPackage()"><i class="fa fa-arrow-circle-left">&nbsp;</i></button>
+                    </div>
+                    <div class="col-md-6 pull-right">
+                        <div class="col-md-12" style="padding:0">
+                            <div class="table table-responsive">
+                                <label class="headerInfo">Part of Package <span id="txtPackageName"></span></label>
+                                <div id="ProductList" style="height: 450px;">
+                                    <table id="tblPackaged" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 1%;"><input type="checkbox"></th>
+                                                <th style="width: 14%;">Date</th>
+                                                <th>Item Name</th>
+                                                <th style="width: 1%;" class="text-right">Qty</th>
+                                                <th style="width: 17%;" class="text-right">Net Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalCommunication" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 20%;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary" style="padding: 4px 10px;background: #1d9f8d;">
+                <p class="modal-title">
+                    Communication Log
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                @Html.Partial("_IPDCommunication");
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAdvancePayment" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top: 19.5%;">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="padding: 2px 10px;background: #2478a9;color:#fff">
+                <p class="modal-title">
+                    Advance Payment
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </p>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding:0">
+                <div class="row" style="margin:10px 0">
+                    <div class="col-md-12">
+                        @Html.Partial("_AdvancePayment")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

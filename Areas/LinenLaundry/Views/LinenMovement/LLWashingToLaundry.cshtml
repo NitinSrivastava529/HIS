@@ -1,0 +1,138 @@
+﻿
+@{
+	ViewBag.Title = "LLWashingToLaundry";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/LinenLaundry/JsModule/LLWashingToLaundry.js"></script>
+<style>
+	.stock-area {
+		padding: 10px;
+		margin-top: 10px;
+		background: #e0f2ff;
+	}
+
+	#tblLinenStocks td {
+		padding: 5px 5px;
+	}
+
+	#tblLinenStocks input:disabled {
+		border-color: #f39c12;
+		opacity: 100%;
+		background: #fff;
+		border-radius: 0;
+	}
+
+	.bn {
+		border: none;
+	}
+
+	.bc {
+		border-color: #f39c12;
+		border-radius: 0;
+	}
+
+	.panel {
+		margin: 5px 3px 0 5px !important;
+		border: 1px solid #bedbf6;
+	}
+
+	.panel-body {
+		border: 1px solid #e1dede;
+		padding: 5px 3px 3px 3px !important;
+	}
+
+	.form-group {
+		margin-bottom: 5px;
+	}
+
+		.form-group label {
+			padding: 3px 0 4px 10px !important;
+		}
+
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	highlight_row {
+		background-color: #d5e7f8;
+		color: #000;
+	}
+
+	.table-bordered {
+		border: 1px solid #90c6f8;
+	}
+
+	.highlight {
+		background-color: red;
+	}
+
+	.text-white {
+		color: #fff;
+	}
+</style>
+
+<div id="page-content">
+	<div class="panel">
+		<div class="panel-body" style="height:560px; overflow-y:auto">
+			<div class="col-md-8">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:2px;">
+								<h4 class="text-white">Washing To Laundry</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="form-group">
+									@*<div class="col-md-6">
+											<select id="ddlCartList" onchange="LinenStocks()" class="form-control"></select>
+										</div>*@
+									<div class="col-md-6">
+										<input type="text" id="txtSearchProduct" class="form-control" autocomplete="off" placeholder="Search Product.." />
+									</div>
+								</div>
+								<div class="col-md-12 stock-area">
+									<div class="table-responsive" style="max-height: 500px;">
+										<table class="table table-condensed" id="tblLinenStocks">
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@*<div class="col-lg-5">
+					<div class="">
+						<div class="">
+							<div class="panel">
+								<div class="panel-heading" style="background:#0076d0;padding:2px;">
+									<h4 class="text-white">Washing Transfer List</h4>
+								</div>
+								<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+									<div class="form-group">
+										<div class="col-md-6">
+											<input type="text" id="txtLotNo" readonly class="form-control" autocomplete="off" value="New" />
+										</div>
+										<div class="col-md-6">
+											<button class="btn btn-info pull-right" onclick="DispatchComplete()"><i class="fa fa-sign-in">&nbsp;</i>Transfer</button>
+										</div>
+									</div>
+									<div class="col-md-12" style="margin-top:10px;">
+										<div class="table-responsive" style="max-height: 500px;">
+											<table class="table table-condensed" id="tblItemByLot">
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>*@
+		</div>
+	</div>
+</div>
+

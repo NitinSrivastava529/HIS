@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "TPAApproval";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/IPD/JsModule/IPD/TPAApproval.js"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="panel-body">
+            <div class="row" style="background-color:#bddeff;margin-bottom:10px;height:60px;padding-top: 5px;">
+                <div class="col-md-2">
+                    Floor Name
+                    <select id="ddlFloor" class="form-control border-imp" style="width: 90px !important;"></select>
+                </div>
+                <div class="col-md-3">
+                    Panel Name
+                    <select id="ddlPanel" class="form-control border-imp" style="width: 90px !important;"></select>
+                </div>
+                <div class="col-md-1">
+                    <br />
+                    <button id="btnCurrentPatient" onclick="AdmittedPatientList('AdmittedPatientList')" class="btn btn-warning"><i class="fa fa-search">&nbsp;</i>Search</button>
+                </div>
+                <div class="col-md-2">
+                    From Date
+                    <input type="date" id="txtSearchFrom" class="form-control" placeholder="from : dd-mm-yyyy" />
+                </div>
+                <div class="col-md-2">
+                    To Date
+                    <input type="date" id="txtSearchTo" class="form-control" placeholder="to : dd-mm-yyyy" />
+                </div>
+                <div class="col-md-1">
+                    <br />
+                    <button id="btnAllPatient" onclick="AdmittedPatientList('AdmittedPatientListBetweenDate')" class="btn btn-success"><i class="fa fa-search">&nbsp;</i>Search</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="scroll" style="height:280px">
+                    <table id="tblServiceRegister" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:1%">CMD</th>
+                                <th>UHID</th>
+                                <th>IPD No</th>
+                                <th>Patient Name</th>
+                                <th>Age/Gender</th>
+                                <th>Admit Date</th>
+                                <th>Room FullName</th>
+                                <th>Panel Name</th>
+                                <th>Department Name</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="background-color:#bbc0c5;margin-bottom:10px;height:60px;padding-top: 5px;">
+                <div class="col-md-2">
+                    Approval Date
+                    <input type="date" id="txtApprDate" class="form-control" placeholder="from : dd-mm-yyyy" />
+                </div>
+                <div class="col-md-2">
+                    Approval Type
+                    <select id="ddlApprType" class="form-control border-imp" style="width: 90px !important;">
+                        <option value="Routine" selected="selected">Routine</option>
+                        <option value="Final-Approval">Final-Approval</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    Claim No
+                    <input type="text" class="form-control" id="txtClaimNo" value="-" />
+                </div>
+                <div class="col-md-1">
+                    Amount
+                    <input type="text" class="form-control" id="txtAmount" value="0" />
+                </div>
+                <div class="col-md-3">
+                    Remark
+                    <input type="text" class="form-control" id="txtRemark" value="-" />
+                </div>
+                <div class="col-md-1">
+                    Document
+                    <input type="file" class="form-control" id="docFile" />
+                </div>
+                <div class="col-md-1">
+                    <br />
+                    <button id="btnSaveTPAApprovalAmount" onclick="IPD_TPApprovalEntry()" class="btn btn-success"><i class="fa fa-save">&nbsp;</i>Save</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="scroll" style="height:200px">
+                    <table id="tblTpaApprInfo" class="table table-bordered" style="font-size:12px;">
+                        <thead>
+                            <tr>
+                                <th>Reject</th>
+                                <th>Approval Date</th>
+                                <th>ApprovalType</th>
+                                <th>Claim No</th>
+                                <th>Amount</th>
+                                <th>Remarks</th>
+                                <th>Entry By</th>
+                                <th>Entry Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>   
+</div>
+</div>

@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.Title = "SampleLogisticReceive";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Lab/JsModule/SampleLogisticReceive.js"></script>
+<style>
+    .pat-group {
+        background: #f3cecca6;
+    }
+
+    .lab-group {
+        background: #d2ebfe;
+    }
+
+    .cat-group {
+        background: #f7c7c7;
+    }
+
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        /*max-height: 450px;*/
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="panel-heading" style="background-color:#026cbd; color:white; padding: 1px;margin-left: 26px;">
+                <h4 class="text-left" style="margin: 4px 2px;">Logistic Receive in Lab</h4>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn pull-left" style="font-size:13px;width:14%;">Lab</button>
+                                            <select id="ddlCategory" class="form-control">
+                                                <option>Select</option>
+                                            </select>
+                                            <button class="btn btn-warning bn pull-left" onclick="GetDispatchInfoToReceive()" style="width:12%;"><span class="fa fa-sign-in"></span>&nbsp;Get</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn pull-left" style="width:30%; font-size:14px;">From</button>
+                                            <input type="date" class="form-control" id="txtFrom" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn pull-left" style="width:15%; font-size:14px;">To</button>
+                                            <input type="date" class="form-control" id="txtTo" />
+                                            <button class="btn btn-warning bn pull-left" onclick=" GetDispatchInfoByDate()" style="width:31%;"><span class="fa fa-sign-in"></span>&nbsp;Get</button>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="height:451px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                            <table class="table table-bordered" id="tblDispatch">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 1%;">S.No</th>
+                                                        <th>Lab Code</th>
+                                                        <th>Dispatch No</th>
+                                                        <th>Dispatch Date</th>
+                                                        <th>Status</th>
+                                                        <th>NOS</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <div class="row">
+                                    @*<div class="col-md-8">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn pull-left" style="font-size:12px;width:38%;">Dispatch No</button>
+                                            <input type="text" class="form-control" />
+                                            <button class="btn btn-warning bn pull-left"  onclick="GetPatientDispatch();" style="width:22%; font-size:11px;"><span class="fa fa-sign-in"></span>&nbsp;Get</button>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-2">
+                                        <button class="btn btn-warning" style="margin-left:429px; height: 30px;"><span class="fa fa-sign-in"></span>&nbsp;Receive</button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="height:511px;  display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                            <table class="table table-bordered" id="tblPatientDetail">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:1%;">S.No</th>
+                                                        <th style="width: 5%;">Visit No</th>
+                                                        <th style="width: 3%;">BarCode</th>
+                                                        <th style="width: 8%;">Patient Name</th>
+                                                        <th style="width: 9%;">Test Detail</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

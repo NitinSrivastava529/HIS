@@ -1,0 +1,173 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "ReferalMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Referral/JsModule/NewReferralByPro.js"></script>
+
+<style type="text/css">
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 5px 0;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    .btn-xs {
+        height: 20px
+    }
+
+    .navbar {
+        min-height: 37px;
+        margin-bottom: 2px;
+    }
+
+    .navbar-form {
+        padding: 0;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+</style>
+
+<div id="page-content">
+    <div class="col-lg-5">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="display-inline">Referral List</h4>
+                    <button type="submit" class="btn btn-xs btn-success pull-right" onclick="LoadAll()">LOAD ALL</button>
+                </div>
+                <div class="panel-body" style="height:500px;overflow:auto; border: 1px solid #86b3de;">
+                    <div class="col-sm-10 form-group">
+                        <label>Search</label>
+                        <input type="text" id="txtReferralSearch" class="form-control" autocomplete="off" placeholder="Search By Referral Name" style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="button" id="btnSearch" style="margin-top:21px" class="btn btn-success btn-xs" onclick="SearchReferrals()" value="Search">SEARCH</button>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Test" style="border:1px solid #86b3de" />
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="tblReferralDetails">
+                                <thead>
+                                    <tr>
+                                        <th>Bussiness.Type</th>
+                                        <th>Ref. Name</th>
+                                        <th>Ref. Code</th>
+                                        <th>Mobile</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="display-inline">Referral Details</h4>
+                    <button type="submit" class="btn btn-xs btn-warning btn-flat" onclick="ClearAll()">New</button>
+                </div>
+                <div class="panel-body" style="height:500px;overflow:auto;">
+                    <div class="col-sm-4 form-group">
+                        <label>Business Type</label>
+                        <select id="ddlBusinessType" class="form-control">
+                            <option value="0">--Please Select--</option>
+                            <option value="Diagnostic">Diagnostic</option>
+                            <option value="Hospital">Hospital</option>
+                            <option value="Corporate">Corporate</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Referral Name</label>
+                        <input type="text" id="txtReferralName" class="form-control border-imp" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Degree</label>
+                        <select id="ddlDegree" class="form-control border-imp"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Speciality</label>
+                        <select id="ddlSpeciality" class="form-control"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="txtDob" class="form-control" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Clinic Name</label>
+                        <input type="text" id="txtClinicName" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Address</label>
+                        <textarea type="text" id="txtAddress" class="form-control" cols="5" rows="5" autocomplete="off"></textarea>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Locality</label>
+                        <input type="text" id="txtLocality" class="form-control" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>State</label>
+                        <select id="ddlState" class="form-control border-imp" onchange="GetCityByState()"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>City</label>
+                        <select id="ddlCity" class="form-control border-imp"></select>
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Phone</label>
+                        <input type="text" id="txtPhone" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Mobile</label>
+                        <input type="text" id="txtMobile" data-int data-count="10" class="form-control border-imp" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4 form-group">
+                        <label>Email</label>
+                        <input type="text" id="txtEmail" class="form-control" autocomplete="off" />
+                    </div>
+                  
+
+                    <div class="col-sm-12 form-group">
+                        <button type="button" id="SaveUpdate" class="btn btn-success btn-xs pull-right" onclick="InsertUpdateReferralMaster()" value="Save">SAVE</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+

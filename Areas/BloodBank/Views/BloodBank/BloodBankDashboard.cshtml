@@ -1,0 +1,302 @@
+﻿
+@{
+    ViewBag.Title = "BloodBankDashboard";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/BloodBank/JsModule/BloodBankDashboard.js"></script>
+<script src="~/JsModule/mdb.min.js?his-version-1.0"></script>
+<style>
+    .graphComponent {
+        display: flex;
+        align-items: baseline;
+        white-space: pre;
+        width: 95%;
+        padding: 5px 10px;       
+        margin: 0;
+    }
+    #chartBloodGroup{
+        margin-top:0 !important;
+    }
+    .graphTitle {
+        font-size: 17px;
+        text-align: center;
+        width: 100%;
+        background: #c9ecff;
+        padding: 5px;
+    }
+    .chartjs-render-monitor {
+        margin-top: 30px;
+        display: block;
+        width: 317px;
+        height: 158px;
+    }
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .bc {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-color: #06a08b;
+    }
+
+    .btnRC {
+        height: 30px;
+        margin: -1px;
+        border-radius: 0;
+    }
+
+    .section {
+        margin-top: 5px;
+        padding: 1px;
+        border: 1px solid #2478a9;
+        height: 150px;
+    }
+
+    .title {
+        background: #bfe8ff;
+        /*color: #fff;*/
+        text-align: left;
+        padding: 2px 5px;
+        margin: 0;
+        width: 100%;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 25px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+    }
+
+
+    .IndentBy {
+        border-radius: 2px;
+        background: #fbf7e2;
+        display: flex;
+        align-items: center;
+        padding: 4px 4px;
+        border: 1px solid #d7d7d7;
+    }
+
+    .IndentDate {
+        border-radius: 2px;
+        background: #fbf7e2;
+        display: flex;
+        align-items: center;
+        padding: 4px 4px;
+        border: 1px solid #d7d7d7;
+    }
+
+        .IndentDate label {
+            white-space: pre;
+            margin-left: 10px;
+        }
+
+        .IndentDate .form-control {
+            height: 27px;
+            border: 1px solid #c3c3c3;
+        }
+
+    .titleMonthlyConsuption {
+        margin-top: 4px;
+        background: #bfe8ff;
+        padding: 15px 6px;
+        font-size: 17px;
+        text-align: center;
+        border: 1px solid #78b6d9;
+        border-radius: 2px;
+        margin-bottom: 5px;
+    }
+
+    .component .col-md-2 {
+        margin-left: 11px;
+        width: 15%;
+        background: #c9ecff;
+        padding: 0px 0px;
+        text-align: center;
+        border-radius: 2px;
+        border: 1px solid #91b5d1;
+    }
+
+    .component hr {
+        margin: 0px 0px 4px;
+        width: 100%;
+        border-color: #e6f4ff;
+    }
+
+    .component {
+        margin-top: 4px;
+    }
+
+        .component label {
+            padding-top: 5px;
+            font-size: 13px;
+        }
+
+    i.question {
+        border-radius: 30px;
+        cursor: pointer;
+        color: #a13131;
+        float: right;
+        font-size: 15px;
+    }
+
+    .panel-heading {
+        padding: 5px !important;
+        background: #0076d0;
+    }
+
+        .panel-heading button {
+            float: right;
+            margin: -20px 0px;
+        }
+
+    .DaysClass {
+        margin: 0;
+        display: flex;
+        float: right;
+        width: 50%;
+        white-space: pre;
+    }
+        .DaysClass input {
+            border-radius: 0;
+            border-color: #f39808;
+            height: 20px;
+        }
+        .DaysClass button {
+            border-radius: 0;
+            height: 20px;
+            margin: 0;
+            width: 50%;
+            line-height: 0;
+        }
+    span.stock {
+        background: #3e8dd1;
+        border-radius: 30px;
+        padding: 2px 28px;
+        color: #fff;
+        width: 90px;
+        display: block;
+    }
+    .group {
+        background: #c9ecff
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row component">                    
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="padding-right:3px">
+                        <div class="section" style="height:530px;">
+                            <label class="title">Overall Stock Details</label>
+                            <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:501px;border: 1px solid #2478a9;">
+                                <table id="tblStockInfo" class="table table-bordered" style="margin-bottom:6px">
+                                    <thead style="background: #00a65a;color: #fff;">
+                                        <tr>
+                                            <th>Blood Group</th>
+                                            <th style="width:15%">Stock</th>
+                                            <th style="width:15%">Hold</th>
+                                            <th style="width:10%">Untested</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding:0 3px">
+                        <div class="section" style="height:530px;">
+                            <label class="title">Nearest Expiry Details <label class="DaysClass">Days : <input type="number" id="txtExpiryDays" class="form-control" value="10" /><button onclick="BloodStockSummaryByExpiryDays()" class="btn btn-warning btn-xs"><i class="fa fa-sign-in">&nbsp;</i>Get</button></label></label>
+                            <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:501px;border: 1px solid #2478a9;">
+                                <table id="tblStockInfoInExpire" class="table table-bordered" style="margin-bottom:6px">
+                                    <thead style="background: #00a65a;color: #fff;">
+                                        <tr>
+                                            <th>Blood Group</th>
+                                            <th style="width:15%">Stock</th>
+                                            <th style="width:15%">Hold</th>
+                                            <th style="width:10%">Untested</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-left:3px">
+                <div class="col-md-12">
+                    <h3 class="titleMonthlyConsuption">Monthly Consumption</h3>
+                </div>
+                <div class="col-md-12">
+                    <div class="section" style="height:262px;">
+                        <label class="graphTitle">Current Stock Breakup</label>
+                        <div class="col-md-12" id="componentContainer">
+                        </div>
+                    </div>
+                    <div class="section" style="height:264px;">
+                        <label class="graphTitle">Monthly Consumption</label>
+                        <label class="graphComponent">Component : 
+                        <select id="ddlComponent" class="form-control">
+                            <option>SDP</option>
+                        </select>
+                        </label>
+                        <div class="col-md-12" id="bloodGroupGraphContainer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade modalProcess" id="modalBloodStockDetailed" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:7%;width: 1100px;">
+            <div class="panel-heading">
+                <h5 class="text-white">Blood Stock Details</h5>
+                <button data-dismiss="modal" class="btn btn-danger btn-xs">x</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section" style="height:460px;overflow:auto">
+                            <label class="title">Blood Stock Detailed</label>
+                            <table id="tblBloodStockDetailed" class="table table-bordered" style="margin-bottom:6px">
+                                <thead style="background: #00a65a;color: #fff;">
+                                    <tr>
+                                        <th>DonorId</th>
+                                        <th>Donor Name</th>
+                                        <th>BB Tube No</th>
+                                        <th>Bag Type</th>
+                                        <th>Bag Type</th>
+                                        <th>Blood Group</th>
+                                        <th>Component Name</th>
+                                        <th>Expiry Date</th>
+                                        <th>Stock</th>
+                                        <th>Hold Stock</th>
+                                        <th>UnTested Stock</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

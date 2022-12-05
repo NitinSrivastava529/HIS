@@ -1,0 +1,80 @@
+﻿@{
+	Layout = null;
+}
+@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chandan Hospital </title>
+    @Html.Partial("_header")
+    @Scripts.Render("~/JsModule/bundle??v1.2")
+    <script src="~/Areas/ApplicationResource/JsModule/MenuAllotment.js"></script>
+    <script>
+
+                        //$(document).ready(function () {
+                        //	$('ul[id=sidebar-menu]').on('click', 'li', function () {
+                        //		$(this).removeClass('sfHover');
+                        //		$(this).closest('div.sidebar-submenu').removeAttr('style');
+                        //	});
+                        //});
+    </script>
+    <style>
+        table thead th {
+            white-space: nowrap;
+            background: #2478a9 !important;
+            color: #fff !important;
+            padding: 3px 6px !important;
+        }
+
+        .table-custom tbody td {
+            padding: 3px !important;
+        }
+
+        table {
+            overflow-y: auto;
+        }
+
+            table thead th {
+                z-index: 100;
+                position: sticky;
+                top: -2px;
+            }
+
+        #ajaxLoading {
+            z-index: 1;
+            position: absolute;
+            top: 45%;
+            left: 45%;
+            color: #fff;
+            background: #34353ce8;
+            padding: 2px 17px;
+            border-radius: 40px;
+        }
+
+        .modal-backdrop {
+            position: inherit;
+        }
+    </style>
+</head>
+<body class="fixed-header">
+    <div id="sb-site">
+        @Html.Partial("_sidebar2")
+        <div id="page-wrapper">
+            @Html.Partial("_topbar")
+            @Html.Partial("_sidebar")
+            <div id="page-content-wrapper">
+                @RenderBody()
+            </div>
+        </div>
+        @Html.Partial("_footer")
+        <script>
+
+        </script>
+    </div>   
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.3/jquery-ui.min.js?mis-version-1.0" type="text/javascript"></script>
+    <link href="~/Content/css/jquery-ui.css" rel="stylesheet" /> 
+    @*<div id="ajaxLoading">
+        <img src="https://www.sanfranciscoflorist.com/images/station-loading.gif" style="width: 40px;" /> Loading...Please Wait.
+    </div>*@
+</body>
+</html>

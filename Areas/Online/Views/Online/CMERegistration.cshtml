@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "CMERegistration";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Online/JsModule/CMERegistration.js"></script>
+<style>
+    .active {
+        color: green;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#2492b3;padding: 4px;">
+                                <h4 class="text-white">CME Registration</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-3">
+                                    <label>CME Date</label>
+                                    <div class="flex">
+                                        <input type="datetime-local" id="txtCMEDate" class="form-control" style="border-color:#06a08b;border-radius:0" />
+                                        <button style="width:45%;margin: 0;border-radius: 0;height: 28px;" id="btnSearch" class="btn btn-primary" onclick="GetCMERegInfo()"><i class="fa fa-search">&nbsp;</i>Get</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label>CME Info</label>
+                                    <input type="text" id="txtCMEInfo" style="border-color:#a7a7a7" placeholder="CME Info" class="form-control" maxlength="60" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Mobile No.</label>
+                                    <input type="text" id="txtMobileNo" data-int maxlength="10" style="border-color:#a7a7a7" placeholder="Mobile No." class="form-control" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Particepant Name</label>
+                                    <input type="text" id="txtParticepantName" style="border-color:#a7a7a7" placeholder="Particepant Name" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Amount</label>
+                                    <div class="flex">
+                                        <input type="text" id="txtAmount" placeholder="Amount" style="border-color:#06a08b;border-radius:0" class="form-control" />
+                                        <button style="width:60%;margin: 0;border-radius: 0;height: 28px;" id="btnSave" class="btn btn-primary" onclick="SaveInfo()"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top:10px">
+                                    <dic class="scroll" style="max-height: 530px;overflow: auto;">
+                                        <table id="tblCMERegistration" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>RegId</th>
+                                                    <th>CME Date</th>
+                                                    <th>CME Info</th>
+                                                    <th>Particepant Name</th>
+                                                    <th>Mobile No</th>
+                                                    <th>Amount</th>
+                                                    <th style="width:1%">CMD</th>
+                                                    <th>Payment Id</th>
+                                                    <th>Payment Status</th>
+                                                    <th>Payment Date</th>
+                                                    <th>Payment Link</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </dic>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span style="text-align:center;width:100%" id="elDoctorName">Payment Status on PayU Money</span>
+            </div>
+            <div class="modal-body">
+                <table id="tblPayments" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>AppointmentId</th>
+                            <th>paymentId</th>
+                            <th>PayMode</th>
+                            <th>Status</th>
+                            <th>Amount</th>
+                            <th>PaymentDate</th>
+                            <th>CMD</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,259 @@
+﻿
+@{
+    ViewBag.Title = "LabOutSource";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Lab/JsModule/LabOutSource.js"></script>
+
+<style>
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: DodgerBlue;
+        }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    #ItemList {
+        border: 1px solid #c2bebe;
+        width: 441px;
+        max-width: min-content;
+        max-height: 310px;
+        /* overflow: scroll; */
+        overflow-x: hidden;
+        position: absolute;
+        z-index: 1;
+        background: #fff;
+        top: 76px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 10px;
+        border-radius: 3px;
+    }
+
+        #ItemList table {
+            font-size: 12px;
+            line-height: 21px;
+            width: 100%;
+        }
+
+            #ItemList table td {
+                padding: 1px 0px 0px 10px;
+            }
+
+            #ItemList table tbody tr {
+                max-width: 100%;
+                /* padding: 1px 9px; */
+                user-select: none;
+                -webkit-user-select: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                /* border-bottom: 0.1px solid #eaeaea; */
+            }
+
+    #ProductList {
+        width: 100%;
+        line-height: 22px;
+        max-height: 291px;
+        font-size: 12px;
+        display: block;
+        overflow: scroll;
+        overflow-x: hidden;
+    }
+
+    .msg {
+        color: #ffffff;
+        background: #dd8803;
+        width: max-content;
+        padding: 5px 14px;
+        position: absolute;
+        bottom: 39px;
+        z-index: 10;
+        left: 11px;
+        border-radius: 2px;
+        display: none;
+    }
+
+        .msg span {
+            background: #ff0049;
+            padding: 2px;
+            border-radius: 20px;
+            width: 13px;
+            height: 13px;
+            font-size: 9px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            text-align: center;
+            cursor: pointer;
+        }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-5">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-left" style="color:white; margin:0">Lab Out Source List</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: -1px 20px;">
+                                <div class="col-md-9">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <span class="btn btn-success" onclick="GetLabOutSource()">Load List</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll" style="height:370px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                                <table id="tblLabOutSource" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:1%">Edit</th>
+                                                            <th style="width:16%">Lab Code</th>
+                                                            <th>Lab Name</th>
+                                                            <th style="width:1%">On/Off</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <span data-panelid class="text-white">Lab Out Source</span>
+                                <button class="btn btn-success" id="btnNew">New</button>
+                                <span data-pid style="display:none;"></span>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 8px 20px;">
+                                <div class="row form-group">
+                                    <div class="col-md-6">
+                                        <label>Lab Type</label>
+                                        <select class="form-control border-imp" id="ddlLabtype">
+                                            <option>Select</option>
+                                            <option value="1">Internal</option>
+                                            <option value="2">External</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Lab Name</label>
+                                        <input type="text" id="txtName" class="form-control border-default" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label>Address</label>
+                                        <textarea id="txtdegree" class="form-control border-default" rows="1"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>State</label>
+                                        <select class="form-control border-imp" id="ddlState">
+                                            <option>Select</option>
+                                            <option value="1">UttarPradesh</option>
+                                            <option>Uttrakhand</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>District</label>
+                                        <select class="form-control border-imp" id="ddlDistrict">
+                                            <option>Select</option>
+                                            <option value="1">Lucknow</option>
+                                            <option value="2">Faizabad</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Contact No.</label>
+                                        <input type="text" id="txtContactNo" class="form-control" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Cin No.</label>
+                                        <input type="text" id="txtCinNo" class="form-control" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button class="btn btn-success" id="btnSubmit" style="margin-top:24px; margin-left:271px;">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

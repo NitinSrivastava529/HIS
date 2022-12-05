@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "SetStatus";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/CSSD/JsModule/Movement/SetStatus.js"></script>
+<style>
+
+    #tblSetInfo a {
+        font-size: 10px;
+        background: #bb8409;
+        cursor: pointer;
+        color: #fafcfe;
+        border-radius: 2px;
+        font-weight: 500;
+        padding: 0px 4px;
+    }
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+    
+    .fileinput.input-group {
+        display: flex;
+    }
+ 
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }   
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Set Status</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-2">
+                                    <span class="text-pink">Search</span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+                                    </div>
+                                </div>                             
+                                <div class="col-xs-12">
+                                    <div class="scroll" style="border: 1px solid #2478a9;height:450px">
+                                        <table id="tblSetInfo" class="table table-bordered">
+                                            <thead>
+                                                <tr>                                                 
+                                                    <th style="width:15%">Set Id</th>
+                                                    <th>Set Name</th>
+                                                    <th style="width:25%">Batch No</th>
+                                                    <th style="width:15%">Status</th>
+                                                    <th style="width:1%">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">                              
+                                <h4 class="text-white">Set Trackning Info</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 4px;">
+                                <div class="col-xs-4">
+                                    <label style="padding: 7px 12px;background:#ddd">Batch Info : <span id="txtBatchInfo"></span></label>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="scroll" style="border: 1px solid #2478a9;height:450px">
+                                        <table id="tblTrackingInfo" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Trn Type</th>
+                                                    <th>Batch No</th>
+                                                    <th>Doc Date</th>
+                                                    <th>Exp Date</th>
+                                                    <th>SetId</th>
+                                                    <th>From Cart</th>
+                                                    <th>To Cart</th>
+                                                    <th>IPD No</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Doctor Name</th>
+                                                    <th>Employee Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

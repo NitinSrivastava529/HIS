@@ -1,0 +1,262 @@
+﻿
+@{
+    ViewBag.Title = "KitUtilization";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/CSSD/JsModule/Movement/KitUtilization.js"></script>
+<style>
+    .bg1 {
+        background: #ffc1c1;
+    }
+
+    .bg2 {
+        background: #e2efff;
+    }
+
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Kit Utilization</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn" style="width:28%">Cart List</button>
+                                            <select id="ddlCartList" class="form-control"></select>&nbsp;
+                                            <button class="btn btn-warning bn" onclick="GetSetInfoByCart()" style="width:28%"><i class="fa fa-search">&nbsp;</i>Search</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll">
+                                            <table class="table table-bordered" id="tblSetInfo" style="padding-bottom: 7px;display: block;border: 1px solid #009688;height:230px;overflow:auto">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:1%">SR.No</th>
+                                                        <th style="width:10%">Set Id</th>
+                                                        <th>Set Name</th>
+                                                        <th style="width:20%">Batch No</th>
+                                                        <th style="width:20%">Expiry Date</th>
+                                                        <th style="width:1%;margin:0"><input type="checkbox" style="margin:0" /></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Patient Info</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;">
+                                <div class="row">
+
+                                    <div class="col-md-8 form-group">
+                                        <button class="btn btn-success bn" id="btnGetIPD" style="width:50%"><i class="fa fa-user">&nbsp;</i>Search IPD Patient</button>&nbsp;&nbsp;
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="height: 252px;">
+                                            <table class="table table-bordered" id="tblIndentInfo" style="border: 1px solid #009688;font-size: 13px;margin: 0px 0px 30px 0px;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:25%">IPD No</th>
+                                                        <th style="width:5%">:</th>
+                                                        <td><span id="txtIPDNo"></span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:25%">Patient Name</th>
+                                                        <th style="width:5%">:</th>
+                                                        <td><span id="txtPatientName"></span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:25%">Age/Gender</th>
+                                                        <th style="width:5%">:</th>
+                                                        <td><span id="txtAge"></span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:25%">Doctor Name</th>
+                                                        <th style="width:5%">:</th>
+                                                        <td><span id="txtDoctorName"></span></td>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                            <hr style="margin-top: 31px;" />
+                                            <label class="bn" style="width: 65%;background: #e8e8e8;padding: 6px;">Assign Selected Set To Patient >></label>
+                                            <button class="btn btn-warning bn" onclick="Assign()" style="width:28%;margin: 0px 10px 7px 0px;float: right;"><i class="fa fa-sign-in">&nbsp;</i>Assign Selected</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body" style="background:#fff;">
+                        <label class="bn" style="width:15%;background: #dbfdc1;padding: 6px;">Assigned List</label>
+                        <button class="btn btn-warning bn pull-right" onclick="ReturnToInspection()" style="margin:0 18px 0 0"><i class="fa fa-sign-in">&nbsp;</i>Return To CSSD-Inspection</button>
+                        <hr style="margin:5px;" />
+                        <div class="scroll">
+                            <table class="table table-bordered" id="tblAssignedInfo" style="padding-bottom: 7px;display: block;border: 1px solid #009688;margin: 0;height:165px;overflow:auto">
+                                <thead>
+                                    <tr>
+                                        <th style="width:1%">SR.No</th>
+                                        <th style="width:7%">Set Id</th>
+                                        <th style="width:20%;">Set Name</th>
+                                        <th style="width:10%;">Batch No</th>
+                                        <th style="width:12%;">Expiry Date</th>
+                                        <th style="width:6%;">IPD No</th>
+                                        <th style="width:16%;">Patient Name</th>
+                                        <th style="width:16%;">Doctor Name</th>
+                                        <th style="width:12%;">Date</th>
+                                        <th style="width:1%;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---Doctor Time Availability Modal---->
+<div class="modal fade" id="modalPatientInfo" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" style="margin-top:5%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Patient Info</h5>
+                <span data-dismiss="modal" class="btn-close">x</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group flex bc">
+                            <button class="btn btn-success bn" style="width:28%">Search</button>
+                            <input type="text" class="form-control" id="txtSearchIPDInfo" placeholder="Search.." />
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="scroll">
+                            <table class="table table-bordered" id="tblAdmittedIPDPatient" style="padding-bottom: 7px;display: block;border: 1px solid #009688;max-height:350px;overflow:auto">
+                                <thead>
+                                    <tr>
+                                        <th style="width:1%">SR.No</th>
+                                        <th style="width:10%">IPD No</th>
+                                        <th>PatientId</th>
+                                        <th>Patient Name</th>
+                                        <th style="width:12%;text-align:right;padding-right:10px">Age/Gender</th>
+                                        <th style="width:14%;text-align:right;padding-right:10px">DoctorName</th>
+                                        <th style="width:1%;text-align:right;padding-right:10px">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

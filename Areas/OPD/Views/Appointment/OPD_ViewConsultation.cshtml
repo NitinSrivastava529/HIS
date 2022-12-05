@@ -1,0 +1,359 @@
+﻿
+@{
+    ViewBag.Title = "OPD_ViewConsultation";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<link href="~/Content/css/MenuMaster.css?his-version-1.0" rel="stylesheet" />
+<script src="~/Areas/OPD/JsModule/ViewConsultation.js"></script>
+<style>
+    .size-xs, .btn-xs, .btn-group-xs > .btn {
+        font-size: 11px;
+        line-height: 14px;
+        min-width: 22px;
+        height: 16px;
+    }
+
+    .btnRound {
+        margin-left: 3px;
+        border-radius: 30px;
+    }
+
+    #rolePanel .panel-body, #roleAllotedPanel .panel-body, #divisionAllotmentPanel .panel-body, #unitAllotedPanel .panel-body {
+        background: #fbfbfb;
+        padding: 0px;
+        list-style: none;
+        border: 1px solid #e6e6e6;
+        max-height: 330px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .panel-title {
+        font-size: 14px;
+        margin-top: 0;
+        margin-bottom: 0;
+        color: inherit;
+    }
+
+    .panel-heading {
+        padding: 2px 10px;
+        border-bottom: 1px solid transparent;
+    }
+
+    .row-green {
+        background: #378a45;
+        color: #fff;
+    }
+
+    .slot-selected {
+        background: green !important;
+    }
+
+    .timeChoose {
+        padding: 3px;
+        color: #fff;
+        background: #842407;
+        border: 1px solid #ddd;
+    }
+
+    .TimeFrame {
+        max-height: 480px;
+        overflow: auto;
+        overflow-y: auto;
+    }
+
+    .TimeSlot-Status {
+        padding: 2px;
+        color: white;
+        background: #064c67;
+        border-radius: 5px;
+    }
+
+    .TimeSlot-Title {
+        align-items: center;
+        display: flex;
+        border: 1px solid #ddd;
+        background: #f1f1f1;
+        padding: 4px 6px;
+        font-size: 13px;
+        font-weight: bold;
+        color: #036f98;
+    }
+
+    .TimeSlot {
+        display: -webkit-inline-box;
+        width: 18%;
+        margin: 6px 7px;
+        box-shadow: 1px 2px 4px #ddd;
+        cursor: pointer;
+        background: #cccccc;
+        color: #fff;
+        padding: 2px 22px;
+        /* border-top-left-radius: 15px; */
+        /* border-bottom-right-radius: 15px; */
+        line-height: 22px;
+        text-align: center;
+    }
+
+        .TimeSlot:hover {
+            box-shadow: 1px 2px 4px #4c4646;
+            transition: all 0.6s;
+        }
+
+    span[disabled] {
+        background: #ccc !important;
+        cursor: not-allowed !important;
+    }
+
+        span[disabled] > .TimeSlot-Status {
+            background: #595a58 !important;
+        }
+
+    .disabled {
+        background: #ddd !important;
+    }
+
+    .btn-flat {
+        padding: 5px;
+        border: navajowhite;
+    }
+
+    .search-section {
+        border: 1px solid #ddd;
+        background: #ffeaea;
+        padding: 5px;
+        line-height: 26px;
+        text-align: center;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .Vital-title {
+        padding-bottom: 5px;
+        border: 1px solid #404040;
+        text-align: center;
+        color: #000;
+        font-family: Verdana, Arial, sans-serif;
+        font-weight: bold;
+    }
+
+    .category {
+        font-weight: bold;
+        background: #2478a9;
+        display: block;
+        color: #ffffff;
+        padding: 1px 9px;
+    }
+
+    .note {
+        border: none;
+        width: 38px;
+        height: 25px;
+        margin: 0 5px;
+        float: left;
+        border-radius: 2px;
+    }
+
+        .note i {
+            color: #fff;
+        }
+
+        .note:hover {
+            background: linear-gradient(to bottom right, #007eff, #615959) !important;
+        }
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 2px 2px 0px 3px;
+        border-top-width: 1px;
+        border-top-style: solid;
+        text-align: left;
+        font-size: 12px;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">OPD Register</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-4 search-section">
+                                    <div class="flex">
+                                        <span style="width:50%">
+                                            <select id="ddlSearchKey" class="form-control border-imp" style="width: 90px !important;">
+                                                <option value="UHID">UHID</option>
+                                                <option value="MobileNo" selected="selected">Mobile No</option>
+                                                <option value="AppointmentNo">Appointment No</option>
+                                            </select>
+                                        </span>
+                                        <input type="text" id="txtSearchValue" class="form-control text-uppercase" placeholder="Search Input" />
+                                        @*<input type="button" id="btnSearchByOption" class="btn-success btn-flat" value="Search" />*@
+                                    </div>
+                                </div>
+                                <div class="col-md-7 search-section" style="background:#ddd;margin-left:2px">
+                                    <div class="flex">
+                                        <select class="form-control" id="ddlStatus">
+                                            <option>Pending</option>
+                                            <option>Closed</option>
+                                            <option>Done</option>
+                                        </select>                                       
+                                        <select class="form-control" id="ddlDoctor">
+                                            <option value="Prompt">Select Doctor</option>
+                                        </select>
+                                        <input type="date" id="txtFromAppDate" class="form-control" placeholder="from : dd-mm-yyyy" />
+                                        <input type="date" id="txtToAppDate" class="form-control" placeholder="to : dd-mm-yyyy" />
+                                        <input type="button" id="btnSearchByDate" onclick="ViewConsultation()" class="btn-success btn-flat" value="Search" />
+                                    </div>
+                                </div>
+                                <hr />
+                                @*<div class="Vital-title" style="margin-top:2px;">
+                                    <div class="row" style="margin-top: 5px">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-2">
+                                            <button class="note" style="background:#e60000"><i class="fa fa-ambulance"></i></button>
+                                            <b class="pull-left" contenteditable="true">Emergency</b>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="note" style="background:#f59200"><i class="fa fa-clock-o"></i></button>
+                                            <b class="pull-left">Pending Temp Status</b>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="note" style="background:#0b40d6"><i class="fa fa-eye"></i></button>
+                                            <b class="pull-left">Viewed &amp; IN</b>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="note" style="background:green"><i class="fa fa-angle-double-right"></i></button>
+                                            <b class="pull-left">Refer</b>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="note" style="background:#464646"><i class="fa fa-adn"></i></button>
+                                            <b class="pull-left">Absent</b>
+                                        </div>
+                                    </div>
+                                </div>*@
+                                <div class="Vital-body" style="padding:0 5px;margin-top:10px">
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <div id="divEmergency">
+                                                <span class="category">Emergency Appointment Patient List</span>
+                                                <div style="max-height:106px;overflow:auto;margin-bottom:5px;border: 1px solid #009688;">
+                                                    <table class="table table-bordered" id="tblEmergencyAppList">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No.</th>
+                                                                <th style="width: 100px;">App. No.</th>
+                                                                <th>Name</th>
+                                                                <th>Age/Sex</th>
+                                                                <th>Date</th>
+                                                                <th>Doctor</th>
+                                                                <th style="width:13%">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div id="divOther">
+                                                <span class="category">Other Appointment Patient List</span>
+                                                <div style="max-height:250px;overflow:auto;margin-bottom:5px;border: 1px solid #009688;">
+                                                    <table class="table table-bordered" id="tblOtherAppList">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No.</th>
+                                                                <th style="width: 100px;">App. No.</th>
+                                                                <th>Name</th>
+                                                                <th>Age/Sex</th>
+                                                                <th>Date</th>
+                                                                <th>Doctor</th>
+                                                                <th style="width:13%">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="category">Done Appointment Patient List</span>
+                                            <div style="max-height:400px;overflow:auto">
+                                                <table class="table table-bordered" id="tblDoneAppointment">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No.</th>
+                                                            <th style="width: 100px;">App. No.</th>
+                                                            <th>Name</th>
+                                                            <th>Age/Sex</th>
+                                                            <th>Date</th>
+                                                            <th>Doctor</th>
+                                                            <th style="width:9%">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewBag.Title = "FollowupMarking";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Masters/JsModule/FollowupMarking.js"></script>
+
+     <style type="text/css">
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 5px 0;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    .btn-xs {
+        height: 20px
+    }
+
+    .navbar {
+        min-height: 37px;
+        margin-bottom: 2px;
+    }
+
+    .navbar-form {
+        padding: 0;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 230px;
+    }
+
+    .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+</style>
+
+<div id="page-content">
+
+    <nav class="navbar navbar-light" style="background-color: #86b3de;">
+        <div class="container-fluid">
+            <div class="navbar-form navbar-left">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="pwd">Doctor:</label>
+                        <select id="ddlDoctors" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Panel:</label>
+                        <select id="ddlPanel" class="form-control"></select>
+                    </div>
+                    <button type="submit" class="btn btn-xs btn-warning" onclick="GetDoctorPanel()"><i class="fa fa-search fa-lg"></i></button>
+
+                </div>
+            </div>
+            <div class="navbar-form">
+                <div class="form-inline">
+                    <button type="submit" style="margin-left:15px" id="btnSaveUpdate" class="btn btn-xs btn-success" onclick="InsertUpdateFollowup()" value="Save"><i class="fa fa-plus"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading" style="display:flex">
+            <h4 style="width:10%">Doctor Panel List </h4> <input type="text" id="txtSeachDoctorPanel" class="form-control" style="width:25%" placeholder="Search Doctor or Panel" />
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive tableFixHead" style="height:500px;overflow-y:auto">
+                <table class="table table-bordered" id="tblDrPanelDetails">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">Sr. No</th>
+                            <th style="width:40%">Panel Name</th>
+                            <th style="width:100%;display:flex">
+                                Follow up Days
+                                <input id="txtfollowup" style="width:10%;margin-left:10px" type="text" data-int class="form-control" autocomplete="off" />
+                                <button type="submit" class="btn btn-xs btn-info" onclick="SetValues()" value="Set">Set Follow up</button>
+
+                                @*<label style="margin-left:10px">Serial From</label>
+                                <input id="txtfrom" style="width:10%;margin-left:10px" type="text" data-int class="form-control" autocomplete="off" />
+                                <label style="margin-left:10px">Serial To</label>
+                                <input id="txtto" style="width:10%;margin-left:10px" type="text" data-int class="form-control" autocomplete="off" />*@
+
+                                <button type="submit" style="margin-left:10px" class="btn btn-xs btn-danger" onclick="ClearValues()" value="Set">Clear</button>
+                            </th>
+                            @*<th style="width:5%">Action</th>*@
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

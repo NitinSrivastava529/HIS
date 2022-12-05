@@ -1,0 +1,234 @@
+﻿
+@{
+	ViewBag.Title = "DoAudit";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<script src="~/Content/js/tableHeadFixer.js?his-version-1.1"></script>
+<script src="~/Areas/Warehouse/JsModule/Audit/DoAudit.js?his-version-1.3"></script>
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+		::-webkit-scrollbar:horizontal {
+			height: 3px;
+		}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+
+	.radio-custom {
+		border: 1px solid #dedede;
+		display: flex;
+		padding: 0px 4px;
+		letter-spacing: 1px;
+	}
+
+	input, .input, select, .select {
+		border: 1px solid #000 !important;
+	}
+
+	.selected {
+		background-color: #0076d0 !important;
+		color: #fff;
+	}
+
+	.active-extra {
+		pointer-events: none;
+		opacity: 0.5;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:0;">
+								<h5 class="text-white">Do Audit</h5>
+							</div>
+							<div class="panel-body">
+								<div class="col-md-12">
+									<div class="form-group">
+										<div class="col-sm-12">
+											<div class="fileinput fileinput-new input-group" style="display:flex" data-provides="fileinput">
+												<select id="ddlDept" class="form-control">
+													<option>Select</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-12">
+											<div class="fileinput fileinput-new input-group" style="display:flex" data-provides="fileinput">
+												<select id="ddlCart" class="form-control"></select>
+											</div>
+										</div>
+										<div class="col-sm-12">
+											<div class="fileinput fileinput-new input-group" style="display:flex" data-provides="fileinput">
+												<input type="text" class="form-control" placeholder="Search.." id="txtSearch" />
+											</div>
+										</div>
+									</div>
+									<div class="scroll" style="height:490px;">
+										<table class="table table-bordered" id="tblItemListByCart">
+											<thead>
+												<tr>
+													<th style="width:1%;padding: 0 2px;">cmd</th>
+													<th>Item Name</th>
+													<th style="padding: 0 10px;">Stock</th>
+
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-7" style="overflow-x:scroll">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:0;">
+							
+                                <table style="width:100%"><tr><td style="text-align:left">	<h5 class="text-white" id="txtItemStock">Item Stock</h5></td><td style="text-align:right"> <input type="button" class="btn-success" value="CLOSE AUDIT" onclick="CloseAudit();" /></td></tr></table>
+                               
+							</div>
+                            <div class="panel-body">
+                                <div class="col-md-12">
+                                    <div class="scroll" style="height:215px;">
+                                        <table class="table table-bordered" id="tblItemStock">
+                                            <thead>
+                                                <tr>
+                                                    <th>Select</th>
+                                                    <th>Manufacturer</th>
+                                                    <th>Batch No</th>
+                                                    <th>Exp. Date</th>
+                                                    <th>MRP</th>
+                                                    <th>P.Type</th>
+                                                    <th>P.Qty</th>
+                                                    <th>Stock</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="background-color:lightblue;">
+                                    <br />
+                                    <div class="row" >
+                          
+                                           <table style="width:100%">
+                                                <tr>
+                                                    <td style="width:20%">
+                                                        <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" data-provides="fileinput">
+                                                            <input type="radio" id="idShort" name="types" value="Short" checked />Short
+                                                            <input type="radio" id="idDamage" name="types" value="Damage" />Damage
+                                                            <input type="radio" id="idExtra" name="types" value="Extra" />   Extra
+                                                        </div>
+                                                    </td>
+                     
+                                                    <td style="width:10%"> <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" data-provides="fileinput">  <input type="text" id="txtQuantity" name="txtQuantity" maxlength="5" class="form-control" placeholder="Qty" /></div> </td>
+                                                    <td style="width:60%">
+                                                        <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" id="divExtra" data-provides="fileinput">
+                                                            <input type="text" id="txtBatchNo" class="form-control" placeholder="Batch No" />
+                                                            <input type="text" id="txtMRP" onkeyup="if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control" placeholder="MRP" />
+                                                            <input type="date" id="txtExpiry" class="form-control" />
+                                                        </div>
+                                                    </td>
+                                                    <td style="width:10%">
+                                                        <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" data-provides="fileinput">
+                                                            <button id="btnSubmit" class="btn btn-success btn-xs" onclick="return InsertAuditInfo()">Submit</button>
+                                                            </div>
+                                                    </td>
+                                     
+
+                                                </tr>
+                                            </table>
+
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="scroll" style="height:300px">
+                                        <table class="table table-bordered" id="tblAuditInfo">
+                                            <thead>
+                                                <tr>
+                                                    <th>CMD</th>
+                                                    <th style="width:35%;color:black"><input type="text" id="txtAuditNo" readonly="readonly" /></th>
+                                                    <th style="width:20%">Manufacturer</th>
+                                                    <th>Batch No</th>
+                                                    <th>Exp. Date</th>
+                                                    <th>P. Type</th>
+                                                    <th>P. Qty</th>
+                                                    <th>AuditedQty</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+

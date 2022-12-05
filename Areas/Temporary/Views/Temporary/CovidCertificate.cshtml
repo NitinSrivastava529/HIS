@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "CovidCertificate";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Temporary/JsModule/CovidCertificate.js"></script>
+<style>
+    .active {
+        color: green;
+    }
+
+    .text-white {
+        color: #fff !important;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+</style>
+
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Upload Covid Certificate</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-1">
+                                    <label>UHID</label>
+                                </div>
+
+                                <div class="col-xs-3">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                        <input type="text" id="txtUHID" class="form-control input_pass" value="" placeholder="UHID">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-2">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                        <button class="btn btn-danger" onclick="SearchByUHID()">Search</button>
+                                    </div>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive">
+                                    <div class="scroll">
+                                        <table id="tblUHIDDetails" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Mobile</th>
+                                                    <th>Gender</th>
+                                                    <th>Relation With</th>                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="col-xs-2">
+                            <label>Upload Covid Certificate</label>
+                        </div>
+
+                        <div class="col-xs-3">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                <input type="file" id="filecovidupload" class="form-control input_pass" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-1">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                <button class="btn btn-success" onclick="UploadCertificate()">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

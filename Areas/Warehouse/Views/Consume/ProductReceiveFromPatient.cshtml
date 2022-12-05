@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "ProductReceiveFromPatient";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Warehouse/JsModule/Consumption/ProductReceiveFromPatient.js?his-version-1.0"></script>
+<style>
+	.flex{
+		display:flex;
+	}
+	.panel {
+		margin: 5px 3px 0 5px !important;
+		border: 1px solid #bedbf6;
+	}
+
+	.panel-body {
+		border: 1px solid #e1dede;
+		padding: 5px 3px 3px 3px !important;
+	}
+
+	.form-group {
+		margin-bottom: 5px;
+	}
+
+		.form-group label {
+			padding: 3px 0 4px 10px !important;
+		}
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	highlight_row {
+		background-color: #d5e7f8;
+		color: #000;
+	}
+
+	.scroll {
+		max-height: 450px;
+		overflow: auto;
+		overflow-y: auto;
+	}
+
+	.highlight {
+		background-color: red;
+	}
+
+	.text-white {
+		color: #fff;
+	}
+</style>
+
+<div id="page-content">
+	<div class="panel">
+		<div class="panel-body" style="height:560px; overflow-y:auto">
+			<div class="col-lg-6">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:2px;">
+								<h4 class="text-white">Receive Stock</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="form-group row">
+									<div class="col-sm-4"><input type="text" class="form-control" placeholder="Search" id="txtSearch" /></div>
+									<div class="col-sm-8 flex">
+										<select id="ddlCartList" class="form-control"></select>
+									<input type="button" value="Get" onclick="HospCartindentToPharmacy()" class="btn-success" />
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div class="table-responsive">
+											<div class="scroll">
+												<table class="table table-bordered" id="tblStockIds">
+												 	<thead>
+														<tr>
+															<th style="width:20%">IPOP No.</th>
+															<th style="width:20%">UHID</th>
+															<th style="width:20%">Patient Name</th>
+															<th style="width:20%">Indent No</th>
+															<th style="width:20%">Indent Date</th>
+															<th style="width:20%">Sale Inv. No</th>
+															<th style="width:1%">Action</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding:2px;">
+								<h4 class="text-white">Product Receive From Patient</h4>
+							</div>
+							<div class="panel-body" style="background:#fff;padding: 8px 20px;">
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<label class="col-sm-2">Sale Inv No </label>
+										<div class="col-sm-4">
+											<input type="text" id="txtSaleInvNo" class="form-control" readonly="readonly" />
+										</div>
+										<button type="button" id="btnReceive" onclick="ReceiveStock()" class="btn btn-primary pull-right">Receive</button>
+									</div>
+								</div>
+								<div class="form-group row">
+									<div class="col-lg-12">
+										<div class="table-responsive">
+											<table class="table table-bordered" id="tblIndentSaleDetail">
+												<thead>
+													<tr>
+														<th>Master Key</th>
+														<th>Item Name</th>
+														<th>Batch</th>
+														<th>Expiry date</th>
+														<th>Pack Type</th>
+														<th>Pack Qty</th>
+														<th>Qty</th>
+														@*<th>Action</th>*@
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

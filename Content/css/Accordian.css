@@ -1,0 +1,88 @@
+﻿.panel-title {
+	margin-left: 2px;
+	text-align: left;
+	font-size: 12px;
+	color: #404040;
+	background: #efefef;
+	padding: 8px 12px;
+}
+
+.panel-heading {
+	background: #efefef;
+	padding: 0px;
+}
+
+.panel-group .panel {
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+
+.circle {
+	padding: 2px 4px;
+	width: 10px;
+	height: 10px;
+	border: 1px solid #f60;
+	border-radius: 41px;
+	margin-right: 5px;
+}
+.circle-add {
+	padding: 1px 2px;
+	width: 16px;
+	height: 15px;
+	border: 1px solid #04a920;
+	border-radius: 3px;
+	margin-right: 0px;
+	cursor: pointer;
+}
+	.circle-add i {
+		font-size: 12px;
+		color: #04a920;
+	}
+	.circle i {
+		font-size: 12px;
+		color: #ff6600;
+	}
+
+.circle-open {
+	color: #0ab320 !important;
+	border-color: #0ab320 !important;
+}
+.nav-tabs > li {
+	width: 50%;
+	float: left;
+	margin-bottom: -5px;
+}
+.nav-tabs {	
+	padding: 0;
+}
+.nav > li > a {
+	font-size: 12px;
+	position: relative;
+	display: block;
+	margin: -1px 0px 4px 0px;
+	padding: 0px 15px;
+}
+
+.bottom-tab {
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	padding: 0;
+	width: 95%;
+	border: 1px solid #c7c5c5;
+	margin-left: 9px;
+}
+
+.example-box-wrapper {
+	margin-left: 5px;
+}
+
+.panel-body {
+	background: #f7f7f7;
+}
+.modal-header {
+	background: #d2d2d2;
+	min-height: 16.42857143px;
+	padding: 3px 10px;
+	border-bottom: 1px solid #dfe8f1;
+	color: #252525;
+}

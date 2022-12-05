@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "EmployeeComponent";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div id="page-title">
+            <h2>Manage Employee Component</h2>
+            <p>Employee Component Master.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-6">
+                            <span class="text-pink">Manage State</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchState" class="form-control input_pass" value="" placeholder="Search State..">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="form-group">
+                                    @*<label class="col-sm-3 control-label">Role Name</label>*@
+                                    <div class="col-sm-8">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtStateName" class="form-control input_pass" value="" placeholder="State Name">
+                                            <span id="btnSaveState" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                            <span id="btnUpdateState" style="display:none" class="input-group-addon btn btn-danger">
+                                                <i class="fa fa-edit"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <table id="tblState" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>State-ID</th>
+                                                <th>State Name</th>
+                                                <th>Flag</th>
+                                                <th>Created On</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-6">
+                            <span class="text-pink">Manage City</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchCity" class="form-control input_pass" value="" placeholder="Search City..">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <select id="ddlState" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtCityName" class="form-control input_pass" value="" placeholder="City Name">
+                                            <span id="btnSaveCity" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                            <span id="btnUpdateCity" style="display:none" class="input-group-addon btn btn-danger">
+                                                <i class="fa fa-edit"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <table id="tblCity" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>City-ID</th>
+                                                <th>State Name</th>
+                                                <th>City Name</th>
+                                                <th>Flag</th>
+                                                <th>CreatedOn</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="col-xs-6">
+                            <span class="text-pink">Manage Designation</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="text" id="txtSearchDesignation" class="form-control input_pass" value="" placeholder="Search Designation..">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="form-group">
+                                    @*<label class="col-sm-3 control-label">Role Name</label>*@
+                                    <div class="col-sm-8">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtDesigName" class="form-control input_pass" value="" placeholder="Designation Name">
+                                            <span id="btnSaveDesignation" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                            <span id="btnUpdateDesignation" style="display:none" class="input-group-addon btn btn-danger">
+                                                <i class="fa fa-edit"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table table-responsive">
+                                    <table id="tblDesignation" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Designation-ID</th>
+                                                <th>Designation Name</th>
+                                                <th>Flag</th>
+                                                <th>Created On</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

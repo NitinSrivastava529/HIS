@@ -1,0 +1,198 @@
+﻿
+@{
+    ViewBag.Title = "LLDressIssueToStaff";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+
+    #btnComplete {
+        padding: 3px;
+        border-radius: 0;
+        width: 40%;
+        margin: 0;
+        height: 27px;
+    }
+
+    #tblInfo th, #tblInfo td {
+        border: 0;
+        color: #4b5056;
+        background-color: #f1efef;
+    }
+
+    .panel {
+        margin: 10px 0 0 15px !important;
+    }
+
+    .panel-body {
+        border: 1px solid #e1dede;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    .text-white {
+        color: #fff;
+    }
+
+    .divcenter {
+        box-shadow: 1px 1px 1px #ececec;
+        overflow: hidden;
+        overflow-x: hidden;
+        position: absolute;
+        z-index: 1;
+        background: #efefef;
+        top: 50px;
+        left: 26%;
+        right: 26%;
+        display: none;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    #ItemList {
+        box-shadow: 1px 1px 1px #ececec;
+        border: 0.5px solid #ececec;
+        width: 313px;
+        max-width: 313px;
+        max-height: 300px;
+        overflow-x: hidden;
+        position: absolute;
+        z-index: 1;
+        background: #fff;
+        top: 49px;
+    }
+
+    #divpopup {
+        box-shadow: 0px 1px 3px #c1c1c1;
+        border: 2px solid #b1c5d4;
+    }
+
+    #ItemList table {
+        font-size: 11px;
+        line-height: 22px;
+        width: 100%;
+    }
+
+        #ItemList table td, #ItemListDetails table td, #ItemListDetails table th {
+            padding: 1px 0px 0px 10px;
+        }
+
+        #ItemList table tbody tr, #ItemListDetails table tbody tr {
+            border-bottom: 0.1px solid #eaeaea;
+        }
+
+    #tblStock tbody tr td:nth-child(1) {
+        width: 19% !important;
+    }
+
+    .m0 {
+        margin: 0;
+    }
+</style>
+<script src="~/Areas/LinenLaundry/JsModule/LLDressIssueToStaff.js"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background-color:#026cbd;padding: 4px;">
+                                <p class="text-white m0">Dress Issue To Staff</p>
+                            </div>
+                            <div class="panel-body" style="background:#fff;">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <input type="text" id="txtEmpName" class="form-control input_pass" value="" placeholder="Employee Name">
+                                            <span id="btnGetEmployee" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-search"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8">
+                                        <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                            <select id="ddlEmployee" onchange="EmpInfo()" class="form-control">
+                                                <option>Select Employee</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12" style="background-color:#f1efef;padding: 7px;border:1px solid #ddd">
+                                        <table class="table" id="tblInfo" style="font-size:13px;margin:0;background:transparent">
+                                            <tr>
+                                                <th style="width:9%"><b>Emp Code</b></th>
+                                                <th>:</th>
+                                                <td id="txtEmpCode"></td>
+                                                <th style="width:14%"><b>Employee Name</b></th>
+                                                <th>:</th>
+                                                <td id="txtEmployeeName"></td>
+                                                <th style="width:1%"><b>Mobile</b></th>
+                                                <th>:</th>
+                                                <td id="txtMobile"></td>
+                                                <th style="width:8%"><b>Designation</b></th>
+                                                <th>:</th>
+                                                <td id="txtDesignation"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="example-box-wrapper">
+                                    <div class="form-group col-md-6">
+                                        <label for="name" class="control-label">Product Name</label>
+                                        <select id="ddlProductList" class="form-control" onchange="GetStocks();"></select>
+                                    </div>
+
+                                    <div class="form-group col-md-2">
+                                        <label for="name" class="control-label">In Stock</label>
+                                        <input type="text" class="form-control" id="txtInStock" readonly="readonly" placeholder="In Stock">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="name" class="control-label">Quantity</label>
+                                        <input type="text" class="form-control" id="txtQty" data-int autocomplete="off" placeholder="Quantity">
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <div class="col-sm-4">
+                                            <label>&nbsp;&nbsp;&nbsp;</label>
+                                            <button id="btnIssue" type="button" class="btn btn-primary btn-flat" onclick="Issue();"><i class="fa fa-sign-in">&nbsp;</i>Issue</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="min-height:350px;border:1px solid #009688">
+                                            <table id="tblIssueItems" class="table table-bordered">
+                                                <thead>
+                                                    <tr class="text-left">
+                                                        <th style="width:1%">SR.No.</th>
+                                                        <th style="width:20%">ItemId</th>
+                                                        <th>Item Name</th>
+                                                        <th class="text-right">Qty</th>
+                                                        <th style="width:5%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

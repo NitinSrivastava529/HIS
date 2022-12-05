@@ -1,0 +1,197 @@
+﻿
+@{
+    ViewBag.Title = "DietMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .scroll-table {
+        width: 100%;
+        max-height: 468px;
+        background: #fff;
+        overflow: overlay;
+        height: 510px;
+        display: block;
+    }
+
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+    }
+
+    table td {
+        padding: 0 5px !important;
+    }
+
+    .panel-body {
+        padding: 15px 15px 0px 20px;
+        position: relative;
+    }
+
+    .text-white {
+        color: #fff;
+    }
+
+    .flex {
+        display: flex;
+        border: 1px solid #4caf50;
+    }
+
+    .bn {
+        border-radius: 0;
+        border: none;
+    }
+
+    .bc {
+        border-radius: 0;
+        border-color: #00a65a;
+    }
+</style>
+<script src="~/Areas/Dietician/JsModule/DietMaster.js"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="" style="margin-top:2px;">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding:4px;">
+                                <h4 class="text-white">Diet Master</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-2" style="width:20%">
+                                        <label>Diet Type</label>
+                                        <div class="flex">
+                                            <input type="text" id="txtDietType" class="form-control bn" autocomplete="off" style="border:1px solid #ddd" placeholder="" />
+                                            <button class="btn btn-success bn" id="btnDietType" onclick="InsertDietType()" style="width:36%;height:27px;">Add</button>
+                                        </div>
+                                        <div class="table table-responsive">
+                                            <div class="scroll-table" style="border:1px solid #2478a9;margin-top:3px;max-height:446px;">
+                                                <table class="table table-bordered" id="tblDiettypeMaster">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:15%"><label class="switch"><input type="checkbox" class="statusflag" id="chkActive" checked=""><span class="slider round"></span></label></th>
+                                                            <th><input type="text" id="txtSearchDietType" style="color: #363535;width:90%" onkeyup="searchTable('txtSearchDietType','tblDiettypeMaster')" placeholder="Search.." /></th>
+                                                            <th style="width:0%">CMD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="width:20%">
+                                        <label>Diet Route</label>
+                                        <div class="flex">
+                                            <input type="text" id="txtDietRoute" class="form-control bn" autocomplete="off" style="border:1px solid #ddd" placeholder="" />
+                                            <button class="btn btn-success bn" id="btnDietRoute" onclick="InsertDietRoute()" style="width:36%;height:27px;">Add</button>
+                                        </div>
+                                        <div class="table table-responsive">
+                                            <div class="scroll-table" style="border: 1px solid #2478a9;margin-top: 3px;max-height:446px;">
+                                                <table class="table table-bordered" id="tblDietRouteDetail">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:15%"><label class="switch"><input type="checkbox" class="statusflag" id="chkActive" checked=""><span class="slider round"></span></label></th>
+                                                            <th><input type="text" id="txtSearchDietRoute" style="color: #363535;width:90%" onkeyup="searchTable('txtSearchDietRoute','tblDietRouteDetail')" placeholder="Search.." /></th>
+                                                            <th style="width:0%">CMD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="width:20%">
+                                        <label>Nutrition</label>
+                                        <label style="margin-left:25%;text-align:right">Cal. Count(/Gram)</label>
+                                        <div class="flex">
+                                            <input type="text" id="txtDietNutrition" class="form-control bn" autocomplete="off" style="border:1px solid #ddd" placeholder="Nutrition" />
+                                            <input type="text" id="txtCalorieCount" class="form-control bn" autocomplete="off" style="width:25%;border:1px solid #ddd" placeholder="Cal. Count" />
+                                            <button class="btn btn-success bn" id="btnDietNutrision" onclick="InsertNutrisionDiet()" style="width:19%;height:27px;padding:0">Add</button>
+                                        </div>
+                                        <div class="table table-responsive">
+                                            <div class="scroll-table" style="border: 1px solid #2478a9;margin-top:3px;max-height:446px;">
+                                                <table class="table table-bordered" id="tblNutrisionDetail">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:15%"><label class="switch"><input type="checkbox" class="statusflag" id="chkActive" checked=""><span class="slider round"></span></label></th>
+                                                            <th><input type="text" id="txtSearchNutrision" style="color: #363535;width:90%" onkeyup="searchTable('txtSearchNutrision','tblNutrisionDetail')" placeholder="Search.." /></th>
+                                                            <th class="text-right">Cal.Cnt</th>
+                                                            <th style="width:0%">CMD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="width:20%">
+                                        <label>Measuring</label>
+                                        <div class="flex">
+                                            <input type="text" id="txtMeasurement" class="form-control bn" autocomplete="off" style="border:1px solid #ddd" placeholder="" />
+                                            <button class="btn btn-success bn" id="btnMeasuring" onclick="InsertMeasuring()" style="width:36%;height:27px;">Add</button>
+                                        </div>
+                                        <div class="table table-responsive">
+                                            <div class="scroll-table" style="border: 1px solid #2478a9;margin-top: 3px;max-height:446px;">
+                                                <table class="table table-bordered" id="tblMeasuringDetail">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:15%"><label class="switch"><input type="checkbox" class="statusflag" id="chkActive" checked=""><span class="slider round"></span></label></th>
+                                                            <th><input type="text" id="txtSearchMeasuring" style="color: #363535;width:90%" onkeyup="searchTable('txtSearchMeasuring','tblMeasuringDetail')" placeholder="Search.." /></th>
+                                                            <th style="width:0%">CMD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="width:20%">
+                                        <label>Diet Category</label>
+                                        <div class="flex">
+                                            <input type="text" id="txtDietCategory" class="form-control bn" autocomplete="off" style="border:1px solid #ddd" placeholder="" />
+                                            <button class="btn btn-success bn" id="btnCategory" onclick="InsertDietCategory()" style="width:36%;height:27px;">Add</button>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <label>Served From</label>
+                                                <input type="time" id="txtServedFrom" class="form-control" />
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label>Served To</label>
+                                                <input type="time" id="txtServedTo" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="table table-responsive">
+                                            <div class="scroll-table" style="border:1px solid #2478a9;margin-top: 3px;max-height:392px;">
+                                                <table class="table table-bordered" id="tblDietCategory">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Diet Category</th>
+                                                            <th style="width:1%">CMD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

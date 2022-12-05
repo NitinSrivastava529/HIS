@@ -1,0 +1,179 @@
+﻿
+@{
+	ViewBag.Title = "ExpiredProduct";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Warehouse/JsModule/Report/ExpiredProduct.js"></script>
+<style>
+	.remove {
+		background: red;
+		line-height: 10px;
+		border-radius: 13px;
+		width: 12px;
+		height: 12px;
+		position: absolute;
+		font-size: 11px;
+		font-weight: bold;
+		text-align: center;
+		cursor: pointer;
+		margin-right: 2px;
+	}
+
+	.ItemIds items {
+		font-size: 12px;
+		background: #026cbd;
+		padding: 3px;
+		margin: 2px;
+		color: #fff;
+		line-height: 24px;
+	}
+
+	.selected {
+		background: DodgerBlue !important;
+		color: #fff;
+	}
+
+	#ItemList {
+		box-shadow: 1px 1px 1px #ececec;
+		border: 0.5px solid #ececec;
+		width: 336px;
+		max-width: 330px;
+		max-height: 300px;
+		overflow-x: hidden;
+		position: absolute;
+		z-index: 1;
+		background: #fff;
+		top: 27px;
+		left: 102px;
+	}
+
+		#ItemList table {
+			font-size: 11px;
+			line-height: 22px;
+			width: 100%;
+		}
+
+			#ItemList table td {
+				padding: 1px 0px 0px 10px;
+			}
+
+			#ItemList table tbody tr {
+				border-bottom: 0.1px solid #eaeaea;
+			}
+
+	.Reports {
+		margin-bottom: 10px;
+		background: #ffffff;
+		padding: 3px 15px;
+	}
+
+	#ReportForm {
+		margin: 0px;
+		padding: 7px;
+		border: 1px solid #dedede;
+		background: #f1f1f1;
+	}
+
+	#ReportButton {
+		right: 18px;
+		float: right !important;
+		top: 3px;
+		position: absolute;
+	}
+
+	.btn-flat {
+		padding: 5px;
+		border: navajowhite;
+	}
+
+	.flex {
+		display: flex !important;
+		align-items: center;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Expired Product Report</h4>
+								<span id="ReportButton" class="pull-right"></span>
+							</div>
+							<div class="panel-body" style="padding:4px 10px;">
+								<div id="ReportForm" class="row">
+									<div class="col-md-6">
+										<div class="flex">
+											<span style="width:30%">
+												<label>Expird Items in Days </label>
+											</span>
+											<span style="width:5%">
+												<label>:</label>
+											</span>
+											<input type="text" style="width:35%" id="txtDays" class="form-control" value="90" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<input type="button" id="btnXL" class="btn-flat btn-success" onclick="ViewExpiredProduct()" value="View" />
+										<input type="button" id="btnXL" class="btn-flat btn-warning" onclick="DownloadExcel()" value="XL Report" />
+									</div>
+									<div class="col-md-12">	
+										<br />
+										<div class="scroll">
+											<table id="tblExpiredProduct" class="table table-bordered" style="display:none;">
+												<thead>
+													<tr>
+														<th>Item ID</th>
+														<th>Item Name</th>
+														<th>Pack Type</th>
+														<th>Pack Qty</th>
+														<th>Master Key id</th>
+														<th>Qty</th>
+														<th>ROL</th>
+														<th>MOQ</th>
+														<th>Exp. Date</th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

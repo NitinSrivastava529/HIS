@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "LLDistribution";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    .panel {
+        margin: 5px 3px 0 5px !important;
+        border: 1px solid #bedbf6;
+    }
+
+    .panel-body {
+        border: 1px solid #e1dede;
+        padding: 5px 3px 3px 3px !important;
+    }
+
+    .panel-heading {
+        padding: 2px 5px !important;
+    }
+
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        padding: 5px 4px;
+    }
+
+    .form-group label {
+        padding: 3px 0 4px 10px !important;
+    }
+
+    input, .input, select, .select {
+        border: 1px solid #000 !important;
+    }
+
+    .selected {
+        background: DodgerBlue !important;
+        color: #fff;
+    }
+
+    highlight_row {
+        background-color: #d5e7f8;
+        color: #000;
+    }
+
+    .highlight {
+        background-color: red;
+    }
+
+    .text-white {
+        color: #fff;
+    }
+
+    #exTab3 {
+        margin-top: 5px;
+    }
+
+        #exTab3 .nav-pills > li > a {
+            border-radius: 0;
+        }
+
+        #exTab3 .tab-content {
+            color: white;
+            padding: 2px 2px;
+            /*border: 1px solid #a4cbe6;*/
+        }
+
+    .nav {
+        background: #0076d0 !important;
+    }
+
+        .nav > li > a {
+            padding: 5px;
+            color: #fff;
+        }
+
+    h4, .h4 {
+        font-size: 15px;
+    }
+
+    .divUserRemark {
+        padding: 5px;
+        background: #0076d0;
+        border-radius: 5px;
+        margin-top: 7px;
+        margin-right: 5px;
+        margin-left: 5px;
+        color: #fff;
+    }
+
+    #myModal.fade.in {
+        margin-left: 50%;
+        width: 665px;
+        height: 600px;
+        margin-top: 60px;
+    }
+
+    #myModal.modal-dialog {
+        margin: 2px auto;
+    }
+
+    .redrowcolor {
+        background-color: #ef0f0f87;
+    }
+</style>
+<script src="~/Areas/LinenLaundry/JsModule/LLDistribution.js"></script>
+<div id="page-content">
+    <div class="">
+        <div class="col-lg-6">
+            <div class="panel panel-primary">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white" style="display: inline-block;margin:4px">Washing Request</h4>
+                      </div>
+
+                    <div class="tab-content clearfix">
+                        <div class="tab-pane active" id="1b" style="height: 540px;overflow-y: auto;border: 1px solid #bdb9b9;">
+                            <div class="form-horizontal" style="display:flex">
+                                <div class="form-group">
+                                </div>
+                            </div>
+
+                            <div class="form-group row" style="display:flex">
+                                <label for="firstname" class="col-sm-1">Cart</label>
+                                <div class="col-sm-4">
+                                    <select id="ddlCart" class="form-control">
+                                        <option value="ALL" selected="selected" >ALL</option>
+                                    </select>
+                                </div>
+
+                                <label for="lastname" class="col-sm-1">From</label>
+                                <div class="col-sm-3">
+                                    <input type="date" id="txtFromDate" class="form-control" style="width:116px" />
+                                </div>
+
+                                <label for="lastname" class="col-sm-1">To</label>
+                                <div class="col-sm-3">
+                                    <input type="date" id="txttoDate" class="form-control" style="width:116px" />
+                                </div>
+                                <button type="button" id="btnIndentList" class="btn btn-success" onclick="GetIndentRequest()"><i class="fa fa-search"></i></button>
+
+
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="tblIndentRequest">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:35%">Indent No</th>
+                                            <th style="width:20%">Indent Date</th>
+                                            <th style="width:15%">T.Indent</th>
+                                            <th style="width:15%">T.Trf</th>
+                                            <th style="width:15%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+          
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="panel">
+                <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                    <h4 class="text-white" style="display: inline-block;margin:4px">.</h4>
+                    <span id="selectedIndent" style="color:white;font-weight:bold"></span>
+                    <input type="button" id="btnlotTransfer" class="btn btn-info btn-xs pull-right" value="Dispatch" onclick="Transfer()" />
+                </div>
+                <div class="panel-body" style="background:#fff;">
+                    <table class="table table-bordered" id="tblIndentInfo">
+                        <thead>
+                            <tr>
+                                <th style="width:10%">L.Stock</th>
+                                <th style="width:10%">ItemId</th>
+                                <th style="width:40%">ItemName</th>
+                                <th style="width:10%">Wash.Qty</th>
+                                <th style="width:10%">Issue.Qty</th>
+                                <th style="width:10%">Pend.Qty</th>
+                                <th style="width:10%">Trf.Qty</th>
+                                <th style="width:10%">Intransit</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+

@@ -1,0 +1,209 @@
+﻿
+@{
+    ViewBag.Title = "SampleDistribution";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Lab/JsModule/SampleDistribution.js"></script>
+
+
+<style>
+    .pat-group {
+        background: #f3cecca6;
+    }
+
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0; margin-top: -13px;  padding: 4px; margin-top:0px;">
+                                <h4 class="text-white">Sample Distribution</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    @*<div class="col-md-5" style="width: 244px; margin-left: 18px;">
+                                            <label>BarCode No</label>
+                                            <div class="form-group flex bc">
+                                                <input id="txtBarcode" type="text" class="form-control" style="width:100%; font-size:11px;" placeholder="ScanBarcode.."/>
+                                            </div>
+                                        </div>*@
+                                    <div class="col-md-5" style="width: 230px;  margin-top: -13px; margin-left: 18px; margin-top:21px;">
+                                        <div class="form-group flex bc">
+                                            <button class="btn btn-success bn" style="width:40%; font-size:10px;">BarCodeNo</button>
+                                            <input id="txtBarcode" type="text" class="form-control" style="width: 75%;  font-size:11px; " placeholder="ScanBarcode.." />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5" style="width: 230px;">
+                                        <div class="form-group flex bc" style="margin-top:21px">
+                                            <input id="txtBarcodeScan" type="text" class="form-control" style="width: 67%;  font-size:11px; " placeholder="SearchBarcode.." />
+                                            <button class="btn btn-success bn" style="width:34%;" onclick="GetSampleInfo('GetSDRInfo')"><span class="fa fa-search"></span>Search</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="width: 244px;">
+                                        <div class="form-group">
+                                            <button class="btn btn-warning bn" id="btnSDR" onclick="GetSampleInfo('DoSDR')" style=" margin-top: 23px;">SDR</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="ml15">
+                                            <div class="">
+                                                <div class="panel">
+                                                    <div class="panel-body">
+                                                        <div class="panel-heading" style="background-color: #337ab7; color: white;margin: 2px 2px;  padding: 1px;">
+                                                            <h4 class="text">InHouseTest</h4>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="scroll" style="height: 400px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                                                    <table class="table table-bordered" id="tblInHouseTest">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th style="width:1%;">S.No</th>
+                                                                                <th style="width:2%;">TestCode</th>
+                                                                                <th style="width:19%;">TestName</th>
+                                                                                <th style="width:1%;">SampleType</th>
+                                                                                <th style="width:1%;">SampleStatus</th>
+                                                                                @*<th>Labname</th>*@
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody></tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="ml15">
+                                            <div class="">
+                                                <div class="panel">
+                                                    <div class="panel-body">
+                                                        <div class="panel-heading" style="background-color: #337ab7;margin: 2px 2px; color: white;  padding: 1px;">
+                                                            <h4 class="text">OutSourceTest</h4>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="scroll" style="height:400px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                                                    <table class="table table-bordered" id="tblOutSourceTest">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th style="width:1%;">S.No</th>
+                                                                                <th style="width:1%;">TestCode</th>
+                                                                                <th style="width:38%;">TestName</th>
+                                                                                <th style="width:9%;">SampleType</th>
+                                                                                <th style="width:1%;">LabName</th>
+                                                                                <th style="width:1%;">SampleStatus</th>
+                                                                        </thead>
+                                                                        <tbody></tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

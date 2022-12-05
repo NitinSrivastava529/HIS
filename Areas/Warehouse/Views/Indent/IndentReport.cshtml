@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "IndentReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<div id="page-content">
+    <script src="~/Areas/Warehouse/JsModule/Indent/IndentReport.js?mis-version-1.0"></script>
+    <section class="content">
+        <div class="row">
+            <div class="box box-purple">
+                
+                <div class="box-body">
+                    <div class="col-md-4">Select Cart<select id="ddlCartList" class="form-control"></select></div>
+                    <div class="col-md-2">From Date<input type="date" class="form-control" id="txtFrom" autocomplete="off" placeholder="dd/mm/yyyy" /></div>
+                    <div class="col-md-2">To Date<input type="date" class="form-control" id="txtTo" autocomplete="off" placeholder="dd/mm/yyyy" /></div>
+                    <div class="col-md-1">Get Detail<input type="button" id="btnGetData" class="form-control btn btn-primary" value="SUBMIT" onclick="OrderIdList()" /></div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="box box-purple">
+
+                    <div class="box-body">
+                        <div class="container" style="width:100%">
+                            <table id="tblOrderIds" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Order No</th>
+                                        <th>Date</th>
+                                        <th>Cmd</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" style="height:500px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-purple">
+                            <div class="row form-group">
+                                <div class="col-xs-12" id="trfDetail">
+                                    <table id="tblOrderDetail" class="table table-bordered ">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:60%">Item Name</th>
+                                                <th style="width:6%">Order.Qty</th>
+                                                <th style="width:6%">Verify.Qty</th>
+                                                <th style="width:6%">StockAtTime</th>
+                                                <th style="width:25%">Verify.Remark</th>
+                                                <th style="width:6%">Trf.Qty</th>
+                                                <th style="width:10%">Balance.Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+</div>
+

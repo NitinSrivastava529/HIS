@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "LedgerBook";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<div id="page-content">
+    <section class="content">
+        <script src="~/Areas/Accounts/JsModule/ledgerBook.js?his-version-1.0"></script>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-purple">
+                    <div class="box-body">
+
+                        <div class="col-md-2">
+                            From Date       <input type="date" class="form-control " id="txtFrom" autocomplete="off" placeholder="dd/mm/yyyy" />
+                        </div>
+                        <div class="col-md-2">
+                            To Date    <input type="date" class="form-control" id="txtTo" autocomplete="off" placeholder="dd/mm/yyyy" />
+                        </div>
+                        <div class="col-md-2">
+                            Search Ledger    <input type="text" class="form-control" id="txtSearchLedger" autocomplete="off" />
+                        </div>
+                        <div class="col-md-1">
+                            <br />
+                            <input id="btnSearch" type="button" value=">>" class="btn bg-purple" onclick="BindLederNames()" />
+                        </div>
+                        <div class="col-md-3" runat="server">
+                            Ledger Name  <select id="ddlLedgerName" class="form-control"> <option value="0">All</option></select>
+                        </div>
+
+                        <div class="col-md-1">
+                            <br />
+                            <input id="btnGetLedgerBooks" type="button" value="Submit" class="btn bg-purple" onclick="GetLedgerBook('Html')" />
+                        </div>
+
+                        <div class="col-md-1">
+                            <br />
+                            <input id="btnGetLedgerBooks" type="button" value="Excel" class="btn bg-purple" onclick="GetLedgerBook('Excel')" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-purple">
+                    <table class='table table-bordered'>
+                        <tr class='text cold bg-purple-active'>
+                            <td style='text-align:left;padding:3px; margin:3px;width:5%'>Command</td>
+                            <td style='text-align:left;padding:3px; margin:3px;width:10%'>VchType</td>
+                            <td style='text-align:left;padding:3px; margin:3px;;width:10%'>Date</td>
+                            <td style='text-align:left;padding:3px; margin:3px;;width:55%'>Particular </td>
+                            <td style='text-align:right;padding:3px; margin:3px;;width:10%'>Debit </td>
+                            <td style='text-align:right;padding:3px; margin:3px;;width:10%'>Credit </td>
+                        </tr>
+                        <tr class='text cold'>
+                            <td colspan="4" style='text-align:right;font-weight:bold;'>Opening Balance Rs.</td>
+                            <td style='text-align:right;padding:3px; margin:3px;;width:10%;background-color:lightgray;font-weight:bold;' id="tdDebitOpening"> </td>
+                            <td style='text-align:right;padding:3px; margin:3px;width:10%;font-weight:bold;background-color:lightgray' id="tdCreditOpening"> </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                <div id="ShowInfo" style="height:380px;overflow-y:scroll;"></div>
+                                <div style="height:75px;">
+                                    <table class='table table-bordered'>
+                                        <tr class='text cold '>
+                                            <td colspan="3" style='text-align:right;font-weight:bold;font-size:12pt;'>Current Total Rs.</td>
+                                            <td style='text-align:right;padding:3px; margin:3px;width:10%;font-size:12pt;font-weight:bold;background-color:lightgray' id="tdTotDebit"></td>
+                                            <td style='text-align:right;padding:3px; margin:3px;width:10%;font-size:12pt;font-weight:bold;background-color:lightgray' id="tdTotCredit"> </td>
+                                        </tr>
+                                        <tr class='text cold '>
+                                            <td colspan="3" style='text-align:right;font-weight:bold;font-size:12pt;'>Closing Balance Rs.</td>
+                                            <td style='text-align:right;padding:3px; margin:3px;width:10%;font-size:12pt;font-weight:bold;background-color:lightgray' id="tdClosingDebit">0</td>
+                                            <td style='text-align:right;padding:3px; margin:3px;width:10%;font-size:12pt;font-weight:bold;background-color:lightgray' id="tdClosingCredit"> </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="myModal" role="dialog" >
+        <div class="modal-dialog modal-lg" >
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <span style="text-align:center;width:100%" id="elVoucherNo"></span>
+                </div>
+                <div class="modal-body">
+                    <span style="text-align:center;width:100%" id="elVoucherDetail"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

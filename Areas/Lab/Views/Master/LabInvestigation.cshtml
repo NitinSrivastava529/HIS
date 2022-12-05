@@ -1,0 +1,320 @@
+﻿@{
+    ViewBag.Title = "LabInvestigation";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<link href="~/Content/css/multiselect.css" rel="stylesheet" />
+<script src="~/Areas/Lab/JsModule/LabInvestigation.js"></script>
+<script src="~/Content/js/multiselect.js"></script>
+
+<style type="text/css">
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 5px 0;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+
+    .btn-xs {
+        height: 20px
+    }
+
+    /*#btndefault {
+        border-bottom: 2px solid red;
+    }*/
+
+    .navbar {
+        min-height: 37px;
+        margin-bottom: 2px;
+    }
+
+    .navbar-form {
+        padding: 0;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .multiselect {
+        width: 432px;
+        height: 20px;
+        border: solid 1px #c0c0c0;
+        overflow: auto;
+        text-align: left;
+        /*margin-top: 22px;*/
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .open > .dropdown-menu {
+        display: block;
+        /*width: 100%;*/
+        height: 250px;
+        overflow: scroll;
+        background: #9bcbfb;
+    }
+</style>
+
+<div id="page-content">
+    <nav class="navbar navbar-light" style="background-color: #86b3de;">
+        <div class="container-fluid">
+            <div class="navbar-form navbar-left">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>Test Category:</label>
+                        <select id="ddlTestSubCategory" class="form-control" style="width:150px"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Status:</label>
+                        <select id="ddlStatus" class="form-control" style="width:100px">
+                            <option value="Y">Active</option>
+                            <option value="N">De-active</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-xs btn-success" onclick="SearchBySubCategory()"><i class="fa fa-search fa-lg"></i></button>
+                </div>
+            </div>
+            <div class="navbar-form navbar-right">
+                <div class="form-inline">
+                    @*<button type="submit" class="btn btn-xs btn-warning btn-flat">New</button>*@
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Test Details</h4>
+                </div>
+                <div class="panel-body" style="height:425px;overflow:auto; border: 1px solid #86b3de;">
+                    <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Test" style="border:1px solid #86b3de" />
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblTestDetails">
+                            <thead>
+                                <tr>
+                                    <th style="width:25%">Test Code</th>
+                                    <th>Test Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="col-lg-3">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="display-inline">Investigation Details</h4>
+                    <button type="submit" class="btn btn-xs btn-warning btn-flat pull-right" onclick="ClearValues()">New</button>
+                </div>
+                <div class="panel-body" style="height:425px;overflow:auto;">
+                    @**@
+                    <div class="col-sm-6 form-group">
+                        <label>Category</label>
+                        <select id="ddlCategory" class="form-control border-imp" onchange="BindSubCategoryByCategory();"></select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Sub Category</label>
+                        <select id="ddlSubCategory" class="form-control border-imp"></select>
+                    </div>
+                    <div class="col-sm-6 form-group" id="divInvestCode" style="display:none">
+                        <label>Investigation Code</label>
+                        <input type="text" id="txtInvestCode" class="form-control border-imp" />
+                    </div>
+                    <div class="col-sm-6 form-group" id="divInvestType">
+                        <label>Investigation Type</label>
+                        <select id="ddlInvestType" class="form-control border-imp">
+                            <option value="0">--Please Select--</option>
+                            <option value="Investigation">Investigation</option>
+                            <option value="Profile">Profile</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Investigation Name</label>
+                        <input type="text" id="txtInvestName" class="form-control border-imp" />
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Name on Report</label>
+                        <input type="text" id="txtInvestReportName" class="form-control border-imp" />
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Book For</label>
+                        <select id="ddlBookFor" class="form-control border-imp">
+                            <option value="0">--Please Select--</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Both" selected="selected">Both</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Report Type</label>
+                        <select id="ddlReportType" class="form-control border-imp">
+                            <option value="0">--Please Select--</option>
+                            <option value="Text">Text</option>
+                            <option value="Numeric">Numeric</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Rate</label>
+                        <input type="text" id="txtRate" data-int data-count="12" class="form-control border-imp" />
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Cost</label>
+                        <input type="text" id="txtCost" data-int data-count="12" class="form-control border-imp" />
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Max Time</label>
+                        <input type="text" id="txtMaxTime" data-int data-count="2" class="form-control border-imp" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Sample Details</h4>
+                </div>
+                <div class="panel-body" style="height:425px;overflow:auto;">
+                    <div class="col-sm-6 form-group">
+                        <label>Sample Option</label>
+                        <select id="ddlSampleoption" class="form-control border-imp">
+                            <option value="0">--Please Select--</option>
+                            <option value="Required">Required</option>
+                            <option value="Not Required">Not Required</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Sample Quantity</label>
+                        <input type="text" id="txtSampleQty" data-int data-count="5" class="form-control" />
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Sample Remark</label>
+                        <input type="text" id="txtSampleRemark" class="form-control" />
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Sample Temprature</label>
+                        <select id="ddlSampleTemp" class="form-control">
+                            <option value="0">--Please Select--</option>
+                            <option value="Frozen">Frozen</option>
+                            <option value="Dry Ice">Dry Ice</option>
+                            <option value="Room Temprature">Room Temprature</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Sample Container</label>
+                        <select id="ddlSampleContainer" class="form-control border-imp">
+                            <option value="0">--Please Select--</option>
+                            <option value="N/A">N/A</option>
+                            <option value="Plain">PLAIN</option>
+                            <option value="Edta">EDTA</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Sample Links</label>
+                        <select id="ddlSamplesdata" multiple="multiple"></select>
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label>Default Sample</label>
+                        <select id="ddlDefaultSample" class="form-control"></select>
+                    </div>
+
+                    <div class="col-sm-12 form-group">
+                        <label>Test Prepration</label>
+                        <textarea id="txttestPrep" class="form-control" cols="5" rows="3"></textarea>
+                    </div>
+
+                    <div class="col-sm-12 form-group">
+                        <label>About Test</label>
+                        <textarea id="txtAboutTest" class="form-control" cols="5" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-2">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4>Flag Details</h4>
+                </div>
+                <div class="panel-body" style="font-size:12px;height:425px;overflow:auto;">
+                    <div class="formGroup">
+                        <input id="chkIsOutSource" type="checkbox" />
+                        <label>IsOutsource</label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkIncementFlag" type="checkbox" />
+                        <label>Increment Flag</label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkPromotionFlag" type="checkbox" />
+                        <label>Promotion Flag</label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkReportFlag" type="checkbox" />
+                        <label>Report Flag</label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkIgnorTat" type="checkbox" />
+                        <label>Ignore Tat</label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkInoutRequired" type="checkbox" />
+                        <label>In-out Required</label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkDisplayInWeb" type="checkbox" />
+                        <label>Display In Web </label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkConsentFlag" type="checkbox" />
+                        <label>Consent Flag</label>
+                    </div>
+                    <div class="formGroup">
+                        <input id="chkPrintSampleInReport" type="checkbox" />
+                        <label>Print Sample In Report</label>
+                    </div>
+
+                    <input type="button" id="btnInvestigationSample" class="btn btn-success btn-flat btn-xs mrg5L" value="Save" onclick="InsertUpdateLabInvestigation()" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

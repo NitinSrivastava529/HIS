@@ -1,0 +1,312 @@
+﻿@{
+	ViewBag.Title = "Item Master";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+@*<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js?his-version-1.0"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js?his-version-1.0"></script>*@
+<link href="~/Content/dist/css/bootstrap-multiselect.css" rel="stylesheet" />
+<script src="~/Content/dist/js/bootstrap-multiselect.js?his-version-1.0"></script>
+<script src="~/Areas/Warehouse/JsModule/Master/ItemMaster.js?his-version-1.0"></script>
+<style>
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        margin:0;
+        padding:3px;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Item Master List</h4>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-3">
+                                    <span class="btn btn-success" onclick="GetItemMasterList('Y')">Load List</span>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span class="text-pink">Search</span>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtSearch" class="form-control input_pass" value="" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="example-box-wrapper">
+                                    <div class="form-horizontal bordered-row">
+                                        <div class="table table-responsive">
+                                            <div class="scroll">
+                                                <span data-itemname style="display:none"></span>
+                                                <span data-itemid style="display:none"></span>
+                                                <table id="tblItem" class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:1%">Edit</th>
+                                                            <th style="width:1%">Item Id</th>
+                                                            <th style="width:25%">Item Name</th>
+                                                            <th style="width:15%"><label class="switch"><input type="checkbox" class="statusflag" id="chkActive" checked=""><span class="slider round"></span></label></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <input type="button" onclick="Clear()" class="btn btn-success" value="New" />
+                                <input type="button" data-toggle="modal" data-target="#modalItemSearch" class="btn btn-success" value="Import From Pharmacy" />
+                                <span id="txtExternalItemId" style="display:none"></span>
+                                <h4 class="text-white pull-right">Create Item Master</h4>
+                            </div>
+                            <div class="panel-body" style="background:#fff;padding: 8px 20px;">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Main Category</label>
+                                        <select id="ddlMainCategory" data-imp class="form-control">
+                                            <optgroup label="Doctor Records"></optgroup>
+                                            <option>SELECT CATEGORY</option>
+                                            <option>GENERAL ITEM</option>
+                                            <option>MEDICAL ITEM</option>
+                                            <option>ASSETS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select id="ddlCategory" data-imp class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Product Name</label>
+                                        <input type="text" id="txtItemName" data-imp class="form-control text-uppercase" data-count="200" maxlength="70" placeholder="Product Name" />
+                                        <span data-item_id style="display:none"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Pur. Flag</label>
+                                        <select id="ddlPurchaseFlag" data-imp class="form-control">
+                                            <option value="Y">Yes</option>
+                                            <option value="N">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>HSN.</label>
+                                        <input type="text" id="txtHSN" class="form-control" data-imp placeholder="HSN(4 or 8 digit only)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>ROL</label>
+                                        <input type="text" id="txtROL" data-int class="form-control" value="0" placeholder="ROL" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>MOQ</label>
+                                        <input type="text" id="txtMOQ" data-int class="form-control" value="0" placeholder="MOQ" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Remark</label>
+                                        <textarea id="txtRemark" class="form-control" rows="1" placeholder="Remark.."></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <ul class="note">
+                                        <li>ROL : Re-Order Level</li>
+                                        <li>MOQ : Maximum Order Quantity</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Shelf No</label>
+                                        <input type="text" id="txtShelfNo" class="form-control" style="z-index: 2;position: absolute;width: 83%;" placeholder="Shelf No." />
+                                        <select id="ddlShelfNo" style="position:relative" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="button" style="margin-top: 25px;" id="btnSaveItem" class="btn btn-success pull-right" value="Submit" />  
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Link Pack</label>
+                                        <div class="fileinput-new input-group" data-provides="fileinput">
+                                            <select class="form-control" id="ddlLinkPack"></select>
+                                            <span id="btnLinkPack" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                        </div>
+                                        <div class="scroll" style="max-height: 260px;">
+                                            <table class="table table-bordered" id="tblLinkPack">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Pack Name</th>
+                                                        <th style="width:1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Link Manufacturer</label>
+                                        <div class="fileinput-new input-group" data-provides="fileinput">
+                                            <select class="form-control" id="ddlLinkManufacturer"></select>
+                                            <span id="btnLinkManufacturer" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                        </div>
+                                        <div class="scroll" style="max-height: 260px;">
+                                            <table class="table table-bordered" id="tblLinkManufacturer">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Manufacturer</th>
+                                                        <th style="width:1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---Referral Modal---->
+<div class="modal fade" id="modalItemSearch" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="margin-top:0%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Item Search</h5>
+                <span data-dismiss="modal" class="btn-close">x</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group flex">
+                            <span style="width:26%"><b>Search</b></span>
+                            <span style="width:4%"><b>:</b></span>
+                            <span style="width:60%">
+                                <input type="text" id="txtItemSearch" onkeyup="ItemSearch()" class="form-control text-uppercase border-imp" placeholder="Search" autocomplete="off" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <br />
+                        <div class="scroll">
+                            <table id="tblSearchItem" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:1%">Action</th>
+                                        <th>Item Id</th>
+                                        <th>Item Name</th>
+                                        <th>Category</th>
+                                        <th>HSN</th>
+                                        <th>Pack Type</th>
+                                        <th>Mfd Id</th>
+                                        <th>Mfd Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

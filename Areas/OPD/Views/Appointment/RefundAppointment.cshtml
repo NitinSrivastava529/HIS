@@ -1,0 +1,183 @@
+﻿
+@{
+	ViewBag.Title = "RefundAppointment";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/OPD/JsModule/RefundAppointment.js?his-version-1.0"></script>
+<style>
+	.refundSection {
+		border: 1px solid #ddd;
+		background: #fbfbfb;
+		width: 32%;
+		margin-bottom: 5px;
+	}
+
+	.total {
+		font-size: 12px !important;
+		opacity: 1 !important;
+		background: #ffeaea !important;
+	}
+
+	.btn-flat {
+		padding: 5px;
+		border: navajowhite;
+	}
+
+	.search-section {
+		border: 1px solid #ddd;
+		background: #ffeaea;
+		padding: 5px;
+		line-height: 26px;
+		text-align: center;
+	}
+
+	.flex {
+		display: flex !important;
+		align-items: center;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white">Refund Appointment</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-md-6 search-section">
+									<div class="flex">
+										<input type="text" id="txtTransactionNo" class="form-control text-uppercase" placeholder="Transaction No." />
+										<input type="button" id="btnSearch" class="btn-success btn-flat" onclick="GetOPDRefund()" value="Search" />
+									</div>
+								</div>
+								<div class="col-md-4 search-section" style="background:#fff;margin-left:10px">
+									<div class="flex">
+										<input type="text" id="txtTranNo" disabled="disabled" class="form-control text-uppercase" />
+									</div>
+								</div>
+								<hr />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="table table-responsive">
+													<div class="scroll">
+														<table id="tblDetails" class="table table-bordered">
+															<thead>
+																<tr>
+																	<th>UHID</th>
+																	<th>Patient Name</th>
+																	<th>Doctor Name</th>
+																	<th>Gender</th>
+																	<th>Mobile No</th>
+																	<th>Appoint. No	</th>
+																	<th>Appoint. Date</th>
+																	<th>Panel Name</th>
+																	<th>TRN Status</th>
+																</tr>
+															</thead>
+															<tbody></tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-8">
+												<div class="scroll">
+													<table id="tblPayment" class="table table-bordered">
+														<thead>
+															<tr>
+																<th>Item Name</th>
+																<th class='text-right'>Gross Amount</th>
+																<th class='text-right'>Discount</th>
+																<th class='text-right'>Net Amount</th>
+																<th style="width:1%">Action</th>
+															</tr>
+														</thead>
+														<tbody></tbody>
+													</table>
+												</div>
+											</div>
+											<div class="col-md-4 refundSection">
+												<div class="form-group" style="margin-bottom:0">
+													<div class="col-md-12">
+														<div class="flex">
+															<label style="width:60%">Refund Amount : </label>
+															<input type="text" id="txtTotal" style="width:40%;margin-left:5px;float:right" disabled="disabled" class="border-imp form-control text-right total" placeholder="0" />
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-md-12">
+														<label>Remark</label>
+														<div class="flex">
+															<textarea class="form-control border-imp" style="width:100%;margin-left:5px;" rows="2" id="txtRemark" placeholder="Cancellation Remark"></textarea>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<div class="col-md-12">
+														<div class="flex">
+															<span style="width:64%;margin:0 10px">
+																<select id="ddlPayMode" class="form-control border-imp" style="width: 90px !important;">
+																	<option value="Cash">Pay Mode</option>
+																	<option value="Cash">Cash</option>
+																	<option value="Cheque">Cheque</option>
+																	<option value="NEFT/RTGS">NEFT/RTGS</option>
+																</select>
+															</span>
+															<input type="button" id="btnCancel" class="btn-danger btn-flat" onclick="AppointmentCancellation()" value="Cancel" />
+															<input type="button" id="btnRefund" class="btn-success btn-flat" onclick="AppointmentCancellation()" value="Refund" />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "DietRequisitionSlip";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top:5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+        margin: 0 0 5px 0;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<script src="~/Areas/Dietician/JsModule/DietRequisitionSlip.js"></script>
+<div id="page-content">
+    <dsiv class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white text-left">Diet Requisition Slip</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-2">
+                            <label>From</label>
+                            <input type="date" id="txtFrom" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label>To</label>
+                            <input type="date" id="txtTo" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label>Category</label>
+                            <select class="form-control" id="ddlCategory"></select>
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label>Floor</label>
+                            <select class="form-control" id="ddlFloor"></select>
+                        </div>
+                        <div class="col-md-2 form-group">
+                            <label>.</label>
+                            <div class="flex">
+                                <button class="btn btn-primary" onclick="GetPatientDietInfo()" style="margin:0;border-radius:0;height:28px">Get Records <i class="fa fa-sign-in">&nbsp;</i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="button" class="btn btn-danger" value="Freeze Selected Diet" onclick="diet_LockOrFreeze();" />
+
+                        </div>
+                        <div class="col-md-7 form-group pull-right" style="text-align:right">
+                            <button class="btn btn-primary" onclick="SummarizedDietInfoExcel()"><i class="fa fa-sign-in">&nbsp;</i>Summarised Diet EXCEL</button>
+                            <button class="btn btn-warning" onclick="DownloadExcel()"><i class="fa fa-file-excel-o">&nbsp;</i>Patient Wise EXCEL</button>
+                            <button class="btn btn-success" onclick="DownloadPDF()"><i class="fa fa-file-pdf-o">&nbsp;</i>PDF</button>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="scroll" style="min-height:490px;overflow:auto;border:1px solid #2492b3">
+                                <table id="tblPatientDietInfo" class="table table-bordered" style="margin-bottom:0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%">IPD No</th>
+                                            <th>Patient Name</th>
+                                            <th style="width:16%">Age Info</th>
+                                            <th>Room Bed Detail</th>
+                                            <th>Diet Name</th>
+                       
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dsiv>
+</div>
+

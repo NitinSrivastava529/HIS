@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Click LatLng</title>
+    @*<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>*@
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <style>
+        #map {
+            height: 100%;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div> <input type="button" onclick="drawRoute()" value="draw rout" /></div>
+   
+    <div id="map"></div>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADa2DuwUeAJOCgRMlnDcmLcVpphP21daU&callback=initialize&v=weekly?sensor=false" async></script>
+    <script src="~/Areas/Customer/JsModule/GetAmbulance.js"></script>
+</body>
+</html>

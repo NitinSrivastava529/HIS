@@ -1,0 +1,71 @@
+﻿
+<div id="page-header" class="bg-gradient-9">
+
+	<div id="mobile-navigation">
+		<button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar"><span></span></button>
+		<a href="/Admin/Dashboard" class="logo-content-small" title="HIS"></a>
+	</div>
+	<div id="header-logo" class="logo-bg">
+		<a href="/Admin/Dashboard" class="logo-content-big" title="HIS">
+			<span>HIS</span>
+		</a>
+		<a href="/Admin/Dashboard" class="logo-content-small" title="HIS">
+			<span>HIS</span>
+		</a>
+		<a id="close-sidebar" href="#" title="Close sidebar">
+			<i class="glyph-icon icon-angle-left"></i>
+		</a>
+	</div>
+
+	<div id="header-nav-left">
+		<div class="user-account-btn dropdown">
+			<a href="#" title="My Account" class="user-profile clearfix" data-toggle="dropdown" aria-expanded="false">
+				<img width="28" src="~/Content/logo/admin.png" alt="Profile image">
+				<span>User Panel</span>
+				<i class="glyph-icon icon-angle-down"></i>
+			</a>
+			<div class="dropdown-menu float-left" style="display: none;">
+				<div class="box-md">
+					<div class="login-box clearfix">
+						<div class="user-info">
+							<span class="LoggedInUserMobile"></span>
+							@*<div class="divider"></div>*@
+							<select id="ddlUnit1" class="form-control" style="display: none;">
+								<option>Indira Nagar (D) Lucknow</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="header-nav-right">
+		<div class="LoggedInUser">
+		</div>
+		<div class="Unit" style="display: none;">
+			<select id="ddlUnit">
+				@*<option data-unitid="IDCD">Indra Diagnostic Center</option>*@
+			</select>
+		</div>
+		<div class="dropdown" id="dashnav-btn">
+			<a href="#" data-toggle="dropdown" data-placement="bottom" class="popover-button-header tooltip-button" title="Dashboard Quick Menu">
+				<i class="glyph-icon icon-linecons-cog"></i>
+			</a>
+			<div class="dropdown-menu float-right">
+				<div class="box-sm">
+					<div class="pad5T pad5B pad10L pad10R dashboard-buttons clearfix">
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="header-btn" id="logout-btn" onclick="if (confirm('Are you sure want to Logout?')) { logOut() }" title="Logout">
+			<i class="fa fa-power-off" style="font-size: 24px;line-height: 19px;color: #ffbcbc;"></i>
+		</a>
+		<a class="header-btn" onclick="toggleFullScreen()" href="#" title="Toggle Full Screen">
+			<img src="~/images/full_screen.png" />
+		</a>
+	</div>
+	<img src="~/images/loading.gif" class="img-responsive" style="width:100% !important;height: 4px;display:none;" id="LineLoader" />
+</div>
+

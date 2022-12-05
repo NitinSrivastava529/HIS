@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "CreateItem";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Masters/JsModule/CreateItem.js"></script>
+
+<style>
+    .panel {
+        margin-bottom: 2px !important;
+    }
+
+    .panel-heading {
+        padding: 1px 5px;
+    }
+
+    .panel-body {
+        padding: 2px 0;
+        margin-top: 1px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        height: 20px;
+        padding: 2px !important
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        color: #fff;
+        font-size: 15px;
+    }
+</style>
+
+<div id="page-content">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="display:flex">
+                    <h4 style="width:7%">Create Item </h4>
+                </div>
+                <div class="panel-body" id="divItemCreation">
+                    <div class="col-sm-2 form-group">
+                        <label>Category</label>
+                        <select id="ddlCategory" class="form-control border-imp" style="border:1px solid #86b3de" onchange="BindSubCategoryByCategory()"></select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Sub Category</label>
+                        <select id="ddlSubCategory" class="form-control border-imp" style="border:1px solid #86b3de"></select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>CPT Codes</label>
+                        <input type="text" id="txtCptCods" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <label>Item Name</label>
+                        <input type="text" id="txtItemName" class="form-control" style="border:1px solid #86b3de" />
+                    </div>
+
+                    <div class="col-sm-1 form-group">
+                        <label>Is Discountable</label>
+                        <select id="ddlDiscountable" class="form-control">
+                            <option value="Y" selected="selected">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-1 form-group">
+                        <label>Is Sharable</label>
+                        <select id="ddlSharable" class="form-control">
+                            <option value="1">Yes</option>
+                            <option value="0" selected="selected">No</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2 form-group">
+                        <input type="hidden" id="hidautoid" />
+                        <button type="submit" id="btndaddupdate" style="margin: 21px 0 0 0;" class="btn btn-xs btn-success" value="Save" onclick="AddUpdateCreateItem()">Save</button>
+                        <button type="submit" id="btnSearch" style="margin: 21px 0 0 0;" onclick="SearchItems()" class="btn btn-xs btn-danger">Search</button>
+                        <button type="submit" id="btnExcel" style="margin: 21px 0 0 0;" class="btn btn-xs btn-warning" onclick="DownloadExcel()">Excel</button>
+                        <button type="submit" id="btnNew" style="margin: 21px 0 0 0;" class="btn btn-xs btn-warning" onclick="ClearValues()">New</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="display:flex">
+                    <h4 style="width:10%">Item Details </h4> <input type="text" id="txtSeachItems" class="form-control" style="width:25.5%" placeholder="Search Items" />
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" style="height:500px;overflow-y:auto">
+                        <table class="table table-bordered" id="tblItemDetails">
+                            <thead>
+                                <tr>
+                                    <th>Edit</th>
+                                    <th>Item Id</th>
+                                    <th>Sub Category</th>
+                                    <th style="width:25%">Item Name</th>
+                                    <th>Is Discountable</th>
+                                    <th>Is Shareable</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="col-lg-10">
+        <div class="row">
+            <div id="divItemTransPartial">
+        </div>
+          
+        </div>
+    </div>*@
+</div>

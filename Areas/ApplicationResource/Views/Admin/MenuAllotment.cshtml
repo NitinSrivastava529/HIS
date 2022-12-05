@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "MenuAllotment";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+@*<script src="~/Areas/ApplicationResource/JsModule/MenuAllotment.js?his-version-1.0"></script>*@
+
+<link href="~/Content/css/MenuMaster.css?his-version-1.0" rel="stylesheet" />
+<div id="page-content">
+    <div class="modal fade" id="ModalAssignUnit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="margin:7% -19%">
+                <div class="modal-header" style="padding: 4px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center"><span class="EmployeeUnit"></span></h5>
+                </div>
+                <div class="modal-body" style="height: 550px;overflow: auto;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" onkeyup="searchTable('txtSearchCart1','tblwhCartList')" id="txtSearchCart1" placeholder="Search" />
+                            <div class="scroll-table">
+                                <table id="tblwhCartList" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Select</th>
+                                            <th>Cart Id</th>
+                                            <th>Cart Type</th>
+                                            <th>Cart Name</th>
+                                            <th>Created On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1 text-center" style="margin-top:150px">
+                            <button type="button" onclick="return EmpAsgnToCart();" class="btn btn-xs btn-full btn-warning">>></button>
+                            <br />
+                            <button type="button" onclick="return EmployeeDeattachToCart();" class="btn btn-xs btn-full btn-danger"><<</button>
+                        </div>
+
+                        <div class="col-md-7">
+                            <input type="text" class="form-control" onkeyup="searchTable('txtSearchCart2','tblwhCartListCopy')" id="txtSearchCart2" placeholder="Search" />
+                            <div class="scroll-table">
+                                <table id="tblwhCartListCopy" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Select</th>
+                                            <th>Employee Code</th>
+                                            <th>Name</th>
+                                            <th>Cart Id</th>
+                                            <th>Cart Type</th>
+                                            <th>Cart Name</th>
+                                            <th>Created On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="col-xs-6">
+                        <span class="text-pink">Manage Menu Allotment</span>
+                    </div>
+                    <hr />
+                    <div class="example-box-wrapper">
+                        <div class="form-horizontal bordered-row">
+                            <div class="form-group">
+                                @*<label class="col-sm-3 control-label">Role Name</label>*@
+                                <div class="col-sm-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <input type="text" id="txtEmpName" class="form-control input_pass" value="" placeholder="Employee Name">
+                                        <span id="btnGetEmployee" class="input-group-addon btn btn-primary">
+                                            <i class="fa fa-plus"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                        <select id="ddlEmployee" class="form-control">
+                                            <option>Select Employee</option>
+                                        </select>
+                                        <span id="btnShowAssignCart" class="input-group-addon btn btn-primary btn-xs" style="background:#026cbd !important;display:none;">
+                                            <i class="fa fa-plus"> Assign Cart</i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @*<label class="col-sm-3 control-label">Role Name</label>*@
+                                <div class="col-sm-2">
+                                    <ul style="padding: 0;">
+                                        <li class="dropdown">
+                                            <a href="#" data-toggle="dropdown" style="text-decoration:none" class="dropdown-toggle form-control">Select Role<b class="caret"></b></a>
+                                            <ul class="dropdown-menu" id="ddRole" style="padding-left: 11px;max-height:300px;overflow:hidden auto"></ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-10">
+                                    <ul id="roleList"></ul>
+                                </div>
+                            </div>
+                            <div class="form-group" id="MenuAllot">
+                                <div class="col-sm-5">
+                                    <div class="example-box-wrapper">
+                                        <div class="panel-group" id="accordion">
+                                            <div class="panel" id="rolePanel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="">
+                                        <span id="btnUnAllotSubmenu" class="input-group-addon btn btn-danger"><<</span>
+                                        <span id="btnAllotSubmenu" class="input-group-addon btn btn-primary">>></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <ul id="AllotedRoleToEmp" style="display:none"></ul>
+                                    <div class="example-box-wrapper">
+                                        <div class="panel-group" id="accordion">
+                                            <div class="panel" id="roleAllotedPanel">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<ul id="AllotedMenuList"></ul>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

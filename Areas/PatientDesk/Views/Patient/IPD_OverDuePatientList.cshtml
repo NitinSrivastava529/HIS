@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "IPD_OverDuePatientList";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    .box-header {
+        padding: 0 17px !important;
+    }
+
+    .box-body {
+        padding: 2px 10px;
+    }
+
+    h4, .h4, h5, .h5, h6, .h6 {
+        margin-top: 2px;
+        margin-bottom: 2px;
+    }
+   .form-group label {
+        font-size: 12px !important;
+        margin: 4px -15px !important;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 500px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    .notification {
+        background-color: #555;
+        color: white;
+        text-decoration: none;
+        padding: 15px 15px;
+        position: relative;
+        display: inline-block;
+        border-radius: 2px;
+    }
+
+        .notification:hover {
+            background: red;
+        }
+
+        .notification .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+        }
+</style>
+
+<div id="page-content">
+    <script src="~/Areas/PatientDesk/JsModule/IPD_OverDuePatientList.js"></script>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-purple">
+                    <div class="box-body">
+                        <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                            <button class="flex-btn btn-info" style="width:20%;text-align:center">
+                                <span id="txtAutoRefresh" class="badge">
+
+                                </span>
+                            </button>
+                            <input type="text" id="myInput" style="border-color: #00c0ef;" class="form-control bc" placeholder="Search..">
+
+                        </div>
+                        @*<input class="form-control" id="myInput" type="text" placeholder="Search.." />*@
+                        <div class="table-responsive tableFixHead">
+                            <table id="tblPatientList" class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th style="width:2%;text-align:left">SN</th>
+                                        <th style="width:3%;text-align:center">Cmd</th>
+                                        <th style="width:4%;text-align:left">IPDNo</th>
+                                        <th style="width:14%;text-align:left">Patient Name</th>
+                                        <th style="width:5%;text-align:left">Mobile</th>
+                                        <th style="width:12%;text-align:left">DoctorName</th>
+                                        <th style="width:8%;text-align:left">Room Category</th>
+                                        <th style="width:5%;text-align:right">Deposit</th>
+                                        <th style="width:5%;text-align:right">Bill.Amt</th>
+                                        <th style="width:5%;text-align:right">Pymt.Status</th>
+                                        <th style="width:5%;text-align:right">Alert.Amt</th>
+                                        <th style="width:5%;text-align:right">Repeat.Call</th>
+                                        <th style="width:3%;text-align:center">Save</th>
+                                        <th style="width:10%;text-align:center">Last Call</th>
+                                        <th style="width:15%;text-align:left;">Panel Name</th>
+                                        <th style="width:0%;text-align:left;display:none;">Admi tDate</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <span style="text-align:center;width:100%" id="elDoctorName"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <table id="tblBookingDetail" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <td colspan="2" id="pInfo"></td>
+                                </tr>
+                                <tr>
+                                    <td>Remark</td>
+                                    <td><textarea id="txtRemark" class="form-control"> </textarea></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td> <button id="btnSave" type="button" class="btn btn-success btn-block" onclick="CallOverDueInsertUpdate()">Complete Call</button></td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+
+                </div>
+                <div class="modal-body">
+
+                    <table id="tblCallLog" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>S.N.</th>
+                                <th>Date</th>
+                                <th>Remark</th>
+                                <th>Call By</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

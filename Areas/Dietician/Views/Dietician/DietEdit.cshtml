@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "DietEdit";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+        margin: 0 0 5px 0;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<script src="~/Areas/Dietician/JsModule/DietEdit.js"></script>
+<script src="~/Areas/Dietician/JsModule/_partialDietSchedule.js"></script>
+<div id="page-content">
+    <dsiv class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white text-left">Diet Edit</h4>
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-3">
+                            <label>From</label>
+                            <input type="date" id="txtFrom" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label>To</label>
+                            <input type="date" id="txtTo" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label>Category</label>
+                            <select class="form-control" id="ddlCategory"></select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>Floor</label>
+                            <div class="flex">
+                                <select class="form-control" id="ddlFloor"></select>
+                                <button class="btn btn-primary" onclick="GetPatientDietInfo()" style="margin:0;border-radius:0;height:28px"><i class="fa fa-sign-in">&nbsp;</i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group" style="text-align:right;">
+                            <label>.</label>
+                            <div class="flex" style="text-align:right;">
+                                <input type="button" class="btn btn-success" value="Lock Selected Diet" onclick="diet_LockOrFreeze();" />
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+                            <div class="scroll" style="min-height:490px;overflow:auto;border:1px solid #2492b3">
+                                <table id="tblPatientDietInfo" class="table table-bordered" style="margin-bottom:0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10%">IPD No</th>
+                                            <th>Patient Name</th>
+                                            <th style="width:16%">Age Info</th>
+                                            <th>Room Bed Detail</th>
+                                            <th>Diet Name</th>
+                                            <th>CMD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                        <h4 class="text-white text-left">Diet Info</h4>
+                    </div>
+                    <div class="panel-body">
+                        @Html.Partial("_DietSchedule")
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </dsiv>
+</div>
+<div class="modal fade" id="modalNutritionBreakup" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="margin-top:40%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:1px 5px;">
+                <h5 class="text-white">Nutrition Breakup</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="scroll" style="overflow:auto;border:1px solid #2492b3">
+                            <table id="tblNutritionBreakup" class="table table-bordered" style="margin-bottom:0">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%">Nutrition Name</th>
+                                        <th style="width:10%;text-align:center">Nutrition Value</th>
+                                        <th style="width:10%;">Measure</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <button data-dismiss="modal" class="btn btn-danger btn-xs pull-right">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                    Collapsible Group 1
+                </a>
+            </h4>
+        </div>
+        <div id="collapse1" class="panel-collapse collapse in">
+            <div class="panel-body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo consequat.
+            </div>
+        </div>
+    </div>
+</div>

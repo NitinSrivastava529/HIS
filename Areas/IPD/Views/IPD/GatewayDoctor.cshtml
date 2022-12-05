@@ -1,0 +1,586 @@
+﻿
+@{
+    ViewBag.Title = "IPDDoctorGateway";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<link href="~/Content/css/MenuMaster.css?his-version-1.0" rel="stylesheet" />
+<script src="~/Areas/IPD/JsModule/IPD/IPDDoctorGateway.js"></script>
+<style>
+    .activePage {
+        background: #8f885c !important;
+    }
+    .RoomBed {
+        background: #f7eac6;
+        padding: 3px;
+        margin: 1px;
+        border-radius: 2px;
+    }
+    #dash-dynamic-section {
+        right: 0;
+        width: 83.5%;
+        float: right;
+        /* background: url(http://192.168.4.10/HIS/Images/patter.jpg); */
+        margin: 4px 9px;
+        height: 80%;
+        position: fixed;
+        display: inline-block;
+        border: solid 1px #7ec4df;
+        padding: 0;
+        border-radius: 3px;
+    }
+
+    .left-panel button i {
+        float: right;
+        font-size: 14px;
+        background: #3199d5;
+        border: 1px solid #dbdbdb;
+        border-radius: 16px;
+        padding: 1px 6px;
+        height: 20px;
+        width: 20px;
+        line-height: 15px;
+    }
+
+    .left-panel button {
+        text-align: left;
+        display: inline-block;
+        padding: 8px 10px;
+        margin: 2px 4px;
+        font-size: 11px;
+        line-height: 1.42857143;
+        cursor: pointer;
+        border: none;
+        border-radius: 3px;
+        background: #3c8dbc;
+        color: #fff;
+        box-shadow: none;
+        width: 96%;
+    }
+
+    .left-panel {
+        background: #ebebeb;
+        border: 1px solid #7ec4df;
+        float: left;
+        margin-top: 4px;
+        margin-left: 15px;
+        position: fixed;
+        width: 15%;
+        height: 80%;
+        border-radius: 3px;
+    }
+
+    #dash-dynamic-section label.title {
+        margin-bottom: 2px;
+        margin-top: 0%;
+        font-size: 13px;
+        text-align: center;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        width: 100%;
+        background: #b2e0f3;
+    }
+
+    .left-panel label {
+        margin-bottom: 2px;
+        margin-top: 0%;
+        font-size: 13px;
+        text-align: center;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        width: 100%;
+        background: #b2e0f3;
+    }
+
+    div#skill .circle {
+        position: relative;
+        height: 22px;
+        width: 22px;
+        border: 3px solid #ff934c;
+        border-top-color: #e60000;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+        top: -10px;
+        left: -4px;
+    }
+
+    div#skill {
+        /* background-color: rgba(144, 0, 64, 0.8); */
+        color: #fff;
+        padding: 9px 0;
+        position: absolute;
+        display: none;
+    }
+
+    .nav > li > a {
+        font-size: 12px;
+        position: relative;
+        display: block;
+        margin: -1px 0px 4px 0px;
+        padding: 0px 15px !important;
+    }
+
+    .tab-pane {
+        padding: 0px 15px;
+    }
+
+    .select2-dropdown {
+        z-index: 140;
+    }
+
+    .dash-header {
+        position: fixed;
+        width: 99%;
+        margin: 0 5px;
+        border-radius: 3px;
+        height: 60px;
+        background: #cdebf7;
+        padding-left: 10px;
+        z-index: 2;
+    }
+
+        .dash-header table {
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            color: black;
+        }
+
+    .dash-body {
+        position: relative;
+        width: 100%;
+        top: 58px;
+    }
+
+    .OPDPrintPreview {
+        width: 70%;
+        float: right;
+        /*padding: 0 13px;*/
+        border: 1px solid #000;
+    }
+
+    .OPDPrintPreview-header {
+        padding: 0 8px;
+        margin-top: -17px;
+        padding-bottom: 6px;
+    }
+
+        .OPDPrintPreview-header label.pull-left {
+            margin: 0;
+            color: #000000;
+            font-family: Verdana, Arial, sans-serif;
+        }
+
+        .OPDPrintPreview-header label.header-value {
+            margin-bottom: 0px !important;
+            font-size: 13px;
+            font-family: Verdana, Arial, sans-serif;
+            color: #000;
+            font-weight: normal;
+        }
+
+    .OPDPrintPreview-body {
+        border-top: 2px solid #000;
+        padding-bottom: 5px;
+        margin-top: -2px;
+    }
+
+    .OPDPrintPreview-body-left {
+        margin-bottom: -5px;
+        border-right: solid 1px #303e54;
+        min-height: 650px;
+    }
+
+    .OPDPrintPreview-body-right {
+        margin-bottom: -5px;
+        border-right: solid 1px #303e54;
+        min-height: 650px;
+    }
+
+    .OPDPrintPreview-body-right-doctor {
+        bottom: 10px;
+        position: absolute;
+        right: 15px;
+        font-weight: bold;
+    }
+
+    .OPDPrintPreview table {
+        color: #000;
+        border: 1PX solid #ddd;
+        font-size: 14px;
+    }
+
+    .right-panel {
+        margin-top: 3px;
+        border: 1px solid green;
+        padding: 5px;
+    }
+
+
+
+    .panel-heading {
+        background: #026cbd;
+        padding: 0px;
+    }
+
+    .panel-title {
+        margin-left: 15px;
+        text-align: left;
+        font-weight: bold;
+        font-size: 13px;
+        color: white;
+        background: #026cbd;
+        padding: 3px;
+    }
+
+    .rotate {
+        transform: rotateZ(12deg);
+    }
+
+    .ListItems {
+        border-radius: 8px;
+        line-height: 0px;
+        font-size: 88%;
+        list-style: none;
+        padding: 7px;
+        background: #fafcfe;
+        border: 1px solid #ddd;
+        max-height: 400px;
+        overflow: auto;
+        overflow-y: auto;
+    }
+
+        .ListItems li {
+            font-weight: normal;
+        }
+
+            .ListItems li label input[type=checkbox] {
+                margin: 0;
+            }
+
+            .ListItems li label {
+                user-select: none;
+                cursor: pointer;
+                max-width: 205px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            .ListItems li a.fa {
+                cursor: pointer;
+                padding-left: 5px;
+                float: right;
+                font-size: 14px;
+            }
+
+            .ListItems li a.fa-trash {
+                color: #dc1c1c;
+            }
+
+            .ListItems li a.fa-pencil {
+                color: #ff8232;
+            }
+
+    .search-box {
+        font-size: 14px;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        color: #3e3e3e;
+    }
+
+    .bottom-box {
+        font-size: 14px;
+        border-radius: 5px;
+        margin-bottom: 4px;
+        color: #3e3e3e;
+    }
+
+    .text11 {
+        font-size: 11px !important;
+    }
+
+    .panel-body {
+        padding: 5px 12px;
+    }
+
+    .btn-flat {
+        border-radius: 2px;
+        border: none;
+        padding: 0;
+    }
+
+    .panel-group .panel + .panel {
+        margin-top: 2px;
+    }
+
+    .panel-group {
+        margin-bottom: 4px;
+    }
+
+    .currentVisit {
+        color: #b7510d;
+        cursor: pointer;
+        padding: 0 5px;
+        font-size: 15px;
+    }
+
+        .currentVisit:hover {
+            color: #484343;
+        }
+
+    .form-control {
+        border: 1px solid #d8d1d1;
+    }
+
+    .prescribedItem {
+        margin-bottom: 10px;
+        display: none;
+    }
+
+        .prescribedItem TemplateGroup {
+            font-weight: bold;
+            cursor: pointer;
+            font-weight: bold;
+            user-select: none;
+            color: black;
+        }
+
+        .prescribedItem span {
+            color: black;
+            font-size: 11px;
+            border-radius: 4px;
+            border: 1px solid #e0dede;
+            padding: 1px 2px;
+            line-height: 23px;
+            margin-left: 4px;
+            cursor: pointer;
+        }
+
+    .OPDPrintPreview-body-left .prescribedItem {
+        color: black;
+        padding-left: 5px;
+    }
+
+        .OPDPrintPreview-body-left .prescribedItem b {
+            color: #000000;
+            font-size: 13px;
+            border-radius: 0;
+            border: none;
+            margin-left: 0px;
+            cursor: pointer;
+            font-weight: 700;
+            padding: 0;
+        }
+
+    .prescribedItem span:hover {
+        border-radius: 0;
+        border: 1px solid #ffcdcd;
+    }
+
+    .MedicineTemplate tbody tr:hover {
+        cursor: pointer;
+        color: #026cbd;
+    }
+
+    .text-red {
+        color: #d82323 !important;
+    }
+
+    span {
+        user-select: none; /* standard syntax */
+        -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+        -moz-user-select: none; /* mozilla browsers */
+        -ms-user-select: none; /* IE10+ */
+    }
+
+    #LaboratoryRadiologyItems span, #VitalSignItems span, #PrescribedProcedureItems span {
+        user-select: none;
+        height: 14px;
+        display: table;
+        list-style: none;
+        font-size: 10px;
+        font-weight: bold;
+        border: none;
+        padding: 0px;
+        margin: -4px 2px;
+        color: black;
+        opacity: initial;
+        text-transform: capitalize;
+        line-height: 14px;
+        margin: 0px;
+    }
+
+        #LaboratoryRadiologyItems span:hover, #PrescribedProcedureItems span:hover {
+            color: blue;
+        }
+
+    .active-btn {
+        background-color: #2969a7 !important;
+    }
+
+    .active-item {
+        background: #3f7f50 !important;
+    }
+
+    .NoteItems {
+        bottom: 5px;
+        background: #e8e8e8;
+        padding: 1px 9px 5px 6px;
+        margin: 0px 0px 0px 8px;
+        position: absolute;
+    }
+
+    .prescribedItem input[type=text] {
+        font-size: 11px;
+        border: 1px solid #cac8c8;
+        border-radius: 2px;
+    }
+
+    close {
+        display: none;
+        background: #e40000;
+        color: #fff;
+        border-radius: 34px;
+        width: 10px;
+        height: 10px;
+        font-size: 7px;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+        right: 6px;
+        top: -7px;
+        padding: 2px;
+    }
+
+    .show {
+        display: initial;
+    }
+
+    .btn-rx {
+        padding: 1px 22px 2px 2px;
+        width: 19px;
+        height: 17px;
+        border: 1px solid #007b15;
+        border-radius: 3px;
+        margin-right: 0px;
+        cursor: pointer;
+        display: flex;
+        font-size: 15px;
+    }
+
+    .select2-container {
+        width: 100% !important;
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        z-index: 10000;
+        position: revert;
+        vertical-align: middle;
+    }
+
+    .form-group {
+        margin-bottom: 6px;
+    }
+    /*Editable Drop-Down Control*/
+    .select-editable {
+        position: relative;
+        background-color: white;
+        width: 100%;
+    }
+
+        .select-editable select {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            width: 100%;
+            margin: 0;
+        }
+
+        .select-editable input {
+            border: 1px solid #d6d6d6;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 90%;
+            padding: 1px 6px;
+            font-size: 12px;
+        }
+
+            .select-editable select:focus, .select-editable input:focus {
+                outline: none;
+            }
+
+    .btnGroup button {
+        width: max-content;
+    }
+
+    .btnRound {
+        margin-right: 4px !important;
+        border-right: 1px solid #069783 !important;
+        width: 8% !important;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dash-header">
+                    <table class="table" id="tblAdviceHeader">
+                        <tr>
+                            <td rowspan="2"><img src="http://192.168.4.10/his/Images/FemaleDefault.png" width="50" class="img-humbnail" /></td>
+                            <td><b>Patient Name</b></td>
+                            <td><b>:</b></td>
+                            <td class="text-red">NA</td>
+
+                            <td><b>Age</b></td>
+                            <td><b>:</b></td>
+                            <td class="text-red">NA</td>
+
+                            <td><b>IPD No.</b></td>
+                            <td><b>:</b></td>
+                            <td class="text-red">NA</td>
+
+                            <td><b>Ad. Date</b></td>
+                            <td><b>:</b></td>
+                            <td class="text-red">NA</td>
+                        </tr>
+                        <tr>
+                            <td><b>Doctor Name</b></td>
+                            <td><b>:</b></td>
+                            <td class="text-red">NA</td>
+
+                            <td><b>UHID</b></td>
+                            <td><b>:</b></td>
+                            <td class="text-red">NA</td>
+
+                            <td><b>Panel</b></td>
+                            <td><b>:</b></td>
+                            <td colspan="1" class="text-red">NA</td>
+                            <td colspan="3" class="RoomBed"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="dash-body">
+            <div class="row">
+                <div class="left-panel">
+                    <label>Menu-Section</label>
+                    <div id="menuPanel">
+
+                    </div>
+                </div>
+                <div id="dash-dynamic-section">
+                    <label class="title">Menu-Section</label>
+                    <div id="dash-dynamic">
+                        @*@Html.Partial("../NursingView/_MedicineIndent")*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

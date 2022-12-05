@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "FeedbackReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/IPD/JsModule/FeedBack/FeedbackReport.js"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body" style="padding:5px 10px">
+
+                        <div class="col-md-3">
+                            Report Type
+                            <select id="ddlRepType" class="form-control">
+                                <option value="IPD-DISCHARGE"> IPD-DISCHARGE-FEEDBACK</option>
+                                <option value="IPD-DAILY-FEEDBACK"> IPD-DAILY-FEEDBACK</option>
+                                <option value="OPD-FEEDBACK"> OPD-DAILY-FEEDBACK</option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-2">
+                            From Date
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="date" id="txtFrom" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            To Date
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <input type="date" id="txtTo" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            .
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <button class="btn btn-warning btn-custom" onclick="IPDDischaregFeedBack()"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="divOverAll">
+                </div>
+                <div class="col-md-3" id="divQuest" style="max-height:400px;overflow-y:scroll">
+                </div>
+                <div class="col-md-3" id="divDoctor" style="max-height:400px;overflow-y:scroll">
+                </div>
+                <div class="col-md-3" id="divNurses" style="max-height:400px;overflow-y:scroll">
+                </div>
+                <div class="col-md-3" id="divFloor" style="max-height:400px;overflow-y:scroll">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

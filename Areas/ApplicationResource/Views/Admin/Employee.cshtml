@@ -1,0 +1,246 @@
+﻿
+@{
+    ViewBag.Title = "Employee";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    h6.title-hero {
+        font-size: 12px;
+    }
+</style>
+<head>
+	<script src="~/Areas/ApplicationResource/JsModule/Employee.js?his-version-1.0"></script>
+	<!-- datedropper -->
+	<link href="~/Content/DateDropper/datedropper.css?his-version-1.0" rel="stylesheet" />
+	<script src="~/Content/DateDropper/datedropper.js?his-version-1.0"></script>
+</head>
+<div id="page-content">
+    <div class="container">
+        <div class="panel">
+            <div class="panel-body">
+                <h4 class="custom-title">
+                    Employee Registration Panel
+                </h4>
+                <div class="example-box-wrapper">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Employee Code</label>
+                                <input type="text" id="txtEmployeeCode" class="form-control" placeholder="Employee Code">
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="title-hero">Personal Details<hr /></h6>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Employee Name</label>
+                                <input type="text" id="txtEmployeeName" class="form-control" placeholder="Employee Name">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Gender</label>
+                                <select id="ddlGender" class="form-control">
+                                    <option>Select Gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Marital Status</label>
+                                <select id="ddlMaritalStatus" class="form-control">
+                                    <option>Select Marital Status</option>
+                                    <option>Married</option>
+                                    <option>Single</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">DOB</label>
+                                <input type="text" id="txtDOB" class="form-control" placeholder="dd/mm/yyyy">
+                                <!-- datedropper init -->
+                                <script>
+                                    $('#txtDOB').dateDropper({
+                                        maxYear: 2050,
+                                        minYear: 1950,
+                                        theme: 'leaf',
+                                        lang: 'en',
+                                        format: 'd-m-Y'
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Mobile No.</label>
+                                <input type="text" id="txtMobileNo" maxlength="10" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Mobile No.">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Husband/Wife Name</label>
+                                <input type="text" id="txtHusbandWife" class="form-control" placeholder="Husband/Wife Name">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Father Name</label>
+                                <input type="text" id="txtFatherName" class="form-control" placeholder="Father Name">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Mother Name</label>
+                                <input type="text" id="txtMotherName" class="form-control" placeholder="Mother Name">
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="title-hero">Local Address<hr /></h6>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Local Address</label>
+                                <input type="text" id="txtLocalAddress" class="form-control" placeholder="LocaL Address">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Locality</label>
+                                <input type="text" id="txtLocLocality" class="form-control" placeholder="Locality">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">State</label>
+                                <select id="ddlLocState" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">City</label>
+                                <select id="ddlLocCity" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="title-hero">Permanent Address<hr /></h6>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Permanent Address</label>
+                                <input type="text" id="txtPerAddress" class="form-control" placeholder="Permanent Address">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Locality</label>
+                                <input type="text" id="txtPerLocality" class="form-control" placeholder="Locality">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">State</label>
+                                <select id="ddlPerState" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">City</label>
+                                <select id="ddlPerCity" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="title-hero">Basic Details<hr /></h6>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Qualification</label>
+                                <input type="text" id="txtQualification" class="form-control" placeholder="Qualification">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Experience</label>
+                                <input type="text" id="txtExperience" class="form-control" placeholder="Experience">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Designation</label>
+                                <select id="ddlDesignation" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Blood Group</label>
+                                <select id="ddlBloodGroup" class="form-control">
+                                    <option>Select Blood Group</option>
+                                    <option>A</option>
+                                    <option>A+</option>
+                                    <option>A-</option>
+                                    <option>B</option>
+                                    <option>B+</option>
+                                    <option>B-</option>
+                                    <option>AB</option>
+                                    <option>AB+</option>
+                                    <option>AB-</option>
+                                    <option>O</option>
+                                    <option>O+</option>
+                                    <option>O-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Aadhar No.</label>
+                                <input type="text" id="txtAadharNo" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="14" class="form-control" placeholder="Aadhar No.">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">User Type</label>
+                                <select id="ddlUserType" class="form-control">
+                                    <option>Select User Type</option>
+                                    <option>Doctor</option>
+                                    <option>Manager</option>
+                                    <option>Receptionist</option>
+                                    <option>HR</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Password</label>
+                                <input type="password" id="txtPassword" class="form-control" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="form-group">
+                                <label class="">Confirm Password</label>
+                                <input type="password" id="txtConfirmPassword" class="form-control" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-3 col-md-offset-5 col-xs-offset-4">
+                            <div class="input-group-btn">
+                                <input type="button" id="btnSaveEmployee" class="btn btn-success" value="Submit" />
+                                <input type="button" id="btnClearEmployee" class="btn btn-warning" value="Clear" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

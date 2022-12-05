@@ -1,0 +1,257 @@
+﻿<script src="~/Areas/IPD/JsModule/NursingView/_BedAvailability.js"></script>
+<style>
+    .status img {
+        width: 45px;
+        padding: 3px;
+    }
+    .OuterRoomType {
+        height: 490px;
+        overflow: auto;
+        margin-bottom: 5px;
+        border: 1px solid #2478a9;
+    }
+
+        .OuterRoomType h3 {
+            margin: 0;
+            font-size: 14px;
+            background: #2478a9;
+            padding: 3px;
+            color: #fff;
+        }
+
+    #ddlFloorForFilter {
+        border: 1px solid #a99f9f;
+        padding: 2px;
+        height: 21px;
+    }
+
+    #listTotal label.total label {
+        margin-top: 1px;
+        color: #ffffff;
+        background: #e58309;
+        font-size: 11px;
+        padding: 3px;
+        line-height: 20px;
+        border-radius: 41px;
+        width: 26px;
+        height: 25px;
+    }
+
+    #listTotal label.total {
+        color: #3a0101;
+        background: #fff;
+        padding: 0px px;
+        border: 1px solid #747474;
+        width: 30px;
+        height: 29px;
+        border-radius: 30px;
+        margin-top: -3px;
+    }
+
+    #listTotal label.Reserved, #listTotal label.Booked, #listTotal label.Vacant {
+        width: 90%;
+        cursor: pointer;
+    }
+
+    #listTotal {
+        margin-top: 0px;
+        list-style: none;
+        padding: 3px;
+        overflow: auto;
+        height: 100px;
+    }
+
+        #listTotal li {
+            cursor: pointer;
+            height: 70px;
+            padding: 2px 2px;
+            display: inline-flex;
+            font-size: 11px;
+            text-align: left;
+            width: 28%;
+            background: #fff;
+            margin: 5px;
+            border: 1px solid #ddd
+        }
+
+            #listTotal li .fa-bed {
+                padding: 2px 6px;
+                font-size: 30px;
+                color: #2478a9;
+            }
+
+        #listTotal .status {
+            font-size: 10px;
+            margin: 2px;
+            text-align: center;
+            background: #e7e7e7;
+            border-radius: 3px;
+            border: 1px solid #d5d5d5;
+        }
+
+    .basicInfo .col-md-3 {
+        width: 20%;
+    }
+
+    .basicInfo .col-md-6 {
+        width: 40%;
+    }
+
+    .bed-group {
+        font-size: 14px;
+        margin: 0;
+        background: #c5e5f7;
+        padding: 3px;
+        border-radius: 2px;
+    }
+
+    #listBed label.Vacant {
+        cursor: pointer;
+    }
+
+    #listBed {
+        height: 470px;
+        margin: 0;
+        list-style: none;
+        padding: 5px;
+        overflow: auto;
+    }
+
+        #listBed li .fa-bed {
+            padding: 2px 6px;
+            font-size: 30px;
+            color: #2478a9;
+        }
+
+        #listBed .status {
+            font-size: 10px;
+            margin: 2px;
+            text-align: center;
+            background: #e7e7e7;
+            width: 30%;
+            border-radius: 3px;
+            border: 1px solid #d5d5d5;
+        }
+
+        #listBed .info {
+            background: #f1f4fd;
+            padding: 2px 5px;
+            width: 70%;
+        }
+
+        #listBed li {
+            height: 70px;
+            padding: 2px 2px;
+            display: inline-flex;
+            font-size: 11px;
+            text-align: left;
+            width: 200px;
+            background: #fff;
+            margin: 5px;
+            border: 1px solid #ddd;
+        }
+
+    .Reserved {
+        padding: 0px 7px;
+        color: #ffffff;
+        background: #e58309;
+        border-radius: 13px;
+    }
+
+    .Vacant {
+        padding: 0px 9px;
+        color: #ffffff;
+        background: #66a60e;
+        border-radius: 13px;
+    }
+
+    .Booked {
+        padding: 0px 9px;
+        color: #ffffff;
+        background: #ef5454;
+        border-radius: 13px;
+    }
+
+
+    #tblPrevInfo th, #tblPrevInfo td {
+        border: none;
+        padding: 3px 0;
+        font-size: 13px;
+    }
+
+    #tblPrevInfo tr th {
+        font-weight: bold;
+        text-align: left;
+        width: 17%;
+    }
+
+    #tblPrevInfo td {
+        text-align: left;
+    }
+
+    .RoomBed {
+        background: #f7eac6;
+        padding: 3px;
+        margin: 1px;
+        border-radius: 2px;
+    }
+    .selectedBed {
+        background: #3ea100 !important;
+        box-shadow: 2px 2px 0px 0px #3ea100;
+    }
+</style>
+<div class="row">
+    <div class="col-md-3">
+        <div class="OuterRoomType">
+            <h3>Room Types</h3>
+            <table class="table table-bordered" id="tblRoomType" style="margin-bottom: -1px;">
+                <thead>
+                    <tr>
+                        <th style="width:40%;">Room Type</th>
+                        <th class="text-center">Total</th>
+                        <th class="text-center">Booked</th>
+                        <th class="text-center">Vacant</th>
+                        <th style="width: 1%;">CMD</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <ul id="listTotal">
+                <li>
+                    <div class="status">
+                        <img src='/Content/logo/bedTotal.png' />
+                        <label class="Reserved" onclick="BedAvailabilityTotal('ALL')">Total</label>
+                        <label class="total"><label>0</label></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="status">
+                        <img src='/Content/logo/bedPatient.png' />
+                        <label class="Booked" onclick="BedAvailabilityTotal('Booked')">Booked</label>
+                        <label class="total"><label style="background:#ef5454">0</label></label>
+                    </div>
+                </li>
+                <li>
+                    <div class="status">
+                        <img src='/Content/logo/bedEmpty.png' />
+                        <label class="Vacant" onclick="BedAvailabilityTotal('Vacant')">Vacant</label>
+                        <label class="total"><label style="background:#66a60e">0</label></label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="OuterRoomType">
+            <h3>Room/Bed Availability
+                <div style="width:30%;display: flex;margin:-15px 0px 1px 70%">
+                <label style="width:30%;color:#fff">Filter By : </label>
+                <div style="width:70%">
+                    <select class="pull-right form-control" id="ddlFloorForFilter"></select>
+                </div>
+                </div>
+            </h3>
+            <ul id="listBed"></ul>
+        </div>
+    </div>
+</div>

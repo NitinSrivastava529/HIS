@@ -1,0 +1,299 @@
+﻿
+@{
+	ViewBag.Title = "SetInspection";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/CSSD/JsModule/Movement/SetInspection.js"></script>
+
+<style>
+	.text11 {
+		font-size: 11px !important;
+	}
+
+	.tbl-btn {
+		height: 17px;
+		font-size: 14px;
+		line-height: 17px;
+		border-radius: 0;
+		padding: 0px 2px;
+	}
+
+	.text-num {
+		background: #ffe2d9;
+		width: 100%;
+		text-align: right;
+		border: 1px solid #797979;
+	}
+
+	.ind-title {
+		background: #0967af;
+		padding: 4px 6px;
+		font-size: 13px;
+		width: 70%;
+		margin: 0px;
+		color: #fff;
+	}
+
+	.linen-title {
+		padding: 5px 10px;
+		background: #c6ffaf;
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	.bg1 {
+		background: #ffc1c1;
+	}
+
+	.bg2 {
+		background: #e2efff;
+	}
+
+	.btn-close {
+		right: 5px;
+		opacity: 100%;
+		position: absolute;
+		color: #fff !important;
+		font-weight: bold;
+		font-size: 12px;
+		padding: 0px 6px;
+		background: #b92c02;
+		height: 16px;
+		border-radius: 2px;
+		cursor: pointer;
+	}
+
+	.flex {
+		display: flex !important;
+		align-items: center;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.btn-flat {
+		padding: 2px;
+		border: none;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 550px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.note {
+		list-style: disc;
+		color: red;
+		font-size: 11px;
+		font-weight: bold;
+		background: #f7f7f7;
+		border: 1px solid #d86c6c;
+	}
+
+	.bn {
+		margin: 0px;
+		font-size: 10pt;
+		padding: 0px 10px;
+		border-radius: 0;
+		text-align: left;
+		height: 30px;
+	}
+
+	.bc {
+		border: 1px solid #00a65a;
+		border-radius: 0;
+	}
+</style>
+
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="row">
+					<div class="col-md-12" style="height:270px;margin-bottom: 25px;">
+						<div class="ml15">
+							<div class="panel">
+								<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+									<input type="button" onclick="GetSetInfoForContemination();" class="btn btn-warning" value="Refresh Pending List" />
+									<h4 class="text-white pull-right">Set Decontamination</h4>
+								</div>
+								<div class="panel-body" style="background:#fff;">
+									<div class="row">										
+										<div class="col-md-12">
+											<div class="scroll" style="padding-bottom: 7px;display: block;border: 1px solid #009688;height:245px;overflow:auto">
+												<table class="table table-bordered" id="tblConteminationInfo">
+													<thead>
+														<tr>
+															<th style="width:1%">SR.No</th>
+															<th style="width:10%">Set Id</th>
+															<th>Set Name</th>
+															<th style="width:19%;">Batch No</th>
+															<th style="width:14%;">Exp Date</th>
+															<th style="width:1%">Action</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12" style="height: 270px;">
+						<div class="ml15">
+							<div class="panel">
+								<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+									<input type="button" onclick="GetSetInfoForInspection();" class="btn btn-warning" value="Refresh Pending List" />
+									<h4 class="text-white pull-right">Set Maintenance & Inspection</h4>
+								</div>
+								<div class="panel-body" style="background:#fff;">
+									<div class="row">										
+										<div class="col-md-12">
+											<div class="scroll" style="padding-bottom: 7px;display: block;border: 1px solid #009688;height:250px;overflow:auto">
+												<table class="table table-bordered" id="tblSetInfo">
+													<thead>
+														<tr>
+															<th style="width:1%">SR.No</th>
+															<th style="width:10%">Set Id</th>
+															<th>Set Name</th>
+															<th style="width:19%;">Batch No</th>
+															<th style="width:14%;">Exp Date</th>
+															<th style="width:1%">Action</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<label class="ind-title"><b>Set Item Info: &nbsp;</b><span id="txtSetInfo"></span></label>								
+							</div>
+							<div class="panel-body" style="background:#fff;">								
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-top:13px">
+                                        <div class="flex">
+                                            <label class="bn" style="width:20%;background: #dbfdc1;padding: 6px;">Set Item List</label>
+                                            <button class="btn btn-success bn" id="btnGetIPD" style="width:10%;margin-left:15px;">Method</button>
+                                            <select id="ddlMethod" class="form-control" style="width:35%;padding: 6px;height: 30px;">
+                                                <option>Select Method</option>
+                                                <option>Autoclaves</option>
+                                                <option>ETO</option>
+                                                <option>Plasma</option>                                              
+                                            </select>
+                                            <button class="btn btn-warning bn pull-right" style="margin:0 18px 0 0" onclick="OutContaminationToInspection()"><i class="fa fa-sign-in">&nbsp;</i>Out</button>
+                                        </div>
+                                        <hr style="margin:5px;" />
+                                        <div class="scroll" style="padding-bottom: 7px;display: block;border: 1px solid #009688;height:190px;overflow:auto">
+                                            <table class="table table-bordered" id="tblSetItemLink">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:1%">SR.No</th>
+                                                        <th style="width:10%">Item Id</th>
+                                                        <th>Item Name</th>
+                                                        <th style="width:5%;">NOS</th>
+                                                        <th style="width:11%;">Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Batch No</label>
+                                            <input type="text" id="txtBatchNo" readonly="" data-int class="form-control bn"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Choose Item</label>
+                                            <select id="ddlItems" class="form-control bn"></select>
+                                            <span id="txtSetId" style="display:none"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label>Stock</label>
+                                            <input type="text" id="txtStock" readonly="" data-int class="form-control bn text-right" value="0" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>NOS</label>
+                                        <div class="flex">
+                                            <input type="text" id="txtNOS" data-int class="form-control bn text-right" placeholder="NOS" />
+                                            <button class="btn btn-warning bn" style="width: 30%;" onclick="SetItemLink()"><i class="fa fa-plus">&nbsp;</i>Link</button>
+                                            <button class="btn btn-success bn" style="width:30%;margin-left:10px" onclick="OutInspectionToCSSDCart()"><i class="fa fa-sign-in">&nbsp;</i>Out</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="padding-bottom: 7px;display: block;border: 1px solid #009688;height:235px;overflow:auto">
+                                            <table class="table table-bordered" id="tblSetItemInfo">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:1%">SR.No</th>
+                                                        <th style="width:10%">Item Id</th>
+                                                        <th>Item Name</th>
+                                                        <th style="width:1%;">Min.Qty</th>
+                                                        <th style="width:1%;">Qty</th>
+                                                        <th style="width:1%;">Edit.Qty</th>
+                                                        <th style="width:1%;">Status</th>
+                                                        <th style="width:1%;">Remark</th>
+                                                        <th style="width:1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

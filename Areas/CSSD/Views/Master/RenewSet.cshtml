@@ -1,0 +1,281 @@
+﻿
+@{
+    ViewBag.Title = "RenewSet";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/CSSD/JsModule/Master/RenewSet.js?v1.5"></script>
+<style>
+    #tblStockInfo a {
+        font-size: 10px;
+        background: #bb8409;
+        cursor: pointer;
+        color: #fafcfe;
+        border-radius: 2px;
+        font-weight: 500;
+        padding: 0px 4px;
+    }
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        /*padding: 5px 3px 0px 3px;*/
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">Pending Set</h4>
+                            </div>
+                            <div class="panel-body" style="padding:5px">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="max-height:495px;min-height:495px;border:1px solid #2478a9">
+                                            <table id="tblPendingInfo" class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 15%;">Set Id</th>
+                                                        <th style="width:40%">Set Name</th>
+                                                        <th style="width: 23%;">Batch No</th>
+                                                        <th style="width: 18%;">Exp. Date</th>
+                                                        <th style="width:1%;">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="ml15">
+                    <div class="">
+                        <div class="panel">
+                            <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                                <h4 class="text-white">ReNew Set</h4>
+                            </div>
+                            <div class="panel-body" style="padding:5px">
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <div class="form-group flex bc" style="margin:0">
+                                            <button class="btn btn-success bn" style="width: 23%;">Set Name</button>
+                                            <input type="text" id="txtSetName" class="form-control bn" onchange="GetStockingInfo()" />
+                                            <span id="txtSetId" style="display:none"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group" style="margin:0">
+                                            <label style="width: 11%;margin:0">Set Id</label>
+                                            <label style="width: 15%;margin:0">Machine No</label>
+                                            <label style="width: 14%;margin:0">Load No</label>
+                                            <label style="width: 22%;margin:0">Date</label>
+                                        </div>
+                                        <div class="form-group flex bc">
+                                            @*<button class="btn btn-success bn" style="width: 92px;">Batch No</button>*@
+                                            <input style="width: 16%;" type="text" id="txtSetIdName" class="form-control text-uppercase bn" autocomplete="off" placeholder="SetId">
+                                            <div style="width: 14%;">
+                                                <select id="ddlMacNo" class="form-control">
+                                                    <option>01</option>
+                                                    <option>02</option>
+                                                    <option>03</option>
+                                                    <option>04</option>
+                                                    <option>05</option>
+                                                </select>
+                                            </div>
+                                            <div style="width: 14%;">
+                                                <select style="width: 8%;" id="ddlLoadNo" class="form-control">
+                                                    <option>01</option>
+                                                    <option>02</option>
+                                                    <option>03</option>
+                                                    <option>04</option>
+                                                    <option>05</option>
+                                                    <option>06</option>
+                                                    <option>07</option>
+                                                    <option>08</option>
+                                                    <option>09</option>
+                                                    <option>10</option>
+                                                    <option>11</option>
+                                                    <option>12</option>
+                                                    <option>13</option>
+                                                    <option>14</option>
+                                                    <option>15</option>
+                                                    <option>16</option>
+                                                    <option>17</option>
+                                                    <option>18</option>
+                                                    <option>19</option>
+                                                    <option>20</option>
+                                                </select>
+                                            </div>
+                                            <div style="width: 25%;">
+                                                <select id="ddlDate"></select>
+                                            </div>
+                                            <input style="width:42%;font-size: 13px;" type="text" id="txtBatchNo" class="form-control text-uppercase bn" autocomplete="off" placeholder="Batch No">
+                                            <button class="btn btn-warning bn" disabled onclick="AutoGenBatchNo()" style="width:7%;font-size: 11px;">Gen</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group flex bc" style="margin-top:18px">
+                                            <button class="btn btn-success bn" style="width: 51%;font-size: 11px;">Exp. Date</button>
+                                            <input type="date" id="txtExpDate" style="padding: 5px;" class="form-control text-uppercase bn" />
+                                            <button type="button" id="btnSave" onclick="NewSetStocking()" class="btn bn btn-warning pull-right" style="border:none;width:32%"><i class="fa fa-sign-in font-size-15">&nbsp;</i></button>
+                                        </div>
+                                    </div>                                   
+                                    <div class="col-md-12">
+                                        <div class="scroll" style="max-height:400px;min-height:400px;border:1px solid #2478a9">
+                                            <span data-itemname style="display:none"></span>
+                                            <span data-itemid style="display:none"></span>
+                                            <table id="tblStockInfo" class="table table-bordered" style="margin:0">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th style="width:10%">Set Id</th>
+                                                        <th style="width:40%">Set Name</th>
+                                                        <th style="width:20%">Last Batch No</th>
+                                                        <th style="width:15%">Last Exp. Date</th>
+                                                        <th style="width:14%">Last Status</th>
+                                                        <th style="width:5%;text-align:right">Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalTracking" tabindex="-1" role="dialog" aria-labelledby="True">
+    <div class="modal-dialog modal-lg" style="width: 1150px;">
+        <div class="modal-content" style="margin-top:5%;">
+            <div class="panel-heading flex" style="background:#0076d0;padding:5px 10px">
+                <h5 class="text-white">Tracking Status</h5>
+                <span data-dismiss="modal" class="btn-close">x</span>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="scroll" style="border: 1px solid #2478a9;height:300px">
+                            <table id="tblTrackingInfo" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Trn Type</th>
+                                        <th>Batch No</th>
+                                        <th>Doc Date</th>
+                                        <th>Exp Date</th>
+                                        <th>SetId</th>
+                                        <th>From Cart</th>
+                                        <th>To Cart</th>
+                                        <th>IPD No</th>
+                                        <th>Patient Name</th>
+                                        <th>Doctor Name</th>
+                                        <th>Employee Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="scroll" style="border: 1px solid #2478a9;height:200px;margin-top: 10px;">
+                            <label>Set Inspection Info</label>
+                            <table id="tblInspectionInfo" class="table table-bordered">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

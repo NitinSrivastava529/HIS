@@ -1,0 +1,82 @@
+﻿
+<style>
+    .sectionInfo {
+        width: 40%;
+        display: flex;
+        align-items: center;
+    }
+
+        .sectionInfo .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 26px;
+            position: absolute;
+            top: -2px;
+            right: 1px;
+            width: 20px;
+        }
+
+        .sectionInfo .select2-selection {
+            position: relative;
+            height: 23px;
+            border-color: #06a08b;
+            padding: 4px;
+        }
+
+        .sectionInfo button {
+            margin: 0;
+            border-radius: 0;
+            height: 23px;
+            width: 50%;
+        }
+
+    .CommunicationLog {
+        overflow:auto;
+        margin-top: 5px;
+        height: 380px;
+        border: 1px solid #06a08b;
+    }
+
+        .CommunicationLog label {
+            width: 100%;
+            padding: 3px 5px;
+            background: #06a08b;
+            color: #fff;
+        }
+    .remarkLog {
+        margin: 0px 5px 7px 5px;
+        border: 1px solid #dbdbdb;
+        padding: 1px;
+    }
+        .remarkLog label {
+            font-size: 12px;
+            width: 100%;
+            padding: 3px 5px;
+            background: #dbdbdb;
+            color: #505050;
+        }
+        .remarkLog p {
+            margin-bottom: 3px;
+            font-size: 13px;
+            padding: 0px 5px;
+            text-align: justify;
+        }
+</style>
+<div class="row" style="margin:10px 0">
+    <div class="col-md-12">
+        <div class="sectionInfo">
+            <label style="width:55%">Section : </label>
+            <select id="ddlSection" class="form-control">
+                <option>Billing</option>
+                <option>Nursing</option>
+                <option>Admin</option>
+            </select>
+            <button class="btn btn-primary" onclick="InsertComLog()"><i class="fa fa-sign-in">&nbsp;</i>Save</button>
+        </div>
+        <textarea id="txtCommunicationRemark" class="form-control" placeholder="Communication Remark"></textarea>
+    </div>
+    <div class="col-md-12">
+        <div class="CommunicationLog">
+            <label>Communication Log</label>
+            <div id="CommunicationLog"></div>
+        </div>
+    </div>
+</div>

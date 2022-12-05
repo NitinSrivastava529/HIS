@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "IndentBloodTest";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/BloodBank/JsModule/IndentBloodTest.js"></script>
+<style>
+    #tblDonorInfo thead th{
+        white-space:pre;
+    }
+    .select2-container--default .select2-selection--single {
+        height: 25px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+
+    .bc {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-color: #06a08b;
+    }
+
+    .btnRC {
+        height: 30px;
+        margin: -1px;
+        border-radius: 0;
+    }
+
+    .section {
+        margin-top: 5px;
+        padding: 1px;
+        border: 1px solid #2478a9;
+        height: 150px;
+    }
+
+    .title {
+        background: #c4ddd8;
+        /*color: #fff;*/
+        padding: 2px 5px;
+        margin: 0;
+        width: 100%;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 25px;
+        background-color: #fff;
+        border: 1px solid #dbdbdb;
+        border-radius: 3px;
+    }
+
+    #tblDonorInfo .form-control {
+        height: 22px;
+        border-color: #c1bcbc;
+        line-height: 0;
+        padding: 1px 4px;
+    }
+
+    .tblDonorInfo td b {
+        white-space: pre;
+    }
+
+    .tblDonorInfo td {
+        font-size: 12px;
+        border: none !important;
+        padding-top: 4px !important;
+    }
+
+    .QuestionList {
+        padding: 5px 3px;
+        display: inline-flex;
+        align-items: center;
+        width: 99%;
+        border-bottom: 1px solid#e5e5e5;
+        margin: 0px 5px;
+    }
+
+        .QuestionList .lblQuest {
+            font-size: 12px;
+            width: 43%;
+            margin-left: 0px;
+        }
+
+        .QuestionList .lblRemark {
+            margin-left: 25px;
+        }
+
+        .QuestionList .remark {
+            border-radius: 0;
+            border-color: #b9b9b9;
+            width: 40%;
+            margin-left: 15px;
+        }
+
+    #btnSaveComponent {
+        position: absolute;
+        top: 150px;
+        left: -9px;
+        padding: 0px 7px;
+        width: 60px;
+    }
+
+    .error {
+        border-color: red !important;
+    }
+    .IndentBy {
+        border-radius: 2px;
+        background: #fbf7e2;
+        display: flex;
+        align-items: center;
+        padding: 4px 4px;
+        border: 1px solid #d7d7d7;
+    }
+    .IndentDate {
+        border-radius: 2px;
+        background: #fbf7e2;
+        display: flex;
+        align-items: center;
+        padding: 4px 4px;
+        border: 1px solid #d7d7d7;
+    }
+
+        .IndentDate label {
+            white-space: pre;
+            margin-left: 10px;
+        }
+
+        .IndentDate .form-control {
+            height: 27px;
+            border: 1px solid #c3c3c3;
+        }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="IndentBy">
+                            <label>Blood Indent By : </label>
+                            <label><input type="radio" name="IndentBy" value="IPD" checked />&nbsp;IPD </label>
+                            <label><input type="radio" name="IndentBy" value="OPD" />&nbsp;OPD </label>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="IndentDate">
+                            <label>from : </label>
+                            <input type="date" id="txtFrom" class="form-control" />
+                            <label>To : </label>
+                            <input type="date" id="txtTo" class="form-control" />
+                            <button class="btn btn-warning" onclick="IndentInfo('IndentInfoForBloodTestByDate')" style="height: 25px;width: 32%;border-radius: 0;"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="section" style="height:560px;">
+                    <label class="title">Indent Details</label>
+                    <div class="table-responsive vertiscrl" style="margin:0;overflow:auto;height:533px;border: 1px solid #2478a9;">
+                        <table id="tblDonorInfo" class="table table-bordered" style="margin-bottom:6px">
+                            <thead style="background: #00a65a;color: #fff;">
+                                <tr>
+                                    <th style="width:1%;">#</th>
+                                    <th style="width:10%;">Date</th>
+                                    <th style="width:10%;">Indent No</th>
+                                    <th style="width:10%;">IPOP No</th>
+                                    <th>Patient Name</th>
+                                    <th>Component Name</th>
+                                    <th>Room Full Info</th>
+                                    <th style="width:5%;">Blood Group</th>
+                                    <th style="width:1%;text-align:center">CMD</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

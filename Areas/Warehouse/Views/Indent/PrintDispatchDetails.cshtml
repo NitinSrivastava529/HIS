@@ -1,0 +1,157 @@
+﻿@{
+    ViewBag.Title = "PrintDispatchDetails";
+    Layout = null;
+}
+<link href="~/Content/assets/bootstrap/css/bootstrap.css?his-version-1.0" rel="stylesheet" />
+<script src="~/Content/js/jquery.min.js?his-version-1.0"></script>
+<script src="~/JsModule/global.js?his-version-1.0"></script>
+<script src="~/Areas/Warehouse/JsModule/Indent/PrintDispatch.js?his-version-1.0"></script>
+
+<style>
+        .panel {
+            border: 0;
+            margin-bottom: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .panel-primary > .panel-heading {
+            color: #000;
+            background-color: #d9d9d9;
+            border-color: #d9d9d9;
+        }
+
+        .panel-heading {
+            padding: 1px;
+        }
+
+            .panel-heading h4 {
+                padding: 1px;
+                margin: 0 10px 0 10px;
+            }
+
+        .panel-body {
+            padding: 5px 0 5px 0;
+        }
+
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            padding: 2px;
+        }
+
+        table, th {
+            background-color: #e8e8e8;
+        }
+
+        table, th, td {
+            padding: 0;
+            border: 1px solid #000 !important;
+            font-size: 14px;
+        }
+
+        img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+            height: 50px !important;
+        }
+
+        p {
+            margin: 0 10px 0 10px;
+        }
+
+        /*@@media print {
+        #print {
+            display: none;
+        }
+
+        @@page {
+            padding: 0;
+            margin: 0;
+            size: A4 landscape;
+        }
+    }*/
+
+        .box-purple {
+            /*border: 1px solid #bfbfbf;*/
+            padding: 10px 12px;
+            background: #fff;
+            margin: 4px 50px;
+        }
+</style>
+
+<div class="container">
+    <section style="border:1px solid #000">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <img src="~/Content/assets/logo/logo.png" class="img-responsive" style="margin: 10px 10px 0 10px;" />
+                        <p style="font-weight:bold;margin-top:10px">Address:</p>
+                        <p>Chandan Hopital, Faizabad Road, Near Chinhat Flyover</>
+                        <p> Vijayant Khand, Gomti Nagar, Lucknow-226010</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-xs-6">
+                <div class="panel panel-primary" style="border:1px solid #000">
+                    <div class="panel-heading">
+                        <h4>From:</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p id="lblfromCart"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <div class="panel panel-primary" style="border:1px solid #000">
+                    <div class="panel-heading">
+                        <h4>To:</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p id="lblToCart"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive" style="margin-left:10px;margin-right:10px;">
+                    <table class="table table-bordered" id="tblprintdispatchedlist" style="border:1px solid #000">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Hsn Code</th>
+                                <th>lot No</th>
+                                <th>Master Key</th>
+                                <th>Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var lotno = GetParameterValues('lotno');
+        PrintDispatchedByLotNo(lotno);
+        function GetParameterValues(param) {
+            var url = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < url.length; i++) {
+                var urlparam = url[i].split('=');
+                if (urlparam[0] == param) {
+                    return urlparam[1];
+                }
+            }
+        }
+    });
+
+
+
+</script>

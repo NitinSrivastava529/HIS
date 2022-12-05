@@ -1,0 +1,223 @@
+﻿
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<title>Print Invoice</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css?his-version-1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js?his-version-1.0"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js?his-version-1.0"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js?his-version-1.0"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.1.1/jspdf.es.js?his-version-1.0"></script>
+	<script src="~/JsModule/config.js?his-version-1.0"></script>
+	<script src="~/JsModule/global.js?his-version-1.0"></script>
+	<script src="~/Areas/Warehouse/JsModule/Purchase/PrintInvoice.js?his-version-1.0"></script>
+	<link href="~/Content/css/print.css?his-version-1.0" rel="stylesheet" />
+
+	<style type="text/css">
+		html {
+			zoom: 0.8;
+			width: 68%;
+			top: 2%;
+			position: absolute;
+			left: 16%;
+			background: #585858;
+		}
+
+		#tblRight tbody {
+			background: #f7f6f6;
+			border: 1px solid #d8d5d5;
+			line-height: 25px;
+			margin: 10px;
+			position: absolute;
+			padding: 12px;
+		}
+
+		.tblRight {
+			float: right !important;
+			right: 0;
+			position: absolute;
+			bottom: 0;
+		}
+
+		#tblBottom tbody {
+			border: 1px solid #d8d5d5;
+			line-height: 25px;
+			margin: -10px 10px;
+			position: absolute;
+			padding: 12px;
+		}
+
+		body {
+			-webkit-print-color-adjust: exact;
+		}
+
+		td.bg {
+			background: #ddd !important;
+		}
+
+		.box-purple {
+			padding: 10px 10px;
+			background: #fff;
+			margin: 4px 10px;
+		}
+
+		body {
+			background: #fff;
+			overflow: hidden auto;
+		}
+
+		.table {
+			font-size: 15px;
+			line-height: 0px;
+		}
+
+		.table-bordered td, .table-bordered th {
+			border: .3px solid #000;
+		}
+
+		.table th {
+			white-space: nowrap;
+			padding: 9px;
+			vertical-align: top;
+			border-top: 1px solid #dee2e6;
+		}
+
+		.table tbody td {
+			white-space: nowrap;
+			text-align: left;
+			/*padding: 28px 2px;*/
+			height: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="box box-purple">
+				<div class="box-body">
+					<div class="row">
+						<div class="col-sm-12">
+							<h3 class="text-center">Chandan Hospital Tax Invoice<hr style="margin: 7px 0 -8px;" /></h3>							
+							<div class="row" style="margin-bottom: 12px;">
+								<div class="col-sm-8">
+									<table>
+										<tbody>
+											<tr>
+												<td colspan="3"><b>Purchase Bill Information</b></td>
+											</tr>
+											<tr>
+												<td><b>Vendor Name</b></td>
+												<td>: </td>
+												<td><span data-vendorname></span></td>
+											</tr>
+											<tr>
+												<td><b>Address</b></td>
+												<td>: </td>
+												<td><span data-address></span></td>
+											</tr>
+											<tr>
+												<td><b>District,State</b></td>
+												<td>: </td>
+												<td><span data-district></span></td>
+											</tr>
+											<tr>
+												<td><b>Contact No</b></td>
+												<td>: </td>
+												<td><span data-contactno></span></td>
+											</tr>
+											<tr>
+												<td><b>GSTN No</b></td>
+												<td>: </td>
+												<td><span data-gstin></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-sm-4">
+									<table id="tblRight">
+										<tbody>
+											<tr>
+												<td><b><span class="grn"></span> Date</b></td>
+												<td>: </td>
+												<td><span data-invdate></span></td>
+											</tr>
+											<tr>
+												<td><b><span class="grn"></span> No</b></td>
+												<td>: </td>
+												<td><span data-invno></span></td>
+											</tr>
+											<tr>
+												<td><b>Purch Id</b></td>
+												<td>: </td>
+												<td><span data-purchaseid></span></td>
+											</tr>
+											<tr>
+												<td><b>Voucher No</b></td>
+												<td>: </td>
+												<td><span data-voucherno></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+						<div class="col-sm-12">
+							<div class="">
+								<div class="scroll">
+									<table class="table table-hover" border="0" id="tblInvoice">
+										<thead>
+											<tr>
+												<th>Item Name</th>
+												<th>HSN Code</th>
+												<th>Batch</th>
+												<th>Pack</th>
+												<th>Pack Qty</th>
+												<th>Expiry</th>
+												<th>Trade</th>
+												<th>NPR</th>
+												<th>Qty</th>
+												<th>Free</th>
+												<th>GST</th>
+												<th>Disc</th>
+												<th>Amount</th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+						</div>
+						<div class="col-sm-8" style="margin-bottom: 12px;">
+							<table class="table" border="1" id="tblTotal">
+								<thead>
+									<tr>
+										<th>Total Amount</th>
+										<th>Discount</th>
+										<th>CGST</th>
+										<th>SGST</th>
+										<th>IGST</th>
+										<th>Tax</th>
+										<th>Net Amount</th>
+										<th>Payable</th>
+									</tr>
+								</thead>
+								<tbody>									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

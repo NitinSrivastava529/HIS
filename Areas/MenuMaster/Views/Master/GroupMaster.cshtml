@@ -1,0 +1,114 @@
+﻿
+@{
+	ViewBag.Title = "GroupMaster";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/MenuMaster/JsModule/GroupMaster.js"></script>
+<style>
+	::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #ccc;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: DodgerBlue;
+	}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: DodgerBlue;
+		}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.panel-body {
+		padding: 15px 15px 0px 20px;
+		position: relative;
+	}
+
+	.table {
+		width: 100%;
+		max-width: 100%;
+		margin-bottom: 5px;
+	}
+
+	#categoryList {
+		line-height: 28px;
+		list-style: none;
+		display: inline-block;
+	}
+
+	.scroll-table {
+		overflow: hidden;
+		overflow-y: scroll;
+		max-height: 510px;
+	}
+
+	.SelectedCat {
+		overflow: hidden;
+		overflow-y: auto;
+		max-height: 380px;
+	}
+
+	#categoryList li {
+		margin-left: 5px;
+	}
+
+	.select2-container {
+		width: 310px !important;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-7">
+				<div class="panel">
+					<div class="panel-heading" style="background:#dcdcdc;padding: 4px;">
+						<input type="button" onclick="Clear()" class="btn btn-success" value="New" />
+						<h4 class="text-white pull-right" style="margin: 4px;">Create Group</h4>
+					</div>
+					<div class="panel-body">
+						<div class="row">				
+							<div class="col-md-6">
+								<div style="display:flex;">
+                                    <input type="text" id="txtGroupName" class="form-control" placeholder="Group Name" />
+									<button style="width:110px;" class="btn btn-success" onclick="InsertGroupMaster()">Create</button>
+								</div>
+							</div>
+						</div>
+						<div class="example-box-wrapper">
+							<div class="form-horizontal bordered-row">
+								<div class="table table-responsive">
+									<div class="scroll-table">
+										<table id="tblGroupMaster" class="table table-bordered">
+											<thead>
+												<tr>
+													<th style="width:10%">SR. No.</th>
+													<th>Group ID</th>
+													<th>Group Name</th>												
+													<th style="width:1%">Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

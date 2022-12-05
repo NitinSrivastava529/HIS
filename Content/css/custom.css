@@ -1,0 +1,190 @@
+﻿body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /*background: url("/Content/assets/logo/bg.jpg");*/
+}
+.login {
+    /*position: fixed;*/
+    top: 0;
+    z-index: 100;
+    /*left: 100px;*/
+}
+
+hr {
+    margin-top: 4px;
+    margin-bottom: -17px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+
+.custom-title {
+    font-size: 14px;
+    /*box-shadow: 0px 2px 4px #4e494940 !important;*/
+    color: #fff;
+    background: #747984 !important;
+    padding: 7px 11px;
+    width: -webkit-fill-available !important;
+    margin: -20px -20px 14px -20px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.user_card {
+    height: 400px;
+    width: 350px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: #ffffffbf;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.brand_logo_container {
+    box-shadow: 1px 2px 13px #FF9800;
+    position: absolute;
+    height: 90px;
+    width: 182px;
+    top: -43px;
+    border-radius: 50%;
+    background: #fff9ec;
+    padding: 10px;
+    text-align: center;
+}
+
+.brand_logo {
+    height: 70px;
+    width: 160px;
+    /*border-radius: 50%;
+            border: 6px solid #c0392b;*/
+    padding: 4px;
+}
+
+.form_container {
+    margin-top: 100px;
+}
+
+.login_btn {
+	width: 100%;
+	background: #0476ce !important;
+	color: white !important;
+}
+
+    .login_btn:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+.login_container {
+    padding: 0 2rem;
+}
+
+.input-group-text {
+	background: #0476ce !important;
+	color: white !important;
+	border: 0 !important;
+	border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+	background-color: #0476ce !important;
+}
+
+.custom-control-label::before {
+    position: absolute;
+    top: .25rem;
+    left: -1.5rem;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    content: "";
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: #83cc9c;
+}
+
+
+
+
+
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #ccc;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: DodgerBlue;
+}
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: DodgerBlue;
+    }
+
+.btn-primary {
+    background: #06a08b !important;
+}
+
+/*Media Query*/
+@media only screen and (max-width : 480px) {
+    .LoggedInUser {
+        display: none;
+    }
+
+    .Unit {
+        display: none;
+    }
+}
+
+@media only screen and (max-width : 767px) {
+    .LoggedInUser {
+        display: none;
+    }
+
+    .Unit {
+        display: none;
+    }
+}
+
+@media only screen and (min-width : 992px) {
+    .login {
+        left: 134px;
+    }
+
+    .user-account-btn {
+        display: none;
+    }
+}
+
+@media only screen and (min-width : 1200px) {
+    .login {
+        left: 134px;
+    }
+
+    .user-account-btn dropdown {
+        display: none;
+    }
+}

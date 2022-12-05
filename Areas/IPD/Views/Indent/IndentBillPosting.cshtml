@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "IndentBillPosting";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/IPD/JsModule/Indent/IndentBillPosting.js"></script>
+@*
+    <script src="~/Content/js/tableHeadFixer.js?his-version-1.0"></script>*@
+<style>
+    .btn-custom {
+        border-radius: 0;
+        width: 27%;
+        margin: 0;
+        height: 28px;
+    }
+
+    #tblItemInfo td {
+        padding: 5px 5px;
+    }
+
+    #tblPatientInfo th, #tblPatientInfo td {
+        background: #e9e9e9;
+        padding: 2px;
+        border: none;
+        line-height: 21px;
+        font-size: 12px;
+    }
+
+    #tblTotalInfo th {
+        font-weight: bold;
+        font-size: 13px;
+        background: #fffaf0;
+        border: none;
+    }
+
+        #tblTotalInfo th:nth-child(3) {
+            text-align: right;
+        }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel">
+                    <div class="panel-body" style="padding:5px 10px">
+                        <div class="col-md-12">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                <input type="text" id="txtIPOPNo" style="border:1px solid #f39c12" class="form-control input_pass" placeholder="Enter IPOP No...">
+                                <button class="btn btn-warning btn-custom" onclick="IndentBills()"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                        </div>
+                        <div class="example-box-wrapper">
+                            <div class="form-horizontal bordered-row">
+                                <div class="table table-responsive">
+                                    <div id="AdmittedIPDPatient">
+                                        <table id="tblIndentBills" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sales Invoice No</th>
+                                                    <th>Order No</th>
+                                                    <th>Net Amt</th>
+                                                    <th style="width:1%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-body" style="background:#fff;padding: 8px 10px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="background: #e9e9e9;padding:3px;border: 1px solid #e3e3e3;">
+                                    <table class="table" id="tblPatientInfo" style="margin:0">
+                                        <tr>
+                                            <th>Patient Name</th>
+                                            <th>:</th>
+                                            <td id="txtPatientName">XXXXXXXXXXXX</td>
+                                            <td style="display:none" id="txtUnitName"></td>
+                                            <td style="display:none" id="txtSaleInvNo"></td>
+                                            <td style="display:none" id="txtOrderNo"></td>
+                                            <td style="display:none" id="txtHealthCardNo"></td>
+                                            <th>Panel Name</th>
+                                            <th>:</th>
+                                            <td id="txtPanelName">XXXXXXXXXXXX</td>
+                                            <th>IPOP No</th>
+                                            <th>:</th>
+                                            <td id="txtIPOP">XXXXXXXXXXXX</td>
+                                        </tr>
+                                        <tr>
+
+                                            <th>UHID</th>
+                                            <th>:</th>
+                                            <td id="txtUHID">XXXXXXXXXXXX</td>
+                                            <th>Ref. Name</th>
+                                            <th>:</th>
+                                            <td id="txtRefName">XXXXXXXXXXXX</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <hr style="margin:10px" />
+                                <div style="width:100%;height:300px;overflow-y:auto">
+                                    <table id="tblItemInfo" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Master key Id</th>
+                                                <th>Batch No</th>
+                                                <th>Exp Date</th>
+                                                <th class="text-right">Pack Type</th>
+                                                <th class="text-right">Pack Qty</th>
+                                                <th class="text-right">MRP</th>
+                                                <th class="text-right">SV</th>
+                                                <th class="text-right">Qty</th>
+                                                <th class="text-right">USR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <br />
+                            </div>
+                            @*<div class="col-md-6">
+                                    <button class="btn btn-success" style="top: 55px" onclick="PostBill()"><i class="fa fa-sign-in">&nbsp;</i>Post Bill</button>
+                                </div>*@
+                            <div class="col-md-6">
+                                <div class="table-responsive" style="background: #fffaf0;padding:3px;border: 1px solid #e3e3e3;">
+                                    <table class="table table-bordered" id="tblTotalInfo1" style="margin:0;width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Total</th>
+                                                <th>Discount</th>
+                                                <th>Round Off</th>
+                                                <th>Payable</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="txtTotal">00.00</td>
+                                                <td id="txtDiscount">00.00</td>
+                                                <td id="txtRoundOff">00.00</td>
+                                                <td id="txtPayable">00.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" id="txtRefNo" disabled="disabled" class="form-control" placeholder="Payment Ref. No">
+                                <label>
+                                    <input type="radio" name="payMode" value="CR" checked="checked" onchange="($(this).is(':checked')==true)? $('#txtRefNo').prop('disabled', true) : $('#txtRefNo').prop('disabled', true)" />&nbsp;Credit
+                                </label>
+                                <label>
+                                    <input type="radio" name="payMode" value="Cash" onchange="($(this).is(':checked')==true)? $('#txtRefNo').prop('disabled', true) : $('#txtRefNo').prop('disabled', true)" />&nbsp;Cash
+                                </label>
+                                <label>
+                                    <input type="radio" name="payMode" value="Credit Card" onchange="($(this).is(':checked')==true)? $('#txtRefNo').prop('disabled', false).focus() : $('#txtRefNo').prop('disabled', true).val('')" />&nbsp;Swipe
+                                </label>
+                                @*<button class="btn btn-success" style="position:relative;left:10px" onclick="PostBill()"><i class="fa fa-sign-in">&nbsp;</i>Post Bill</button>*@
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button id="btnReceive" class="btn btn-info" style="position:relative;left:10px;padding:0 12px" onclick="MarkIndentReceived()"><i class="fa fa-sign-in">&nbsp;</i>Receive Indent</button>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                            <div class="col-md-2">
+                                <button id="btnPostBill" class="btn btn-success" style="position:relative;left:10px;padding:0 12px" onclick="PostBill()"><i class="fa fa-sign-in">&nbsp;</i>Post Bill</button>
+
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-warning" style="position:relative;left:10px" onclick="ViewBill()"><i class="fa fa-eye">&nbsp;</i>Print</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+

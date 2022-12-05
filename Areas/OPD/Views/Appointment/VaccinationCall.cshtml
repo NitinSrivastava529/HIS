@@ -1,0 +1,375 @@
+﻿
+@{
+    ViewBag.Title = "VaccinationCall";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/OPD/JsModule/VaccinationCall.js"></script>
+<style>
+    tr.vaccineDone td {
+        background: #bdefbc !important;
+    }
+
+    tr.planeDone td {
+        background: #fbef9c !important;
+    }
+
+    tr.missedDone td {
+        background: #efbebc !important;
+    }
+    .btnGet {
+        margin: 0;
+        width: 28%;
+        border-radius: 0;
+        background: #2478a9;
+        color: #fff !important;
+        height: 28px;
+    }
+
+    .tblGet {
+        margin: 0;
+        width: 34%;
+        border-radius: 0;
+        background: #f39c12;
+        color: #fff !important;
+        height: 26px;
+    }
+
+    .section-header {
+        background: #f9f0ec;
+        min-height: 70px;
+        max-height: 70px;
+        padding: 3px;
+        margin-bottom: 3px;
+        border: 1px solid #2478a9;
+    }
+
+    .duration {
+        border: 1px solid #2478a9;
+        font-size: 11px;
+        height: 20px;
+        width: 60px;
+        padding: 1px 3px;
+        margin-left: 3px;
+        border-radius: 2px;
+    }
+
+    body {
+        color: #000;
+    }
+
+    .title {
+        background: #2478a9;
+        color: #fff;
+        padding: 3px 63px 2px 6px;
+        top: 3px;
+        position: relative;
+    }
+
+        .title:after {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            content: '';
+            border-right: -2px solid transparent;
+            border-left: 25px solid transparent;
+            border-top: 25px solid #fff;
+        }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 480px;
+        display: block;
+    }
+
+    .panel-body {
+        /*box-shadow: 1px 1px 10px #d2d2d2;*/
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .ml15 {
+        margin-left: 15px;
+    }
+
+    .category {
+        font-weight: bold;
+        background: #fafcfe;
+        display: flow-root;
+        border: 1px solid #2478a9;
+    }
+
+
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 2px 2px 0px 3px !important;
+        border-top-width: 1px;
+        border-top-style: solid;
+        text-align: left;
+        color: #000;
+    }
+
+    .section {
+        min-height: 142px;
+        max-height: 142px;
+        overflow: auto;
+        margin-bottom: 5px;
+        border: 1px solid #2478a9;
+    }
+</style>
+<style>
+    #ulSchedule li {
+        cursor: pointer;
+        display: inline-block;
+        background: #faffef;
+        padding: 5px 5px;
+        margin: 2px 2px;
+        border-radius: 0px;
+        text-align: center;
+        border: 1px solid #c8cdbe;
+        width: 22%;
+        line-height: 22px;
+    }
+
+        #ulSchedule li span {
+            font-size: 14px;
+            font-weight: bold;
+            background: #2478a9;
+            color: #fff;
+            border-radius: 30px;
+            padding: 1px 6px;
+        }
+
+        #ulSchedule li.days {
+            margin: 0px -4px;
+            text-align: center;
+            background: #2478a9;
+            color: #fff;
+            border-color: #fff;
+            width: 14%;
+            border-radius: 0;
+            height: 23px;
+            padding: 0;
+        }
+
+    .help {
+        border-radius: 20px;
+        height: 13px;
+        margin: 1px 7px;
+        line-height: 11px;
+        cursor: pointer;
+    }
+
+    .groupday {
+        background: #bee6f9 !important;
+    }
+
+        .groupday .form-control {
+            border-radius: 0;
+            border: 1px solid #f39c12;
+            height: 26px;
+            background: #bee6f9;
+        }
+
+    #tblVaccinationInfo tbody tr:not(.groupday) td.form-control:nth-last-child(-n+3) {
+        height: 27px;
+    }
+
+    .plan-note {
+        text-align: center;
+        /* background: #e3e3e3; */
+        padding: 0px 4px;
+        color: #323232;
+        font-weight: bold;
+        font-size: 11px;
+        margin: 0px;
+    }
+
+    .plandate {
+        width: 142%;
+        margin-right: 11px;
+    }
+
+    .panel-heading {
+        background: #026cbd;
+        padding: 0px;
+    }
+    .panel-title {
+        margin-left: 15px;
+        text-align: left;
+        font-weight: bold;
+        font-size: 13px;
+        color: white;
+        background: #026cbd;
+        padding: 3px;
+    }
+
+
+    .form-control {
+        border: 1px solid #d8d1d1;
+    }
+
+    .prescribedItem {
+        margin-bottom: 10px;
+        display: none;
+    }
+
+
+
+    .text-red {
+        color: #d82323 !important;
+    }
+
+    span {
+        user-select: none; /* standard syntax */
+        -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+        -moz-user-select: none; /* mozilla browsers */
+        -ms-user-select: none; /* IE10+ */
+    }
+
+    #tblOPTHHeaderInfo td, #tblOPTHHeaderInfo th {
+        color: #262424;
+        background: #f9f0ec;
+        border: none;
+        font-size: 13px;
+        padding: 1px;
+    }
+
+    #divTemplate {
+        display: block;
+        padding: 6px 3px;
+        border-left: 1px solid rgb(36, 120, 169);
+        border-right: 1px solid rgb(36, 120, 169);
+    }
+
+    .template-group {
+        padding: 5px;
+        background: #f3f3f3;
+        margin: 2px 0px;
+        border: 1px solid #ddd;
+    }
+</style>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ml15">
+                    <div class="">
+                        <div class="Vital-body" style="padding:0 5px;margin-top:1px">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <div id="divEmergency">
+                                        <div class="row template-group">
+                                            <div class="col-md-2">
+                                                <label style="width:25%">From </label>
+                                                <div class="flex">
+                                                    <input type="date" id="txtFrom" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label style="width:25%">To </label>
+                                                <div class="flex">
+                                                    <input type="date" id="txtTo" class="form-control" style="width: 73%;border-color:#2478a9;border-radius:0" value="2022-05-05">
+                                                    <button class="btn btnGet" onclick="GetPatientInfo()"><i class="fa fa-sign-in">&nbsp;</i>Get</button>                                                  
+                                                </div>
+                                            </div>                                          
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="category" style="padding:0px 0px 5px 0px;"><span class="title">Patient Vaccination Info</span></div>
+                                    <div style="height: 380px;overflow:auto;margin-bottom:5px;border: 1px solid #2478a9;">
+                                        <table class="table table-bordered MedicineTemplate" id="tblVaccinationInfo">
+                                            <thead>
+                                                @*<tr>
+                                                    <th style="width: 2%;">#</th>
+                                                    <th>UHID</th>
+                                                    <th>Patient Name</th>
+                                                    <th>Gender</th>
+                                                    <th>DOB</th>
+                                                    <th>Mobile</th>
+                                                    <th>District</th>
+                                                    <th>Call By</th>
+                                                    <th>Call Date</th>
+                                                    <th style="width:10%">CMD </th>                                                
+                                                </tr>*@
+                                                 <tr>
+                                                    <th style="width: 2%;">#</th>
+                                                    <th>Vaccine Name</th>
+                                                    <th>Planning Date</th>                                                   
+                                                    <th>Call By</th>
+                                                    <th>Call Date</th>                                                                                                  
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalVaccineInfo" role="dialog">
+    <div class="modal-dialog modal-lg" style="width:845px">
+        <div class="modal-content" style="margin-top: 2%;height:520px">
+            <!-- Modal Header -->
+            <div class="modal-header bg-success" style="background: #2478a9;color:#fff;padding:5px;">
+                <h4 class="modal-title" style="font-size:15px;">
+                    <span class="text-white">Vaccination Info</span>
+                    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>
+                </h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="padding: 2px 6px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="category" style="padding:0px 0px 5px 0px;">
+                            <span class="title">Vaccination Schedule</span> <span class="">                              
+                                <button onclick="GetSchedule('GetVaccineInfo:ALL')" class="btn btn-success" style="margin-left: 10px;"><i class="fa fa-sign-in">&nbsp;</i>ALL</button>
+                                <button onclick="GetSchedule('GetVaccineInfo:Vaccinated')" class="btn btn-primary"><i class="fa fa-sign-in">&nbsp;</i>Vaccinated</button>
+                                <button onclick="GetSchedule('GetVaccineInfo:Pending')" class="btn btn-warning"><i class="fa fa-sign-in">&nbsp;</i>Pending</button>
+                            </span>
+                        </div>
+                        <div style="height: 380px;overflow:auto;margin-bottom:5px;border: 1px solid #2478a9;">
+                            <table class="table table-bordered MedicineTemplate" id="tblVaccinationScheduleInfo">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 2%;">#</th>
+                                        <th>Vaccine Id</th>
+                                        <th>Vaccine Name</th>
+                                        <th style="width: 18%;">Schedule Date</th>
+                                        <th style="width: 18%;">Planned From</th>
+                                        <th style="width: 18%;">Planned To</th>
+                                        <th style="width: 18%;">Vaccination Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,393 @@
+﻿
+@{
+    ViewBag.Title = "OTSchedule";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    .bg1 {
+        background: #ffc1c1;
+    }
+
+    .bg2 {
+        background: #e2efff;
+    }
+
+    .btn-close {
+        right: 5px;
+        opacity: 100%;
+        position: absolute;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+        padding: 0px 6px;
+        background: #b92c02;
+        height: 16px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
+
+    hr {
+        margin-top: 35px;
+        margin-bottom: 5px;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .custom-table {
+        width: 100%;
+        line-height: 29px;
+        font-size: 12px;
+    }
+
+    .fileinput.input-group {
+        display: flex;
+    }
+
+    .text-17 {
+        font-size: 17px;
+    }
+
+    .btn-flat {
+        padding: 2px;
+        border: none;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: overlay;
+        max-height: 450px;
+        display: block;
+    }
+
+    .selected {
+        background-color: #bddbf7;
+    }
+
+    .panel-body {
+        border-radius: 10px;
+        padding: 5px 3px 0px 3px;
+        position: relative;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+    }
+
+    .bn {
+        margin: 0px;
+        font-size: 10pt;
+        padding: 0px 10px;
+        border-radius: 0;
+        text-align: left;
+        height: 30px;
+    }
+
+    .bc {
+        border: 1px solid #00a65a;
+        border-radius: 0;
+    }
+
+    .name-group {
+        background: #ddd;
+    }
+
+    #tblOTDetails thead th {
+        white-space: nowrap;
+    }
+</style>
+<script src="~/Areas/OT/JsModule/EventScheduler.js"></script>
+<script src="~/Areas/OT/JsModule/OTSchedule.js?ver=1.0"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="col-md-9">
+            <div class="">
+                <div class="">
+                    <div class="panel">
+                        <div class="panel-heading" style="background:#0076d0;padding:4px;">
+                            <h4 class="text-white">OT Schedule</h4>
+                        </div>
+                        <div class="panel-body" style="background:#fff;">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>From</label>
+                                    <input type="date" class="form-control" id="txtFrom" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>To</label>
+                                    <input type="date" class="form-control" id="txtTo" />
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <button class="btn btn-success bn" style="margin-top: 22px;" onclick="OTSchedule();"><i class="fa fa-user">&nbsp;</i>Search OT</button>&nbsp;&nbsp;
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <button class="btn btn-success bn" id="btnOtView" style="margin-top: 22px;" onclick="OTSchedule();">OT Schedule Grid</button>&nbsp;&nbsp;
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <button id="btnBookNewOT" class="btn btn-info bn" style="margin-top: 22px;"><i class="fa fa-user">&nbsp;</i>Book New OT</button>&nbsp;&nbsp;
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="scroll">
+                                        <table class="table table-bordered" id="tblOTDetails" style="padding-bottom: 7px;display: block;border: 1px solid #009688;max-height:550px;overflow:auto">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:1%">S.No</th>
+                                                    <th style="width:15%">Doctor Name</th>
+                                                    <th>UHID</th>
+                                                    <th style="width:15%">Patient Name</th>
+                                                    <th>MobileNo</th>
+                                                    <th style="width:15%">Booking Date</th>
+                                                    <th>Start Date</th>
+                                                    <th>End Date</th>
+                                                    <th>Remark</th>
+                                                    <th>Item Required</th>
+                                                    <th style="width:1%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="">
+                <div class="">
+                    <div class="panel">
+                        <div class="panel-heading" style="background:#0076d0;padding: 4px;">
+                            <h4 class="text-white">OT Details</h4>
+                        </div>
+                        <div class="panel-body" style="background:#fff;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="scroll" style="height: 340px;">
+                                        <table class="table table-bordered" id="" style="border: 1px solid #009688;font-size: 13px;margin: 0px 0px 30px 0px;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:25%">UHID</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtUHIDNo"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:25%">Book By</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtBookBy"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:25%">PatientName</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtPatientName"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:25%">Mobile No</th>
+                                                    <th style="width:5%">:</th>
+                                                    <td><span id="txtMobileNo"></span></td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <textarea width="100%" id="txtConfirmRemark" placeholder="Remark" rows="4" cols="41"></textarea>
+                                    </div>
+                                    <div class="col-md-2 input-group-btn">
+                                        <button class="btn btn-success bn" id="btnConfirm" onclick="ApproveAndCancle('Y')" style="margin-left: 24px; margin-right: -76px;margin-top: -114px;"><i class="fa fa-sign-in">&nbsp;</i>Confirm</button>
+                                        <button class="btn btn-danger bn" id="btnCancel" onclick="ApproveAndCancle('X')" style="margin-top: -115px; margin-left: 118px;"><i class="fa fa-times">&nbsp;</i>Cancel</button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <h4 id="txtBookingDate"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="background: #ddd;padding: 1px;">
+                <div class="card card-style" style="margin:10px;padding:10px;border-radius:9px;">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="">
+                                    <div class="row" style="margin-bottom: 8px;">
+                                        <div class="col-xs-4">OT List</div>
+                                        <div class="col-xs-8"><select id="ddlOTList" class="form-control" onchange="OTScheduleList();"></select></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4">Date </div>
+                                        <div class="col-xs-8" style="display:flex">
+                                            <input type="date" class="form-control" id="txtDate" />
+                                        </div>
+                                    </div>
+                                    <table class="table-condensed" style="width: 100%;font-size:12px;">
+                                        <tr>
+                                            <th style="width:30%">Search By</th>
+                                            <th style="width:5%">:</th>
+                                            <td style="width:65%" class="flex">
+                                                <input type="text" id="txtUHID" placeholder="UHID/Mobile" style="width:120px;" />
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Doctor</th>
+                                            <th>:</th>
+                                            <td>
+                                                <select id="ddlDoctor" class="form-control"> </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>:</th>
+                                            <td>
+                                                <input type="text" id="txtName" class="form-control" placeholder="Name" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Mobile</th>
+                                            <th>:</th>
+                                            <td>
+                                                <input type="text" id="txtMobile" class="form-control" placeholder="Mobile No." />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Start Time</th>
+                                            <th>:</th>
+                                            <td>
+                                                <select id="txtFromTime" class="form-control">
+                                                    <option>Select</option>
+                                                    <option>01</option>
+                                                    <option>02</option>
+                                                    <option>03</option>
+                                                    <option>04</option>
+                                                    <option>05</option>
+                                                    <option>06</option>
+                                                    <option>07</option>
+                                                    <option>08</option>
+                                                    <option>09</option>
+                                                    <option>10</option>
+                                                    <option>11</option>
+                                                    <option>12</option>
+                                                    <option>13</option>
+                                                    <option>14</option>
+                                                    <option>15</option>
+                                                    <option>16</option>
+                                                    <option>17</option>
+                                                    <option>18</option>
+                                                    <option>19</option>
+                                                    <option>20</option>
+                                                    <option>21</option>
+                                                    <option>22</option>
+                                                    <option>23</option>
+                                                    <option>24</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>End Time</th>
+                                            <th>:</th>
+                                            <td>
+                                                <select id="txtToTime" class="form-control">
+                                                    <option>Select</option>
+                                                    <option>01</option>
+                                                    <option>02</option>
+                                                    <option>03</option>
+                                                    <option>04</option>
+                                                    <option>05</option>
+                                                    <option>06</option>
+                                                    <option>07</option>
+                                                    <option>08</option>
+                                                    <option>09</option>
+                                                    <option>10</option>
+                                                    <option>11</option>
+                                                    <option>12</option>
+                                                    <option>13</option>
+                                                    <option>14</option>
+                                                    <option>15</option>
+                                                    <option>16</option>
+                                                    <option>17</option>
+                                                    <option>18</option>
+                                                    <option>19</option>
+                                                    <option>20</option>
+                                                    <option>21</option>
+                                                    <option>22</option>
+                                                    <option>23</option>
+                                                    <option>24</option>
+                                                </select>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Remark</th>
+                                            <th>:</th>
+                                            <td>
+                                                <textarea id="txtRemark" class="form-control" placeholder="Remark"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Item Required</th>
+                                            <th>:</th>
+                                            <td>
+                                                <textarea id="txtItemRequired" class="form-control" placeholder="Item Required"></textarea>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                        <p class="text-center" style="margin-top: 10px;">
+                                    <a href="#" id="btnGetIPD" onclick="OTBooking()" class="btn btn-info">Book Now</a>
+                                </p>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal" id="myModal2">
+    <div class="modal-dialog modal-lg ">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <h4 id="txtBookingDate"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body" style="background: #ddd;padding: 1px;">
+                <div id="divEntryForm" style="overflow-x:auto;overflow-y:auto">
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>

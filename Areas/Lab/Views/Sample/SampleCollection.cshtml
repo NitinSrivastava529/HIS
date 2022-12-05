@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "SampleCollection";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<style>
+    .scroll {
+        overflow: auto;
+        max-height: 300px;
+    }
+
+    .sampleTaken {
+        background: #bcffe0
+    }
+</style>
+<script src="~/Areas/Lab/JsModule/SampleCollection.js"></script>
+<div id="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding:1px 10px; ">
+                        <p class="text-white">Sample</p>
+                    </div>
+                    <div class="panel-body" style="background:#fff;">
+                        <div class="col-md-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                <select class="form-control" id="ddldemo">
+                                    <option value="1">Pending</option>
+                                    <option value="2">Collected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="fileinput fileinput-new input-group" style="display:flex;">
+                                <input type="text" class="form-control" id="txtVisitNo" placeholder="VisitNo" />
+                                <button class="btn-success" onclick="PendingByVisitNo()" style="width:13%;border:none"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                <label style="width:21%">From </label> &nbsp;&nbsp;
+                                <input style="width:79%" type="date" id="txtFrom" onchange="PendingCollection()" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                <label style="width:21%">To </label>&nbsp;
+                                <input style="width:79%" type="date" onchange="PendingCollection()" id="txtTo" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="scroll" style="height:400px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                <table class="table table-bordered" id="tblPendingCollection">
+                                    <thead>
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Patient Name</th>
+                                            <th>Age</th>
+                                            <th>Visit No</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding:1px 10px; ">
+                        <p class="text-white">Sample Collection</p>
+                    </div>
+                    <div class="panel-body" style="background:#fff;">
+                        <div class="row" style="margin:0px; background: #e6f4ff; padding-top: 15px;">
+                            <div class="col-md-4">
+                                <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                    <label style="width:18%">Name:</label> &nbsp;<span id="txtPatientName"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+                                    <label style="width:23%">Visit No:</label>&nbsp; <span id="txtPatientVisitNo"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-success pull-right" id="tblCollect">Collect</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="scroll" style="max-height:154px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                    <div class="table table-responsive">
+                                        <table class="table table-bordered" id="tblSampleInfoOfPatient">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:1%">Help</th>
+                                                    <th style="width:10%" id="tdtestcode">TestCode</th>
+                                                    <th style="width:44%">Test Name</th>
+                                                    <th style="width:28%">Sam_Type</th>
+                                                    <th style="width:100%;"><input type="text" style='width:100%' placeholder="BarCode" /></th>
+                                                    <th>CollectDate</th>
+                                                    <th>VialQty</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel">
+                    <div class="panel-heading" style="background:#0076d0;padding:1px 10px;">
+                        <p class="text-white">Collected Sample List</p>
+                    </div>
+                    <div class="panel-body" style="background:#fff;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="scroll" style="max-height: 154px; display:block; border:1px solid #00a65a; overflow:auto;padding-bottom:7px;">
+                                    <div class="table table-responsive">
+                                        <table class="table table-bordered" id="tblSampleTakenHelp">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:25%">Prepration&Test</th>
+                                                    <th style="width:15%">Storage</th>
+                                                    <th style="width:13%">Sample Container</th>
+                                                    <th style="width:19%">Temprature</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+﻿@{
+    Layout = null;
+}
+@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chandan Hospital </title>
+    @Html.Partial("_header")
+</head>
+<body class="fixed-header">
+    <div id="sb-site">
+        <div id="page-wrapper">
+            @Html.Partial("_menu")
+            <div id="page-content-wrapper">
+                @RenderBody()
+            </div>
+        </div>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js?his-version-1.0" type="text/javascript"></script>
+        <link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css?his-version-1.0" rel="Stylesheet" type="text/css" />
+    </div>
+</body>
+</html>

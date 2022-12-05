@@ -1,0 +1,282 @@
+﻿
+@{
+	ViewBag.Title = "ListRoomAndBed";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Masters/JsModule/ListRoomAndBed.js?his-version-1.0"></script>
+<style>
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 450px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	input:disabled span.slider {
+		background-color: #ddd !important;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white pull-right">Manage Room</h4>
+								<input type="button" id="btnNew" class="btn-default btn-action" value="New" />
+							</div>
+							<div class="panel-body">
+								<div class="row basic">
+									<div class="form-group">
+										<div class="col-md-8">
+											<select id="ddlFloor" class="form-control">
+												<option>Select Floor</option>
+												<option>BASEMENT</option>
+												<option>GROUND FLOOR</option>
+												<option>FIRST FLOOR</option>
+												<option>SECOND FLOOR</option>
+												<option>THIRD FLOOR</option>
+												<option>FOURTH FLOOR</option>
+												<option>FIFTH FLOOR</option>
+												<option>SIXTH FLOOR</option>
+												<option>SAVENTH FLOOR</option>
+												<option>EIGHTH FLOOR</option>
+												<option>NINTH FLOOR</option>
+												<option>TENTH FLOOR</option>
+												<option>ELEVENTH FLOOR</option>
+											</select>
+										</div>
+										<div class="col-md-4">
+											<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<input type="text" id="txtSearch" class="form-control" placeholder="Search.." />
+											</div>
+										</div>
+									</div>
+								</div>			
+								<div id="update" style="display:none;">
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-2">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+												<input type="text" class="form-control" id="txtRoomId" disabled="disabled" />
+												</div>
+											</div>
+											<div class="col-md-5">
+												<select id="ddlUpdateFloor" class="form-control">
+													<option>Select Floor</option>
+													<option>BASEMENT</option>
+													<option>GROUND FLOOR</option>
+													<option>FIRST FLOOR</option>
+													<option>SECOND FLOOR</option>
+													<option>THIRD FLOOR</option>
+													<option>FOURTH FLOOR</option>
+													<option>FIFTH FLOOR</option>
+													<option>SIXTH FLOOR</option>
+													<option>SAVENTH FLOOR</option>
+													<option>EIGHTH FLOOR</option>
+													<option>NINTH FLOOR</option>
+													<option>TENTH FLOOR</option>
+													<option>ELEVENTH FLOOR</option>
+												</select>
+											</div>
+											<div class="col-md-5">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<select id="ddlUpdateRoomType" class="form-control">
+														<option>Select Room Type</option>
+														<option>OPD</option>
+														<option>ICU</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-7">											
+												<select id="ddlUpdateBillingCategory" class="form-control">
+													<option>Select Billing Category</option>
+													<option>OPD</option>
+													<option>ICU</option>
+												</select>
+											</div>
+											<div class="col-md-5">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+													<input type="text" id="txtUpdateRoomName" data-count="50" class="form-control text-uppercase" placeholder="Room Name" />
+													<input type="button" id="btnUpdateRoom" class="btn-warning btn-action" onclick="CreateRoom()" value="Update" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr style="margin-top:0" />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll" style="max-height:400px">												
+												<table id="tblRoom" class="table table-bordered">
+													<thead>
+														<tr>															
+															<th>Edit</th>
+															<th>Floor Name</th>
+															<th>Room Id</th>
+															<th style="width: 16%;">Room Name</th>
+															<th>Room Type</th>
+															<th>Billing Category</th>
+															<th>Room Full Name</th>
+															<th>On/Off</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#0076d0;padding: 4px;">
+								<h4 class="text-white pull-right">Manage Bed</h4>
+								<input type="button" id="btnNewBed" class="btn-default btn-action" value="New" />
+							</div>
+							<div class="panel-body">
+								<div id="BasicBed">
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-8">
+												<select id="ddlFloorForBed" class="form-control">
+													<option>Select Floor</option>
+													<option>BASEMENT</option>
+													<option>GROUND FLOOR</option>
+													<option>FIRST FLOOR</option>
+													<option>SECOND FLOOR</option>
+													<option>THIRD FLOOR</option>
+													<option>FOURTH FLOOR</option>
+													<option>FIFTH FLOOR</option>
+													<option>SIXTH FLOOR</option>
+													<option>SAVENTH FLOOR</option>
+													<option>EIGHTH FLOOR</option>
+													<option>NINTH FLOOR</option>
+													<option>TENTH FLOOR</option>
+													<option>ELEVENTH FLOOR</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<input type="text" id="txtSearchBed" class="form-control" placeholder="Search.." />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="updateBed" style="display:none;">
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-2">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<input type="text" class="form-control" id="txtBedNo" disabled="disabled" />
+												</div>
+											</div>
+											<div class="col-md-5">
+												<select id="ddlUpdateFloorForBed" class="form-control">
+													<option>Select Floor</option>
+													<option>BASEMENT</option>
+													<option>GROUND FLOOR</option>
+													<option>FIRST FLOOR</option>
+													<option>SECOND FLOOR</option>
+													<option>THIRD FLOOR</option>
+													<option>FOURTH FLOOR</option>
+													<option>FIFTH FLOOR</option>
+													<option>SIXTH FLOOR</option>
+													<option>SAVENTH FLOOR</option>
+													<option>EIGHTH FLOOR</option>
+													<option>NINTH FLOOR</option>
+													<option>TENTH FLOOR</option>
+													<option>ELEVENTH FLOOR</option>
+												</select>
+											</div>
+											<div class="col-md-5">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+													<select id="ddlUpdateRoom" class="form-control"></select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-6">
+												<div class="fileinput fileinput-new input-group" data-provides="fileinput" style="display:flex">
+													<input type="text" id="txtBedName" data-count="50" class="form-control text-uppercase" placeholder="Bed Name" />
+													<input type="button" id="btnUpdateBed" class="btn-warning btn-action" value="Update" />
+												</div>
+											</div>										
+										</div>
+									</div>
+								</div>
+								<hr style="margin-top:0" />
+								<div class="example-box-wrapper">
+									<div class="form-horizontal bordered-row">
+										<div class="table table-responsive">
+											<div class="scroll">												
+												<table id="tblBeds" class="table table-bordered">
+													<thead>
+														<tr>
+															<th style="width:1%">Edit</th>															
+															<th>Bed Id</th>
+															<th>Bed Name</th>
+															<th style="width:1%">On/Off</th>															
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

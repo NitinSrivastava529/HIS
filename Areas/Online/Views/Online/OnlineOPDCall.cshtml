@@ -1,0 +1,110 @@
+﻿
+@{
+	ViewBag.Title = "OnlineOPDCAll";
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Online/JsModule/OnlineOPDCall.js"></script>
+<style>
+	.active {
+		color: green;
+	}
+
+	.text-white {
+		color: #fff !important;
+	}
+
+	hr {
+		margin-top: 35px;
+		margin-bottom: 5px;
+		border: 0;
+		border-top: 1px solid #eee;
+	}
+
+	.custom-table {
+		width: 100%;
+		line-height: 29px;
+		font-size: 12px;
+	}
+
+	.fileinput.input-group {
+		display: flex;
+	}
+
+	.text-17 {
+		font-size: 17px;
+	}
+
+	.flex {
+		display: flex;
+	}
+
+	.scroll {
+		width: 100%;
+		background: #fff;
+		overflow: overlay;
+		max-height: 480px;
+		display: block;
+	}
+
+	.panel-body {
+		/*box-shadow: 1px 1px 10px #d2d2d2;*/
+		border-radius: 10px;
+		padding: 5px 3px 0px 3px;
+		position: relative;
+	}
+
+	.ml15 {
+		margin-left: 15px;
+	}
+</style>
+<div id="page-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="ml15">
+					<div class="">
+						<div class="panel">
+							<div class="panel-heading" style="background:#2492b3;padding: 4px;">
+								<h4 class="text-white">Online OPD Call</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-md-3">
+									<label>From</label>
+									<input type="date" id="txtFrom" class="form-control" />
+								</div>
+								<div class="col-md-4">
+									<label>To</label>
+									<div class="flex">
+										<input type="date" id="txtTo" class="form-control" />
+										<button style="width:37%" id="btnSearch" class="btn btn-primary" onclick="HIS_OPDCall()">Get Record</button>
+									</div>
+								</div>
+								<div class="col-md-12" style="margin-top:10px">
+									<dic class="scroll" style="max-height: 530px;overflow: auto;">
+										<table id="tblOPDCall" class="table table-bordered">
+											<thead>
+                                                <tr>
+                                                    <th>Patient Name</th>
+                                                    <th>Age</th>
+                                                    <th>Mobile No</th>
+                                                    <th>App.Date</th>
+                                                    <th>Time</th>
+                                                    <th>Doctor Name</th>
+                                                    <th>Cancel DateTime</th>
+                                                    <th>Action</th>
+                                                </tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</dic>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

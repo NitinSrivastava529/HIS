@@ -1,0 +1,360 @@
+﻿
+@{
+    ViewBag.Title = "Package Confirmation";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    .notification {
+        background-color: #555;
+        color: white;
+        text-decoration: none;
+        padding: 15px 15px;
+        position: relative;
+        display: inline-block;
+        border-radius: 2px;
+    }
+
+        .notification:hover {
+            background: red;
+        }
+
+        .notification .badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            padding: 5px 10px;
+            border-radius: 50%;
+            background: red;
+            color: white;
+        }
+</style>
+<div id="page-content">
+    <script src="~/Areas/Online/JsModule/online_ConfirmPackage.js?his-version-1.0"></script>
+    <section class="content">
+        <div class="row">
+            <div class="box box-purple">
+                <div class="box-body">
+                    <div class="col-md-2">From Date<input type="date" class="form-control" id="txtFrom" autocomplete="off" placeholder="dd/mm/yyyy" data-date-format="DD-MM-YYYY" /></div>
+                    <div class="col-md-2">To Date<input type="date" class="form-control" id="txtTo" autocomplete="off" placeholder="dd/mm/yyyy" /></div>
+                    <div class="col-md-2">
+
+                        . <button id="btnNewReqList" type="button" class="btn btn-warning btn-block">
+                            NEW REQUEST
+                            <span id="spnNew" class="badge">
+
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        .<button id="btnPayedList" type="button" class="btn btn-success btn-block">PAYMENT DONE   <span id="spnPay" class="badge"></span></button>
+                    </div>
+                    <div class="col-md-2">
+                        .<button id="btnCancelled" type="button" class="btn btn-danger btn-block">CANCELLED</button>
+                    </div>
+                    <div class="col-md-2">
+                        .<button id="btnAll" type="button" class="btn btn-info btn-block">ALL</button>
+                    </div>
+                    @*<div class="col-md-2">
+                            Mob.No/Appointment Id
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" id="txtSearchKey" />
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box box-purple">
+                    <div class="box-body">
+                        <div class="container" style="width:100%;overflow-y:scroll;height:500px">
+                            <input class="form-control" id="myInput" type="text" placeholder="Search.." />
+                            <table id="tblBooking" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Booking Date</th>
+                                        <th>Patient Id</th>
+                                        <th>Patient Name</th>
+                                        <th>Gender</th>
+                                        <th>Age</th>
+                                        <th>Mobile No</th>
+                                        <th>Isconfirmed</th>
+                                        <th>Cmd</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" style="height:400px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-purple">
+                            <div class="row">
+                                <div class="col-xs-12" id="trfDetail">
+                                    <table id="tblBookingDetail" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td>Patient Id</td>
+                                                <td colspan="2">
+                                                    <input type="text" id="txtPatientId" class="form-control" />
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Doctor Selection</td>
+                                                <td colspan="2">
+                                                    <select id="ddlDoctorName" class="form-control"></select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Remark</td>
+                                                <td colspan="2"><textarea id="txtRemark" class="form-control"> </textarea></td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button id="btnConfirm" type="button" class="btn btn-success btn-block" onclick="BookingConfirmation()">Confirm</button>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <button id="btnCancel" type="button" class="btn btn-danger btn-block" onclick="CancelBooking();">Cancel</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button id="btnSendPayLink" type="button" class="btn btn-info btn-block" onclick="Online_BookingNotification(this.id);">Re-Send Pay Link</button>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button id="btnPayStatus" type="button" class="btn btn-success btn-block" onclick="GetPaymentStatus()">Pay Status</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button id="btnOpenSmsLog" type="button" class="btn btn-danger btn-block" onclick="showSmsDialog();">SMS Log</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button id="btnSendAppLink" type="button" class="btn btn-info btn-block" onclick="Online_BookingNotification(this.id);">Send Covid App Link</button>
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button id="btnUpdateUHID" type="button" class="btn btn-success btn-block" onclick="showUHIDDialog()">UPDATE UHID</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-purple">
+                            <div class="row form-group">
+                                <div class="col-xs-12" id="trfDetail" style="overflow-y:scroll;height:200px">
+                                    <table id="tblOrderIds" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td>Remark</td>
+                                                <td id="idBookingReason"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Alloted Doctor</td>
+                                                <td id="idAllotedDoctor"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Package Cost</td>
+                                                <td id="idFee"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pay Status</td>
+                                                <td id="idPayStatus"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Address</td>
+                                                <td id="idAddress"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td id="idEmail"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Confirm_remark</td>
+                                                <td id="idConfirmRemark"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mobile</td>
+                                                <td><input type="text" id="txtMobile1" class="form-control" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td>UHID</td>
+                                                <td id="idUHID"></td>
+                                            </tr>
+
+
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <span style="text-align:center;width:100%" id="elDoctorName"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4">Appointment Date</div>
+                        <div class="col-md-4"><input type="date" class="form-control" id="dtolddate" autocomplete="off" placeholder="dd/mm/yyyy" data-date-format="DD-MM-YYYY" /></div>
+                        <div class="col-md-4"><input type="button" class="btn-success" id="btnGetdate" onclick="DoctorScheduledList()" value="Booked Appointment" /></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">Choose Date Time</div>
+                        <div class="col-md-4"><input type="datetime-local" class="form-control" id="dtAppDatetime" autocomplete="off" placeholder="dd/mm/yyyy" data-date-format="DD-MM-YYYY" /></div>
+                        <div class="col-md-4"><input type="button" class="btn-success" id="btnGetdate" onclick="getdate()" value="Select Date" /></div>
+                    </div>
+
+                </div>
+                <div class="modal-body">
+                    <table id="tblScheduledList" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>AppointmentId</th>
+                                <th>Patient Name</th>
+                                <th>Appointment DateTime</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="myModal2" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <span style="text-align:center;width:100%" id="elDoctorName">Payment Status on PayU Money</span>
+                </div>
+                <div class="modal-body">
+                    <table id="tblPayments" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>AppointmentId</th>
+                                <th>paymentId</th>
+                                <th>PayMode</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>PaymentDate</th>
+                                <th>Command</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="myModal3" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <span style="text-align:center;width:100%">SMS Log</span>
+                </div>
+                <div class="modal-body" style="height:500px;overflow-y:scroll">
+                    <div class="row">
+                        <div class="col-md-2">Mobile No</div>
+                        <div class="col-md-4"><input type="text" id="txtMobileLog" class="form-control" /></div>
+                        <div class="col-md-3"><input type="button" id="btnSMSGetLog" value="Get Log" class="form-control btn-success" onclick="GetSmsLog()" /></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table id="tblSmsLog" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Sms</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#myInput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#tblBooking tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+            });
+        </script>
+    </div>
+    <div class="modal fade" id="myModal4" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <span style="text-align:center;width:100%" id="elDoctorName">Link HIS ID by COVID Patient</span>
+                </div>
+                <div class="modal-body">
+                    <table id="tplPatientList" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>UHID</th>
+                                <th>PatientName</th>
+                                <th>Command</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <input id="hidMobile" type="hidden" />
+</div>
