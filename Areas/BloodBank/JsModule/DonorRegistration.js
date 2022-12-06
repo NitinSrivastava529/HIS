@@ -212,6 +212,7 @@ function FinalSubmit() {
             objDonorInfo.Hb = $('#ddlHemoglobin option:selected').val();
             objDonorInfo.isFit = $('input[name=Fit]:checked').val();
             objDonorInfo.Donationtype = $('#ddlType option:selected').val();
+            objDonorInfo.Extract = $('#ddlExtract option:selected').text();
             objDonorInfo.uhid = '-';
             objDonorInfo.Platelet = $('#txtPlateletCount').val();
             objDonorInfo.Remark = $('#txtRemark').val();
@@ -249,6 +250,15 @@ function FinalSubmit() {
     }
 }
 function Validate() {
+    var Extract = $('#ddlExtract option:selected').text();
+    if (Extract=='Select Extract') {
+        alert('Please Select Extract.');        
+        $('span.selection').find('span[aria-labelledby=select2-ddlExtract-container]').css('border-color', 'red').focus();
+        return false;
+    }
+    else {
+        $('span.selection').find('span[aria-labelledby=select2-ddlExtract-container]').removeAttr('style');
+    }
     if (!Number($('#txtBP').val().split('/')[1]) ? true : false) {
         alert('Invalid BP Value');
         $('#txtBP').css('border-color', 'red');

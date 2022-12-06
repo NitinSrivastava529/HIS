@@ -157,6 +157,18 @@
 <div id="page-content">
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <div class="section" style="height:60px;">
+                    <label class="title">Extraction Details</label>
+                    <div class="flex" style="width:20%;margin: 5px 11px;">
+                        <label style="white-space:pre">Extract : </label>
+                        <select id="ddlExtract" class="form-control">                         
+                            <option value="Whole Blood">Whole Blood</option>
+                            <option value="SDP">SDP</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-10">
                 <div class="section" style="height:210px;">
                     <label class="title">Donor Details</label>
@@ -210,7 +222,6 @@
                             <td>
                                 <select id="ddlType" class="form-control">
                                     <option value="-">N/A</option>
-                                    <option value="Volunteer">SDP</option>
                                     <option value="Volunteer">Volunteer</option>
                                     <option value="Replacement">Replacement</option>
                                     <option value="Family Donor">Family Donor</option>
@@ -327,15 +338,15 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="section" style="height:222px;">
+                <div class="section" style="height: 185px;overflow: auto;">
                     <label class="title">Quentionnaire</label>
                     <div class="Questionnair" style="height:180px;overflow:auto"></div>
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="section">
+                <div class="section" style="height: 120px;">
                     <label class="title">Health Status</label>
-                    <table class="table tblDonorInfo">
+                    <table class="table tblDonorInfo" style="margin:0">
                         <tr>
                             <td><b>BP</b></td>
                             <td><b>:</b></td>
@@ -348,12 +359,12 @@
                             <td><b>Temp</b></td>
                             <td><b>:</b></td>
                             <td class="flex"><input type="text" id="txtTemp" class="form-control" />&nbsp;&#8451;</td>
-                        </tr>
-                        <tr>
+                            <td>&nbsp;</td>
                             <td><b>Pulse</b></td>
                             <td><b>:</b></td>
                             <td class="flex"><input type="text" id="txtPulse" class="form-control" />&nbsp;<label style="width: 20%;">p-m</label></td>
-                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
                             <td><b>Height</b></td>
                             <td><b>:</b></td>
                             <td class="flex"><input type="text" id="txtHeight" class="form-control" />&nbsp;cm</td>
@@ -368,8 +379,7 @@
                                 </select>
                                 &nbsp;Hb
                             </td>
-                        </tr>
-                        <tr>
+                            <td>&nbsp;</td>
                             <td><b>GPE</b></td>
                             <td><b>:</b></td>
                             <td><input type="text" id="txtGPE" class="form-control" /></td>
@@ -380,17 +390,17 @@
                                 <label><input type="radio" name="Fit" value="Y" checked />&nbsp;Yes</label>
                                 <label><input type="radio" name="Fit" value="N" />&nbsp;No</label>
                             </td>
-                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
                             <td><b>Platelet Count</b></td>
                             <td><b>:</b></td>
                             <td><input type="text" id="txtPlateletCount" class="form-control" /></td>
-                        </tr>
-                        <tr>
+                            <td>&nbsp;</td>
                             <td><b>Remark</b></td>
                             <td><b>:</b></td>
                             <td colspan="8"><input type="text" id="txtRemark" class="form-control" /></td>
                             <td>
-                                <button class="btn btn-success" id="btnFinalSubmit" onclick="FinalSubmit()" style="width:55%;margin-left:5px"><i class="fa fa-sign-in">&nbsp;</i>Final Submit</button>
+                                <button class="btn btn-success" id="btnFinalSubmit" onclick="FinalSubmit()" style="width:64%;margin-left:5px"><i class="fa fa-sign-in">&nbsp;</i>Final Submit</button>
                             </td>
                         </tr>
                     </table>
